@@ -1,0 +1,72 @@
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+      % Seitenrahmen zeichnen.
+      \draw[semithick,rounded corners=0.5cm]
+        ($(current page.north west) + ( 1cm,-1cm)$) --
+        ($(current page.north east) + (-1cm,-1cm)$) --
+        ($(current page.south east) + (-1cm, 1.5cm)$);
+        
+      \draw[semithick,rounded corners=0.5cm]
+        ($(current page.south east) + (-1cm, 1.5cm)$) --
+        ($(current page.south west) + ( 1cm, 1.5cm)$) --
+        ($(current page.north west) + ( 1cm,-1cm)$);
+        
+      % Logo einbinden.
+      \node[anchor=north west] (logo) at ($(current page.north west) + (1.75cm,-1.5cm)$)
+      {
+        \includegraphics[width=4cm]{KITLogo}
+      };
+      
+      % Institut / Lehrstuhl.
+      \node[anchor=east] at ($(current page.east |- logo.east) + (-1.75cm,0cm)$)
+      {    
+        \begin{minipage}{5.2cm}
+          \begin{flushleft}
+            \footnotesize{}Institute for Program Structures
+and Data Organization (IPD) \\
+          \end{flushleft}
+        \end{minipage}
+      };
+      
+      \node (title) at ($(current page.center |- logo.south) + (0cm, -4cm)$)
+      {
+        % Korrekter Zeilenabstand etc. durch Minipage.
+        \begin{minipage}{12cm}
+          \begin{center}
+            \huge\textbf{Gradual Verification \\ and maybe something about \\ implicit dynamic frames}
+          \end{center}
+        \end{minipage}
+      };
+      
+      \node[below=1.75cm of title.south]   (prename)  { Master's Thesis of };
+      \node[below=0.75cm of prename.south] (name)     { \Large{}\textbf{Johannes Bader} };
+      \node[below=1cm    of name.south]    (postname1) { at the Department of Informatics };
+      \node[below=1.5cm    of name.south]    (postname2) { Institute for Program Structures
+and Data Organization (IPD) };
+      
+      \node[below=4.5cm of postname1.south] (table)
+      {
+        \begin{tabular}{ll}
+        \textbf{Reviewer:}               & Prof. Dr.-Ing. Gregor Snelting, Karlsruhe Institute of Technology - Karlsruhe, Germany \\[5pt]
+        \textbf{Advisors:}               & Assoc. Prof. Jonathan Aldrich, Carnegie Mellon University - Pittsburgh, USA \\
+                                         & Assoc. Prof. Éric Tanter, University of Chile - Santiago, Chile
+                                           
+        \end{tabular}
+      };
+      
+      \node[below=4.5cm of table.south] (time)
+      {
+        \begin{tabular}{ll}
+        \textbf{Duration:} & 2016-05-10 -- 2016-09-28
+        \end{tabular}
+      };
+      
+      % Fußzeile, unten zentriert.
+      \node[anchor=south] (footnote) at ($(current page.center |- current page.south) + (0cm, 0.65cm)$)
+      {
+        \tiny{}KIT -- University of the State of Baden-Wuerttemberg and National Research Center of the Helmholtz Association
+        \hspace{0.5cm}
+        \Large{}\textbf{www.kit.edu}
+      };
+    \end{tikzpicture}
+\end{titlepage}
