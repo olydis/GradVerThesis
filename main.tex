@@ -13,62 +13,27 @@
 \usepackage{syntax}
 \usepackage{lscape}
 \usepackage{stmaryrd}
-
-\bibliographystyle{plain}
+\usepackage{listings}
 %\usepackage[pdftex]{graphicx}
 
-\usetikzlibrary{positioning,calc}
+\bibliographystyle{plain}
 
-\DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
-\DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
-\DeclareMathOperator*{\argmin}{\arg\!\min}
-\DeclareMathOperator*{\argmax}{\arg\!\max}
-
-
+\input{decl}
 
 \begin{document}
+	
+% 1. Front pages
 \pagenumbering{gobble}
-\include{pageTitle}
-\include{pageDeclaration}
-\include{pageAbstract}
-\include{pageAcknowledgments}
+\input{front}
 
+% 2. TOC
 \tableofcontents
-\newpage
+
+% 3. Content
 \pagenumbering{arabic}
-%%%BEGIN THESIS
-\chapter{Introduction}
+\input{content}
 
-\section{Motivation}
-\label{sec:motivation}
-
-\section{Goal}
-
-
-\section{Related Work}
-
-
-\chapter{Language and syntax}
-\label{sec:language}
-
-\section{Syntax}
-\label{sec:cfg}
-
-
-\chapter{Conclusion}
-
-
-\section{Evaluation}
-
-
-\subsection{Limitations}
-
-\section{Future Work}
-
-
-\chapter{Appendix}
-
-%%%END THESIS
-
+% 4. Bibliography
 \bibliography{references}
+
 \end{document}

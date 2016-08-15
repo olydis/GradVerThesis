@@ -1,0 +1,35 @@
+\chapter{Background and Related Work}
+
+\section{Abstract Gradual Typing}
+
+% TODO: mention draft about refinement types?
+
+\section{Implicit Dynamic Frames}
+\subsection{Self-Framing}
+
+\section{Hoare Logic}
+...as formal setting
+
+\begin{verbatim}
+class Point
+{
+    int manhattenDistance(Point p)
+        requires \phi_{pre};
+        ensures  \phi_{post};
+    {
+        s1;
+        s2;
+        .
+        .
+        .
+    }
+}
+\end{verbatim}
+
+\begin{displaymath}
+\thoare
+    {\ethis : \type{Point}, \ex{p} : \type{Point}, \eresult : \Tint}
+    {\phi_{pre}}
+    {s1; s2; ...}
+    {\phi_{post}}
+\end{displaymath}

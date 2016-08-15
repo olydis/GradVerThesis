@@ -1,0 +1,110 @@
+\chapter{Introduction}
+
+\section{Motivation}
+\subsection{As extension to unverified setting}
+
+\lstset{
+    basicstyle=\ttfamily
+    }
+
+Motivating example:
+\begin{lstlisting}[frame=single, language=Java]
+public static boolean hasLegalDriver(Car c)
+{
+    return c.driver.age >= 18;
+}
+\end{lstlisting}
+
+Motivating example with potential leak:
+\begin{lstlisting}[frame=single, language=Java]
+public static boolean hasLegalDriver(Car c)
+{
+    allocateSomething();
+    boolean result = c.driver.age >= 18;
+    releaseSomething();
+    return result;
+}
+\end{lstlisting}
+
+Motivating example with argument validation:
+\begin{lstlisting}[frame=single, language=Java]
+public static boolean hasLegalDriver(Car c)
+{
+    if (c == null || c.driver == null)
+        throw new IllegalArgumentException("...");
+        
+    // business logic (requires 'c.driver.age' to evaluate)
+}
+\end{lstlisting}
+
+Motivating example with declarative approach (JML syntax):
+\begin{lstlisting}[frame=single, language=Java]
+//@ requires c != null && c.driver != null;
+public static boolean hasLegalDriver(Car c)
+{
+    // business logic (requires 'c.driver.age' to evaluate)
+}
+\end{lstlisting}
+
+There are two basic ways to turn this annotation into a guarantee:
+\begin{description}
+    \item[Static Verification (run ESC/Java \cite{leino2000esc})]
+    In the unlikely event that the verifier can prove the precondition at all call sites, our problem is solved.
+    Otherwise, we have to enhance the call sites in order to convince the verifier.
+    Choices:
+    \begin{itemize}
+        \item 
+        Add parameter validation, effectively duplicating the original runtime check across the program.
+        \item
+        Add further annotations, guiding the verifier towards a proof.
+        This might not always work due to limitations of the verifier or decidability in general.
+    \end{itemize}
+    There are obvious limitations to this approach, static verification tends to be invasive.
+    At least there is a performance benefit: 
+    The runtime check that was originally part of every call is now only necessary in places where verification would not succeed otherwise.
+    
+    \item[Runtime Assertion Checking (RAC, run JML4c, TODO: http://www.cs.utep.edu/cheon/download/jml4c/doc.php)]
+    This approach basically converts the annotation back into a runtime check equivalent to our manual argument validation.
+    It is therefore less invasive, not requiring further changes to the code, but also lacks the advantages of static verification.
+\end{description}
+
+% gradual:
+% - not in a sense of GraVy
+% - assertions are GUARANTEED not to be violated (analogous to type safety of gradually typed languages), meaning that
+%    - as much as possible is verified statically
+%    - if necessary, (ideally: as few as possible) dynamic checks kick in
+% - full continuum between static and dynamic
+
+% static checking
+% dynamic checking
+% combine static and dynamic checking
+% views:
+% - add designated "?" to statically checked language, making checking optional
+% - introduce checking to unchecked language, making "?" the default value
+% typing
+% transition to verification
+% - of particular interest, cause limitations due to syntax or decidability make full checking impossible,
+%    possibly making use of static verification impossible and the program thus unverifiable
+%    inevitable incompleteness of static verifiers!
+%    GraVy: measure, only \textit{classifies} code into sections: correctness statically guaranteed, correctness statically disproved, no static guarantee so far
+
+% very desirable in practice
+% gradual version of a language is inherently a strict superset of original language
+% 
+
+% our approach allows extension of existing languages (without any verification) by adding transpilation step
+
+% why would you want continuum?
+% - move toward satically verified program without giving up guarantees!
+% - while "barely typed" languages hardly make sense, programs with "little verification" are already highly useful
+%    i.e. verification even makes sense as "rarely used feature"!
+%    ArgumentException-example
+%    -    performance benefit!
+%    -    cleaner code!
+%    -    makes more sense semantically
+% having optional types 
+
+% Future Work:
+% implement on top of existing languages
+% - tracking access via ThreadLocalStorage
+% - transpilation (e.g. C# Roslyn compiler extension)
