@@ -18,10 +18,49 @@
 
 \bibliographystyle{plain}
 
-\input{decl}
+% COMMANDS
+% \DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
+% \DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+
+% typewriter stuff
+\newcommand{\ttt}{\texttt}
+
+% expressions
+\newcommand{\ev}[1]{\ttt{#1}}
+\newcommand{\ex}[1]{\ttt{#1}}
+\newcommand{\edot}[2]{\ttt{#1.#2}}
+\newcommand{\this}{this}
+\newcommand{\result}{result}
+\newcommand{\ethis}{\ex{\this}}
+\newcommand{\eresult}{\ex{\result}}
+% formulas
+\newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}
+\newcommand{\phiFalse}[0]{\ttt{false}}
+\newcommand{\phiTrue}[0]{\ttt{true}}
+\newcommand{\phiEq}[2]{\ttt{(#1 = #2)}}
+\newcommand{\phiNeq}[2]{\ttt{(#1 ≠ #2)}}
+\newcommand{\phiAcc}[2]{\ttt{acc(#1.#2)}}
+% statements
+\newcommand{\sMemberSet}[3]{\ttt{#1.#2 ≔ #3;}}
+\newcommand{\sAssign}[2]{\ttt{#1 ≔ #2;}}
+\newcommand{\sAlloc}[2]{\ttt{#1 ≔ \new #2;}}
+\newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4);}}
+\newcommand{\sReturn}[1]{\ttt{return #1;}}
+\newcommand{\sAssert}[1]{\ttt{assert #1;}}
+\newcommand{\sRelease}[1]{\ttt{release #1;}}
+\newcommand{\sDeclare}[2]{\ttt{#1~#2;}}
+% type
+\newcommand{\type}[1]{\ttt{#1}}
+\newcommand{\Tint}{\type{int}}
+
+
+\newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}
+
 
 \begin{document}
-	
+
 % 1. Front pages
 \pagenumbering{gobble}
 \input{front}

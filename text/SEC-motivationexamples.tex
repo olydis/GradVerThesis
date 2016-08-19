@@ -1,23 +1,27 @@
-\chapter{Introduction}
 
-\section{Motivation}
 \subsection{As extension to unverified setting}
+“Make dynamic setting more static”
 
 \lstset{
-    basicstyle=\ttfamily
+    basicstyle=\ttfamily,
+    commentstyle=\ttfamily,
+    frame=single,
+    framesep=5pt,
+    mathescape=true
+    %escapeinside={(*}{*)}
     }
 
 Motivating example:
-\begin{lstlisting}[frame=single, language=Java]
-public static boolean hasLegalDriver(Car c)
+\begin{lstlisting}[language=Java]
+boolean hasLegalDriver(Car c)
 {
     return c.driver.age >= 18;
 }
 \end{lstlisting}
 
 Motivating example with potential leak:
-\begin{lstlisting}[frame=single, language=Java]
-public static boolean hasLegalDriver(Car c)
+\begin{lstlisting}[language=Java]
+boolean hasLegalDriver(Car c)
 {
     allocateSomething();
     boolean result = c.driver.age >= 18;
@@ -27,20 +31,22 @@ public static boolean hasLegalDriver(Car c)
 \end{lstlisting}
 
 Motivating example with argument validation:
-\begin{lstlisting}[frame=single, language=Java]
-public static boolean hasLegalDriver(Car c)
+\begin{lstlisting}[language=Java]
+boolean hasLegalDriver(Car c)
 {
-    if (c == null || c.driver == null)
-        throw new IllegalArgumentException("...");
+    if (!(c != null))
+        throw new IllegalArgumentException("expected c != null");
+    if (!(c.driver != null))
+        throw new IllegalArgumentException("expected c.driver != null");
         
     // business logic (requires 'c.driver.age' to evaluate)
 }
 \end{lstlisting}
 
 Motivating example with declarative approach (JML syntax):
-\begin{lstlisting}[frame=single, language=Java]
+\begin{lstlisting}[language=Java]
 //@ requires c != null && c.driver != null;
-public static boolean hasLegalDriver(Car c)
+boolean hasLegalDriver(Car c)
 {
     // business logic (requires 'c.driver.age' to evaluate)
 }
@@ -48,7 +54,7 @@ public static boolean hasLegalDriver(Car c)
 
 There are two basic ways to turn this annotation into a guarantee:
 \begin{description}
-    \item[Static Verification (run ESC/Java \cite{leino2000esc})]
+    \item[Static Verification (run ESC/Java \cite{leino2000esc})]~\\
     In the unlikely event that the verifier can prove the precondition at all call sites, our problem is solved.
     Otherwise, we have to enhance the call sites in order to convince the verifier.
     Choices:
@@ -61,12 +67,89 @@ There are two basic ways to turn this annotation into a guarantee:
     \end{itemize}
     There are obvious limitations to this approach, static verification tends to be invasive.
     At least there is a performance benefit: 
-    The runtime check that was originally part of every call is now only necessary in places where verification would not succeed otherwise.
+    Runtime checks (originally part of every call) are now only necessary in places where verification would not succeed otherwise.
     
-    \item[Runtime Assertion Checking (RAC, run JML4c, TODO: http://www.cs.utep.edu/cheon/download/jml4c/doc.php)]
+    \item[Runtime Assertion Checking (RAC, run JML4c, TODO: http://www.cs.utep.edu/cheon/download/jml4c/doc.php)]~\\
     This approach basically converts the annotation back into a runtime check equivalent to our manual argument validation.
     It is therefore less invasive, not requiring further changes to the code, but also lacks the advantages of static verification.
 \end{description}
+
+\subsection{As extension to fully verified setting}
+“Make static setting more dynamic”
+
+\begin{lstlisting}[language=Java]
+int collatzIterations(int iter, int start)
+    requires 0 < start
+    ensures  0 < result
+{
+    // ...
+}
+
+int myRandom(int seed)
+    requires 0 < seed   && seed   < 10000
+    ensures  0 < result && result < 4     // not provable
+{
+    int result = collatzIterations(300, seed);
+    // we know: result $\in$ { 1, 2, 4 }
+    
+    if (result == 4) result = 3;
+    return result;
+}
+\end{lstlisting}
+
+Non-solution:
+\begin{lstlisting}[language=Java]
+int collatzIterations(int iter, int start)
+    requires 0 < start
+    ensures  0 < result
+{
+    // ...
+}
+
+int myRandom(int seed)
+    requires 0 < seed   && seed   < 10000
+    ensures  0 < result && result < 4
+{
+    int result = collatzIterations(300, seed);
+    // we know: result $\in$ { 1, 2, 4 }
+    
+    // "cast"
+    if (!(result < 5))
+        throw new IllegalStateException("expected result < 5");
+
+    // verifier now knows:  0 < result && result < 5 
+    
+    if (result == 4) result = 3;
+    return result;
+}
+\end{lstlisting}
+This is not satisfying, since (from a formal perspective) the problem is with the method's postcondition being too weak
+
+
+\begin{lstlisting}[language=Java]
+int collatzIterations(int iter, int start)
+    requires 0 < start
+    ensures  0 < result && ?
+{
+    // ...
+}
+
+int myRandom(int seed)
+    requires 0 < seed   && seed   < 10000
+    ensures  0 < result && result < 4
+{
+    int result = collatzIterations(300, seed);
+    // we know: result $\in$ { 1, 2, 4 }
+    
+    // verifier allowed to
+    //  assume 0 < result && result < 5
+    //  from   0 < result && ?
+    // (adding runtime check)
+    
+    if (result == 4) result = 3;
+    return result;
+}
+\end{lstlisting}
 
 % gradual:
 % - not in a sense of GraVy
