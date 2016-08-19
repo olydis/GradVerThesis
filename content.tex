@@ -12,9 +12,25 @@
 Most modern programming languages use static analysis to some degree, ruling out certain types of runtime failure.
 Static analysis provides guarantees about the dynamic behavior of a program without actually running the program.
 Static typing disciplines are among the most common representatives of static analysis, guaranteeing type safety at compile time, obviating the need for dynamic checks.
-In reality, most programming languages combine ...
+In reality, most programming languages combine ..., e.g. null-checks.
 
-Another powerful 
+Another powerful technique is static verification of programs against their specification, i.e. statically proving their “correctness”.
+In practice this is achieved by checking that some annotated invariants or assertions (reflecting the specification) must always hold.
+% example?
+Unfortunately, static verification has limitations:
+\begin{itemize} % TODO
+    \item Syntax
+    \item Decidability
+    \item Difficult and Tedious to annotate programs
+    \item ...
+\end{itemize}
+
+
+Type systems weakened (casts, ...)
+
+
+
+This work will also show that gradual verification ... other angle!
 
 - 
 What is the thesis about?
