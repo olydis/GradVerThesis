@@ -123,7 +123,9 @@ int myRandom(int seed)
     return result;
 }
 \end{lstlisting}
-This is not satisfying, since (from a formal perspective) the problem is with the method's postcondition being too weak
+This solution is not satisfying, 
+- much to write, have to think about what to write (requires you to kind of thing from verifiers perspective)
+- intuitively the problem is with the method's postcondition being too weak, i.e. we solved the problem at the wrong place!
 
 
 \begin{lstlisting}[language=Java]

@@ -1,0 +1,40 @@
+With static semantics in place, we can define what makes programs well-formed.
+Well-formedness is required to ...
+The following predicates 
+
+A program is well-formed if both its classes and main method are.
+For the main method to be well-formed, it must satisfy our Hoare predicate, given no assumptions.
+
+\begin{mathpar}
+\inferrule* [Right=OkProgram]
+{
+\overline{cls_i \OK} \\
+\thoare {~} {\phiTrue} {\overline{s}} {\phiTrue}
+}
+{(\overline{cls_i}~\overline{s}) \OK}
+\end{mathpar}
+
+% TODO: start with deterministic semantics!?
+
+\begin{mathpar}
+\inferrule* [Right=OkClass]
+{
+\text{unique $field$-names} \\
+\text{unique $method$-names} \\
+\overline{method_i \OKinC}
+}
+{(\class {$C$} {$\overline{field_i}$} {$\overline{method_i}$}) \OK}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=OkMethod]
+{
+FV(\phi_1) \subseteq \{ x, \ethis \} \\
+FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\
+\thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {\overline{s}} {\phi_2} \\
+\emptyset \sfrmphi {\phi_1} \\
+\emptyset \sfrmphi {\phi_2} \\
+\overline{\neg \textsf{writesTo}(s_i, x)}
+}
+{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$\overline{s}$}) \OKinC}
+\end{mathpar}

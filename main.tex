@@ -14,7 +14,9 @@
 \usepackage{lscape}
 \usepackage{stmaryrd}
 \usepackage{listings}
-%\usepackage[pdftex]{graphicx}
+\usepackage{newunicodechar}
+\newunicodechar{≠}{=\llap{/}}
+\newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
 
 \bibliographystyle{plain}
 
@@ -24,17 +26,29 @@
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 \DeclareMathOperator*{\argmax}{\arg\!\max}
 
-% typewriter stuff
+% font aliases
 \newcommand{\ttt}{\texttt}
-
+\newcommand{\tset}{\textsc}
+\newcommand{\predicate}{\textsf}
+% sets
+\newcommand{\setProgram}{\tset{Program}}
+\newcommand{\setClass}{\tset{Class}}
+\newcommand{\setField}{\tset{Field}}
+\newcommand{\setMethod}{\tset{Method}}
+\newcommand{\setContract}{\tset{Contract}}
+\newcommand{\setType}{\tset{Type}}
+\newcommand{\setStmt}{\tset{Stmt}}
+\newcommand{\setFormula}{\tset{Formula}}
+\newcommand{\setExpr}{\tset{Expr}}
+\newcommand{\setVal}{\tset{Val}}
+\newcommand{\setVar}{\tset{Var}}
 % expressions
 \newcommand{\ev}[1]{\ttt{#1}}
 \newcommand{\ex}[1]{\ttt{#1}}
 \newcommand{\edot}[2]{\ttt{#1.#2}}
-\newcommand{\this}{this}
-\newcommand{\result}{result}
-\newcommand{\ethis}{\ex{\this}}
-\newcommand{\eresult}{\ex{\result}}
+\newcommand{\ethis}{\ex{this}}
+\newcommand{\eresult}{\ex{result}}
+\newcommand{\enull}{\ex{result}}
 % formulas
 \newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}
 \newcommand{\phiFalse}[0]{\ttt{false}}
@@ -45,7 +59,7 @@
 % statements
 \newcommand{\sMemberSet}[3]{\ttt{#1.#2 ≔ #3;}}
 \newcommand{\sAssign}[2]{\ttt{#1 ≔ #2;}}
-\newcommand{\sAlloc}[2]{\ttt{#1 ≔ \new #2;}}
+\newcommand{\sAlloc}[2]{\ttt{#1 ≔ new #2;}}
 \newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4);}}
 \newcommand{\sReturn}[1]{\ttt{return #1;}}
 \newcommand{\sAssert}[1]{\ttt{assert #1;}}
@@ -54,6 +68,14 @@
 % type
 \newcommand{\type}[1]{\ttt{#1}}
 \newcommand{\Tint}{\type{int}}
+% composite syntax
+\newcommand{\class}[3]{\ttt{class {#1}~\{ {#2} {#3} \}}}
+\newcommand{\method}[6]{\ttt{{#1}~{#2}({#3}~{#4})~{#5}~\{ {#6} \}}}
+\newcommand{\contract}[2]{\ttt{requires {#1}; ensures {#2};}}
+%% predicates
+% well-formed
+\newcommand{\OK}{~\predicate{OK}}
+\newcommand{\OKinC}{~\predicate{OK in}~C}
 
 
 \newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}

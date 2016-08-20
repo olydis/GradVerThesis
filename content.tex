@@ -26,7 +26,7 @@ Unfortunately, static verification has limitations and drawbacks:
     \item ...
 \end{itemize}
 These limitations not only affect programmers trying to statically verify their program.
-Most general purpose programming languages (C/C++, C#, Java, ...), usually driven by cost-benefit and usability considerations, haven't adopted this level of static analysis in the first place.
+Most general purpose programming languages (C/C++, C\#, Java, ...), usually driven by cost-benefit and usability considerations, haven't adopted this level of static analysis in the first place.
 
 %% grad verification
 The purpose of gradual verification is to weaken if not remove some of these limitations at the cost of turning some static checks into runtime checks, whenever inevitable.
@@ -101,13 +101,38 @@ more practical view? Intro? Background?
 or here?
 
 
-\chapter{A Static Language}
+\chapter{Gradualization of a static... / A Statically Verified Language}
+%% why start with static language
+As illustrated earlier %MAKE SURE!
+gradual verification can be seen as an extension of both static and dynamic verification.
+% Both can be seen as the endpoints of the continuum...?
+Yet, our approach of “gradualization” formalizes the introduction of the dynamic aspect into a fully static system.
+Thus, this %TODO: work, section, chapter?
+uses a statically verified language as starting point.
+Later %TODO: ref
+we will show how a programming language without static verification can be approached.
+
+%% more about our language
+We will now intrude a very simple Java-like language that uses Chalice/Eiffel/Spec\# %???
+ sub-syntax to express method contracts.
+% more about simplicity?
+
+%% structure of this chapter
+% TODO
 
 \section{Syntax}
+\label{sec:syntax}
+\input{text/SEC-syntax}
 
 \section{Static Semantics}
+\label{sec:static-semantics}
+\input{text/SEC-static-semantics}
 
-\section{Dynamics Semantics}
+\section{Well-Formedness}
+\label{sec:well-formedness}
+\input{text/SEC-well-formedness}
+
+\section{Dynamic Semantics}
 
 
 
