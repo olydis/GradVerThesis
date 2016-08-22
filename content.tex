@@ -79,26 +79,64 @@ What are the issues or problems?
 What is the proposed solution or approach?
 What can one expect in the rest of the thesis?
 
+“Static verification checks that properties are always true, but it can be difficult and tedious to select a goal and to annotate programs for input to a static checker.” (http://www.sciencedirect.com/science/article/pii/S1571066104002567)
 
-\chapter{Motivation}
+
+\section{Motivation}
 more practical view? Intro? Background?
 
 
-\chapter{Background and Motivation}
 
-\section{Categorization of existing programming languages}
+\chapter{Background}
 
-\section{Abstract Gradual Typing}
+\section{Categorization of existing stuff}
+\cite{nelson2004extended} ESC/Java
+Software development and maintenance are costly endeavors.
+The cost can be reduced if more software defects are
+detected earlier in the development cycle. This paper introduces
+the Extended Static Checker for Java (ESC/Java),
+an experimental compile-time program checker that finds
+common programming errors. The checker is powered by
+verification-condition generation and automatic theoremproving
+techniques. It provides programmers with a simple
+annotation language with which programmer design decisions
+can be expressed formally. ESC/Java examines the
+annotated software and warns of inconsistencies between the
+design decisions recorded in the annotations and the actual
+code, and also warns of potential runtime errors in the code.
+This paper gives an overview of the checker architecture and
+annotation language and describes our experience applying
+the checker to tens of thousands of lines of Java programs.
 
-\section{Implicit Dynamic Frames}
+\cite{jacobs2001logic} JML => static verification
 
-\subsection{Self-Framing}
+\cite{cheon2002runtime} JML => RAC
+
+\cite{the-spec-programming-system-an-overview} Spec\#
+
+\cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs} Spec\# extension (concurrent OO)
+
+\cite{embedded-contract-languages} Code Contracts! Combines runtime and static checking
 
 \section{Hoare Logic}
 ...for static semantics
 
-\section{Motivation}
-or here?
+\section{Related Work}
+\subsection{Abstract Gradual Typing}
+
+\subsection{Implicit Dynamic Frames}
+% separating conjuction (= Multiplicative conjunction ⊗, lollipop, ...), access is resource, cannot duplicate access, ...
+% TODO: explain Frame Problem
+% translation of separating conjuction to regular conjunction? would simplify later reasoning A LOT
+
+\subsubsection{Self-Framing}
+
+
+
+%STRUCTURE:
+% - intruduce static sample language (interesting for IDF, blabla, ..., but also general enough to transfer ideas)
+% - gradualize sample language without focus on impl. details (assume NPC/undec. sat, impl, ... to stay general), i.e. focus on principal correctness
+% - implement this very language and show effects of precision, ...
 
 
 \chapter{Gradualization of a static... / A Statically Verified Language}
@@ -120,34 +158,52 @@ We will now intrude a very simple Java-like language that uses Chalice/Eiffel/Sp
 %% structure of this chapter
 % TODO
 
-\section{Syntax}
+\section{A Statically Verified Language}
+\label{sec:a-statically-verified}
+\input{text/SEC-a-statically-verified}
+
+\subsection{Syntax}
 \label{sec:syntax}
 \input{text/SEC-syntax}
 
-\section{Static Semantics}
+\subsection{Static Semantics}
 \label{sec:static-semantics}
 \input{text/SEC-static-semantics}
 
-\section{Well-Formedness}
+\subsection{Well-Formedness}
 \label{sec:well-formedness}
 \input{text/SEC-well-formedness}
 
-\section{Dynamic Semantics}
+\subsection{Dynamic Semantics}
 
 
+\section{Deriving a Gradually Verified Language}
 
-\chapter{Deriving a Gradual Language}
+\subsection{Abstracting Static Semantics}
 
-\section{Abstracting Static Semantics}
-
-\section{Abstracting Dynamic Semantics}
+\subsection{Abstracting Dynamic Semantics}
 
 
 \chapter{Implementation}
+...of \ref{sec:a-statically-verified}
+
+\section{Prepare Hoare Rules}
+% make deterministic, split into 3 sections
+
+\subsection{Deterministic Functions}
+
+\section{Gradualize Hoare Rules}
+
+\subsection{Gradualize Functions}
+% IDF stuff will probably only show up here!
+
+\section{Enhancing an Unverified Language}
 
 
 \chapter{Evaluation/Analysis}
-
+> E:
+with gradual typestates the same problem happened: as soon as the potential for unknown annotations was accepted, there was a “baseline cost” just to maintain the necessary infrastructure.
+With simple gradual types, it’s almost nothing. With gradual effects, we’ve shown that it can boil down to very little (a thread-local variable with little overhead, see OOPSLA’15). 
 
 
 \chapter{Conclusion}
