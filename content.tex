@@ -118,16 +118,82 @@ the checker to tens of thousands of lines of Java programs.
 
 \cite{embedded-contract-languages} Code Contracts! Combines runtime and static checking
 
+\cite{crocker2004safe} “verified design-by-contract”
+
 \section{Hoare Logic}
 ...for static semantics
 
 \section{Related Work}
-\subsection{Abstract Gradual Typing}
+\subsection{Abstracting Gradual Typing}
+\cite{garcia2016abstracting}
+In this paper, we propose a new formal foundation for gradual
+typing, drawing on principles from abstract interpretation to
+give gradual types a semantics in terms of pre-existing static types.
+Abstracting Gradual Typing (AGT for short) yields a formal account
+of consistency—one of the cornerstones of the gradual typing
+approach—that subsumes existing notions of consistency, which
+were developed through intuition and ad hoc reasoning.
+
+\cite{garcia2015deriving}
+Abstracting Gradual Typing (AGT) is an approach to systematically
+deriving gradual counterparts to static type disciplines (Garcia
+et al. 2016). The approach consists of defining the semantics of
+gradual types by interpreting them as sets of static types, and then
+defining an optimal abstraction back to gradual types. These operations
+are used to lift the static discipline to the gradual setting. The
+runtime semantics of the gradual language then arises as reductions
+on gradual typing derivations.
+To demonstrate the flexibility of AGT, we gradualize
+λSEC (Zdancewic 2002), the prototypical security-typed language,
+with respect to only security labels rather than entire types, yielding
+a type system that ranges gradually from simply-typed to securelytyped.
+We establish noninterference for the gradual language,
+called λfSEC
+, using Zdancewic’s logical relation proof method.
+Whereas prior work presents gradual security cast languages,
+which require explicit security casts, this work yields the first gradual
+security source language, which requires no explicit casts.
+
+\cite{wolff2011gradual}
+prior to AGT
+the language extends the notion of gradual typing to account for typestate: gradual typestate
+checking seamlessly combines static and dynamic checking by automatically
+inserting runtime checks into programs.
 
 \subsection{Implicit Dynamic Frames}
+
+Race-free Assertion language! => static verification tool able to reason soundly about concurrent programs
+
 % separating conjuction (= Multiplicative conjunction ⊗, lollipop, ...), access is resource, cannot duplicate access, ...
 % TODO: explain Frame Problem
 % translation of separating conjuction to regular conjunction? would simplify later reasoning A LOT
+
+\cite{smans2009implicit}
+IDF
+
+
+\cite{leino2009verification}
+Chalice, a verication methodology based on implicit dynamic frames
+
+Chalice’s verification methodology centers around permissions and permission transfer. In particular, a memory location may be accessed by a thread only if that thread has permission to do so. Proper use of permissions allows Chalice to deduce upper bounds on the set of locations modifiable by a method and guarantees the absence of data races for concurrent programs. The lecture notes informally explain how Chalice works through various examples.
+
+\cite{summers2013formal}
+In this paper, we provide both an isorecursive and an equirecursive formal
+semantics for recursive definitions in the context of Chalice
+
+\cite{parkinson2011relationship}
+VERY IMPORTANT: chapter 2.2
+
+Finally, we show that we can encode the separation
+logic fragment of our logic into the implicit dynamic frames fragment, preserving
+semantics. For the connectives typically supported by tools, this shows that separation
+logic can be faithfully encoded in a first-order automatic verification tool (Chalice).
+
+Although IDF was partially inspired by separation logic, there are many differences
+between SL and IDF that make understanding their relationship difficult. SL does not
+allow expressions that refer to the heap, while IDF does. SL is defined on partial heaps,
+while IDF is defined using total heaps and permission masks. The semantics of IDF are only defined by its translation to first-order verification conditions, while SL has a direct
+Kripke semantics for its assertions.
 
 \subsubsection{Self-Framing}
 
