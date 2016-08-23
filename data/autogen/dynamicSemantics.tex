@@ -27,10 +27,10 @@
 \inferrule* [Right=ESAlloc]
 {
     {o} \not\in \dom({H}) \\
-    {\fields({C})} = {{Tfs}} \\
+    {\fields({C})} = {{\overline{\field{$T$}{$f$}}}} \\
     {\rho'} = {{\rho}[{x} \mapsto {{o}}]} \\
-    {A'} = {{A} * {@map(prod(T, f), prod(o, f), fun(cf', :, prod, T, f, =>, @pair, o, f, o, @snd(T, f, cf')), Tfs)}} \\
-    {H'} = {{H}[{o} \mapsto [\overline{f \mapsto \defaultValue{T}}]]}
+    {A'} = {{A} \cup {\overline{({o}, f_i)}}} \\
+    {H'} = {{H}[{o} \mapsto [\overline{f_i \mapsto \defaultValue{$T_i$}}]]}
 }
 {
     {({H}, {{({{\rho}, {A}}, {{\sAlloc {${x}$} {${C}$}} {\overline{s}}})} \cdot {S}})} \rightarrow {({H'}, {{({{\rho'}, {A'}}, {\overline{s}})} \cdot {S}})}
@@ -55,7 +55,7 @@
     \evalex {H} {\rho} {\ex{${z}$}} {v} \\
     {H(o)} = {{({C}, {\_})}} \\
     {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\contract {${phi}$} {${\_}$}}$} {${\overline{r}}$}}} \\
-    {\rho'} = {[{\eresult} \mapsto {\defaultValue{{T_r}}}, {\ethis} \mapsto {{o}}, {{w}} \mapsto {v}]} \\
+    {\rho'} = {[{\eresult} \mapsto {\defaultValue{${T_r}$}}, {\ethis} \mapsto {{o}}, {{w}} \mapsto {v}]} \\
     \evalphix {H} {\rho'} {A} {phi} \\
     {A'} = {\dynamicFP {H} {\rho'} {phi}}
 }
@@ -75,7 +75,7 @@
     \evalex {H} {\rho'} {\ex{${\eresult}$}} {v_r}
 }
 {
-    {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {\overline{s}}})} \cdot {S}}})} \rightarrow {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} * {A''}}}, {\overline{s}})} \cdot {S}})}
+    {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {\overline{s}}})} \cdot {S}}})} \rightarrow {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A''}}}, {\overline{s}})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -103,7 +103,7 @@
 \begin{mathpar}
 \inferrule* [Right=ESDeclare]
 {
-    {\rho'} = {{\rho}[{x} \mapsto {\defaultValue{{T}}}]}
+    {\rho'} = {{\rho}[{x} \mapsto {\defaultValue{${T}$}}]}
 }
 {
     {({H}, {{({{\rho}, {A}}, {{\sDeclare {${T}$} {${x}$}} {\overline{s}}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A}}, {\overline{s}})} \cdot {S}})}
@@ -127,7 +127,7 @@
     ~
 }
 {
-    {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sHold {${\phi}$} {${\overline{s'}}$}} {\overline{s}}})} \cdot {S}}})} \rightarrow {({H}, {{({{\rho'}, {{A} * {A'}}}, {\overline{s}})} \cdot {S}})}
+    {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sHold {${\phi}$} {${\overline{s'}}$}} {\overline{s}}})} \cdot {S}}})} \rightarrow {({H}, {{({{\rho'}, {{A} \cup {A'}}}, {\overline{s}})} \cdot {S}})}
 }
 \end{mathpar}
 

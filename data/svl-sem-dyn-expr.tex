@@ -1,0 +1,18 @@
+
+\begin{mathpar}
+    \inferrule* [Right=EEVar]
+    {~}
+    {\evale {x} {\rho(x)}}
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=EEValue]
+    {~}
+    {\evale {v} {v}}
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=EEAcc]
+    {\evale {e} {o}}
+    {\evale {e.f} {H(o)(f)}}
+\end{mathpar}

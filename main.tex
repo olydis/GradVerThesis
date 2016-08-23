@@ -115,10 +115,7 @@
 \newcommand{\fields}{\predicate{fields$_p$}}
 \newcommand{\mpre}{\predicate{mpre$_p$}}
 \newcommand{\mpost}{\predicate{mpost$_p$}}
-\newcommand{\mbody}{\predicate{mbody$_p$}}
-\newcommand{\mparam}{\predicate{mparam$_p$}}
-\newcommand{\mrettype}{\predicate{mrettype$_p$}}
-\newcommand{\mmethod}{\predicate{mmethod$_p$}}
+\newcommand{\mmethod}{\predicate{method$_p$}}
 % other
 \newcommand{\dom}{\predicate{dom}}
 \newcommand{\writesTo}{\predicate{writesTo}}
@@ -126,9 +123,17 @@
 \newcommand{\defaultValue}[1]{\predicate{defaultValue(#1)}}
 \newcommand{\defeq}{\overset{\predicate{def}}{=}}
 \newcommand{\accFor}[1]{\llbracket #1 \rrbracket}
-
-
+% footprint
+\newcommand\floor[1]{\lfloor#1\rfloor}
+\newcommand\ceil[1]{\lceil#1\rceil}
+\newcommand{\staticFP}[1]{\ensuremath{\floor{#1}}}
+\newcommand{\dynamicFP}[3]{\ensuremath{\floor{#3}_{#1,#2}}}
+% static sem
 \newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}
+% dyn sem
+\newcommand{\sstepGeneric}[5]{({#1}, {#2}) \rightarrow^{#3} ({#4}, {#5})}
+\newcommand{\sstep}[4]{\sstepGeneric {#1} {#2} {} {#3} {#4}}
+\newcommand{\ssteps}[4]{\sstepGeneric {#1} {#2} * {#3} {#4}}
 
 
 \begin{document}

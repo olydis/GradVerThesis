@@ -1,0 +1,11 @@
+\input{data/autogen/dynamicFormula}
+
+\begin{mathpar}
+    \inferrule* [Right=EASepOp]
+    {
+        A_1 = A \backslash A_2 \\
+        \evalphix H \rho {A_1} {\phi_1} \\
+        \evalphix H \rho {A_2} {\phi_2}
+    }
+    {\evalphi {\phiCons {$\phi_1$} {$\phi_2$}}}
+\end{mathpar}

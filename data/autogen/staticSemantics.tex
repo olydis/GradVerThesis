@@ -101,7 +101,7 @@
 \inferrule* [Right=HDeclare]
 {
     {x} \not\in \dom({\Gamma}) \\
-    \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{{T}}}$}}$}}$}{${\phi}$}} {\overline{s}} {\phi'}
+    \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {\overline{s}} {\phi'}
 }
 {
     \thoare {\Gamma} {\phi} {{\sDeclare {${T}$} {${x}$}} {\overline{s}}} {\phi'}
@@ -123,11 +123,11 @@
 \begin{mathpar}
 \inferrule* [Right=HSeq]
 {
-    \thoare {\Gamma} {\phi_p} {\overline{s_1}} {\phi_q} \\
+    \thoare {\Gamma} {\phi_p} {{s_1}} {\phi_q} \\
     \thoare {\Gamma} {\phi_q} {\overline{s_2}} {\phi_r}
 }
 {
-    \thoare {\Gamma} {\phi_p} {{\overline{s_1}}\ttt{;} {\overline{s_2}}} {\phi_r}
+    \thoare {\Gamma} {\phi_p} {{s_1} {\overline{s_2}}} {\phi_r}
 }
 \end{mathpar}
 
