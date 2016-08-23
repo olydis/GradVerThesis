@@ -76,6 +76,16 @@
 % well-formed
 \newcommand{\OK}{~\predicate{OK}}
 \newcommand{\OKinC}{~\predicate{OK in}~C}
+% framing
+\newcommand{\sfrme}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+\newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+% evaluation
+\newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
+\newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
+\newcommand{\evalphix}[4]{#1,#2,#3 \vDash #4}
+\newcommand{\evalphi}{\evalphix H \rho A}
+%other
+\newcommand{\writesTo}{\predicate{writesTo}}
 
 
 \newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}

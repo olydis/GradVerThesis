@@ -34,7 +34,7 @@ FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\
 \thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {\overline{s}} {\phi_2} \\
 \emptyset \sfrmphi {\phi_1} \\
 \emptyset \sfrmphi {\phi_2} \\
-\overline{\neg \textsf{writesTo}(s_i, x)}
+\overline{\neg \writesTo(s_i, x)}
 }
 {(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$\overline{s}$}) \OKinC}
 \end{mathpar}

@@ -90,6 +90,17 @@ more practical view? Intro? Background?
 \chapter{Background}
 
 \section{Categorization of existing stuff}
+\cite{arlt2014gradual}
+GraVy:
+metric of progress of the verification process
+and allows the verification engineer to focus on the remaining statements.
+Gradual verification is not a new static verification technique. It is an extension
+that can be applied to any existing static verification techniques to provide
+additional information to the verification engineer. Thus, issues, such as handling
+of loops or aliasing are not addressed in this paper. These are problems
+related to sound verification, but gradual verification is about how to make the
+use of such verification more traceable and quantifiable
+
 \cite{nelson2004extended} ESC/Java
 Software development and maintenance are costly endeavors.
 The cost can be reduced if more software defects are
@@ -97,7 +108,7 @@ detected earlier in the development cycle. This paper introduces
 the Extended Static Checker for Java (ESC/Java),
 an experimental compile-time program checker that finds
 common programming errors. The checker is powered by
-verification-condition generation and automatic theoremproving
+verification-condition generation and automatic theorem proving
 techniques. It provides programmers with a simple
 annotation language with which programmer design decisions
 can be expressed formally. ESC/Java examines the
@@ -128,11 +139,20 @@ then also: Eiffel by Bertrand Meyer
 
 \section{Related Work}
 \subsection{Abstracting Gradual Typing}
+\cite{siek2006gradual}
+Gradual Typing for Functional Languages
+
+apply their gradual typing approach to other areas
+
+\cite{siek2015refined}
+Refined criteria for gradual typing
+gradual guarantee
+
 \cite{garcia2016abstracting}
 AGT
 In this paper, we propose a new formal foundation for gradual
 typing, drawing on principles from abstract interpretation to
-give gradual types a semantics in terms of pre-existing static types.
+give gradual types a semantics in terms of preexisting static types.
 Abstracting Gradual Typing (AGT for short) yields a formal account
 of consistency—one of the cornerstones of the gradual typing
 approach—that subsumes existing notions of consistency, which
@@ -148,12 +168,10 @@ are used to lift the static discipline to the gradual setting. The
 runtime semantics of the gradual language then arises as reductions
 on gradual typing derivations.
 To demonstrate the flexibility of AGT, we gradualize
-λSEC (Zdancewic 2002), the prototypical security-typed language,
+a prototypical security-typed language
 with respect to only security labels rather than entire types, yielding
-a type system that ranges gradually from simply-typed to securelytyped.
-We establish noninterference for the gradual language,
-called λfSEC
-, using Zdancewic’s logical relation proof method.
+a type system that ranges gradually from simply-typed to securely typed.
+We establish noninterference for our gradual language using Zdancewic’s logical relation proof method.
 Whereas prior work presents gradual security cast languages,
 which require explicit security casts, this work yields the first gradual
 security source language, which requires no explicit casts.
@@ -174,6 +192,9 @@ inserting runtime checks into programs.
  typing. We appeal to abstract interpretation to develop and validate
  the concepts of gradual effect checking.
 
+\cite{toro2015customizable}
+Grad Effects in Scala, benchmarks on runtime impact!
+
 \subsection{Implicit Dynamic Frames}
 
 Race-free Assertion language! => static verification tool able to reason soundly about concurrent programs
@@ -187,9 +208,11 @@ IDF
 
 
 \cite{leino2009verification}
-Chalice, a verication methodology based on implicit dynamic frames
+Chalice, a verification methodology based on implicit dynamic frames
 
 Chalice’s verification methodology centers around permissions and permission transfer. In particular, a memory location may be accessed by a thread only if that thread has permission to do so. Proper use of permissions allows Chalice to deduce upper bounds on the set of locations modifiable by a method and guarantees the absence of data races for concurrent programs. The lecture notes informally explain how Chalice works through various examples.
+
+also: Viper (Verification Infrastructure for Permission-based Reasoning; is a suite of tools developed at ETH Zurich, providing an architecture on which new verification tools and prototypes can be developed simply and quickly.) has Chalice as front-end
 
 \cite{summers2013formal}
 In this paper, we provide both an isorecursive and an equirecursive formal
@@ -219,7 +242,7 @@ Kripke semantics for its assertions.
 % - implement this very language and show effects of precision, ...
 
 
-\chapter{Gradualization of a static... / A Statically Verified Language}
+\chapter{Gradualization of a Statically Verified Language}
 %% why start with static language
 As illustrated earlier %MAKE SURE!
 gradual verification can be seen as an extension of both static and dynamic verification.
