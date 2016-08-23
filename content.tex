@@ -265,6 +265,8 @@ Kripke semantics for its assertions.
 
 
 \chapter{Gradualization of a Statically Verified Language}
+% TODO: at some point define what statically verified (verification as part of static semantics, no compilation without verification success) vs dynamically verified (no static measures, only (implicit) runtime cecks) means!
+
 %% why start with static language
 As illustrated earlier %MAKE SURE!
 gradual verification can be seen as an extension of both static and dynamic verification.
@@ -275,21 +277,19 @@ uses a statically verified language as starting point.
 Later %TODO: ref
 we will show how a programming language without static verification can be approached.
 
-%% more about our language
-We will now intrude a very simple Java-like language that uses Chalice/Eiffel/Spec\# %???
- sub-syntax to express method contracts.
-% more about simplicity?
-
 %% structure of this chapter
 % TODO
 
-\section{A Statically Verified Language}
+\section{A Statically Verified Language (\svl) / A Static Verification System?}
 \label{sec:a-statically-verified}
 \input{text/SEC-a-statically-verified}
 
 \subsection{Syntax}
 \label{sec:syntax}
 \input{text/SEC-syntax}
+
+\subsection{Formulas}
+It makes sense to 
 
 \subsection{Static Semantics}
 \label{sec:static-semantics}
@@ -300,6 +300,8 @@ We will now intrude a very simple Java-like language that uses Chalice/Eiffel/Sp
 \input{text/SEC-well-formedness}
 
 \subsection{Dynamic Semantics}
+\label{ssec:dynamic-semantics}
+\input{text/SSEC-dynamic-semantics}
 
 
 \section{Deriving a Gradually Verified Language}

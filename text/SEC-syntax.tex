@@ -1,38 +1,9 @@
 % TODO
 
-\newcommand{\tempStmtA}{\sFieldAssign {$x$} {$f$} {$y$} 
-                    ~|~ \sAssign {$x$} {$e$}
-                    ~|~ \sAlloc {$x$} {$C$} 
-                    ~|~ \sCall {$x$} {$y$} {$m$} {$z$}}
-\newcommand{\tempStmtB}{~~~ ~|~ \sReturn {$x$}  
-                            ~|~ \sAssert {$\phi$} 
-                            ~|~ \sRelease {$\phi$} 
-                            ~|~ \sDeclare {$T$} {$x$}}
-\newcommand{\tempFrm}{  \phiTrue 
-                    ~|~ \phiEq {$e$} {$e$} 
-                    ~|~ \phiNeq {$e$} {$e$}
-                    ~|~ \phiAcc {$e$} {$f$}
-                    ~|~ \phiCons {$\phi$} {$\phi$}}
-\newcommand{\tempExpr}{ \ev{$v$}
-                    ~|~ \ex{$x$}
-                    ~|~ \edot{$e$}{$f$}}
-
-\begin{align*}
-	program  & \in \setProgram  &  & ::= \ttt{$\overline{cls}$~$\overline{s}$}                         \\
-	cls      & \in \setClass    &  & ::= \class {$C$} {$\overline{field}$} {$\overline{method}$}       \\
-	field    & \in \setField    &  & ::= \ttt{$T$~$f$;}                                                \\
-	method   & \in \setMethod   &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$contract$} {$\overline{s}$} \\
-	contract & \in \setContract &  & ::= \ttt{requires $\phi$;~ensures $\phi$;}                        \\
-	T        & \in \setType     &  & ::= \Tint ~|~ C                                                   \\
-	s        & \in \setStmt     &  & ::= \tempStmtA                                                    \\
-	         &                  &  & \tempStmtB                                                        \\
-	\phi     & \in \setFormula  &  & ::= \tempFrm                                                      \\
-	e        & \in \setExpr     &  & ::= \tempExpr                                                     \\
-	x, y, z  & \in \setVar      &  & ::= \ethis ~|~ \eresult ~|~ name                                  \\
-	v        & \in \setVal      &  & ::= o ~|~ n ~|~ \enull                                            \\
-	n        & \in \mathbb{Z}   &  &  \\
-	C, f, m  &                  &  & ::= name
-\end{align*}
+\begin{figure}[h]
+    \input{data/svl-syntax}
+    \caption{Syntax}
+\end{figure}
 
 Programs consist of classes and a main method, represented directly as the list of its instructions.
 

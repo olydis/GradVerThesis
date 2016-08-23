@@ -13,23 +13,30 @@
         ($(current page.north west) + ( 1cm,-1cm)$);
         
       % Logo einbinden.
-      \node[anchor=north west] (logo) at ($(current page.north west) + (1.75cm,-1.5cm)$)
+      \node[anchor=north west] (logo1) at ($(current page.north west) + (1.75cm,-1.5cm)$)
       {
-        \includegraphics[width=4cm]{KITLogo}
-      };
-      
-      % Institut / Lehrstuhl.
-      \node[anchor=east] at ($(current page.east |- logo.east) + (-1.75cm,0cm)$)
-      {    
-        \begin{minipage}{5.2cm}
-          \begin{flushleft}
-            \footnotesize{}Institute for Program Structures
-and Data Organization (IPD) \\
-          \end{flushleft}
+        \begin{minipage}{6cm}
+            \includegraphics[width=4cm]{logos/KIT}
+            \begin{flushleft}
+                \footnotesize{}
+                Institute for Program Structures
+                and Data Organization (IPD) \\
+            \end{flushleft}
         \end{minipage}
       };
       
-      \node (title) at ($(current page.center |- logo.south) + (0cm, -4cm)$)
+      % Institut / Lehrstuhl.
+      \node[anchor=north east] at ($(current page.north east) + (-1.75cm,-1.5cm)$)
+      {    
+          \begin{minipage}{5cm}
+              %\includegraphics[width=4cm]{logos/cmu-stacked}
+              \includegraphics[width=5cm]{logos/cmu-flat}
+              ~\\
+              \includegraphics[width=5cm]{logos/ISR}
+          \end{minipage}
+      };
+      
+      \node (title) at ($(current page.center) + (0cm, 6cm)$)
       {
         % Korrekter Zeilenabstand etc. durch Minipage.
         \begin{minipage}{12cm}

@@ -1,10 +1,12 @@
 \documentclass[11pt,a4paper]{scrbook}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage[english]{babel}
 \usepackage{lmodern}
 \usepackage{tikz}
 \usepackage[margin=1.2in]{geometry}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{hyperref}
 \usepackage{mathpartir}
 \usepackage{tikz}
@@ -18,6 +20,13 @@
 \newunicodechar{≠}{=\llap{/}}
 \newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
 
+% THEOREMS
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+
+% BIB
 \bibliographystyle{plain}
 
 % COMMANDS
@@ -26,10 +35,17 @@
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 \DeclareMathOperator*{\argmax}{\arg\!\max}
 
-% font aliases
+%% ALIASES
+% fonts
+\newcommand{\std}{\textrm}
 \newcommand{\ttt}{\texttt}
 \newcommand{\tset}{\textsc}
 \newcommand{\predicate}{\textsf}
+% names
+\newcommand{\svl}{\std{SVL}}
+\newcommand{\dvl}{\std{DVL}}
+\newcommand{\gvl}{\std{GVL}}
+
 % sets
 \newcommand{\setProgram}{\tset{Program}}
 \newcommand{\setClass}{\tset{Class}}
@@ -48,7 +64,7 @@
 \newcommand{\edot}[2]{\ttt{#1.#2}}
 \newcommand{\ethis}{\ex{this}}
 \newcommand{\eresult}{\ex{result}}
-\newcommand{\enull}{\ex{result}}
+\newcommand{\enull}{\ttt{null}}
 % formulas
 \newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}
 \newcommand{\phiFalse}[0]{\ttt{false}}
@@ -58,13 +74,14 @@
 \newcommand{\phiAcc}[2]{\ttt{acc(#1.#2)}}
 % statements
 \newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3;}}
-\newcommand{\sAssign}[2]{\ttt{#1 ≔ #2;}}
+\newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2;}}
 \newcommand{\sAlloc}[2]{\ttt{#1 ≔ new #2;}}
 \newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4);}}
 \newcommand{\sReturn}[1]{\ttt{return #1;}}
 \newcommand{\sAssert}[1]{\ttt{assert #1;}}
 \newcommand{\sRelease}[1]{\ttt{release #1;}}
 \newcommand{\sDeclare}[2]{\ttt{#1~#2;}}
+\newcommand{\sHold}[2]{\ttt{hold #1~\{ #2 \};}}
 % type
 \newcommand{\type}[1]{\ttt{#1}}
 \newcommand{\Tint}{\type{int}}
@@ -77,7 +94,7 @@
 \newcommand{\OK}{~\predicate{OK}}
 \newcommand{\OKinC}{~\predicate{OK in}~C}
 % framing
-\newcommand{\sfrme}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+\newcommand{\sfrme}{\ensuremath{\vdash_\texttt{frm}}\,}
 \newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
 % evaluation
 \newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
@@ -86,6 +103,7 @@
 \newcommand{\evalphi}{\evalphix H \rho A}
 %other
 \newcommand{\writesTo}{\predicate{writesTo}}
+\newcommand{\defeq}{\overset{\predicate{def}}{=}}
 
 
 \newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}
