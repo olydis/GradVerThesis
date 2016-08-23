@@ -116,6 +116,9 @@ the checker to tens of thousands of lines of Java programs.
 
 \cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs} Spec\# extension (concurrent OO)
 
+\cite{meyer2002design} Design-by-Contract
+then also: Eiffel by Bertrand Meyer 
+
 \cite{embedded-contract-languages} Code Contracts! Combines runtime and static checking
 
 \cite{crocker2004safe} “verified design-by-contract”
@@ -126,6 +129,7 @@ the checker to tens of thousands of lines of Java programs.
 \section{Related Work}
 \subsection{Abstracting Gradual Typing}
 \cite{garcia2016abstracting}
+AGT
 In this paper, we propose a new formal foundation for gradual
 typing, drawing on principles from abstract interpretation to
 give gradual types a semantics in terms of pre-existing static types.
@@ -154,11 +158,21 @@ Whereas prior work presents gradual security cast languages,
 which require explicit security casts, this work yields the first gradual
 security source language, which requires no explicit casts.
 
-\cite{wolff2011gradual}
 prior to AGT
+\cite{wolff2011gradual}
 the language extends the notion of gradual typing to account for typestate: gradual typestate
 checking seamlessly combines static and dynamic checking by automatically
 inserting runtime checks into programs.
+
+\cite{banados2014theory}
+ develop a theory of gradual effect checking, which
+ makes it possible to incrementally annotate and statically check
+ effects, while still rejecting statically inconsistent programs. We
+ extend the generic type-and-effect framework of Marino and Millstein
+ with a notion of unknown effects, which turns out to be significantly
+ more subtle than unknown types in traditional gradual
+ typing. We appeal to abstract interpretation to develop and validate
+ the concepts of gradual effect checking.
 
 \subsection{Implicit Dynamic Frames}
 
@@ -201,7 +215,7 @@ Kripke semantics for its assertions.
 
 %STRUCTURE:
 % - intruduce static sample language (interesting for IDF, blabla, ..., but also general enough to transfer ideas)
-% - gradualize sample language without focus on impl. details (assume NPC/undec. sat, impl, ... to stay general), i.e. focus on principal correctness
+% - gradualize sample language without focus on impl. details (assume NPC/undec. sat, impl, ... to stay general), i.e. focus on principal correctness        (undecidable in general => SMT solvers)
 % - implement this very language and show effects of precision, ...
 
 
