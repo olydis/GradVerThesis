@@ -134,8 +134,26 @@ then also: Eiffel by Bertrand Meyer
 
 \cite{crocker2004safe} “verified design-by-contract”
 
+\cite{ChristakisMuellerWuestholz16}
+= static verification plus directed dynamic verification
+In this paper, we present a technique to complement partial
+verification results by automatic test case generation. In
+contrast to existing work, our technique supports the common
+case that the verification results are based on unsound
+assumptions. We annotate programs to reflect which executions
+have been verified, and under which assumptions.
+These annotations are then used to guide dynamic symbolic
+execution toward unverified program executions. Our main
+technical contribution is a code instrumentation that causes
+dynamic symbolic execution to abort tests that lead to verified
+executions, to prune parts of the search space, and to
+prioritize tests that cover more properties that are not fully
+verified.
+
 \section{Hoare Logic}
 ...for static semantics
+
+\cite{hoare1969axiomatic}
 
 \section{Related Work}
 \subsection{Abstracting Gradual Typing}
@@ -146,7 +164,11 @@ apply their gradual typing approach to other areas
 
 \cite{siek2015refined}
 Refined criteria for gradual typing
-gradual guarantee
+gradual guarantee:
+     The gradual guarantee says that if a gradually typed program is
+     well typed, then removing type annotations always produces a program that is still well typed.
+     Further, if a gradually typed program evaluates to a value, then removing type annotations
+     always produces a program that evaluates to an equivalent value.
 
 \cite{garcia2016abstracting}
 AGT
@@ -282,7 +304,12 @@ We will now intrude a very simple Java-like language that uses Chalice/Eiffel/Sp
 
 \section{Deriving a Gradually Verified Language}
 
+\subsection{Gradual Formulas}
+% syntax, concretization
+% lifting predicates, lifting functions
+
 \subsection{Abstracting Static Semantics}
+% non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
 
 \subsection{Abstracting Dynamic Semantics}
 
@@ -307,6 +334,8 @@ We will now intrude a very simple Java-like language that uses Chalice/Eiffel/Sp
 > E:
 with gradual typestates the same problem happened: as soon as the potential for unknown annotations was accepted, there was a “baseline cost” just to maintain the necessary infrastructure.
 With simple gradual types, it’s almost nothing. With gradual effects, we’ve shown that it can boil down to very little (a thread-local variable with little overhead, see OOPSLA’15). 
+
+% relationship LC and verification! which rules are derived by which, correspondence table
 
 
 \chapter{Conclusion}

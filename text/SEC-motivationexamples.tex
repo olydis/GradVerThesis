@@ -2,17 +2,23 @@
 \subsection{As extension to unverified setting}
 “Make dynamic setting more static”
 
+\definecolor{cogreen}{RGB}{0,80,0}
 \lstset{
+    language=Java,
     basicstyle=\ttfamily,
     commentstyle=\ttfamily,
     frame=single,
     framesep=5pt,
-    mathescape=true
-    %escapeinside={(*}{*)}
+    mathescape=true,
+    %escapeinside={(*}{*)},
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{darkgray}\ttfamily,
+    commentstyle=\color{cogreen}\ttfamily,
+    morekeywords={requires, ensures}
     }
 
 Motivating example:
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
     return c.driver.age >= 18;
@@ -20,7 +26,7 @@ boolean hasLegalDriver(Car c)
 \end{lstlisting}
 
 Motivating example with potential leak:
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
     allocateSomething();
@@ -31,7 +37,7 @@ boolean hasLegalDriver(Car c)
 \end{lstlisting}
 
 Motivating example with argument validation:
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
     if (!(c != null))
@@ -44,7 +50,7 @@ boolean hasLegalDriver(Car c)
 \end{lstlisting}
 
 Motivating example with declarative approach (JML syntax):
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 //@ requires c != null && c.driver != null;
 boolean hasLegalDriver(Car c)
 {
@@ -77,17 +83,17 @@ There are two basic ways to turn this annotation into a guarantee:
 \subsection{As extension to fully verified setting}
 “Make static setting more dynamic”
 
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 int collatzIterations(int iter, int start)
-    requires 0 < start
-    ensures  0 < result
+    requires 0 < start;
+    ensures  0 < result;
 {
     // ...
 }
 
 int myRandom(int seed)
-    requires 0 < seed   && seed   < 10000
-    ensures  0 < result && result < 4     // not provable
+    requires 0 < seed   && seed   < 10000;
+    ensures  0 < result && result < 4;     // not provable
 {
     int result = collatzIterations(300, seed);
     // we know: result $\in$ { 1, 2, 4 }
@@ -98,17 +104,17 @@ int myRandom(int seed)
 \end{lstlisting}
 
 Non-solution:
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 int collatzIterations(int iter, int start)
-    requires 0 < start
-    ensures  0 < result
+    requires 0 < start;
+    ensures  0 < result;
 {
     // ...
 }
 
 int myRandom(int seed)
-    requires 0 < seed   && seed   < 10000
-    ensures  0 < result && result < 4
+    requires 0 < seed   && seed   < 10000;
+    ensures  0 < result && result < 4;
 {
     int result = collatzIterations(300, seed);
     // we know: result $\in$ { 1, 2, 4 }
@@ -128,17 +134,17 @@ This solution is not satisfying,
 - intuitively the problem is with the method's postcondition being too weak, i.e. we solved the problem at the wrong place!
 
 
-\begin{lstlisting}[language=Java]
+\begin{lstlisting}
 int collatzIterations(int iter, int start)
-    requires 0 < start
-    ensures  0 < result && ?
+    requires 0 < start;
+    ensures  0 < result && ?;
 {
     // ...
 }
 
 int myRandom(int seed)
-    requires 0 < seed   && seed   < 10000
-    ensures  0 < result && result < 4
+    requires 0 < seed   && seed   < 10000;
+    ensures  0 < result && result < 4;
 {
     int result = collatzIterations(300, seed);
     // we know: result $\in$ { 1, 2, 4 }
