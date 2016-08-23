@@ -1,11 +1,12 @@
-\newcommand{\tempStmtA}{\sFieldAssign {$x$} {$f$} {$y$} 
+\newcommand{\tempStmtA}{\sDeclare {$T$} {$x$}
+                    ~|~ \sFieldAssign {$x$} {$f$} {$y$} 
                     ~|~ \sVarAssign {$x$} {$e$}
                     ~|~ \sAlloc {$x$} {$C$} 
                     ~|~ \sCall {$x$} {$y$} {$m$} {$z$}}
 \newcommand{\tempStmtB}{~~~ ~|~ \sReturn {$x$}  
                             ~|~ \sAssert {$\phi$} 
                             ~|~ \sRelease {$\phi$} 
-                            ~|~ \sDeclare {$T$} {$x$}}
+                            ~|~ \sHold {$\phi$} {$\overline{s}$}}
 \newcommand{\tempFrm}{  \phiTrue 
                     ~|~ \phiEq {$e$} {$e$} 
                     ~|~ \phiNeq {$e$} {$e$}
@@ -18,7 +19,7 @@
 \begin{align*}
 	program  & \in \setProgram  &  & ::= \ttt{$\overline{cls}$~$\overline{s}$}                         \\
 	cls      & \in \setClass    &  & ::= \class {$C$} {$\overline{field}$} {$\overline{method}$}       \\
-	field    & \in \setField    &  & ::= \ttt{$T$~$f$;}                                                \\
+	field    & \in \setField    &  & ::= \field {$T$} {$f$}                                            \\
 	method   & \in \setMethod   &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$contract$} {$\overline{s}$} \\
 	contract & \in \setContract &  & ::= \ttt{requires $\phi$;~ensures $\phi$;}                        \\
 	T        & \in \setType     &  & ::= \Tint ~|~ C                                                   \\

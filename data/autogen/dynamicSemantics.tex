@@ -30,7 +30,7 @@
     {\fields({C})} = {{Tfs}} \\
     {\rho'} = {{\rho}[{x} \mapsto {{o}}]} \\
     {A'} = {{A} * {@map(prod(T, f), prod(o, f), fun(cf', :, prod, T, f, =>, @pair, o, f, o, @snd(T, f, cf')), Tfs)}} \\
-    {H'} = {{H}[{o} \mapsto [\overline{f \mapsto \texttt{defaultValue}(T)}]]}
+    {H'} = {{H}[{o} \mapsto [\overline{f \mapsto \defaultValue{T}}]]}
 }
 {
     {({H}, {{({{\rho}, {A}}, {{\sAlloc {${x}$} {${C}$}} {\overline{s}}})} \cdot {S}})} \rightarrow {({H'}, {{({{\rho'}, {A'}}, {\overline{s}})} \cdot {S}})}
@@ -41,7 +41,7 @@
 \inferrule* [Right=ESReturn]
 {
     \evalex {H} {\rho} {\ex{${x}$}} {v_x} \\
-    {\rho'} = {{\rho}[{\xresult} \mapsto {v_x}]}
+    {\rho'} = {{\rho}[{\eresult} \mapsto {v_x}]}
 }
 {
     {({H}, {{({{\rho}, {A}}, {{\sReturn {${x}$}} {\overline{s}}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A}}, {\overline{s}})} \cdot {S}})}
@@ -54,8 +54,8 @@
     \evalex {H} {\rho} {\ex{${y}$}} {{o}} \\
     \evalex {H} {\rho} {\ex{${z}$}} {v} \\
     {H(o)} = {{({C}, {\_})}} \\
-    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\requires {phi};~\ensures {\_};}$} {${\overline{r}}$}}} \\
-    {\rho'} = {[{\xresult} \mapsto {\texttt{defaultValue}({T_r})}, {\xthis} \mapsto {{o}}, {{w}} \mapsto {v}]} \\
+    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\contract {${phi}$} {${\_}$}}$} {${\overline{r}}$}}} \\
+    {\rho'} = {[{\eresult} \mapsto {\defaultValue{{T_r}}}, {\ethis} \mapsto {{o}}, {{w}} \mapsto {v}]} \\
     \evalphix {H} {\rho'} {A} {phi} \\
     {A'} = {\dynamicFP {H} {\rho'} {phi}}
 }
@@ -72,7 +72,7 @@
     {\mpost({C}, {m})} = {{\phi}} \\
     \evalphix {H} {\rho'} {A'} {\phi} \\
     {A''} = {\dynamicFP {H} {\rho'} {\phi}} \\
-    \evalex {H} {\rho'} {\ex{${\xresult}$}} {v_r}
+    \evalex {H} {\rho'} {\ex{${\eresult}$}} {v_r}
 }
 {
     {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {\overline{s}}})} \cdot {S}}})} \rightarrow {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} * {A''}}}, {\overline{s}})} \cdot {S}})}
@@ -103,7 +103,7 @@
 \begin{mathpar}
 \inferrule* [Right=ESDeclare]
 {
-    {\rho'} = {{\rho}[{x} \mapsto {\texttt{defaultValue}({T})}]}
+    {\rho'} = {{\rho}[{x} \mapsto {\defaultValue{{T}}}]}
 }
 {
     {({H}, {{({{\rho}, {A}}, {{\sDeclare {${T}$} {${x}$}} {\overline{s}}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A}}, {\overline{s}})} \cdot {S}})}

@@ -1,8 +1,16 @@
+The static semantics of \svl consist of typing rules and a Hoare calculus making use of those typing rules.
+All the rules are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field in the following typing rules.
 
 \begin{figure}[h]
     \input{data/svl-sem-stat-typing}
-    \caption{Static Typing Rules}
+    \caption{\svl: Static Typing of Expressions}
 \end{figure}
+
+\begin{figure}[h!]
+    \input{data/svl-sem-stat-hoare}
+    \caption{\svl: Hoare Calculus} 
+\end{figure}
+
 
 %% FRAMING
 %\input{data/autogen/staticExpression}

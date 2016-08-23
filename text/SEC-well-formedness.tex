@@ -32,8 +32,7 @@ For the main method to be well-formed, it must satisfy our Hoare predicate, give
 FV(\phi_1) \subseteq \{ x, \ethis \} \\
 FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\
 \thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {\overline{s}} {\phi_2} \\
-\emptyset \sfrmphi {\phi_1} \\
-\emptyset \sfrmphi {\phi_2} \\
+\phi_1, \phi_2 \in \setFormulaB \\
 \overline{\neg \writesTo(s_i, x)}
 }
 {(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$\overline{s}$}) \OKinC}

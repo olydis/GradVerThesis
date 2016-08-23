@@ -17,6 +17,8 @@
 \usepackage{stmaryrd}
 \usepackage{listings}
 \usepackage{newunicodechar}
+\usepackage{xspace}
+\usepackage[labelsep=period, labelfont=bf]{caption}
 \newunicodechar{≠}{=\llap{/}}
 \newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
 
@@ -35,6 +37,10 @@
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 \DeclareMathOperator*{\argmax}{\arg\!\max}
 
+%% decoration
+\newcommand{\pa}[1]{${#1}^{\circ}$}
+\newcommand{\pb}[1]{${#1}^{\checkmark}$}
+
 %% ALIASES
 % fonts
 \newcommand{\std}{\textrm}
@@ -42,22 +48,24 @@
 \newcommand{\tset}{\textsc}
 \newcommand{\predicate}{\textsf}
 % names
-\newcommand{\svl}{\std{SVL}}
-\newcommand{\dvl}{\std{DVL}}
-\newcommand{\gvl}{\std{GVL}}
+\newcommand{\svl}{\std{SVL}\xspace}
+\newcommand{\dvl}{\std{DVL}\xspace}
+\newcommand{\gvl}{\std{GVL}\xspace}
 
 % sets
-\newcommand{\setProgram}{\tset{Program}}
-\newcommand{\setClass}{\tset{Class}}
-\newcommand{\setField}{\tset{Field}}
-\newcommand{\setMethod}{\tset{Method}}
-\newcommand{\setContract}{\tset{Contract}}
-\newcommand{\setType}{\tset{Type}}
-\newcommand{\setStmt}{\tset{Stmt}}
-\newcommand{\setFormula}{\tset{Formula}}
-\newcommand{\setExpr}{\tset{Expr}}
-\newcommand{\setVal}{\tset{Val}}
-\newcommand{\setVar}{\tset{Var}}
+\newcommand{\setProgram}{\tset{Program}\xspace}
+\newcommand{\setClass}{\tset{Class}\xspace}
+\newcommand{\setField}{\tset{Field}\xspace}
+\newcommand{\setMethod}{\tset{Method}\xspace}
+\newcommand{\setContract}{\tset{Contract}\xspace}
+\newcommand{\setType}{\tset{Type}\xspace}
+\newcommand{\setStmt}{\tset{Stmt}\xspace}
+\newcommand{\setFormula}{\tset{Formula}\xspace}
+\newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
+\newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
+\newcommand{\setExpr}{\tset{Expr}\xspace}
+\newcommand{\setVal}{\tset{Val}\xspace}
+\newcommand{\setVar}{\tset{Var}\xspace}
 % expressions
 \newcommand{\ev}[1]{\ttt{#1}}
 \newcommand{\ex}[1]{\ttt{#1}}
@@ -89,6 +97,7 @@
 \newcommand{\class}[3]{\ttt{class {#1}~\{ {#2} {#3} \}}}
 \newcommand{\method}[6]{\ttt{{#1}~{#2}({#3}~{#4})~{#5}~\{ {#6} \}}}
 \newcommand{\contract}[2]{\ttt{requires {#1}; ensures {#2};}}
+\newcommand{\field}[2]{\ttt{{#1}~{#2};}}
 %% predicates
 % well-formed
 \newcommand{\OK}{~\predicate{OK}}
@@ -101,9 +110,22 @@
 \newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
 \newcommand{\evalphix}[4]{#1,#2,#3 \vDash #4}
 \newcommand{\evalphi}{\evalphix H \rho A}
-%other
+% extraction
+\newcommand{\fieldType}{\predicate{fieldType$_p$}}
+\newcommand{\fields}{\predicate{fields$_p$}}
+\newcommand{\mpre}{\predicate{mpre$_p$}}
+\newcommand{\mpost}{\predicate{mpost$_p$}}
+\newcommand{\mbody}{\predicate{mbody$_p$}}
+\newcommand{\mparam}{\predicate{mparam$_p$}}
+\newcommand{\mrettype}{\predicate{mrettype$_p$}}
+\newcommand{\mmethod}{\predicate{mmethod$_p$}}
+% other
+\newcommand{\dom}{\predicate{dom}}
 \newcommand{\writesTo}{\predicate{writesTo}}
+\newcommand{\sType}[3]{{#1} \vdash {#2} : {#3}}
+\newcommand{\defaultValue}[1]{\predicate{defaultValue(#1)}}
 \newcommand{\defeq}{\overset{\predicate{def}}{=}}
+\newcommand{\accFor}[1]{\llbracket #1 \rrbracket}
 
 
 \newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}
