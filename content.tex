@@ -311,26 +311,46 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 \label{ssec:dynamic-semantics}
 \input{text/SSEC-dynamic-semantics}
 
+\subsection{Soundness}
+
 
 \section{Deriving a Gradually Verified Language}
+% TODO: overall approach
+% reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)
 
 \subsection{Gradual Formulas}
 % syntax, concretization
-% lifting predicates, lifting functions
+% lifting predicates, lifting functions, lifting function composition (sound but not nec. optimal), ...
 
 \subsection{Abstracting Static Semantics}
 % non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
 
-\subsection{Abstracting Dynamic Semantics}
+\begin{align*}
+\funHoare_s : \setFormulaB \rightharpoonup \setFormulaB\\
+\funHoare_s = \funHoareC_s \circ \funHoareB_s \circ \funHoareA_s\\
+\funHoareA_s : \setFormulaB \rightharpoonup \setFormulaB\\
+\funHoareA_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\funHoareApred_s$} \\
+\funHoareB_s : \setFormulaB \rightharpoonup \setFormulaB\\
+\funHoareB_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\pb{\phi} \implies \funHoareBimp_s$} \\
+\funHoareC_s : \setFormulaB \rightarrow \setFormulaB\\
+\end{align*}
 
+% example of determinified Hoare rule
+
+% lifting... challenges
+
+\subsection{Abstracting Dynamic Semantics}
+% thing with HSec
+% Tapp usw...
 
 \chapter{Implementation}
 ...of \ref{sec:a-statically-verified}
 
 \section{Prepare Hoare Rules}
-% make deterministic, split into 3 sections
 
 \subsection{Deterministic Functions}
+
+
 
 \section{Gradualize Hoare Rules}
 
