@@ -325,13 +325,23 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 \subsection{Abstracting Static Semantics}
 % non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
 
+% wlp not an option since not well-defined for some rules:
+\begin{displaymath}
+\predicate{wlp}(\text{“\sVarAssign{x}{a.f}”}, \phiAcc{b}{f}) =
+\begin{cases}
+\phiCons {\phiAcc{b}{f}} {\phiAcc{a}{f}}\\
+\phiCons {\phiAcc{b}{f}} {\phiEq{a}{b}}
+\end{cases}
+\end{displaymath}
+
 \begin{align*}
 \funHoare_s : \setFormulaB \rightharpoonup \setFormulaB\\
 \funHoare_s = \funHoareC_s \circ \funHoareB_s \circ \funHoareA_s\\
+\funHoare_s(\pb{\phi}) = \funHoareC_s(\pb{\phi}) \quad\text{ if $\funHoareApred(s) \wedge \pb{\phi} \implies \funHoareBimp(s)$} \\
 \funHoareA_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoareA_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\funHoareApred_s$} \\
+\funHoareA_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\funHoareApred(s)$} \\
 \funHoareB_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoareB_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\pb{\phi} \implies \funHoareBimp_s$} \\
+\funHoareB_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\pb{\phi} \implies \funHoareBimp(s)$} \\
 \funHoareC_s : \setFormulaB \rightarrow \setFormulaB\\
 \end{align*}
 
@@ -349,8 +359,12 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 \section{Prepare Hoare Rules}
 
 \subsection{Deterministic Functions}
+\begin{displaymath}
+\funHoareApred(s) =
+\begin{cases}
 
-
+\end{cases}
+\end{displaymath}
 
 \section{Gradualize Hoare Rules}
 

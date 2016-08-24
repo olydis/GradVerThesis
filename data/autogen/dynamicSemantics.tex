@@ -54,10 +54,10 @@
     \evalex {H} {\rho} {\ex{${y}$}} {{o}} \\
     \evalex {H} {\rho} {\ex{${z}$}} {v} \\
     {H(o)} = {{({C}, {\_})}} \\
-    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\contract {${phi}$} {${\_}$}}$} {${\overline{r}}$}}} \\
+    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\contract {${\phi}$} {${\_}$}}$} {${\overline{r}}$}}} \\
     {\rho'} = {[{\eresult} \mapsto {\defaultValue{${T_r}$}}, {\ethis} \mapsto {{o}}, {{w}} \mapsto {v}]} \\
-    \evalphix {H} {\rho'} {A} {phi} \\
-    {A'} = {\dynamicFP {H} {\rho'} {phi}}
+    \evalphix {H} {\rho'} {A} {\phi} \\
+    {A'} = {\dynamicFP {H} {\rho'} {\phi}}
 }
 {
     {({H}, {{({{\rho}, {A}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {\overline{s}}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A'}}, {\overline{r}})} \cdot {{({{\rho}, {{A} \backslash {A'}}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {\overline{s}}})} \cdot {S}}})}
