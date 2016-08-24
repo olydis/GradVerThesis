@@ -111,8 +111,11 @@
 \begin{mathpar}
 \inferrule* [Right=HHold]
 {
+    \sfrmphi {\phi} \\
     {\phi_f} \implies {\phiCons{${\phi_r}$}{${\phi'}$}} \\
     {\phi'} \implies {\phi} \\
+    {FV(\phi')} = {FV(\phi)} \\
+    \neg {\writesTo({FV(\phi)}, {\overline{s}})} \\
     \thoare {\Gamma} {\phi_r} {\overline{s}} {\phi_r'}
 }
 {
