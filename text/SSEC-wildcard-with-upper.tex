@@ -1,0 +1,16 @@
+
+To allow combining wildcards with static knowledge, we might view \qm merely as an unknown conjunctive term within a formula:
+\begin{displaymath}
+\grad{\phi} ::= \phi ~|~ \withqmGen{\phi}
+\end{displaymath}
+
+We pose $\qm \defeq \withqmGen{\phiTrue}$
+
+We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
+There are two ways to express this containment, resulting in different concretizations.
+\begin{description}
+    \item[Syntactic]
+    $\gamma(\withqmGen{\phi}) := \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormula ~\}$
+    \item[Semantic]
+    $\gamma(\withqmGen{\phi}) := \{~ \phi' \in \setFormula ~|~ \phi' \implies \phi ~\}$
+\end{description}

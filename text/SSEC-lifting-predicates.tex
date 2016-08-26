@@ -1,0 +1,48 @@
+
+% TODO: we dissect the gradual lifting notion of AGT
+In this section, we assume that we are dealing with a binary predicate $P \subseteq \setFormula \times \setFormula$.
+The concepts are directly applicable to predicates with different arity or with additional non-formula parameters.
+The lifted version we are targeting has signature $\grad{P} \subseteq \setGFormula \times \setGFormula$.
+W.l.o.g. we further assume that $P$ appears unnegated in the axiomatic semantics (otherwise we simply regard the negation of that predicate as $P$).
+
+Restrictions imposed by the gradual guarantee:
+\begin{description}
+    \item[Introduction of Gradual System]~\\
+    Having source code that is considered valid by the static verification system, the same source code must be considered valid by the gradual verification system.
+    In other words, switching to the gradual system may never “break the code”.
+    This means that arguments satisfying $P$ must satisfy $\grad{P}$:
+    \begin{displaymath}
+    \forall \phi_1, \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \grad{P}(\phi_1, \phi_2)
+    \end{displaymath}
+    or equivalently, using set notation
+    \begin{displaymath}
+    P \subseteq \grad{P}
+    \end{displaymath}
+    
+    \item[Reducing Precision/Monotonicity???]~\\
+    A central point of a gradual verification system is enabling programmers to specify contracts with less precision.
+    Source code that is rejected by the verifier might get accepted after reducing precision.
+    If the opposite would happen, though, that would be highly counter-intuitive and ...??? workflow.
+    To prevent such behavior, we expect satisfied predicates to still be satisfied after reducing the precision of arguments:
+    
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_1'}, \grad{\phi_2'} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \wedge \grad{\phi_2} \sqsubseteq \grad{\phi_2'} \wedge \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \implies \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
+    \end{displaymath}
+    or equivalently, thinking of predicates as boolean functions
+    \begin{displaymath}
+    \grad{P}  \text{ is monotonic w.r.t. $\sqsubseteq$}
+    \end{displaymath}
+    or something with set terminology!???
+    \begin{displaymath}
+    \grad{P}  \text{ is somewhat closed over weakening}
+    \end{displaymath}
+\end{description}
+
+%TODO: restate that in terms of deduction stuff?
+
+Then:
+- if lifted predicate adheres precisely to these rules (i.e. nothing more) it is equivalent to 
+    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &(\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \iff \grad{P}(\grad{\phi_1}, \grad{\phi_2})$
+  and is according to “consistent lifting” in AGT
+- if lifted predicate only adheres tp these rules, it implies 
+    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &(\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})$ (but not vice versa).

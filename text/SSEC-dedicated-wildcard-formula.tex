@@ -1,0 +1,15 @@
+
+The most straight forward way to extend the syntax is by simply adding \qm as a dedicated formula:
+\begin{displaymath}
+\grad{\phi} ::= \phi ~|~ \qm
+\end{displaymath}
+This is analogous to how most gradually typed languages are realized (e.g. \ttt{dynamic}-type in C\# 4.0 and upward).
+
+Since \qm is supposed to be a placeholder for an arbitrary formula, its concretization is defined as.
+\begin{displaymath}
+\gamma(\qm) := \setFormula
+\end{displaymath}
+
+This approach is limited since programmers cannot express any additional static knowledge they might have.
+For example, a programmer might resort to using the wildcard lacking some knowledge about variable \ex{x} (or being unable to express it), whereas he could give a static formula for \ex{y}, say \phiEq{y}{3}.
+Yet, there is no way to express this information as soon as the wildcard is used.

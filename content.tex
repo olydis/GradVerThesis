@@ -293,127 +293,35 @@ we will show how a programming language without static verification can be appro
 \input{text/SEC-a-statically-verified}
 
 \section{Gradual Formulas}
-% TODO: somewhere, make clear that it is design goal (gradual guarantee \ref{grad-guarantee}) to make resulting system compatible with old one => must EXTEND the syntax
-
-To introduce dynamic verification into a fully static system, the formula syntax has to be extended... % TODO
-- mention wildcard “?”
-- mention $\grad{\phi} \in \setGFormula$, $\setFormula \subset \setGFormula$
-- mention that semantics defined via concretization (abstract interpretation), i.e. mapping back to...
-    - in order for the concretization to “make sense” it must be singleton constructor for \setFormula
-        - non-empty: violate extension principle
-        - not more: in absence of graduality, no change of semantics desired
+\label{sec:gradual-formulas}
+\input{text/SEC-gradual-formulas}
 
 There are two typical ways of extending the formula syntax.
 \subsection{Dedicated wildcard formula}
-The most straight forward way to extend the syntax is by simply adding \qm as a dedicated formula:
-\begin{displaymath}
-\grad{\phi} ::= \phi ~|~ \qm
-\end{displaymath}
-This is analogous to how most gradually typed languages are realized (e.g. \ttt{dynamic}-type in C\# 4.0 and upward).
-
-Since \qm is supposed to be a placeholder for an arbitrary formula, its concretization is defined as.
-\begin{displaymath}
-\gamma(\qm) := \setFormula
-\end{displaymath}
-
-This approach is limited since programmers cannot express any additional static knowledge they might have.
-For example, a programmer might resort to using the wildcard lacking some knowledge about variable \ex{x} (or being unable to express it), whereas he could give a static formula for \ex{y}, say \phiEq{y}{3}.
-Yet, there is no way to express this information as soon as the wildcard is used.
+\label{ssec:dedicated-wildcard-formula}
+\input{text/SSEC-dedicated-wildcard-formula}
 
 \subsection{Wildcard with upper bound}
-To allow combining wildcards with static knowledge, we might view \qm merely as an unknown conjunctive term within a formula:
-\begin{displaymath}
-\grad{\phi} ::= \phi ~|~ \withqmGen{\phi}
-\end{displaymath}
-
-We pose $\qm \defeq \withqmGen{\phiTrue}$
-
-We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
-There are two ways to express this containment, resulting in different concretizations.
-\begin{description}
-    \item[Syntactic]
-    $\gamma(\withqmGen{\phi}) := \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormula ~\}$
-    \item[Semantic]
-    $\gamma(\withqmGen{\phi}) := \{~ \phi' \in \setFormula ~|~ \phi' \implies \phi ~\}$
-\end{description}
+\label{ssec:wildcard-with-upper}
+\input{text/SSEC-wildcard-with-upper}
 
 % TODO (compare both definitions? subset? pros cons? Con: unintuitive precision!)
 
 \subsection{Conclusion}
-Comparing gradual formulas (e.g. $\ttt{x = 3}$, $\withqmGen{x = 3}$, $\qm$) gives rise to a notion of “precision”.
-Intuitively, $\ttt{x = 3}$ is more precise than $\withqmGen{x = 3}$ which is still more precise than $\qm$.
-Using concretization, we can formalize this intuition.
-\begin{definition}[Formula Precision]
-    $$\grad{\phi_a} \sqsubseteq \grad{\phi_b}  \quad\iff\quad  \gamma(\grad{\phi_a}) \subseteq \gamma(\grad{\phi_b})$$
-    Read: Formula $\grad{\phi_a}$ is “at least as precise as” $\grad{\phi_b}$.
-\end{definition}
-The strict version $\sqsubset$ is defined accordingly.
+\label{ssec:gfconclusion}
+\input{text/SSEC-gfconclusion}
 
-With the notion of precision, we can give a formal definition of the gradual guarantee (TODO: ref) that we are aiming to satisfy.
-\begin{definition}[Gradual Guarantee (for Gradual Verification Systems)]
-\label{grad-guarantee-def}
-    %TODO
-\end{definition}
-
-% TODO: define static() helper function
+% TODO: define static() helper function somewhere
 
 \section{Lifting Predicates and Functions}
-The axiomatic semantics of our language are (PROBABLY!?) defined in terms of predicates and functions that operate on formulas.
-Examples:
-% TODO:
-% - implication, e.g. in assertion statement
-% - adding equality, e.g. in assignment statement (or look in static semantics for better examples...)
-% - axiomatic semantics itself!
-
-After introducing and giving meaning to gradual formulas, we will now describe how to redefine existing predicates and functions in order for them to deal with gradual formulas.
-
-\begin{definition}[Gradual Lifting]
-    The process of creating a “gradual version”/“lifted version” of a predicate/function.
-    The resulting predicate/function has the same signature as the original one, with occurrences of \setFormula replaced by \setGFormula.
-\end{definition}
-
-The more important question is of course how to define such lifted versions in a consistent way.
-What consistency means is a direct consequence of the gradual guarantee (definition \ref{grad-guarantee-def}), i.e. an inconsistently lifted predicate/function may cause the gradual verification system to break the gradual guarantee.
-The specifics are described in the following sections.
+\label{sec:lifting-predicates-and}
+\input{text/SEC-lifting-predicates-and}
 
 \subsection{Lifting Predicates}
-In this section, we assume that we are dealing with a binary predicate $P \subseteq \setFormula \times \setFormula$.
-The concepts are directly applicable to predicates with different arity or with additional non-formula parameters.
-The lifted version we are targeting has signature $\grad{P} \subseteq \setGFormula \times \setGFormula$.
-W.l.o.g. we further assume that $P$ appears unnegated in the axiomatic semantics (otherwise we simply regard the negation of that predicate as $P$).
+\label{ssec:lifting-predicates}
+\input{text/SSEC-lifting-predicates}
 
-Restrictions imposed by the gradual guarantee:
-\begin{description}
-    \item[Introduction of Gradual System]~\\
-    Having source code that is considered valid by the static verification system, the same source code must be considered valid by the gradual verification system.
-    In other words, switching to the gradual system may never “break the code”.
-    This means that arguments satisfying $P$ must satisfy $\grad{P}$:
-    \begin{displaymath}
-    \forall \phi_1, \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \grad{P}(\phi_1, \phi_2)
-    \end{displaymath}
-    or equivalently, using set notation
-    \begin{displaymath}
-    P \subseteq \grad{P}
-    \end{displaymath}
-    
-    \item[Reducing Precision/Monotonicity???]~\\
-    A central point of a gradual verification system is enabling programmers to specify contracts with less precision.
-    Source code that is rejected by the verifier might get accepted after reducing precision.
-    If the opposite would happen, though, that would be highly counter-intuitive and ...??? workflow.
-    To prevent such behavior, we expect satisfied predicates to still be satisfied after reducing the precision of arguments:
-    
-    \begin{displaymath}
-    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_1'}, \grad{\phi_2'} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \wedge \grad{\phi_2} \sqsubseteq \grad{\phi_2'} \wedge \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \implies \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
-    \end{displaymath}
-    or equivalently, thinking of predicates as boolean functions
-    \begin{displaymath}
-    \grad{P}  \text{ is monotonic w.r.t. $\sqsubseteq$}
-    \end{displaymath}
-\end{description}
-
-\begin{definition}[Consistent Lifting]
-    the process of ... in terms of their old version
-\end{definition}
+\subsection{Lifting Functions}
 
 
 

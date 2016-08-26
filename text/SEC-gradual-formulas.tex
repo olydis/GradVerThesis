@@ -1,0 +1,10 @@
+
+% TODO: somewhere, make clear that it is design goal (gradual guarantee \ref{grad-guarantee}) to make resulting system compatible with old one => must EXTEND the syntax
+
+To introduce dynamic verification into a fully static system, the formula syntax has to be extended... % TODO
+- mention wildcard “?”
+- mention $\grad{\phi} \in \setGFormula$, $\setFormula \subset \setGFormula$
+- mention that semantics defined via concretization (abstract interpretation), i.e. mapping back to...
+    - in order for the concretization to “make sense” it must be singleton constructor for \setFormula
+        - non-empty: violate extension principle
+        - not more: in absence of graduality, no change of semantics desired

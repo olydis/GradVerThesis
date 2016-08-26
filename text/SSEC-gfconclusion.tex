@@ -1,0 +1,15 @@
+
+Comparing gradual formulas (e.g. $\ttt{x = 3}$, $\withqmGen{x = 3}$, $\qm$) gives rise to a notion of “precision”.
+Intuitively, $\ttt{x = 3}$ is more precise than $\withqmGen{x = 3}$ which is still more precise than $\qm$.
+Using concretization, we can formalize this intuition.
+\begin{definition}[Formula Precision]
+    $$\grad{\phi_a} \sqsubseteq \grad{\phi_b}  \quad\iff\quad  \gamma(\grad{\phi_a}) \subseteq \gamma(\grad{\phi_b})$$
+    Read: Formula $\grad{\phi_a}$ is “at least as precise as” $\grad{\phi_b}$.
+\end{definition}
+The strict version $\sqsubset$ is defined accordingly.
+
+With the notion of precision, we can give a formal definition of the gradual guarantee (TODO: ref) that we are aiming to satisfy.
+\begin{definition}[Gradual Guarantee (for Gradual Verification Systems)]
+\label{grad-guarantee-def}
+    %TODO
+\end{definition}
