@@ -171,6 +171,9 @@ gradual guarantee:
      well typed, then removing type annotations always produces a program that is still well typed.
      Further, if a gradually typed program evaluates to a value, then removing type annotations
      always produces a program that evaluates to an equivalent value.
+     
+\label{grad-guarantee}
+% REDEFINE FOR VERIFICATION!
 
 \cite{garcia2016abstracting}
 AGT
@@ -282,7 +285,7 @@ we will show how a programming language without static verification can be appro
 %% structure of this chapter
 % TODO
 
-% TODO: overall approach
+% TODO: overall approach (lift axiomatic semantics, then think about the places where axiomatic semantics reflect back into the system, e.g. function call)
 % reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)
 
 \section{A Generic Statically Verified Language (\gsvl)}
@@ -290,7 +293,7 @@ we will show how a programming language without static verification can be appro
 \input{text/SEC-a-statically-verified}
 
 \section{Gradual Formulas}
-% TODO: somewhere, make clear that it is design goal (gradual guarantee) to make resulting system compatible with old one => must EXTEND the syntax
+% TODO: somewhere, make clear that it is design goal (gradual guarantee \ref{grad-guarantee}) to make resulting system compatible with old one => must EXTEND the syntax
 
 To introduce dynamic verification into a fully static system, the formula syntax has to be extended... % TODO
 - mention wildcard “?”
@@ -328,13 +331,95 @@ We pose $\qm \defeq \withqmGen{\phiTrue}$
 We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
 There are two ways to express this containment, resulting in different concretizations.
 \begin{description}
-    \item[Syntactic] 
-    \item[Semantic] 
+    \item[Syntactic]
+    $\gamma(\withqmGen{\phi}) := \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormula ~\}$
+    \item[Semantic]
+    $\gamma(\withqmGen{\phi}) := \{~ \phi' \in \setFormula ~|~ \phi' \implies \phi ~\}$
 \end{description}
+
+% TODO (compare both definitions? subset? pros cons? Con: unintuitive precision!)
+
+\subsection{Conclusion}
+Comparing gradual formulas (e.g. $\ttt{x = 3}$, $\withqmGen{x = 3}$, $\qm$) gives rise to a notion of “precision”.
+Intuitively, $\ttt{x = 3}$ is more precise than $\withqmGen{x = 3}$ which is still more precise than $\qm$.
+Using concretization, we can formalize this intuition.
+\begin{definition}[Formula Precision]
+    $$\grad{\phi_a} \sqsubseteq \grad{\phi_b}  \quad\iff\quad  \gamma(\grad{\phi_a}) \subseteq \gamma(\grad{\phi_b})$$
+    Read: Formula $\grad{\phi_a}$ is “at least as precise as” $\grad{\phi_b}$.
+\end{definition}
+The strict version $\sqsubset$ is defined accordingly.
+
+With the notion of precision, we can give a formal definition of the gradual guarantee (TODO: ref) that we are aiming to satisfy.
+\begin{definition}[Gradual Guarantee (for Gradual Verification Systems)]
+\label{grad-guarantee-def}
+    %TODO
+\end{definition}
+
+% TODO: define static() helper function
+
+\section{Lifting Predicates and Functions}
+The axiomatic semantics of our language are (PROBABLY!?) defined in terms of predicates and functions that operate on formulas.
+Examples:
+% TODO:
+% - implication, e.g. in assertion statement
+% - adding equality, e.g. in assignment statement (or look in static semantics for better examples...)
+% - axiomatic semantics itself!
+
+After introducing and giving meaning to gradual formulas, we will now describe how to redefine existing predicates and functions in order for them to deal with gradual formulas.
+
+\begin{definition}[Gradual Lifting]
+    The process of creating a “gradual version”/“lifted version” of a predicate/function.
+    The resulting predicate/function has the same signature as the original one, with occurrences of \setFormula replaced by \setGFormula.
+\end{definition}
+
+The more important question is of course how to define such lifted versions in a consistent way.
+What consistency means is a direct consequence of the gradual guarantee (definition \ref{grad-guarantee-def}), i.e. an inconsistently lifted predicate/function may cause the gradual verification system to break the gradual guarantee.
+The specifics are described in the following sections.
+
+\subsection{Lifting Predicates}
+In this section, we assume that we are dealing with a binary predicate $P \subseteq \setFormula \times \setFormula$.
+The concepts are directly applicable to predicates with different arity or with additional non-formula parameters.
+The lifted version we are targeting has signature $\grad{P} \subseteq \setGFormula \times \setGFormula$.
+W.l.o.g. we further assume that $P$ appears unnegated in the axiomatic semantics (otherwise we simply regard the negation of that predicate as $P$).
+
+Restrictions imposed by the gradual guarantee:
+\begin{description}
+    \item[Introduction of Gradual System]~\\
+    Having source code that is considered valid by the static verification system, the same source code must be considered valid by the gradual verification system.
+    In other words, switching to the gradual system may never “break the code”.
+    This means that arguments satisfying $P$ must satisfy $\grad{P}$:
+    \begin{displaymath}
+    \forall \phi_1, \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \grad{P}(\phi_1, \phi_2)
+    \end{displaymath}
+    or equivalently, using set notation
+    \begin{displaymath}
+    P \subseteq \grad{P}
+    \end{displaymath}
+    
+    \item[Reducing Precision/Monotonicity???]~\\
+    A central point of a gradual verification system is enabling programmers to specify contracts with less precision.
+    Source code that is rejected by the verifier might get accepted after reducing precision.
+    If the opposite would happen, though, that would be highly counter-intuitive and ...??? workflow.
+    To prevent such behavior, we expect satisfied predicates to still be satisfied after reducing the precision of arguments:
+    
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_1'}, \grad{\phi_2'} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \wedge \grad{\phi_2} \sqsubseteq \grad{\phi_2'} \wedge \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \implies \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
+    \end{displaymath}
+    or equivalently, thinking of predicates as boolean functions
+    \begin{displaymath}
+    \grad{P}  \text{ is monotonic w.r.t. $\sqsubseteq$}
+    \end{displaymath}
+\end{description}
+
+\begin{definition}[Consistent Lifting]
+    the process of ... in terms of their old version
+\end{definition}
+
+
 
 % lifting predicates, lifting functions, lifting function composition (sound but not nec. optimal), ...
 
-\subsection{Abstracting Static Semantics}
+\section{Abstracting Static Semantics}
 % non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
 % Hoare rules (in a sound language) GUARANTEE that intermediate formulas hold at runtime 
 % non-deterministic gradual hoare rules do NOT guarantee that!
@@ -386,7 +471,7 @@ assert (x != 0);
 
 % lifting... challenges
 
-\subsection{Abstracting Dynamic Semantics}
+\section{Abstracting Dynamic Semantics}
 % thing with HSec
 % Tapp usw...
 
