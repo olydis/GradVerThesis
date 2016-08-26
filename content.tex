@@ -282,36 +282,10 @@ we will show how a programming language without static verification can be appro
 %% structure of this chapter
 % TODO
 
-\section{A Statically Verified Language (\svl) / A Static Verification System?}
+\section{A Generic Statically Verified Language (\gsvl)}
 \label{sec:a-statically-verified}
 \input{text/SEC-a-statically-verified}
 
-\subsection{Syntax}
-\label{sec:syntax}
-\input{text/SEC-syntax}
-
-\subsection{Formulas}
-Not all syntactically correct formulas are useful in a static verification system.
-We will introduce two subsets \setFormulaA and \setFormulaB ...
-
-% def of footprint
-% def of frm, sfrm
-% implication
-% variants of *
-
-\subsection{Static Semantics}% requires sfrm
-\label{sec:static-semantics}
-\input{text/SEC-static-semantics}
-
-\subsection{Well-Formedness}
-\label{sec:well-formedness}
-\input{text/SEC-well-formedness}
-
-\subsection{Dynamic Semantics}
-\label{ssec:dynamic-semantics}
-\input{text/SSEC-dynamic-semantics}
-
-\subsection{Soundness}
 
 
 \section{Deriving a Gradually Verified Language}
@@ -319,11 +293,15 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 % reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)
 
 \subsection{Gradual Formulas}
-% syntax, concretization
+\begin{align*}
+&\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
+\end{align*}
 % lifting predicates, lifting functions, lifting function composition (sound but not nec. optimal), ...
 
 \subsection{Abstracting Static Semantics}
 % non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
+% Hoare rules (in a sound language) GUARANTEE that intermediate formulas hold at runtime 
+% non-deterministic gradual hoare rules do NOT guarantee that!
 
 % take burdon of chosing “good” intermediate formulas off verifier:
 \begin{verbatim}
@@ -346,6 +324,7 @@ assert (x != 0);
 % instead, make rules deterministic and inherently sound
 % => they might still not be optimal (we will define measure), but at least verifier is not to blame
 % => about non-optimality formalism is to blame, not some inference mechanism (conflict of interest! formulas as strong as possible, verifier as “good”/successful as possible)
+% => whether “working” intermediate formula exists is generally not even decidable! (already follows from satisfiability itself not being decidable...)
 
 % wlp not an option since not well-defined for some rules:
 \begin{displaymath}
@@ -375,8 +354,46 @@ assert (x != 0);
 % thing with HSec
 % Tapp usw...
 
-\chapter{Implementation}
-...of \ref{sec:a-statically-verified}
+% THIS IS WHERE THE SIMPLIFICATION AND ALL ITS REASONING COMES IN!
+
+\chapter{Implementation / Case Study / ...}
+
+\section{Language}
+%% more about our language
+We now intrude a very simple Java-like statically verified language “\svl” that uses Chalice/Eiffel/Spec\# %???
+sub-syntax to express method contracts.
+
+% more about simplicity
+% - decidable satisfiability & implication of formulas (will later investigate how to extend... ) % TODO
+% - exactly one method arg, return type
+% - not only decidable, but even polytime static semantics - entire area of research to extend boundaries there
+
+\subsection{Syntax}
+\label{sec:syntax}
+\input{text/SEC-syntax}
+
+\subsection{Formulas}
+Not all syntactically correct formulas are useful in a static verification system.
+We will introduce two subsets \setFormulaA and \setFormulaB ...
+
+% def of footprint
+% def of frm, sfrm
+% implication
+% variants of *
+
+\subsection{Static Semantics}% requires sfrm
+\label{sec:static-semantics}
+\input{text/SEC-static-semantics}
+
+\subsection{Well-Formedness}
+\label{sec:well-formedness}
+\input{text/SEC-well-formedness}
+
+\subsection{Dynamic Semantics}
+\label{ssec:dynamic-semantics}
+\input{text/SSEC-dynamic-semantics}
+
+\subsection{Soundness}
 
 \section{Prepare Hoare Rules}
 

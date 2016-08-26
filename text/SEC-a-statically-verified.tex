@@ -1,7 +1,45 @@
-%% more about our language
-We now intrude a very simple Java-like statically verified language “\svl” that uses Chalice/Eiffel/Spec\# %???
- sub-syntax to express method contracts.
+% generic language introduction
 
-% more about simplicity
-% - decidable satisfiability & implication of formulas (will later investigate how to extend... ) % TODO
-% - exactly one method arg, return type
+Requirements:
+
+\begin{description}
+    \item[Syntax] ~\\
+    We assume the existence of at least the following two syntactic categories:
+    \begin{align*}
+    	s    & \in \setStmt    \\
+    	\phi & \in \setFormula
+    \end{align*}
+    % TODO: we make no other assumptions
+    % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
+    
+    \item[Formula Semantics]~\\
+    Formulas are used to describe program states.
+    For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the current program state.
+    
+    We assume that we are given a predicate
+    \begin{displaymath}
+    \evalphiGen{\cdot}{\cdot} ~\subseteq~ \setProgramState \times \setFormula
+    \end{displaymath}
+    that decides, whether a formula is satisfied given a concrete program state.
+    
+    % EXAMPLES examples examples
+    
+    \item[Static Semantics]~\\
+    We assume that there is an axiomatic semantics, i.e. some predicate 
+    \begin{displaymath}
+    \hoare {\cdot} {~\cdot~} {\cdot} ~\subseteq~ \setFormula \times \setStmt \times \setFormula
+    \end{displaymath}
+    describing which programs (together with pre- and postconditions about the program state) are accepted.
+    In reality, this predicate might have further parameters. 
+    For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
+    As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
+    
+    \item[Dynamic Semantics]~\\
+    We assume that there is a dynamic semantics (e.g. small-step) describing precisely whether and how program state is updated.
+    This is required mainly for reasoning about soundness of the static semantics.
+    % NOTE: allow for non-deterministic semantics!
+    
+    \item[Soundness]~\\
+    We expect that given static semantics are sound w.r.t. given dynamic semantics.
+    This means that programs satisfying ... 
+\end{description}
