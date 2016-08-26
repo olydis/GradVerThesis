@@ -42,7 +42,9 @@ Restrictions imposed by the gradual guarantee:
 
 Then:
 - if lifted predicate adheres precisely to these rules (i.e. nothing more) it is equivalent to 
-    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &(\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \iff \grad{P}(\grad{\phi_1}, \grad{\phi_2})$
+    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \iff \grad{P}(\grad{\phi_1}, \grad{\phi_2})$
   and is according to “consistent lifting” in AGT
 - if lifted predicate only adheres tp these rules, it implies 
-    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &(\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})$ (but not vice versa).
+    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})$ (but not vice versa).
+
+% TODO: optimality measure!

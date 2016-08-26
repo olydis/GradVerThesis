@@ -322,68 +322,15 @@ There are two typical ways of extending the formula syntax.
 \input{text/SSEC-lifting-predicates}
 
 \subsection{Lifting Functions}
+% TODO: Partiality same as predicates + monotonicity in terms of \sqsubseteq???
 
-
-
-% lifting predicates, lifting functions, lifting function composition (sound but not nec. optimal), ...
+% function composition (soundness, optimality?), ...
 
 \section{Abstracting Static Semantics}
-% non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
-% Hoare rules (in a sound language) GUARANTEE that intermediate formulas hold at runtime 
-% non-deterministic gradual hoare rules do NOT guarantee that!
-
-% take burdon of chosing “good” intermediate formulas off verifier:
-\begin{verbatim}
-{ ? }
-x := 2;
-{ ? } // too weak, not optimal
-assert (x = 3);
-\end{verbatim}
-\begin{verbatim}
-{ ? }
-assert (x != 0);
-{ (x = 42) } // too strong, “somewhat unsound!!!” (no guarantee of holding at runtime, assuming previsous formula held)
-
-// BUT supported by instantiation!!!
-
-{ (x = 42) }
-assert (x != 0);
-{ (x = 42) }
-\end{verbatim}
-% instead, make rules deterministic and inherently sound
-% => they might still not be optimal (we will define measure), but at least verifier is not to blame
-% => about non-optimality formalism is to blame, not some inference mechanism (conflict of interest! formulas as strong as possible, verifier as “good”/successful as possible)
-% => whether “working” intermediate formula exists is generally not even decidable! (already follows from satisfiability itself not being decidable...)
-
-% wlp not an option since not well-defined for some rules:
-\begin{displaymath}
-\predicate{wlp}(\text{“\sVarAssign{x}{a.f}”}, \phiAcc{b}{f}) =
-\begin{cases}
-\phiCons {\phiAcc{b}{f}} {\phiAcc{a}{f}}\\
-\phiCons {\phiAcc{b}{f}} {\phiEq{a}{b}}
-\end{cases}
-\end{displaymath}
-
-\begin{align*}
-\funHoare_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoare_s = \funHoareC_s \circ \funHoareB_s \circ \funHoareA_s\\
-\funHoare_s(\pb{\phi}) = \funHoareC_s(\pb{\phi}) \quad\text{ if $\funHoareApred(s) \wedge \pb{\phi} \implies \funHoareBimp(s)$} \\
-\funHoareA_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoareA_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\funHoareApred(s)$} \\
-\funHoareB_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoareB_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\pb{\phi} \implies \funHoareBimp(s)$} \\
-\funHoareC_s : \setFormulaB \rightarrow \setFormulaB\\
-\end{align*}
-
-% example of determinified Hoare rule
-
-% lifting... challenges
+\label{sec:abstracting-static-semantics}
+\input{text/SEC-abstracting-static-semantics}
 
 \section{Abstracting Dynamic Semantics}
-% thing with HSec
-% Tapp usw...
-
-% THIS IS WHERE THE SIMPLIFICATION AND ALL ITS REASONING COMES IN!
 
 \chapter{Implementation / Case Study / ...}
 The path we take:
@@ -443,6 +390,13 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 \subsection{Gradualize Functions}
 % IDF stuff will probably only show up here!
 
+
+\section{Gradual Dyn. Semantics}
+% thing with HSec
+% Tapp usw...
+
+% THIS IS WHERE THE SIMPLIFICATION AND ALL ITS REASONING COMES IN!
+
 \section{Enhancing an Unverified Language}
 
 
@@ -463,7 +417,15 @@ Briefly outline your thesis, motivation, problem, and proposed solution.
 \section{Limitations}
 
 \section{Future Work}
-
+% does it work with wlp semantics?
+% wlp not an option since not well-defined for some rules:
+\begin{displaymath}
+\predicate{wlp}(\text{“\sVarAssign{x}{a.f}”}, \phiAcc{b}{f}) =
+\begin{cases}
+\phiCons {\phiAcc{b}{f}} {\phiAcc{a}{f}}\\
+\phiCons {\phiAcc{b}{f}} {\phiEq{a}{b}}
+\end{cases}
+\end{displaymath}
 
 \chapter{Appendix}
 
