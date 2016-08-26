@@ -282,20 +282,56 @@ we will show how a programming language without static verification can be appro
 %% structure of this chapter
 % TODO
 
+% TODO: overall approach
+% reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)
+
 \section{A Generic Statically Verified Language (\gsvl)}
 \label{sec:a-statically-verified}
 \input{text/SEC-a-statically-verified}
 
+\section{Gradual Formulas}
+% TODO: somewhere, make clear that it is design goal (gradual guarantee) to make resulting system compatible with old one => must EXTEND the syntax
 
+To introduce dynamic verification into a fully static system, the formula syntax has to be extended... % TODO
+- mention wildcard “?”
+- mention $\grad{\phi} \in \setGFormula$, $\setFormula \subset \setGFormula$
+- mention that semantics defined via concretization (abstract interpretation), i.e. mapping back to...
+    - in order for the concretization to “make sense” it must be singleton constructor for \setFormula
+        - non-empty: violate extension principle
+        - not more: in absence of graduality, no change of semantics desired
 
-\section{Deriving a Gradually Verified Language}
-% TODO: overall approach
-% reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)
+There are two typical ways of extending the formula syntax.
+\subsection{Dedicated wildcard formula}
+The most straight forward way to extend the syntax is by simply adding \qm as a dedicated formula:
+\begin{displaymath}
+\grad{\phi} ::= \phi ~|~ \qm
+\end{displaymath}
+This is analogous to how most gradually typed languages are realized (e.g. \ttt{dynamic}-type in C\# 4.0 and upward).
 
-\subsection{Gradual Formulas}
-\begin{align*}
-&\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
-\end{align*}
+Since \qm is supposed to be a placeholder for an arbitrary formula, its concretization is defined as.
+\begin{displaymath}
+\gamma(\qm) := \setFormula
+\end{displaymath}
+
+This approach is limited since programmers cannot express any additional static knowledge they might have.
+For example, a programmer might resort to using the wildcard lacking some knowledge about variable \ex{x} (or being unable to express it), whereas he could give a static formula for \ex{y}, say \phiEq{y}{3}.
+Yet, there is no way to express this information as soon as the wildcard is used.
+
+\subsection{Wildcard with upper bound}
+To allow combining wildcards with static knowledge, we might view \qm merely as an unknown conjunctive term within a formula:
+\begin{displaymath}
+\grad{\phi} ::= \phi ~|~ \withqmGen{\phi}
+\end{displaymath}
+
+We pose $\qm \defeq \withqmGen{\phiTrue}$
+
+We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
+There are two ways to express this containment, resulting in different concretizations.
+\begin{description}
+    \item[Syntactic] 
+    \item[Semantic] 
+\end{description}
+
 % lifting predicates, lifting functions, lifting function composition (sound but not nec. optimal), ...
 
 \subsection{Abstracting Static Semantics}
@@ -357,6 +393,10 @@ assert (x != 0);
 % THIS IS WHERE THE SIMPLIFICATION AND ALL ITS REASONING COMES IN!
 
 \chapter{Implementation / Case Study / ...}
+The path we take:
+\begin{align*}
+&\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
+\end{align*}
 
 \section{Language}
 %% more about our language
@@ -395,7 +435,7 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 
 \subsection{Soundness}
 
-\section{Prepare Hoare Rules}
+\section{Prep?}
 
 \subsection{Deterministic Functions}
 \begin{displaymath}
@@ -424,6 +464,8 @@ With simple gradual types, it’s almost nothing. With gradual effects, we’ve 
 \chapter{Conclusion}
 Recap, remind reader what big picture was.
 Briefly outline your thesis, motivation, problem, and proposed solution.
+
+\section{Conceptual Nugget: Comparison/Implication to AGT!}
 
 \section{Limitations}
 

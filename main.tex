@@ -64,9 +64,11 @@
 \newcommand{\setContract}{\tset{Contract}\xspace}
 \newcommand{\setType}{\tset{Type}\xspace}
 \newcommand{\setStmt}{\tset{Stmt}\xspace}
+\newcommand{\setGStmt}{\tset{GStmt}\xspace}
 \newcommand{\setFormula}{\tset{Formula}\xspace}
 \newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
 \newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
+\newcommand{\setGFormula}{\tset{GFormula}\xspace}
 \newcommand{\setExpr}{\tset{Expr}\xspace}
 \newcommand{\setVal}{\tset{Val}\xspace}
 \newcommand{\setVar}{\tset{Var}\xspace}
@@ -86,6 +88,7 @@
 \newcommand{\phiAcc}[2]{\ttt{acc(#1.#2)}}
 \newcommand{\qm}{\ttt{?}}
 \newcommand{\withqm}[1]{\ttt{\qm\:*\:$#1$}}
+\newcommand{\withqmGen}[1]{\ttt{#1$\:\wedge\:$\qm}}
 % statements
 \newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3;}}
 \newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2;}}
