@@ -1,18 +1,2 @@
-% AXIOMATIC
 The static semantics of \svl consist of typing rules and a Hoare calculus making use of those typing rules.
 All the rules are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field in the following typing rules.
-
-\begin{figure}[h]
-    \boxed{\sType{\Gamma}{e}{T}}
-    \input{data/svl-sem-stat-typing}
-    \caption{\svl: Static Typing of Expressions}
-\end{figure}
-
-\begin{figure}[h!]
-    \boxed{\thoare {\Gamma} {\phi_{pre}} {\overline{s}} {\phi_{post}}}
-    \input{data/svl-sem-stat-hoare}
-    \caption{\svl: Hoare Calculus} 
-\end{figure}
-
-%% FRAMING
-%\input{data/autogen/staticExpression}

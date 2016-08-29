@@ -1,0 +1,37 @@
+
+
+\svl uses the concepts of implicit dynamic frames to ensure that a statement can only access memory locations (more specifically: fields) which it is guaranteed to have exclusive access to.
+This is achieved by explicitly tracking access tokens $\phiAcc{\textit{<expression>}}{\textit{<field>}}$ as part of formulas throughout the entire program during verification.
+    
+The axiomatic semantics of \svl also make sure that access is never duplicated within or across stack frames, effectively ruling out concurrent access to any field during runtime.
+
+Implicit dynamic frames also allows static reasoning about the values of fields during verification, i.e. as part of verification formulas.
+In order to guarantee that such formulas always reflect the program state (preservation), formulas mentioning a certain field must also contain the access token to that very field:
+\begin{definition}[Self-Framing]
+    A formula is \textbf{self-framing/self-framed} if it contains access to all fields it mentions.
+\end{definition}
+
+% EXAMPLE of verification without self-framing.
+
+% MAYBE We will introduce two subsets \setFormulaA and \setFormulaB ...
+
+
+\begin{figure}
+    \boxed{A_s \sfrme e}
+    \input{data/svl-sem-stat-frme}
+    \caption{\svl: Framing Expressions}
+\end{figure}
+
+\begin{figure}
+    \boxed{A_s \sfrmphi \phi}
+    \input{data/svl-sem-stat-frmphi}
+    \caption{\svl: Framing Formulas}
+\end{figure}
+
+We omit the emptyset... bla self-framing
+
+\begin{figure}
+    \boxed{\staticFP {\phi} = A_s}
+    \input{data/svl-sem-stat-fp}
+    \caption{\svl: Static Footprint}
+\end{figure}

@@ -44,14 +44,21 @@ From a logical perspective the runtime can fix this problem in two ways:
     This is not an option as it actively interferes with the program state.
     Verification conditions should not bend reality in order to hold, they have a rather passive role of checking reality.
     
-    \item[]~\\
+    \item[Termination]~\\
     Preservation is only expected to hold in case execution actually reaches the postcondition.
     The runtime could artificially terminate in case the postcondition is not satisfied.
     This approach is unsatisfying as it trivially achieves soundness, effectively making the notion worthless:
-    Any “verification system” can be made sound by just terminating exceptionally whenever progress or preservation are about to be violated.
+    Any system can be made sound by just terminating exceptionally whenever progress or preservation are about to be violated.
 \end{description}
 
-The first way to fix this problem would be 
+% other problem: compositition and guessing
+
+Third option: Ignore gradual guarantee for a while, ...
+Afterwards, resolve gradual guarantee dilemma by wrapping resulting predicate with extra implication layer.
+
+
+
+
 
 Note that the intermediate formula $\phiEq{x}{2}$ does not show up in the final judgment, i.e. it was up to the verifier to “come up” with a formula that makes the overall proof work -- a valid alternative would have been $\phiNeq{x}{0}$.
 Still, preservation also applies to “hidden” judgments (after all we could look at them isolated, so soundness must apply), so we are guaranteed that the program state satisfies $\phiEq{x}{2}$ (and also $\phiNeq{x}{0}$) after the first statement is executed.

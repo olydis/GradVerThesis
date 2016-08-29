@@ -330,16 +330,14 @@ There are two typical ways of extending the formula syntax.
 \input{text/SEC-abstracting-static-semantics}
 
 \section{Abstracting Dynamic Semantics}
+\label{sec:abstracting-dynamic-semantics}
+\input{text/SEC-abstracting-dynamic-semantics}
 
 \chapter{Implementation / Case Study / ...}
-The path we take:
-\begin{align*}
-&\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
-\end{align*}
 
 \section{Language}
 %% more about our language
-We now introduce a very simple Java-like statically verified language “\svl” that uses Chalice/Eiffel/Spec\# %???
+We now introduce a simplified Java-like statically verified language “\svl” that uses Chalice/Eiffel/Spec\# %???
 sub-syntax to express method contracts.
 
 % more about simplicity
@@ -347,22 +345,27 @@ sub-syntax to express method contracts.
 % - exactly one method arg, return type
 % - not only decidable, but even polytime static semantics - entire area of research to extend boundaries there
 
+% somewhere: implication (refer to general language)
+
 \subsection{Syntax}
 \label{sec:syntax}
 \input{text/SEC-syntax}
 
-\subsection{Formulas}
-Not all syntactically correct formulas are useful in a static verification system.
-We will introduce two subsets \setFormulaA and \setFormulaB ...
-
-% def of footprint
-% def of frm, sfrm
-% implication
-% variants of *
-
-\subsection{Static Semantics}% requires sfrm
+\subsection{Static Semantics}
 \label{sec:static-semantics}
 \input{text/SEC-static-semantics}
+
+\subsubsection{Typing}
+\label{sssec:typing}
+\input{text/SSSEC-typing}
+
+\subsubsection{Framing}
+\label{sssec:framing}
+\input{text/SSSEC-framing}
+
+\subsubsection{Verification}
+\label{sssec:verification}
+\input{text/SSSEC-verification}
 
 \subsection{Well-Formedness}
 \label{sec:well-formedness}
@@ -374,15 +377,11 @@ We will introduce two subsets \setFormulaA and \setFormulaB ...
 
 \subsection{Soundness}
 
-\section{Prep?}
-
-\subsection{Deterministic Functions}
-\begin{displaymath}
-\funHoareApred(s) =
-\begin{cases}
-
-\end{cases}
-\end{displaymath}
+\section{Prep? Formula syntax etc... differences to \gsvl!}
+The path we take:
+\begin{align*}
+&\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
+\end{align*}
 
 \section{Gradualize Hoare Rules}
 
@@ -414,6 +413,7 @@ Briefly outline your thesis, motivation, problem, and proposed solution.
 \section{Conceptual Nugget: Comparison/Implication to AGT!}
 
 \section{Limitations}
+no shared access...
 
 \section{Future Work}
 % does it work with wlp semantics?
