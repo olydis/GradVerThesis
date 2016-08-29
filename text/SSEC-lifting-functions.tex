@@ -1,0 +1,55 @@
+% assuming total for now (otherwise: split partial function into total function and definedness predicate)
+
+Static verification rules may contain functions manipulating formulas. % EX
+We can also derive rules for lifting such functions from the gradual guarantee.
+In this section, we assume that we are dealing with a function $f : \setFormula \rightarrow \setFormula$.
+Again, the concepts are directly applicable to functions with higher arity.
+
+Restrictions imposed by the gradual guarantee:
+\begin{description}
+    \item[Introduction of Gradual System]~\\
+    We ensure that our verification system is “immune” to reduction of precision.
+    Thus, when passing a static formula $\phi$ to $\grad{f}$, the result must be the same or less precise than $f(\phi)$.
+    \begin{displaymath}
+    \forall \phi \in \setFormula.~ f(\phi) \sqsubseteq \grad{f}(\phi)
+    \end{displaymath}
+    %Equivalently:
+    %\begin{displaymath}
+    %\forall \phi \in \setFormula.~ f(\phi) \in \gamma(\grad{f}(\phi))
+    %\end{displaymath}
+    
+    \item[Monotonicity]~\\
+    Reducing precision of a parameter, may only result in a loss of precision of the result.
+    In other words, the function must be monotonic w.r.t. $\sqsubseteq$ (in every argument).
+    
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})
+    \end{displaymath}
+\end{description}
+
+
+Holds (but prob. unimportant...)
+\begin{align*}
+\forall \phi \in \setFormula.~ &f(\phi) \sqsubseteq \grad{f}(\phi)\\
+~\wedge~
+\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &\grad{\phi_1} \sqsubseteq \grad{\phi_2} \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})\\
+\implies\\
+\forall \grad{\phi} \in \setGFormula, \phi \in \setFormula.~ &\phi \sqsubseteq \grad{\phi} \implies f(\phi) \sqsubseteq \grad{f}(\grad{\phi})\\
+\end{align*}
+
+
+% TODO: Partiality same as predicates + monotonicity in terms of \sqsubseteq???
+PARTIAL:
+
+\begin{displaymath}
+\forall \phi \in \setFormula \cap \dom(f).~ f(\phi) \sqsubseteq \grad{f}(\phi)
+\end{displaymath}
+
+\begin{displaymath}
+\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\grad{f}) \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})
+\end{displaymath}
+
+
+% mention alpha(...), galois connection (does not always exist, make example... so partial GC instead (reference)...)
+
+% function composition (soundness, optimality?), ...

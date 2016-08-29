@@ -38,13 +38,30 @@ Restrictions imposed by the gradual guarantee:
     \end{displaymath}
 \end{description}
 
+\begin{definition}[Soundness of Lifted Predicate]
+    A lifted predicate is \textbf{sound} if it satisfies both ?????
+\end{definition}
+
+For sound rules this holds:
+\begin{displaymath}
+\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})
+\end{displaymath}
+
+Note that there is a “smallest” set/predicate??? ... induced by the rules.
+
+\begin{definition}[Optimality of Lifted Predicate]
+    A lifted predicate is \textbf{optimal} if there exists no ???
+\end{definition}
+
+...same as “consistent lifting” in AGT!
+
+% TODO: delve into what is important, what is optional, etc.
+\begin{displaymath}
+\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \iff \grad{P}(\grad{\phi_1}, \grad{\phi_2})
+\end{displaymath}
+
+
+
 %TODO: restate that in terms of deduction stuff?
 
-Then:
-- if lifted predicate adheres precisely to these rules (i.e. nothing more) it is equivalent to 
-    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \iff \grad{P}(\grad{\phi_1}, \grad{\phi_2})$
-  and is according to “consistent lifting” in AGT
-- if lifted predicate only adheres tp these rules, it implies 
-    $\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})$ (but not vice versa).
 
-% TODO: optimality measure!

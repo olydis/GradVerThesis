@@ -3,7 +3,7 @@
 Requirements:
 
 \begin{description}
-    \item[Syntax] ~\\
+\item[Syntax] ~\\
     We assume the existence of at least the following two syntactic categories:
     \begin{align*}
     	s    & \in \setStmt    \\
@@ -12,7 +12,7 @@ Requirements:
     % TODO: we make no other assumptions
     % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
-    \item[Formula Semantics]~\\
+\item[Formula Semantics]~\\
     Formulas are used to describe program states.
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the current program state.
     
@@ -27,22 +27,24 @@ Requirements:
     This also induces notion of implication!!! % TODO
     % also talk about partially ordered set induced by that... name largest element "true" (expect that to exist!), etc.
     
-    \item[Static Semantics]~\\
+\item[Static Semantics]~\\
     We assume that there is an axiomatic semantics, i.e. some predicate 
     \begin{displaymath}
-    \hoare {\cdot} {~\cdot~} {\cdot} ~\subseteq~ \setFormula \times \setStmt \times \setFormula
+    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
-    In reality, this predicate might have further parameters. 
+    In practice, this predicate might have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
     
-    \item[Dynamic Semantics]~\\
+    We further assume that ... SEQUENCE RULE!
+    
+\item[Dynamic Semantics]~\\
     We assume that there is a dynamic semantics (e.g. small-step) describing precisely whether and how program state is updated.
     This is required mainly for reasoning about soundness of the static semantics.
     % NOTE: allow for non-deterministic semantics!
     
-    \item[Soundness]~\\
+\item[Soundness]~\\
     We expect that given static semantics are sound w.r.t. given dynamic semantics.
     This means that programs satisfying ... 
 \end{description}

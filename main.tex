@@ -139,8 +139,9 @@
 \newcommand{\staticFP}[1]{\ensuremath{\floor{#1}}}
 \newcommand{\dynamicFP}[3]{\ensuremath{\floor{#3}_{#1,#2}}}
 % static sem
-\newcommand{\hoare}[3]{\{{#1}\} {#2} \{{#3}\}}
-\newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} {#3} \{{#4}\}}
+\newcommand{\hoare}[3]{\{{#1}\} ~{#2}~ \{{#3}\}}
+\newcommand{\thoare}[4]{{#1} \vdash \{{#2}\} ~{#3}~ \{{#4}\}}
+\newcommand{\gthoare}[4]{{#1} \,\,\grad{\vdash}\,\, \{{#2}\} ~{#3}~ \{{#4}\}}
 \newcommand{\funHoare}{\mathcal{H}}
 \newcommand{\funHoareA}{\mathcal{F}}
 \newcommand{\funHoareApred}{\mathcal{P}}
