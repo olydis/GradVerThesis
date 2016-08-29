@@ -1,3 +1,4 @@
+%% Naive approach
 With the rules for lifting set up we can apply them to the static verification predicate:
 Lifting 
 $$\thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula$$
@@ -6,45 +7,60 @@ $$\gthoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setS
 
 % EXAMPLE with proof
 
-%% what's wrong with this predicate
+% now: preservation broken - only fix puts verifier in dilemma!
+
+\textbf{Restoring Soundness}\\
 Recall what soundness means for a static verification system:
 Assume that $\thoare {~} {\phi_{pre}} {\overline{s}} {\phi_{post}}$ holds in the static verification system.
 Given a program state that satisfies $\phi_{pre}$, soundness guarantees us both that execution won't get blocked when executing $\overline{s}$ (progress) and that the program state satisfies $\phi_{post}$ afterwards (preservation).
 
-Unfortunately, the gradual verification predicate severely violates the preservation property.
-While we don't expect progress to still be guaranteed without changes to dynamic semantics, there is no way to “fix” preservation.
-Consider a sound static verification system (with an assignment rule and a sequence rule) that allows verifying
+It turns out that additional measures are necessary for both progress and preservation.
+We will first focus on preservation, assuming that statements do not cause the runtime to be in a blocked state.
 
+Consider a sound static verification system that allows verifying:
 \begin{mathpar}
-\inferrule* [Right=Seq]
+\inferrule* [Right=VerAssign]
+{ ... }
 {
-    {
-        \inferrule* [right=Ass]
-        { ~ }
-        {
-            \thoare {~} {\phiTrue} {\sVarAssign{x}{2}} {\phiEq{x}{2}}
-        }
-    }\\
-    {
-        \inferrule* [Right=Ass]
-        { ~ }
-        {
-            \thoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}
-        }
-    }
-}
-{
-    \thoare {~} {\phiTrue} {\sVarAssign{x}{2}~\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}
+    \thoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}
 }
 \end{mathpar}
+
 With the rules of lifting we can deduce
 \begin{align*}
-&&\thoare {~} {\phiEq{x}{42}} {\sAssert{\phiNeq{x}{0}}} {\phiEq{x}{42}}&\\
-\implies&&
-\gthoare {~} {\phiEq{x}{42}} {\sAssert{\phiNeq{x}{0}}} {\phiEq{x}{42}}&\\
-\implies&&
-\gthoare {~} {\qm} {\sAssert{\phiNeq{x}{0}}} {\phiEq{x}{42}}&
+&&\thoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&\\
+\overset{Introduction?}{\implies}&&
+\gthoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&\\
+\overset{Monotonicity?}{\implies}&&
+\gthoare {~} {\qm} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&
 \end{align*}
+
+Preservation is apparently not ensured in a runtime that lets the assignment succeed: 
+While the precondition does not put any restriction on the value of \ttt{x}, the postcondition claims that \ttt{x} does have a certain value.
+From a logical perspective the runtime can fix this problem in two ways:
+\begin{description}
+    \item[“Fix” the program state]~\\
+    The only way to actually make the postcondition true would involve altering the program state to satisfy the formula.
+    This is not an option as it actively interferes with the program state.
+    Verification conditions should not bend reality in order to hold, they have a rather passive role of checking reality.
+    
+    \item[]~\\
+    Preservation is only expected to hold in case execution actually reaches the postcondition.
+    The runtime could artificially terminate in case the postcondition is not satisfied.
+    This approach is unsatisfying as it trivially achieves soundness, effectively making the notion worthless:
+    Any “verification system” can be made sound by just terminating exceptionally whenever progress or preservation are about to be violated.
+\end{description}
+
+The first way to fix this problem would be 
+
+Note that the intermediate formula $\phiEq{x}{2}$ does not show up in the final judgment, i.e. it was up to the verifier to “come up” with a formula that makes the overall proof work -- a valid alternative would have been $\phiNeq{x}{0}$.
+Still, preservation also applies to “hidden” judgments (after all we could look at them isolated, so soundness must apply), so we are guaranteed that the program state satisfies $\phiEq{x}{2}$ (and also $\phiNeq{x}{0}$) after the first statement is executed.
+
+The same reasoning does not apply to the lifted verification predicate: 
+
+
+Yet, soundness guarantees that
+
 
 Apparently the precondition does not restrict the program state before executing the assertion.
 Let's assume that we 

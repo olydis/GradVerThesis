@@ -37,7 +37,30 @@ Requirements:
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
     
-    We further assume that ... SEQUENCE RULE!
+    We further assume that there is always some way to decompose judgments about a sequence of statements into judgments about parts of that sequence, all the way down to single statements. 
+    Usually this is achieved with a sequence rule. Examples:
+    \begin{mathpar}
+        \inferrule* [Right=VerSeqSyntaxDriven]
+        {
+            \thoare {~} {\phi_p} {{s_1}} {\phi_q} \\
+            \thoare {~} {\phi_q} {\overline{s_2}} {\phi_r}
+        }
+        {
+            \thoare {~} {\phi_p} {{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
+        }
+    \end{mathpar}
+    \begin{mathpar}
+        \inferrule* [Right=VerSeqFlexible]
+        {
+            \thoare {~} {\phi_p} {\overline{s_1}} {\phi_{q1}} \\
+            \phi_{q1} \implies \phi_{q2}\\
+            \thoare {~} {\phi_{q2}} {\overline{s_2}} {\phi_r}
+        }
+        {
+            \thoare {\Gamma} {\phi_p} {\overline{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
+        }
+    \end{mathpar}
+    
     
 \item[Dynamic Semantics]~\\
     We assume that there is a dynamic semantics (e.g. small-step) describing precisely whether and how program state is updated.
