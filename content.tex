@@ -259,34 +259,12 @@ allow expressions that refer to the heap, while IDF does. SL is defined on parti
 while IDF is defined using total heaps and permission masks. The semantics of IDF are only defined by its translation to first-order verification conditions, while SL has a direct
 Kripke semantics for its assertions.
 
-\subsubsection{Self-Framing}
 
-
-
-%STRUCTURE:
-% - intruduce static sample language (interesting for IDF, blabla, ..., but also general enough to transfer ideas)
-% - gradualize sample language without focus on impl. details (assume NPC/undec. sat, impl, ... to stay general), i.e. focus on principal correctness        (undecidable in general => SMT solvers)
-% - implement this very language and show effects of precision, ...
 
 
 \chapter{Gradualization of a Statically Verified Language}
-% TODO: at some point define what statically verified (verification as part of static semantics, no compilation without verification success) vs dynamically verified (no static measures, only (implicit) runtime cecks) means!
-
-%% why start with static language
-As illustrated earlier %MAKE SURE!
-gradual verification can be seen as an extension of both static and dynamic verification.
-% Both can be seen as the endpoints of the continuum...?
-Yet, our approach of “gradualization” formalizes the introduction of the dynamic aspect into a fully static system.
-Thus, this %TODO: work, section, chapter?
-uses a statically verified language as starting point.
-Later %TODO: ref
-we will show how a programming language without static verification can be approached.
-
-%% structure of this chapter
-% TODO
-
-% TODO: overall approach (lift axiomatic semantics, then think about the places where axiomatic semantics reflect back into the system, e.g. function call)
-% reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)
+\label{ch:gradualization-of-a}
+\input{text/CH-gradualization-of-a}
 
 \section{A Generic Statically Verified Language (\gsvl)}
 \label{sec:a-statically-verified}
@@ -297,33 +275,33 @@ we will show how a programming language without static verification can be appro
 \input{text/SEC-gradual-formulas}
 
 There are two typical ways of extending the formula syntax.
-\subsection{Dedicated wildcard formula}
-\label{ssec:dedicated-wildcard-formula}
-\input{text/SSEC-dedicated-wildcard-formula}
+    \subsection{Dedicated wildcard formula}
+    \label{ssec:dedicated-wildcard-formula}
+    \input{text/SSEC-dedicated-wildcard-formula}
+    
+    \subsection{Wildcard with upper bound}
+    \label{ssec:wildcard-with-upper}
+    \input{text/SSEC-wildcard-with-upper}
+    
+    % TODO (compare both definitions? subset? pros cons? Con: unintuitive precision!)
 
-\subsection{Wildcard with upper bound}
-\label{ssec:wildcard-with-upper}
-\input{text/SSEC-wildcard-with-upper}
-
-% TODO (compare both definitions? subset? pros cons? Con: unintuitive precision!)
-
-\subsection{Conclusion}
-\label{ssec:gfconclusion}
-\input{text/SSEC-gfconclusion}
-
-% TODO: define static() helper function somewhere
+    \subsection{Conclusion}
+    \label{ssec:gfconclusion}
+    \input{text/SSEC-gfconclusion}
+    
+    % TODO: define static() helper function somewhere
 
 \section{Lifting Predicates and Functions}
 \label{sec:lifting-predicates-and}
 \input{text/SEC-lifting-predicates-and}
 
-\subsection{Lifting Predicates}
-\label{ssec:lifting-predicates}
-\input{text/SSEC-lifting-predicates}
-
-\subsection{Lifting Functions}
-\label{ssec:lifting-functions}
-\input{text/SSEC-lifting-functions}
+    \subsection{Lifting Predicates}
+    \label{ssec:lifting-predicates}
+    \input{text/SSEC-lifting-predicates}
+    
+    \subsection{Lifting Functions}
+    \label{ssec:lifting-functions}
+    \input{text/SSEC-lifting-functions}
 
 \section{Abstracting Static Semantics}
 \label{sec:abstracting-static-semantics}
@@ -333,49 +311,45 @@ There are two typical ways of extending the formula syntax.
 \label{sec:abstracting-dynamic-semantics}
 \input{text/SEC-abstracting-dynamic-semantics}
 
+
+
+
+
 \chapter{Implementation / Case Study / ...}
 
 \section{Language}
-%% more about our language
-We now introduce a simplified Java-like statically verified language “\svl” that uses Chalice/Eiffel/Spec\# %???
-sub-syntax to express method contracts.
+\label{sec:language}
+\input{text/SEC-language}
 
-% more about simplicity
-% - decidable satisfiability & implication of formulas (will later investigate how to extend... ) % TODO
-% - exactly one method arg, return type
-% - not only decidable, but even polytime static semantics - entire area of research to extend boundaries there
-
-% somewhere: implication (refer to general language)
-
-\subsection{Syntax}
-\label{sec:syntax}
-\input{text/SEC-syntax}
-
-\subsection{Static Semantics}
-\label{sec:static-semantics}
-\input{text/SEC-static-semantics}
-
-\subsubsection{Typing}
-\label{sssec:typing}
-\input{text/SSSEC-typing}
-
-\subsubsection{Framing}
-\label{sssec:framing}
-\input{text/SSSEC-framing}
-
-\subsubsection{Verification}
-\label{sssec:verification}
-\input{text/SSSEC-verification}
-
-\subsection{Well-Formedness}
-\label{sec:well-formedness}
-\input{text/SEC-well-formedness}
-
-\subsection{Dynamic Semantics}
-\label{ssec:dynamic-semantics}
-\input{text/SSEC-dynamic-semantics}
-
-\subsection{Soundness}
+    \subsection{Syntax}
+    \label{sec:syntax}
+    \input{text/SEC-syntax}
+    
+    \subsection{Static Semantics}
+    \label{sec:static-semantics}
+    \input{text/SEC-static-semantics}
+    
+    \subsubsection{Typing}
+    \label{sssec:typing}
+    \input{text/SSSEC-typing}
+    
+    \subsubsection{Framing}
+    \label{sssec:framing}
+    \input{text/SSSEC-framing}
+    
+    \subsubsection{Verification}
+    \label{sssec:verification}
+    \input{text/SSSEC-verification}
+    
+    \subsection{Well-Formedness}
+    \label{sec:well-formedness}
+    \input{text/SEC-well-formedness}
+    
+    \subsection{Dynamic Semantics}
+    \label{ssec:dynamic-semantics}
+    \input{text/SSEC-dynamic-semantics}
+    
+    \subsection{Soundness}
 
 \section{Prep? Formula syntax etc... differences to \gsvl!}
 The path we take:
@@ -383,11 +357,10 @@ The path we take:
 &\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
 \end{align*}
 
-\section{Gradualize Hoare Rules}
-
 \subsection{Gradualize Functions}
 % IDF stuff will probably only show up here!
 
+\section{Gradualize Hoare Rules}
 
 \section{Gradual Dyn. Semantics}
 % thing with HSec
@@ -398,33 +371,26 @@ The path we take:
 \section{Enhancing an Unverified Language}
 
 
+
+
+
 \chapter{Evaluation/Analysis}
-> E:
-with gradual typestates the same problem happened: as soon as the potential for unknown annotations was accepted, there was a “baseline cost” just to maintain the necessary infrastructure.
-With simple gradual types, it’s almost nothing. With gradual effects, we’ve shown that it can boil down to very little (a thread-local variable with little overhead, see OOPSLA’15). 
-
-% relationship LC and verification! which rules are derived by which, correspondence table
-
+\label{ch:evaluation-analysis}
+\input{text/CH-evaluation-analysis}
 
 \chapter{Conclusion}
-Recap, remind reader what big picture was.
-Briefly outline your thesis, motivation, problem, and proposed solution.
+\label{ch:conclusion}
+\input{text/CH-conclusion}
 
 \section{Conceptual Nugget: Comparison/Implication to AGT!}
 
 \section{Limitations}
-no shared access...
+\label{sec:limitations}
+\input{text/SEC-limitations}
 
 \section{Future Work}
-% does it work with wlp semantics?
-% wlp not an option since not well-defined for some rules:
-\begin{displaymath}
-\predicate{wlp}(\text{“\sVarAssign{x}{a.f}”}, \phiAcc{b}{f}) =
-\begin{cases}
-\phiCons {\phiAcc{b}{f}} {\phiAcc{a}{f}}\\
-\phiCons {\phiAcc{b}{f}} {\phiEq{a}{b}}
-\end{cases}
-\end{displaymath}
+\label{sec:future-work}
+\input{text/SEC-future-work}
 
 \chapter{Appendix}
 

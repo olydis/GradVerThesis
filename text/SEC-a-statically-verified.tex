@@ -28,7 +28,7 @@ Requirements:
     % also talk about partially ordered set induced by that... name largest element "true" (expect that to exist!), etc.
     
 \item[Static Semantics]~\\
-    We assume that there is an axiomatic semantics, i.e. some predicate 
+    We assume that there is an axiomatic semantics
     \begin{displaymath}
     \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula
     \end{displaymath}
@@ -60,6 +60,47 @@ Requirements:
             \thoare {\Gamma} {\phi_p} {\overline{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
         }
     \end{mathpar}
+    
+    %% verify-predicate
+    Some axiomatic semantics are not flexible enough to directly use them for checking method contracts.
+    For example a rule like
+    \begin{mathpar}
+        \inferrule* [Right=VerReturn]
+        {
+        }
+        {
+            \thoare {~} {\phi} {\sReturn{x}} {\phi /\ \phiEq{\eresult}{x}}
+        }
+    \end{mathpar}
+    cannot prove
+    \begin{lstlisting}
+    int test(int noise)
+        requires noise != 42;
+        ensures  result > 0;
+    {
+        return 3;
+    }
+    \end{lstlisting}
+    as there is no matching instantiation of the rule.
+    
+    By definition of implication, a sound verification system stays sound if we embed the axiomatic semantics between implications and instead use the resulting predicate for verification. % PROOF?
+    \begin{definition}[Generic Verification Predicate]
+        \begin{align*}
+        \verify(\phi_{pre}, \overline{s}, \phi_{post}) \overset{\predicate{def}}{\iff} \exists \phi_{pre}', \phi_{post}'.
+        &~~ \phi_{pre} \implies \phi_{pre}' \\
+        \wedge& \thoare {~} {\phi_{pre}'} {\overline{s}} {\phi_{post}'} \\
+        \wedge&~~ \phi_{post}' \implies \phi_{post}
+        \end{align*}
+    \end{definition}
+    Note that the predicate is equivalent to the axiomatic semantics, in case it already takes implications into account.
+    Yet, uncoupling axiomatic semantics and the actual verification predicate will prove extremely useful for gradualization.
+    
+    % We assume that \gsvl has this kind of flexibility.
+    
+    To abstract from specific implementations and not force flexibility 
+
+\item[Notion of Well-Formedness]
+    
     
     
 \item[Dynamic Semantics]~\\

@@ -22,6 +22,23 @@
 \newunicodechar{≠}{=\llap{/}}
 \newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
 
+% CODE LISTINGS
+
+\definecolor{cogreen}{RGB}{0,80,0}
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily,
+    commentstyle=\ttfamily,
+    frame=single,
+    framesep=5pt,
+    mathescape=true,
+    %escapeinside={(*}{*)},
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{darkgray}\ttfamily,
+    commentstyle=\color{cogreen}\ttfamily,
+    morekeywords={requires, ensures}
+}
+
 % THEOREMS
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}[definition]{Theorem}
@@ -109,6 +126,7 @@
 \newcommand{\field}[2]{\ttt{{#1}~{#2};}}
 %% predicates
 % well-formed
+\newcommand{\verify}{\predicate{verify}}
 \newcommand{\OK}{~\predicate{OK}}
 \newcommand{\OKinC}{~\predicate{OK in}~C}
 % framing

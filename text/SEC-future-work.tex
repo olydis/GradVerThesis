@@ -1,0 +1,10 @@
+
+% does it work with wlp semantics?
+% wlp not an option since not well-defined for some rules:
+\begin{displaymath}
+\predicate{wlp}(\text{“\sVarAssign{x}{a.f}”}, \phiAcc{b}{f}) =
+\begin{cases}
+\phiCons {\phiAcc{b}{f}} {\phiAcc{a}{f}}\\
+\phiCons {\phiAcc{b}{f}} {\phiEq{a}{b}}
+\end{cases}
+\end{displaymath}
