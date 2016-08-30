@@ -12,6 +12,9 @@ Requirements:
     % TODO: we make no other assumptions
     % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
+    We write $\setStmts$ for the set of lists of instructions. % TODO: formally?
+    ...and use $\overline{\cdot}$ to decorate variables representing lists of things.
+    
 \item[Formula Semantics]~\\
     Formulas are used to describe program states.
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the current program state.
@@ -30,12 +33,26 @@ Requirements:
 \item[Static Semantics]~\\
     We assume that there is an axiomatic semantics
     \begin{displaymath}
-    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula
+    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmts \times \setFormula
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
     In practice, this predicate might have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
+    
+    We further assume that this predicate is monotonic in the precondition w.r.t. implication:
+    \begin{align*}
+    \forall \overline{s} \in \setStmts.~& \\
+    \forall \phi_1, \phi_2 \in \setFormula.~&\\
+    \forall \phi_1' \in \setFormula.~&
+    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\
+    \implies
+    \exists \phi_2' \in \setFormula.~&
+    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~~ \thoare {~} {\phi_2} {\overline{s}} {\phi_2'}
+    \end{align*}
+    
+    
+    %%% ==== ?
     
     We further assume that there is always some way to decompose judgments about a sequence of statements into judgments about parts of that sequence, all the way down to single statements. 
     Usually this is achieved with a sequence rule. Examples:
