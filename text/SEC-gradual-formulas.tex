@@ -5,20 +5,24 @@ We introduce the concepts of gradual verification by introducing a wildcard form
 There are different ways to introduce the wildcard, we will describe two common options in the following sections.
 
 %% COMMON KNOWLEDGE
-Note that we want to strictly extend the existing formula syntax ($\setFormula \subset \setGFormula$) in order to maintain compatibility with the static system.
+Note that we want to strictly extend the existing formula syntax in order to maintain compatibility with the static system, i.e. $\setFormula \subset \setGFormula$ holds.
 This design goal ensures that any program considered syntactically valid by the static system will still be syntactically valid in the gradual system (motivated by gradual guarantee \ref{grad-guarantee}).
 
 We decorate formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
-Using the concept of abstract interpretation, we want to reason about gradual formulas by mapping them back to a set of static formulas (called “concretization”) and then applying static reasoning to that set.
+Using the concept of abstract interpretation, we want to reason about gradual formulas by mapping them back to a set of satisfiable static formulas (called “concretization”) and then applying static reasoning to that set.
+Intuitively, a program state satisfies a gradual formula iff it satisfies (at least) on of the static formulas of the its concretization.
+(This intuition is formalized in section \ref{ssec:lifting-predicates}.)
+A gradual formula
 
 % An example of that approach ... in section \ref{sec:lifting-predicates-and}
 
 Without knowing specifics of the syntax extension, we can already formalize this approach for static formulas:
 \begin{definition}[Concretization]~\\
-    Let $\gamma : \setGFormula \rightarrow \PP(\setFormula)$ be defined as follows:
+    Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as follows:
     \begin{align*}
-    &\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormula\\
-    &\textit{other cases to be defined when extending the syntax}
+    &\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormulaA\\
+    &\gamma(\grad{\phi}) = \textit{to be defined when extending the syntax}     \quad\quad \forall \phi \in \setGFormulaA\\
+    &\gamma(\grad{\phi}) ???
     \end{align*}
 \end{definition}
 

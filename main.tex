@@ -145,13 +145,14 @@
 \newcommand{\sfrme}{\ensuremath{\vdash_\texttt{frm}}\,}
 \newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
 % evaluation
-\newcommand{\evalphiGen}[2]{#1 \vDash #2}
 \newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
 \newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
-\newcommand{\evalphix}[4]{#1,#2,#3 \vDash #4}
-\newcommand{\evalphi}{\evalphix H \rho A}
+\newcommand{\evalphiGen}[2]{#1 \vDash #2}
+\newcommand{\evalgphiGen}[2]{#1 \,\,\grad{\vDash}\,\, #2}
+\newcommand{\evalphi}[1]{\evalphiGen {H,\rho,A} {#1}}
+\newcommand{\evalgphi}[1]{\evalgphiGen {H,\rho,A} {#1}}
 \newcommand{\phiImplies}[2]{{#1} \underset{\phi}{\implies} {#2}}
-\newcommand{\gphiImplies}[2]{{#1} \underset{\phi}{\grad{\implies}} {#2}}
+\newcommand{\gphiImplies}[2]{{#1} \,\,\underset{\phi}{\grad{\implies}}\, {#2}}
 % extraction
 \newcommand{\fieldType}{\predicate{fieldType$_p$}}
 \newcommand{\fields}{\predicate{fields$_p$}}
@@ -159,6 +160,7 @@
 \newcommand{\mpost}{\predicate{mpost$_p$}}
 \newcommand{\mmethod}{\predicate{method$_p$}}
 % other
+\newcommand{\static}{\predicate{static}}
 \newcommand{\dom}{\predicate{dom}}
 \newcommand{\writesTo}{\predicate{writesTo}}
 \newcommand{\sType}[3]{{#1} \vdash {#2} : {#3}}

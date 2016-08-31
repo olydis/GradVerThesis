@@ -5,29 +5,45 @@ The concepts are directly applicable to predicates with different arity or with 
 The lifted version we are targeting has signature $\grad{P} \subseteq \setGFormula \times \setGFormula$.
 W.l.o.g. we further assume that $P$ appears unnegated in the axiomatic semantics (otherwise we simply regard the negation of that predicate as $P$).
 
-Restrictions imposed by the gradual guarantee:
+Rules emerging from the gradual guarantee:
 \begin{description}
-    \item[Introduction of Gradual System]~\\
+    \item[Introduction]~\\
     Having source code that is considered valid by the static verification system, the same source code must be considered valid by the gradual verification system.
     In other words, switching to the gradual system may never “break the code”.
     This means that arguments satisfying $P$ must satisfy $\grad{P}$:
-    \begin{displaymath}
-    \forall \phi_1, \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \grad{P}(\phi_1, \phi_2)
-    \end{displaymath}
-    or equivalently, using set notation
+    \begin{mathpar}
+        \inferrule* [Right=GPredIntro]
+        {
+            P(\phi_1, \phi_2)
+        }
+        {
+            \grad{P}(\phi_1, \phi_2)
+        }
+    \end{mathpar}
+    
+    Or equivalently, using set notation
     \begin{displaymath}
     P \subseteq \grad{P}
     \end{displaymath}
     
-    \item[Reducing Precision/Monotonicity???]~\\
+    \item[Monotonicity]~\\
     A central point of a gradual verification system is enabling programmers to specify contracts with less precision.
     Source code that is rejected by the verifier might get accepted after reducing precision.
     If the opposite would happen, though, that would be highly counter-intuitive and ...??? workflow.
     To prevent such behavior, we expect satisfied predicates to still be satisfied after reducing the precision of arguments:
     
-    \begin{displaymath}
-    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_1'}, \grad{\phi_2'} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \wedge \grad{\phi_2} \sqsubseteq \grad{\phi_2'} \wedge \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \implies \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
-    \end{displaymath}
+    \begin{mathpar}
+        \inferrule* [Right=GPredMon]
+        {
+            \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \\
+            \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \\
+            \grad{\phi_2} \sqsubseteq \grad{\phi_2'}
+        }
+        {
+            \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
+        }
+    \end{mathpar}
+    
     or equivalently, thinking of predicates as boolean functions
     \begin{displaymath}
     \grad{P}  \text{ is monotonic w.r.t. $\sqsubseteq$}
@@ -38,30 +54,59 @@ Restrictions imposed by the gradual guarantee:
     \end{displaymath}
 \end{description}
 
-\begin{definition}[Soundness of Lifted Predicate]
-    A lifted predicate is \textbf{sound} if it satisfies both ?????
+\begin{definition}[Valid/Sound??? Predicate Lifting]
+    A lifted predicate is called \textbf{sound/valid} if it is closed under the above rules.
 \end{definition}
 
-For sound rules this holds:
-\begin{displaymath}
-\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})
-\end{displaymath}
+Note that $\grad{P} = \setGFormula \times \setGFormula$ is a sound predicate lifting of any binary predicate $P \subseteq \times \setFormula$.
+% Apparently satisfying the gradual guarantee only gives a lower bound to lifted predicates.
 
-Note that there is a “smallest” set/predicate??? ... induced by the rules.
-
-\begin{definition}[Optimality of Lifted Predicate]
-    A lifted predicate is \textbf{optimal} if there exists no ???
+\begin{definition}[Consistent/Optimal??? Predicate Lifting]
+    A lifted predicate is called \textbf{consistent/optimal} if it is the smallest set closed under the above rules.
 \end{definition}
 
-...same as “consistent lifting” in AGT!
+This definition coincides with the definition of consistent predicate lifting in AGT:
 
-% TODO: delve into what is important, what is optional, etc.
-\begin{displaymath}
-\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \iff \grad{P}(\grad{\phi_1}, \grad{\phi_2})
+\begin{lemma}[Consistent Predicate Lifting (Direct Definition)]\label{lemma:consistent-pred-lifting-direct}
+    Let $\grad{P} \subseteq \setGFormula \times \setGFormula$ be defined as
+    \begin{displaymath} 
+    \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)
+    \end{displaymath}
+    $\grad{P}$ is the only consistent lifting of $P$.
+\end{lemma} %PROOF
+
+% delve more into what is important, what is optional, etc.?
+
+% For sound rules this holds:
+% \begin{displaymath}
+% \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})
+% \end{displaymath}
+
+\textbf{Consistent lifting of common predicates:}
+
+%% evalphi
+\begin{lemma}[Consistent Lifting of Evaluation]~\\
+    Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined as
+    \begin{displaymath} 
+    \evalgphiGen {\pi} {\grad{\phi}} ~\defiff~ \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen {\pi} {\phi}
+    \end{displaymath}
+    Then $~\evalgphiGen{\cdot}{\cdot}~$ is a consistent lifting of $~\evalphiGen{\cdot}{\cdot}~$.
+\end{lemma}
+
+Note that above definition can be further simplified if concretization is defined as in section \ref{sec:gradual-formulas}:
+\begin{displaymath} 
+\evalgphiGen {\pi} {\grad{\phi}} ~\iff~ \evalphiGen {\pi} {\static(\phi)} 
 \end{displaymath}
 
+%% phiImplies
+\begin{lemma}[Consistent Lifting of Evaluation]~\\
+    Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined as
+    \begin{displaymath} 
+    \gphiImplies {\grad{\phi_1}} {\grad{\phi_2}} ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies {\phi_1} {\phi_2}
+    \end{displaymath}
+    Then $~\gphiImplies{\cdot}{\cdot}~$ is a consistent lifting of $~\phiImplies{\cdot}{\cdot}~$.
+\end{lemma}
 
 
-%TODO: restate that in terms of deduction stuff?
-
+% TODO examples: evaluation and implication (at least)
 

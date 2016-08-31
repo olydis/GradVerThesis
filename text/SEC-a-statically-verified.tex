@@ -63,8 +63,7 @@ Requirements:
     Preservation guarantees that any reachable program state satisfies potentially annotated formulas, trivially implying that the formula is satisfiable.
     
     This property is true regardless of whether \gsvl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
-    
-    % ASSUME only satisfiable formulas occur?
+    Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
     
 \item[Static Semantics]~\\
     We assume that there is a Hoare logic (HL)
@@ -72,9 +71,9 @@ Requirements:
     \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormulaA \times \setStmts \times \setFormulaA
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
-    Note that we only care about the 
+    While the Hoare logic might be defined for arbitrary formulas in practice, we only ever reason about it in presence of satisfiable formulas, hence the “restricted domain”???.
     
-    In practice, this predicate might have further parameters. 
+    In practice, this predicate might also have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
     
