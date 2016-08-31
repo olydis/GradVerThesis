@@ -40,82 +40,18 @@ Requirements:
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
     
-    We further assume that this predicate is monotonic in the precondition w.r.t. implication:
-    \begin{align*}
-    \forall \overline{s} \in \setStmts.~& \\
-    \forall \phi_1, \phi_2 \in \setFormula.~&\\
-    \forall \phi_1' \in \setFormula.~&
-    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\
-    \implies
-    \exists \phi_2' \in \setFormula.~&
-    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~~ \thoare {~} {\phi_2} {\overline{s}} {\phi_2'}
-    \end{align*}
+    %% NOT REQUIRED AFTER ALL
+    %We further assume that this predicate is monotonic in the precondition w.r.t. implication:
+    %\begin{align*}
+    %\forall \overline{s} \in \setStmts.~& \\
+    %\forall \phi_1, \phi_2 \in \setFormula.~&\\
+    %\forall \phi_1' \in \setFormula.~&
+    %(\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\
+    %\implies
+    %\exists \phi_2' \in \setFormula.~&
+    %(\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {\overline{s}} {\phi_2'}
+    %\end{align*}
     
-    
-    %%% ==== ?
-    
-    We further assume that there is always some way to decompose judgments about a sequence of statements into judgments about parts of that sequence, all the way down to single statements. 
-    Usually this is achieved with a sequence rule. Examples:
-    \begin{mathpar}
-        \inferrule* [Right=VerSeqSyntaxDriven]
-        {
-            \thoare {~} {\phi_p} {{s_1}} {\phi_q} \\
-            \thoare {~} {\phi_q} {\overline{s_2}} {\phi_r}
-        }
-        {
-            \thoare {~} {\phi_p} {{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
-        }
-    \end{mathpar}
-    \begin{mathpar}
-        \inferrule* [Right=VerSeqFlexible]
-        {
-            \thoare {~} {\phi_p} {\overline{s_1}} {\phi_{q1}} \\
-            \phi_{q1} \implies \phi_{q2}\\
-            \thoare {~} {\phi_{q2}} {\overline{s_2}} {\phi_r}
-        }
-        {
-            \thoare {\Gamma} {\phi_p} {\overline{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
-        }
-    \end{mathpar}
-    
-    %% verify-predicate
-    Some axiomatic semantics are not flexible enough to directly use them for checking method contracts.
-    For example a rule like
-    \begin{mathpar}
-        \inferrule* [Right=VerReturn]
-        {
-        }
-        {
-            \thoare {~} {\phi} {\sReturn{x}} {\phi /\ \phiEq{\eresult}{x}}
-        }
-    \end{mathpar}
-    cannot prove
-    \begin{lstlisting}
-    int test(int noise)
-        requires noise != 42;
-        ensures  result > 0;
-    {
-        return 3;
-    }
-    \end{lstlisting}
-    as there is no matching instantiation of the rule.
-    
-    By definition of implication, a sound verification system stays sound if we embed the axiomatic semantics between implications and instead use the resulting predicate for verification. % PROOF?
-    \begin{definition}[Generic Verification Predicate]
-        \begin{align*}
-        \verify(\phi_{pre}, \overline{s}, \phi_{post}) \overset{\predicate{def}}{\iff} \exists \phi_{pre}', \phi_{post}'.
-        &~~ \phi_{pre} \implies \phi_{pre}' \\
-        \wedge& \thoare {~} {\phi_{pre}'} {\overline{s}} {\phi_{post}'} \\
-        \wedge&~~ \phi_{post}' \implies \phi_{post}
-        \end{align*}
-    \end{definition}
-    Note that the predicate is equivalent to the axiomatic semantics, in case it already takes implications into account.
-    Yet, uncoupling axiomatic semantics and the actual verification predicate will prove extremely useful for gradualization.
-    
-    % We assume that \gsvl has this kind of flexibility.
-    
-    To abstract from specific implementations and not force flexibility 
-
 \item[Notion of Well-Formedness]
     
     

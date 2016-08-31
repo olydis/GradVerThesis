@@ -1,0 +1,91 @@
+
+%% Soundness
+Recall what soundness means for a static verification system:
+Assume that $\thoare {~} {\phi_{pre}} {\overline{s}} {\phi_{post}}$ holds in the static verification system.
+Given a program state that satisfies $\phi_{pre}$, soundness guarantees us both that execution won't get blocked when executing $\overline{s}$ (progress) and that the program state satisfies $\phi_{post}$ afterwards (preservation).
+
+%% Rule-wise approach
+
+
+% PROBLEM 1 - preservation broken
+
+% now: preservation broken - only fix puts verifier in dilemma!
+It turns out that additional measures are necessary to ensure for both progress and preservation.
+We will first focus on preservation, assuming that statements do not cause the runtime to be in a blocked state.
+
+Consider a sound static verification system that allows verifying:
+\begin{mathpar}
+\inferrule* [Right=VerAssign]
+{ ... }
+{
+    \thoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}
+}
+\end{mathpar}
+
+With the rules of lifting we can deduce
+\begin{align*}
+&&\thoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&\\
+\overset{Introduction?}{\implies}&&
+\gthoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&\\
+\overset{Monotonicity?}{\implies}&&
+\gthoare {~} {\qm} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&
+\end{align*}
+
+Preservation is apparently not ensured in a runtime that lets the assignment succeed: 
+While the precondition does not put any restriction on the value of \ttt{x}, the postcondition claims that \ttt{x} does have a certain value.
+From a logical perspective the runtime can fix this problem in two ways:
+\begin{description}
+    \item[“Fix” the program state]~\\
+    The only way to actually make the postcondition true would involve altering the program state to satisfy the formula.
+    This is not an option as it actively interferes with the program state.
+    Verification conditions should not bend reality in order to hold, they have a rather passive role of checking reality.
+    
+    \item[Termination]~\\
+    Preservation is only expected to hold in case execution actually reaches the postcondition.
+    The runtime could artificially terminate in case the postcondition is not satisfied.
+    This approach is unsatisfying as it trivially achieves soundness, effectively making the notion worthless:
+    Any system can be made sound by just terminating exceptionally whenever progress or preservation are about to be violated.
+\end{description}
+
+% other problem: compositition and guessing
+
+% PROBLEM 2 - compiler in dilemma
+Note that the intermediate formula $\phiEq{x}{2}$ does not show up in the final judgment, i.e. it was up to the verifier to “come up” with a formula that makes the overall proof work -- a valid alternative would have been $\phiNeq{x}{0}$.
+Still, preservation also applies to “hidden” judgments (after all we could look at them isolated, so soundness must apply), so we are guaranteed that the program state satisfies $\phiEq{x}{2}$ (and also $\phiNeq{x}{0}$) after the first statement is executed.
+
+The same reasoning does not apply to the lifted verification predicate: 
+
+
+Yet, soundness guarantees that
+
+
+Apparently the precondition does not restrict the program state before executing the assertion.
+Let's assume that we 
+
+In the static system, we are guaranteed that the runtime satisfies a postcondition, given that the precondition should execution
+There is something fundamentally wrong with this 
+
+
+
+% non-deterministic static hoare rules make “quality of lifting” reasoning hard! if even {a}...{true} is valid statically, how to express/measure “badness” of emitting {a}...{?}
+% Hoare rules (in a sound language) GUARANTEE that intermediate formulas hold at runtime 
+% non-deterministic gradual hoare rules do NOT guarantee that!
+
+% take burdon of chosing “good” intermediate formulas off verifier:
+\begin{verbatim}
+{ ? }
+x := 2;
+{ ? } // too weak, not optimal
+assert (x = 3);
+\end{verbatim}
+\begin{verbatim}
+{ ? }
+assert (x != 0);
+{ (x = 42) } // too strong, “somewhat unsound!!!” (no guarantee of holding at runtime, assuming previsous formula held)
+
+// BUT supported by instantiation!!!
+
+{ (x = 42) }
+assert (x != 0);
+{ (x = 42) }
+\end{verbatim}

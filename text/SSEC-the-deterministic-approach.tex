@@ -1,0 +1,72 @@
+% proof by example: optimal deterministic lifting does not induce optimal predicate lifting!
+% not verifiable with consistent predicate
+% { ? }
+% release acc(x.f)
+% { ? * acc(x.f) }
+%
+% but
+% { ? }
+% release acc(x.f)
+% { ? }
+% =>
+% { ? * acc(x.f) }
+%
+%
+% not verifiable with consistent predicate
+% { ? }
+% x := random();
+% { (x = 0) }
+%
+% but
+% { ? }
+% x := random();
+% { ? }
+% =>
+% { (x = 0) }
+
+The approach we propose is based on the idea to treat the Hoare predicate as a (multivalued) function, mapping preconditions to the set of possible/verifiable postconditions.
+We can obtain a lifted version of this hypothetical construct and demand certain properties similar to the ones defined in section \ref{text/SSEC-lifting-functions}:
+
+\begin{definition}[Deterministic Lifting]
+    Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
+    \begin{description}
+        \item[Introduction]~\\
+        Note: Similar to introduction condition of lifted partial functions, but using a predicate instead of function.
+        \begin{displaymath}
+        \forall (\phi_1, \phi_2) \in P.~ \phi_2 \sqsubseteq \dgrad{P}(\phi_1)
+        \end{displaymath}
+        
+        \item[Monotonicity]~\\
+        Note: Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
+        \begin{displaymath}
+        \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\dgrad{P}) \implies \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
+        \end{displaymath}
+    \end{description}
+\end{definition}
+
+...assume we have obtained deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare triple. % TODO: notation talk
+This gradual partial function has desirable properties:
+\begin{description}
+    \item[Obtaining Sound Gradual Lifting]
+    \begin{lemma}[Obtaining Sound Gradual Lifting]~\\
+        $\gthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2}} ~~\iff~~ \exists \grad{\phi_2'}.~ \gthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2'}} \wedge \gphiImplies {\grad{\phi_2'}} {\grad{\phi_2}}$
+        is sound gradual lifting.
+    \end{lemma}
+    
+    \item[Determinism]~\\
+    The verifier has no more degrees of freedom as it is now dealing with a function instead of a predicate. % So also no more of the problems/dilemmas apply
+    \item[Preservation]~\\
+    A (gradual) postcondition returned by the lifted function is guaranteed to reflect the execution state after executing the statements in question (given that the precondition was met).
+    \item[Composability]~\\
+    Composing two ...
+\end{description}
+
+ deterministic way of reasoning about programs.
+
+
+
+The approach we propose is based on the following observation:
+\begin{lemma}[Deterministic Lifting]
+    There exists a 
+    $\thoare {~} {\cdot} {\cdot} {\cdot}$
+\end{lemma}
