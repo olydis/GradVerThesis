@@ -193,6 +193,14 @@
 \newcommand{\sstep}[4]{\sstepGeneric {#1} {#2} {} {#3} {#4}}
 \newcommand{\ssteps}[4]{\sstepGeneric {#1} {#2} * {#3} {#4}}
 
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+        \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+        #1 % the function
+        \vphantom{\big|} % pretend it's a little taller at normal size
+        \right|_{#2} % this is the delimiter
+    }}
+
+
 
 \begin{document}
 

@@ -7,7 +7,7 @@ Again, the concepts are directly applicable to functions with higher arity.
 
 Restrictions imposed by the gradual guarantee:
 \begin{description}
-    \item[Introduction of Gradual System]~\\
+    \item[Introduction]~\\
     We ensure that our verification system is “immune” to reduction of precision.
     Thus, when passing a static formula $\phi$ to $\grad{f}$, the result must be the same or less precise than $f(\phi)$.
     \begin{displaymath}
@@ -19,23 +19,54 @@ Restrictions imposed by the gradual guarantee:
     %\end{displaymath}
     
     \item[Monotonicity]~\\
-    Reducing precision of a parameter, may only result in a loss of precision of the result.
+    Reducing precision of a parameter may only result in a loss of precision of the result.
     In other words, the function must be monotonic w.r.t. $\sqsubseteq$ (in every argument).
     
     \begin{displaymath}
-    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})
+    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
+    \grad{\phi_1} \sqsubseteq \grad{\phi_2} 
+    \implies 
+    \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})
     \end{displaymath}
 \end{description}
 
+\begin{definition}[Valid/Sound??? Function Lifting]
+    A lifted function is \textbf{sound/valid} if it adheres to the above rules.
+\end{definition}
 
-Holds (but prob. unimportant...)
-\begin{align*}
-\forall \phi \in \setFormula.~ &f(\phi) \sqsubseteq \grad{f}(\phi)\\
-~\wedge~
-\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &\grad{\phi_1} \sqsubseteq \grad{\phi_2} \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})\\
-\implies\\
-\forall \grad{\phi} \in \setGFormula, \phi \in \setFormula.~ &\phi \sqsubseteq \grad{\phi} \implies f(\phi) \sqsubseteq \grad{f}(\grad{\phi})\\
-\end{align*}
+Note that the rules for sound lifting only give a lower bound for the gradual return values.
+Thus a function $\grad{f} : \setGFormula \rightarrow \setGFormula$ constantly returning $\qm$ is a sound lifting of any function $f : \setFormula \rightarrow \setFormula$.
+
+\begin{definition}[Consistent/Optimal??? Function Lifting]
+    A sound lifted function is \textbf{consistent/optimal} if its return values are as precise as possible.
+    %TODO: formally?
+\end{definition}
+
+This definition coincides with the definition of consistent function lifting in AGT:
+
+\begin{lemma}[Consistent Function Lifting (Direct Definition)]\label{lemma:consistent-func-lifting-direct}~\\
+    Let $\alpha : \PP(\setFormulaA) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ f \}$-partial Galois connection.\\ 
+    Let $\grad{f} : \setGFormula \rightarrow \setGFormula$ be defined as
+    \begin{displaymath}
+    \grad{f}(\grad{\phi}) \defeq \alpha(\overline{f}(\gamma(\grad{\phi})))
+    \end{displaymath}
+    Then $\grad{f}$ is the only consistent lifting of $f$.
+\end{lemma} %PROOF
+
+
+\textbf{Examples}
+
+
+
+
+%Holds (but prob. unimportant...)
+%\begin{align*}
+%\forall \phi \in \setFormula.~ &f(\phi) \sqsubseteq \grad{f}(\phi)\\
+%~\wedge~
+%\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &\grad{\phi_1} \sqsubseteq \grad{\phi_2} \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})\\
+%\implies\\
+%\forall \grad{\phi} \in \setGFormula, \phi \in \setFormula.~ &\phi \sqsubseteq \grad{\phi} \implies f(\phi) \sqsubseteq \grad{f}(\grad{\phi})\\
+%\end{align*}
 
 
 % TODO: Partiality same as predicates + monotonicity in terms of \sqsubseteq???

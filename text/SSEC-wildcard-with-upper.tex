@@ -4,15 +4,15 @@ To allow combining wildcards with static knowledge, we might view \qm merely as 
 \grad{\phi} ::= \phi ~|~ \withqmGen{\phi}
 \end{displaymath}
 
-We pose $\qm \defeq \withqmGen{\phiTrue}$
+We pose $\qm \defeq \withqmGen{\phiTrue}$.
 
 We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
 There are two ways to express this containment, resulting in different concretizations.
 \begin{description}
     \item[Syntactic]\quad
-    $\gamma_1(\withqmGen{\phi}) := \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormulaA ~\}$
+    $\gamma_1(\withqmGen{\phi}) = \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormulaA ~\}$
     \item[Semantic]\quad
-    $\gamma_2(\withqmGen{\phi}) := \{~ \phi' \in \setFormulaA ~|~ \phi' \implies \phi ~\}$
+    $\gamma_2(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phi' \implies \phi ~\}$
 \end{description}
 
 \begin{lemma} 
@@ -22,3 +22,4 @@ There are two ways to express this containment, resulting in different concretiz
     $\forall \grad{\phi} \in \setGFormula.~ \gamma_1(\grad{\phi}) = \gamma_2(\grad{\phi})$ modulo equivalence
 \end{lemma}
 
+Note that $\gamma_1(\qm) = \gamma_2(\qm) = \setFormulaA$, meaning that this approach of extending the formula syntax is compatible with (but superior to) the approach introduced in the previous section.

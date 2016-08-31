@@ -20,9 +20,12 @@ Without knowing specifics of the syntax extension, we can already formalize this
 \begin{definition}[Concretization]~\\
     Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as follows:
     \begin{align*}
-    &\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormulaA\\
-    &\gamma(\grad{\phi}) = \textit{to be defined when extending the syntax}     \quad\quad \forall \phi \in \setGFormulaA\\
-    &\gamma(\grad{\phi}) ???
+    &\gamma(\phi) = 
+        \begin{cases}
+        \{~ \phi ~\}  & \phi \in \setFormulaA\\
+        \emptyset     & \textit{otherwise}
+        \end{cases}\\
+    &\gamma(\grad{\phi}) = \textit{to be defined when extending the syntax}     \quad\quad \forall \phi \in \setGFormula\\
     \end{align*}
 \end{definition}
 

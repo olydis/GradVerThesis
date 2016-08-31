@@ -2,3 +2,17 @@
 % - here: always part of the concretization, ... later we will see counterexample
 
 % TODO: introduce ensureDyn-function? with some lemmas about when it returns true?
+
+
+Because of its generality, we will pursue the approach introduced in section \ref{ssec:wildcard-with-upper} for the remainder of this chapter.
+As concretization we chose the semantic version, as it is more flexible than the syntactic one in practice.
+For reference, the full definitions:
+\begin{align*} 
+&\text{Syntax:}\\
+&\grad{\phi} ::= \phi ~|~ \withqmGen{\phi}\\
+\\
+&\text{Concretization:}\\
+&\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormulaA\\
+&\gamma(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phi' \implies \phi ~\}\\
+&\gamma(\grad{\phi}) = \emptyset    \quad\textit{otherwise}
+\end{align*}

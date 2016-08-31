@@ -55,14 +55,14 @@ Rules emerging from the gradual guarantee:
 \end{description}
 
 \begin{definition}[Valid/Sound??? Predicate Lifting]
-    A lifted predicate is called \textbf{sound/valid} if it is closed under the above rules.
+    A lifted predicate is \textbf{sound/valid} if it is closed under the above rules.
 \end{definition}
 
-Note that $\grad{P} = \setGFormula \times \setGFormula$ is a sound predicate lifting of any binary predicate $P \subseteq \times \setFormula$.
-% Apparently satisfying the gradual guarantee only gives a lower bound to lifted predicates.
+Note that the rules for sound lifting only give a lower bound for the predicate.
+Thus $\grad{P} = \setGFormula \times \setGFormula$ is a sound predicate lifting of any binary predicate $P \subseteq \setFormula \times \setFormula$.
 
 \begin{definition}[Consistent/Optimal??? Predicate Lifting]
-    A lifted predicate is called \textbf{consistent/optimal} if it is the smallest set closed under the above rules.
+    A sound lifted predicate is \textbf{consistent/optimal} if it is the smallest set closed under the above rules.
 \end{definition}
 
 This definition coincides with the definition of consistent predicate lifting in AGT:
@@ -72,7 +72,7 @@ This definition coincides with the definition of consistent predicate lifting in
     \begin{displaymath} 
     \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)
     \end{displaymath}
-    $\grad{P}$ is the only consistent lifting of $P$.
+    Then $\grad{P}$ is the only consistent lifting of $P$.
 \end{lemma} %PROOF
 
 % delve more into what is important, what is optional, etc.?
@@ -88,18 +88,19 @@ This definition coincides with the definition of consistent predicate lifting in
 \begin{lemma}[Consistent Lifting of Evaluation]~\\
     Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined as
     \begin{displaymath} 
-    \evalgphiGen {\pi} {\grad{\phi}} ~\defiff~ \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen {\pi} {\phi}
+    \evalgphiGen {\pi} {\grad{\phi}} ~\defiff~ \evalphiGen {\pi} {\static(\phi)}
     \end{displaymath}
     Then $~\evalgphiGen{\cdot}{\cdot}~$ is a consistent lifting of $~\evalphiGen{\cdot}{\cdot}~$.
 \end{lemma}
 
-Note that above definition can be further simplified if concretization is defined as in section \ref{sec:gradual-formulas}:
-\begin{displaymath} 
-\evalgphiGen {\pi} {\grad{\phi}} ~\iff~ \evalphiGen {\pi} {\static(\phi)} 
-\end{displaymath}
+We define $\setGFormulaA = \{~ \grad{\phi} \in \setGFormula ~|~ \exists \pi.~ \evalgphiGen {\pi} {\grad{\phi}} ~\}$ as the set of satisfiable gradual formulas.
+
+\begin{lemma}[Restricted Domain of Concretization]~\\
+    $\restr{\gamma}{\setGFormulaA}$ never returns the empty set.
+\end{lemma}
 
 %% phiImplies
-\begin{lemma}[Consistent Lifting of Evaluation]~\\
+\begin{lemma}[Consistent Lifting of Implication]~\\
     Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined as
     \begin{displaymath} 
     \gphiImplies {\grad{\phi_1}} {\grad{\phi_2}} ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies {\phi_1} {\phi_2}
