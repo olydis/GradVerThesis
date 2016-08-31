@@ -45,12 +45,14 @@ We can obtain a lifted version of this hypothetical construct and demand certain
 \end{definition}
 
 ...assume we have obtained deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare triple. % TODO: notation talk
-This gradual partial function has desirable properties:
+This gradual partial function has desirable properties: % use lemmas only? PROOFS
 \begin{description}
     \item[Obtaining Sound Gradual Lifting]
     \begin{lemma}[Obtaining Sound Gradual Lifting]~\\
-        $\gthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2}} ~~\iff~~ \exists \grad{\phi_2'}.~ \gthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2'}} \wedge \gphiImplies {\grad{\phi_2'}} {\grad{\phi_2}}$
-        is sound gradual lifting.
+        \begin{displaymath}
+        \gthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2}} ~~\defiff~~ \exists \grad{\phi_2'}.~ \dgthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2'}} \wedge \gphiImplies {\grad{\phi_2'}} {\grad{\phi_2}}
+        \end{displaymath}
+        is a sound gradual lifting.
     \end{lemma}
     
     \item[Determinism]~\\
@@ -61,12 +63,5 @@ This gradual partial function has desirable properties:
     Composing two ...
 \end{description}
 
- deterministic way of reasoning about programs.
 
-
-
-The approach we propose is based on the following observation:
-\begin{lemma}[Deterministic Lifting]
-    There exists a 
-    $\thoare {~} {\cdot} {\cdot} {\cdot}$
-\end{lemma}
+% EXAMPLE LIFTINGS

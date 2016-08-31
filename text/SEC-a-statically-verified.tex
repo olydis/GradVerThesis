@@ -27,15 +27,53 @@ Requirements:
     
     % EXAMPLES examples examples
     
-    This also induces notion of implication!!! % TODO
-    % also talk about partially ordered set induced by that... name largest element "true" (expect that to exist!), etc.
+    We can derive a notion of satisfiability, implication and equivalence from this evaluation predicate.
+    
+    \begin{definition}[Formula Satisfiability]~\\
+        A formula $\phi$ is \textbf{satisfiable} iff
+        \begin{displaymath}
+        \exists \pi \in \setProgramState.~ \evalphiGen{\pi}{\phi}
+        \end{displaymath}
+        Let $\setFormulaA \subseteq \setFormula$ be the set of satisfiable formulas.
+    \end{definition}
+    
+    \begin{definition}[Formula Implication]~\\
+        A formula $\phi_1$ \textbf{implies} formula $\phi_2$ (written $\phiImplies{\phi_1}{\phi_2}$) iff
+        \begin{displaymath}
+        \forall \pi \in \setProgramState.~ \evalphiGen{\pi}{\phi_1} \implies \evalphiGen{\pi}{\phi_2}
+        \end{displaymath}
+    \end{definition}
+    
+    \begin{definition}[Formula Equivalence]~\\
+        Two formulas $\phi_1$ and $\phi_2$ are \textbf{equivalent} (written $\phi_1 \equiv \phi_2$) iff
+        \begin{displaymath}
+        \phiImplies{\phi_1}{\phi_2} ~~\wedge~~ \phiImplies{\phi_2}{\phi_1}
+        \end{displaymath}
+    \end{definition} 
+    
+    % TODO examples
+    
+    \begin{lemma}[Partial Order of Formulas]~\\
+        The implication predicate is a partial order on $\setFormula$.
+    \end{lemma}
+    % PROOF
+    
+    We assume that there is a largest element $\phiTrue \in \setFormula$.
+    Note that the presence of an unsatisfiable formula (as invariant, pre-/postcondition, assertion, ...) in a sound verification system implies that the corresponding source code location is unreachable:
+    Preservation guarantees that any reachable program state satisfies potentially annotated formulas, trivially implying that the formula is satisfiable.
+    
+    This property is true regardless of whether \gsvl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
+    
+    % ASSUME only satisfiable formulas occur?
     
 \item[Static Semantics]~\\
-    We assume that there is an axiomatic semantics
+    We assume that there is a Hoare logic (HL)
     \begin{displaymath}
-    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmts \times \setFormula
+    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormulaA \times \setStmts \times \setFormulaA
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
+    Note that we only care about the 
+    
     In practice, this predicate might have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.

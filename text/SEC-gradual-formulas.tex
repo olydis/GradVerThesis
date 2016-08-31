@@ -1,10 +1,25 @@
+% It is one of our design goals to make any program of the static system a valid program of the 
+% the resulting gradual system compatible with the old one (otherwise it would trivially not  satisfy the gradual guarantee \ref{grad-guarantee}).
 
-% TODO: somewhere, make clear that it is design goal (gradual guarantee \ref{grad-guarantee}) to make resulting system compatible with old one => must EXTEND the syntax
+We introduce the concepts of gradual verification by introducing a wildcard formula $\qm$ into the formula syntax, resulting in a new set of gradual formulas $\setGFormula$.
+There are different ways to introduce the wildcard, we will describe two common options in the following sections.
 
-To introduce dynamic verification into a fully static system, the formula syntax has to be extended... % TODO
-- mention wildcard “?”
-- mention $\grad{\phi} \in \setGFormula$, $\setFormula \subset \setGFormula$
-- mention that semantics defined via concretization (abstract interpretation), i.e. mapping back to...
-    - in order for the concretization to “make sense” it must be singleton constructor for \setFormula
-        - non-empty: violate extension principle
-        - not more: in absence of graduality, no change of semantics desired
+%% COMMON KNOWLEDGE
+Note that we want to strictly extend the existing formula syntax ($\setFormula \subset \setGFormula$) in order to maintain compatibility with the static system.
+This design goal ensures that any program considered syntactically valid by the static system will still be syntactically valid in the gradual system (motivated by gradual guarantee \ref{grad-guarantee}).
+
+We decorate formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
+Using the concept of abstract interpretation, we want to reason about gradual formulas by mapping them back to a set of static formulas (called “concretization”) and then applying static reasoning to that set.
+
+% An example of that approach ... in section \ref{sec:lifting-predicates-and}
+
+Without knowing specifics of the syntax extension, we can already formalize this approach for static formulas:
+\begin{definition}[Concretization]~\\
+    Let $\gamma : \setGFormula \rightarrow \PP(\setFormula)$ be defined as follows:
+    \begin{align*}
+    &\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormula\\
+    &\textit{other cases to be defined when extending the syntax}
+    \end{align*}
+\end{definition}
+
+% more detail about singleton mapping and why it makes sense?

@@ -7,8 +7,10 @@ This is analogous to how most gradually typed languages are realized (e.g. \ttt{
 
 Since \qm is supposed to be a placeholder for an arbitrary formula, its concretization is defined as.
 \begin{displaymath}
-\gamma(\qm) := \setFormula
+\gamma(\qm) := \setFormulaA
 \end{displaymath}
+
+% EXPLAIN why \setFormulaA
 
 This approach is limited since programmers cannot express any additional static knowledge they might have.
 For example, a programmer might resort to using the wildcard lacking some knowledge about variable \ex{x} (or being unable to express it), whereas he could give a static formula for \ex{y}, say \phiEq{y}{3}.
