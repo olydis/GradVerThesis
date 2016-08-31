@@ -54,8 +54,18 @@ This definition coincides with the definition of consistent function lifting in 
 \end{lemma} %PROOF
 
 
+
+
 \textbf{Examples}
 
+\begin{displaymath}
+\alpha(\overline{\phi}) = \min_{\sqsubseteq} {\{~ \grad{\phi} ~|~ \overline{\phi} \subseteq \gamma(\grad{\phi}) ~\}}
+\end{displaymath}
+
+The logical and operator $\phiAnd{$\cdot$}{$\cdot$}$ of our formula syntax can be viewed as a binary function on formulas.
+\begin{align*}
+\grad{f}(\grad{\phi_1}, \grad{\phi_2}) = \alpha(\{~ \phiAnd{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) ~\})
+\end{align*}
 
 
 
