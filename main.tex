@@ -97,6 +97,8 @@
 \newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
 \newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
 \newcommand{\setGFormula}{\tset{GFormula}\xspace}
+\newcommand{\setGFormulaA}{\tset{SatGFormula}\xspace}
+\newcommand{\setGFormulaB}{\tset{SfrmGFormula}\xspace}
 \newcommand{\setExpr}{\tset{Expr}\xspace}
 \newcommand{\setVal}{\tset{Val}\xspace}
 \newcommand{\setVar}{\tset{Var}\xspace}
@@ -116,8 +118,8 @@
 \newcommand{\phiNeq}[2]{\ttt{(#1 ≠ #2)}}
 \newcommand{\phiAcc}[2]{\ttt{acc(#1.#2)}}
 \newcommand{\qm}{\ttt{?}}
-\newcommand{\withqm}[1]{\ttt{\qm\:*\:$#1$}}
-\newcommand{\withqmGen}[1]{\ensuremath{\ttt{$#1\:\wedge\:\qm$}}}
+\newcommand{\withqm}[1]{\phiCons{\qm}{\ensuremath{#1}}}
+\newcommand{\withqmGen}[1]{\phiAnd{\ensuremath{#1}}{\qm}}
 % statements
 \newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3;}}
 \newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2;}}
@@ -153,6 +155,7 @@
 \newcommand{\evalgphi}[1]{\evalgphiGen {H,\rho,A} {#1}}
 \newcommand{\phiImplies}[2]{{#1} \underset{\phi}{\implies} {#2}}
 \newcommand{\gphiImplies}[2]{{#1} \,\,\underset{\phi}{\grad{\implies}}\, {#2}}
+\newcommand{\evalphix}[4]{\evalphiGen {#1,#2,#3} {#4}}
 % extraction
 \newcommand{\fieldType}{\predicate{fieldType$_p$}}
 \newcommand{\fields}{\predicate{fields$_p$}}

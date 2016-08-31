@@ -9,8 +9,16 @@ We pose $\qm \defeq \withqmGen{\phiTrue}$
 We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
 There are two ways to express this containment, resulting in different concretizations.
 \begin{description}
-    \item[Syntactic]
-    $\gamma(\withqmGen{\phi}) := \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormulaA ~\}$
-    \item[Semantic]
-    $\gamma(\withqmGen{\phi}) := \{~ \phi' \in \setFormulaA ~|~ \phi' \implies \phi ~\}$
+    \item[Syntactic]\quad
+    $\gamma_1(\withqmGen{\phi}) := \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormulaA ~\}$
+    \item[Semantic]\quad
+    $\gamma_2(\withqmGen{\phi}) := \{~ \phi' \in \setFormulaA ~|~ \phi' \implies \phi ~\}$
 \end{description}
+
+\begin{lemma} 
+    $\forall \grad{\phi} \in \setGFormula.~ \gamma_1(\grad{\phi}) \subseteq \gamma_2(\grad{\phi})$
+\end{lemma}
+\begin{lemma} 
+    $\forall \grad{\phi} \in \setGFormula.~ \gamma_1(\grad{\phi}) = \gamma_2(\grad{\phi})$ modulo equivalence
+\end{lemma}
+
