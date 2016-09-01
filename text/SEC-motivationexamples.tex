@@ -1,7 +1,5 @@
 
 \subsection{As extension to unverified setting}
-“Make dynamic setting more static”
-
 Motivating example:
 \begin{lstlisting}
 boolean hasLegalDriver(Car c)
@@ -10,25 +8,14 @@ boolean hasLegalDriver(Car c)
 }
 \end{lstlisting}
 
-Motivating example with potential leak:
-\begin{lstlisting}
-boolean hasLegalDriver(Car c)
-{
-    allocateSomething();
-    boolean result = c.driver.age >= 18;
-    releaseSomething();
-    return result;
-}
-\end{lstlisting}
-
 Motivating example with argument validation:
 \begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
     if (!(c != null))
-        throw new IllegalArgumentException("expected c != null");
+        throw new IllegalArgException("expected c != null");
     if (!(c.driver != null))
-        throw new IllegalArgumentException("expected c.driver != null");
+        throw new IllegalArgException("expected c.driver != null");
         
     // business logic (requires 'c.driver.age' to evaluate)
 }
@@ -45,7 +32,7 @@ boolean hasLegalDriver(Car c)
 
 There are two basic ways to turn this annotation into a guarantee:
 \begin{description}
-    \item[Static Verification (run ESC/Java \cite{leino2000esc})]~\\
+    \item[Static Verification (e.g. ESC/Java \cite{leino2000esc})]~\\
     In the unlikely event that the verifier can prove the precondition at all call sites, our problem is solved.
     Otherwise, we have to enhance the call sites in order to convince the verifier.
     Choices:
@@ -60,14 +47,12 @@ There are two basic ways to turn this annotation into a guarantee:
     At least there is a performance benefit: 
     Runtime checks (originally part of every call) are now only necessary in places where verification would not succeed otherwise.
     
-    \item[Runtime Assertion Checking (RAC, run JML4c, TODO: http://www.cs.utep.edu/cheon/download/jml4c/doc.php)]~\\
+    \item[Runtime Assertion Checking (e.g. run JML4c \cite{sarcar2010new}]~\\
     This approach basically converts the annotation back into a runtime check equivalent to our manual argument validation.
-    It is therefore less invasive, not requiring further changes to the code, but also lacks the advantages of static verification.
+    It is therefore less invasive, not requiring further changes to the code, but also lacks the advantages (no perf. impact, static guarantee) of static verification.
 \end{description}
 
 \subsection{As extension to fully verified setting}
-“Make static setting more dynamic”
-
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
     requires 0 < start;

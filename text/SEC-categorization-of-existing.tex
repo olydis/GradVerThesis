@@ -1,0 +1,64 @@
+
+% TODO: define contract somewhere
+
+\cite{arlt2014gradual}
+GraVy:
+metric of progress of the verification process
+and allows the verification engineer to focus on the remaining statements.
+Gradual verification is not a new static verification technique. It is an extension
+that can be applied to any existing static verification techniques to provide
+additional information to the verification engineer. Thus, issues, such as handling
+of loops or aliasing are not addressed in this paper. These are problems
+related to sound verification, but gradual verification is about how to make the
+use of such verification more traceable and quantifiable
+
+\cite{nelson2004extended} ESC/Java
+Software development and maintenance are costly endeavors.
+The cost can be reduced if more software defects are
+detected earlier in the development cycle. This paper introduces
+the Extended Static Checker for Java (ESC/Java),
+an experimental compile-time program checker that finds
+common programming errors. The checker is powered by
+verification-condition generation and automatic theorem proving
+techniques. It provides programmers with a simple
+annotation language with which programmer design decisions
+can be expressed formally. ESC/Java examines the
+annotated software and warns of inconsistencies between the
+design decisions recorded in the annotations and the actual
+code, and also warns of potential runtime errors in the code.
+This paper gives an overview of the checker architecture and
+annotation language and describes our experience applying
+the checker to tens of thousands of lines of Java programs.
+
+\cite{jacobs2001logic} JML => static verification
+
+\cite{cheon2002runtime} JML => RAC
+...lead up to
+\cite{sarcar2010new} JML4c
+
+\cite{the-spec-programming-system-an-overview} Spec\#
+
+\cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs} Spec\# extension (concurrent OO)
+
+\cite{meyer2002design} Design-by-Contract
+then also: Eiffel by Bertrand Meyer 
+
+\cite{embedded-contract-languages} Code Contracts! Combines runtime and static checking
+
+\cite{crocker2004safe} “verified design-by-contract”
+
+\cite{ChristakisMuellerWuestholz16}
+= static verification plus directed dynamic verification
+In this paper, we present a technique to complement partial
+verification results by automatic test case generation. In
+contrast to existing work, our technique supports the common
+case that the verification results are based on unsound
+assumptions. We annotate programs to reflect which executions
+have been verified, and under which assumptions.
+These annotations are then used to guide dynamic symbolic
+execution toward unverified program executions. Our main
+technical contribution is a code instrumentation that causes
+dynamic symbolic execution to abort tests that lead to verified
+executions, to prune parts of the search space, and to
+prioritize tests that cover more properties that are not fully
+verified.

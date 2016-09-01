@@ -1,0 +1,63 @@
+
+\cite{siek2006gradual}
+Gradual Typing for Functional Languages
+
+apply their gradual typing approach to other areas
+
+\cite{siek2015refined}
+Refined criteria for gradual typing
+gradual guarantee:
+     The gradual guarantee says that if a gradually typed program is
+     well typed, then removing type annotations always produces a program that is still well typed.
+     Further, if a gradually typed program evaluates to a value, then removing type annotations
+     always produces a program that evaluates to an equivalent value.
+     
+\label{grad-guarantee}
+% REDEFINE FOR VERIFICATION!
+
+\cite{garcia2016abstracting}
+AGT
+In this paper, we propose a new formal foundation for gradual
+typing, drawing on principles from abstract interpretation to
+give gradual types a semantics in terms of preexisting static types.
+Abstracting Gradual Typing (AGT for short) yields a formal account
+of consistency—one of the cornerstones of the gradual typing
+approach—that subsumes existing notions of consistency, which
+were developed through intuition and ad hoc reasoning.
+
+\cite{garcia2015deriving}
+Abstracting Gradual Typing (AGT) is an approach to systematically
+deriving gradual counterparts to static type disciplines (Garcia
+et al. 2016). The approach consists of defining the semantics of
+gradual types by interpreting them as sets of static types, and then
+defining an optimal abstraction back to gradual types. These operations
+are used to lift the static discipline to the gradual setting. The
+runtime semantics of the gradual language then arises as reductions
+on gradual typing derivations.
+To demonstrate the flexibility of AGT, we gradualize
+a prototypical security-typed language
+with respect to only security labels rather than entire types, yielding
+a type system that ranges gradually from simply-typed to securely typed.
+We establish noninterference for our gradual language using Zdancewic’s logical relation proof method.
+Whereas prior work presents gradual security cast languages,
+which require explicit security casts, this work yields the first gradual
+security source language, which requires no explicit casts.
+
+prior to AGT
+\cite{wolff2011gradual}
+the language extends the notion of gradual typing to account for typestate: gradual typestate
+checking seamlessly combines static and dynamic checking by automatically
+inserting runtime checks into programs.
+
+\cite{banados2014theory}
+ develop a theory of gradual effect checking, which
+ makes it possible to incrementally annotate and statically check
+ effects, while still rejecting statically inconsistent programs. We
+ extend the generic type-and-effect framework of Marino and Millstein
+ with a notion of unknown effects, which turns out to be significantly
+ more subtle than unknown types in traditional gradual
+ typing. We appeal to abstract interpretation to develop and validate
+ the concepts of gradual effect checking.
+
+\cite{toro2015customizable}
+Grad Effects in Scala, benchmarks on runtime impact!

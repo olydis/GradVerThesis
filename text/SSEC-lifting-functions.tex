@@ -30,14 +30,14 @@ Restrictions imposed by the gradual guarantee:
     \end{displaymath}
 \end{description}
 
-\begin{definition}[Valid/Sound??? Function Lifting]
+\begin{definition}[Sound Function Lifting]
     A lifted function is \textbf{sound/valid} if it adheres to the above rules.
 \end{definition}
 
 Note that the rules for sound lifting only give a lower bound for the gradual return values.
 Thus a function $\grad{f} : \setGFormula \rightarrow \setGFormula$ constantly returning $\qm$ is a sound lifting of any function $f : \setFormula \rightarrow \setFormula$.
 
-\begin{definition}[Consistent/Optimal??? Function Lifting]
+\begin{definition}[Optimal Function Lifting]
     A sound lifted function is \textbf{consistent/optimal} if its return values are as precise as possible.
     %TODO: formally?
 \end{definition}

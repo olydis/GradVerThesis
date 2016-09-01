@@ -1,0 +1,37 @@
+
+
+Race-free Assertion language! => static verification tool able to reason soundly about concurrent programs
+
+% separating conjuction (= Multiplicative conjunction ⊗, lollipop, ...), access is resource, cannot duplicate access, ...
+% TODO: explain Frame Problem
+% translation of separating conjuction to regular conjunction? would simplify later reasoning A LOT
+
+\cite{smans2009implicit}
+IDF
+
+
+\cite{leino2009verification}
+Chalice, a verification methodology based on implicit dynamic frames
+
+Chalice’s verification methodology centers around permissions and permission transfer. In particular, a memory location may be accessed by a thread only if that thread has permission to do so. Proper use of permissions allows Chalice to deduce upper bounds on the set of locations modifiable by a method and guarantees the absence of data races for concurrent programs. The lecture notes informally explain how Chalice works through various examples.
+
+also: Viper (Verification Infrastructure for Permission-based Reasoning; is a suite of tools developed at ETH Zurich, providing an architecture on which new verification tools and prototypes can be developed simply and quickly.) has Chalice as front-end
+
+\cite{summers2013formal}
+In this paper, we provide both an isorecursive and an equirecursive formal
+semantics for recursive definitions in the context of Chalice
+
+\cite{parkinson2011relationship}
+VERY IMPORTANT: chapter 2.2
+
+Finally, we show that we can encode the separation
+logic fragment of our logic into the implicit dynamic frames fragment, preserving
+semantics. For the connectives typically supported by tools, this shows that separation
+logic can be faithfully encoded in a first-order automatic verification tool (Chalice).
+
+Although IDF was partially inspired by separation logic, there are many differences
+between SL and IDF that make understanding their relationship difficult. SL does not
+allow expressions that refer to the heap, while IDF does. SL is defined on partial heaps,
+while IDF is defined using total heaps and permission masks. The semantics of IDF are only defined by its translation to first-order verification conditions, while SL has a direct
+Kripke semantics for its assertions.
+

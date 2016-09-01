@@ -1,0 +1,72 @@
+
+Most modern programming languages use static analysis to some degree, ruling out certain types of runtime failure.
+Static analysis provides guarantees about the dynamic behavior of a program without actually running the program.
+%% static typing
+Static typing disciplines are among the most common representatives of static analysis, guaranteeing type safety at compile time, obviating the need for dynamic checks.
+
+%% static verification
+Another powerful technique is static verification of programs against their specification, i.e. statically proving their “correctness”.
+In practice this is achieved by checking that some annotated invariants or assertions (reflecting the specification) must always hold.
+% example?
+Unfortunately, static verification has limitations and drawbacks:
+\begin{itemize} % TODO
+    \item Syntax
+    \item Decidability
+    \item Difficult and Tedious to annotate programs
+    \item ...
+\end{itemize}
+These limitations not only affect programmers trying to statically verify their program.
+Most general purpose programming languages (C/C++, C\#, Java, ...), usually driven by cost-benefit and usability considerations, haven't adopted this level of static analysis in the first place.
+
+%% grad verification
+The purpose of gradual verification is to weaken if not remove some of these limitations at the cost of turning some static checks into runtime checks, whenever inevitable.
+We will present a procedure of turning a static verification into a gradual one.
+% more detail about static limitations and how runtime circumvents them?
+
+%% static typing weakened
+This idea is not new at all and actually common practice in type systems:
+In C\# or Java, explicit type casts are assertions about the actual type of a value.
+This actual type (usually a subtype of the statically known type) could not be deduced by the static type system due to its limitations.
+Such an assertion/cast allows subsequent static reasoning about the value assuming its new type at the cost of an additional runtime check, ensuring the validity of the cast.
+Note that such deviations from a “purely” static type system (one where there is no need for runtime checks) do not affect type safety:
+It is still guaranteed that execution does not enter an invalid state (one where runtime types are incompatible with statically annotated types) by simply interrupting execution whenever a runtime type check fails.
+This is usually implemented by throwing an exception.
+% mention that runtime cost reasonable, ...
+
+
+%% dyn typing
+At the other end of the spectrum are dynamically typed languages.
+In scenarios where the limitations of a static type system would clutter up the source code, they allow expressing the same logic with less syntactic overhead, but at the cost of less static guarantees and early bug detection.
+
+%% PLs are on the dynamic end of the verification spectrum
+In terms of program verification, most general purpose languages are on the dynamic end of the spectrum.
+If they exist as designated syntax, assertions are usually implemented as runtime checks and often even dropped entirely for “release” builds (the Java compiler drops them by default).
+It is common practice to implement 
+% research Eiffel!
+% Design-by-Contract!!! Eiffel!
+% D even has both
+
+% this is more of a consequence of the “deep roots” of dynamic verification!!!
+%But even preconditions at expression level are implemented as runtime checks, reflected all the way down at instruction architecture level.
+%Examples:
+%\begin{description}
+%    \item[Division by zero]~\\
+%    Integer division performs a dynamic check...
+%    
+%\end{description}
+
+%% grad typing
+A gradual type system is more flexible, as it provides the full continuum between static and dynamic typing, letting the programmer decide ... %TODO.
+It can be seen as an extension  “unknown” type 
+
+
+This work will also show that gradual verification ... other angle!
+
+- 
+What is the thesis about?
+Why is it relevant or important?
+What are the issues or problems?
+What is the proposed solution or approach?
+What can one expect in the rest of the thesis?
+
+“Static verification checks that properties are always true, but it can be difficult and tedious to select a goal and to annotate programs for input to a static checker.” (http://www.sciencedirect.com/science/article/pii/S1571066104002567)
