@@ -1,4 +1,77 @@
-Gradualization of dynamic semantics is driven by our goal to produce a sound system.
+%% first: changes in source code!!!
+% making formula gradual 
+% - cannot let execution fail 
+% - cannot satisfy less formulas (“observational compatibility”})
+
+\begin{align*}
+\grad{\pi_1} \sqsubseteq_{\pi} \grad{\pi_2}
+~\defiff~
+&\forall \phi \in \setFormula.~ \evalphiGen{\grad{\pi_1}}{\phi} \implies \evalphiGen{\grad{\pi_2}}{\phi} \\
+~~\wedge~~
+&\sqsubseteq \textit{f.a. statements}
+\end{align*}
+
+Choose ~$\gsssem : \setGProgramState \rightharpoonup \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$.
+
+\begin{mathpar}
+    \inferrule* [Right=Soundness]
+    {
+        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
+        \pi_{\grad{s}} \,\in \setGProgramState_{\grad{s}}\\
+        \evalgphiGen{\pi_{\grad{s}}}{\grad{\phi_1}}
+    }
+    {
+        \evalgphiGen{\gsssem^{\grad{s}}(\pi_{\grad{s}})}{\grad{\phi_2}}
+    }
+\end{mathpar}
+
+%% intro
+Static verification provides guarantees about the dynamic behavior of a program without changing it.
+With the introduction of dynamic components to the assertion language, these guarantees potentially impossible to provide without altering the program.
+In other words, it might be inevitable to enrich the program with runtime checks ensuring properties that were impossible to ensure at compile time.
+
+%% example
+Consider a (static) Hoare logic that can verify
+\begin{displaymath}
+\thoare{~}{\phiEq{x}{3}}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
+\end{displaymath}
+The corresponding gradual logic can thus verify
+\begin{displaymath}
+\gthoare{~}{\qm}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
+\end{displaymath}
+but without additional measures there is no guarantee that every program state satisfying the precondition (here: literally every program state) will satisfy the post condition after executing the assignment.
+Adding a runtime assertion to ensure that $\phiEq{x}{3}$ holds (terminating exceptionally in case it does not) would be sufficient and minimal to reestablish soundness in the above example.
+
+We will generalize and formalize this approach, resulting in gradual dynamic semantics that reestablish the soundness of the static verification system by adding minimal runtime checks.
+
+% OUTLOOK on how I develop stuff
+
+\subsection{Soundness of Gradual System}
+
+
+\subsection{Runtime Approach}
+\begin{displaymath}
+\sssem
+\end{displaymath}
+
+, a dynamic check is required, making sure that $\phiEq{x}{3}$ holds after executing the assignment.
+
+
+ , i.e. without altering a given runtime.
+Often static verification formalisms are designed specifically to make 
+
+In the presence of gradual formulas, additional measures are necessary to ensure soundness at runtime.
+
+Our approach of ensuring soundness is motivated by a simple 
+
+
+
+The static guarantee provided by fully static verification system is inherently lost 
+Gradual static semantics inherently bears the risk of 
+
+
+
+
 Gradualizing static semantics potentially introduced spots where progress is no longer guaranteed.
 
 %%Naive:

@@ -75,7 +75,7 @@
 \newcommand{\std}{\textrm}
 \newcommand{\ttt}{\texttt}
 \newcommand{\tset}{\textsc}
-\newcommand{\predicate}{\textsf}
+\newcommand{\predicate}[1]{\textup{\textsf{#1}}}
 % names
 \newcommand{\gsvl}{\std{GSVL}\xspace}
 \newcommand{\svl}{\std{SVL}\xspace}
@@ -84,15 +84,23 @@
 
 % sets
 \newcommand{\setProgramState}{\tset{ProgramState}\xspace}
+\newcommand{\setProgramStateFin}{\tset{ProgramStateFin}\xspace}
+\newcommand{\setProgramStateEx}{\tset{ProgramStateEx}\xspace}
+\newcommand{\setGProgramState}{\tset{GProgramState}\xspace}
+\newcommand{\setGProgramStateFin}{\tset{GProgramStateFin}\xspace}
+\newcommand{\setGProgramStateEx}{\tset{GProgramStateEx}\xspace}
 \newcommand{\setProgram}{\tset{Program}\xspace}
+\newcommand{\setGProgram}{\tset{GProgram}\xspace}
 \newcommand{\setClass}{\tset{Class}\xspace}
 \newcommand{\setField}{\tset{Field}\xspace}
 \newcommand{\setMethod}{\tset{Method}\xspace}
+\newcommand{\setGMethod}{\tset{GMethod}\xspace}
 \newcommand{\setContract}{\tset{Contract}\xspace}
+\newcommand{\setGContract}{\tset{GContract}\xspace}
 \newcommand{\setType}{\tset{Type}\xspace}
 \newcommand{\setStmt}{\tset{Stmt}\xspace}
-\newcommand{\setStmts}{\tset{Stmts}\xspace}
 \newcommand{\setGStmt}{\tset{GStmt}\xspace}
+\newcommand{\setStmts}{\tset{Stmts}\xspace} %TODO!!!
 \newcommand{\setFormula}{\tset{Formula}\xspace}
 \newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
 \newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
@@ -140,6 +148,7 @@
 \newcommand{\field}[2]{\ttt{{#1}~{#2};}}
 %% predicates
 % well-formed
+\newcommand{\wsp}{\predicate{wsp}}
 \newcommand{\verify}{\predicate{verify}}
 \newcommand{\OK}{~\predicate{OK}}
 \newcommand{\OKinC}{~\predicate{OK in}~C}
@@ -149,6 +158,8 @@
 % evaluation
 \newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
 \newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
+\newcommand{\evalphiXGen}[2]{#1 \vDash_{X} #2}
+\newcommand{\evalgphiXGen}[2]{#1 \,\,\grad{\vDash_{X}}\,\, #2}
 \newcommand{\evalphiGen}[2]{#1 \vDash #2}
 \newcommand{\evalgphiGen}[2]{#1 \,\,\grad{\vDash}\,\, #2}
 \newcommand{\evalphi}[1]{\evalphiGen {H,\rho,A} {#1}}
@@ -182,6 +193,8 @@
 \newcommand{\gthoare}[4]{{#1} \,\,\grad{\vdash}\,\, \{{#2}\} ~{#3}~ \{{#4}\}}
 \newcommand{\dgthoare}[4]{{#1} \,\,\dgrad{\vdash}\,\, \{{#2}\} ~{#3}~ \{{#4}\}}
 \newcommand{\PP}{\mathcal{P}}
+\newcommand{\sssem}{\mathcal{S}}
+\newcommand{\gsssem}{\grad{\sssem}}
 \newcommand{\funHoare}{\mathcal{H}}
 \newcommand{\funHoareA}{\mathcal{F}}
 \newcommand{\funHoareApred}{\mathcal{P}}
@@ -189,6 +202,7 @@
 \newcommand{\funHoareBimp}{\mathcal{J}}
 \newcommand{\funHoareC}{\mathcal{M}}
 % dyn sem
+\newcommand{\progress}{\predicate{progress}_{\sssem}}
 \newcommand{\sstepGeneric}[5]{({#1}, {#2}) \rightarrow^{#3} ({#4}, {#5})}
 \newcommand{\sstep}[4]{\sstepGeneric {#1} {#2} {} {#3} {#4}}
 \newcommand{\ssteps}[4]{\sstepGeneric {#1} {#2} * {#3} {#4}}

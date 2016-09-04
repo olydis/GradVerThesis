@@ -15,11 +15,13 @@ Requirements:
     We write $\setStmts$ for the set of lists of instructions. % TODO: formally?
     ...and use $\overline{\cdot}$ to decorate variables representing lists of things.
     
+    % FORMALIZE \setProgramState, \setProgramState_{...}
+    
 \item[Formula Semantics]~\\
     Formulas are used to describe program states.
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the current program state.
     
-    We assume that we are given a predicate
+    We assume that we are given a computable predicate
     \begin{displaymath}
     \evalphiGen{\cdot}{\cdot} ~\subseteq~ \setProgramState \times \setFormula
     \end{displaymath}
@@ -76,29 +78,119 @@ Requirements:
     In practice, this predicate might also have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
+    % TODO: program als parameter...
     
-    %% NOT REQUIRED AFTER ALL
-    %We further assume that this predicate is monotonic in the precondition w.r.t. implication:
-    %\begin{align*}
-    %\forall \overline{s} \in \setStmts.~& \\
-    %\forall \phi_1, \phi_2 \in \setFormula.~&\\
-    %\forall \phi_1' \in \setFormula.~&
-    %(\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\
-    %\implies
-    %\exists \phi_2' \in \setFormula.~&
-    %(\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {\overline{s}} {\phi_2'}
-    %\end{align*}
+    %% SEQ
+    We assume that 
+    \begin{mathpar}
+        \inferrule* [Right=HoareSequence]
+        {
+            \thoare {~} {\phi_p} {{s_1}} {\phi_q} \\
+            \thoare {~} {\phi_q} {\overline{s_2}} {\phi_r}
+        }
+        {
+            \thoare {~} {\phi_p} {{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
+        }
+    \end{mathpar}
+    is derivable from given Hoare rules. % OR with both parts as lists?
+    
+    %% "wsp" - wlp, but with static instead of dynamic semantics!!!
+    \begin{definition}[Weakest Static Precondition]~\\
+        Let $\wsp : \setStmts \rightarrow \PP(\setProgramState)$ be defined as
+        \begin{displaymath}
+        \wsp(\overline{s}) = \{~ \pi \in \setProgramState ~|~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{~}{\phi_1}{\overline{s}}{\phi_2} ~~\wedge~~ \evalphiGen{\pi}{\phi_1} ~\}
+        \end{displaymath}
+    \end{definition}
+    Intuitively, the $\wsp(\overline{s})$ is a predicate on program states, indicating whether we could deduce anything about the state after executing $\overline{s}$, using only our Hoare rules.
+    We require that $\wsp$ is computable at least for individual statements and that the resulting predicate is computable as well.
+    
+    Example:
+    \begin{itemize}
+        \item 
+        Given that
+        \begin{mathpar}
+            \inferrule* [Right=HoareAssign]
+            {
+                ~
+            }
+            {
+                \thoare {~} {\phi[e/x]} {\sVarAssign {${x}$} {${e}$}} {\phi}
+            }
+        \end{mathpar}
+        is the only Hoare rule for assignment, it follows that
+        \begin{displaymath}
+        \wsp(\sVarAssign {${x}$} {${e}$}) = \setProgramState
+        \end{displaymath}
+        
+        \item 
+        Given that
+        \begin{mathpar}
+            \inferrule* [Right=HoareStaticAssert]
+            {
+                \phiImplies{\phi}{\phi_a}
+            }
+            {
+                \thoare {~} {\phi} {\sAssert {$\phi_a$}} {\phi}
+            }
+        \end{mathpar}
+        is the only Hoare rule for assertions, it follows that
+        \begin{displaymath}
+        \wsp(\sAssert {$\phi_a$}) = \{~ \pi \in \setProgramState ~|~ \evalphiGen{\pi}{\phi_a} ~\}
+        \end{displaymath}
+    \end{itemize}
+    % TODO: x := 3; assert (x = 2);   EXAMPLE?
+    
+    % Note that this definition is similar to the weakest liberal precondition $\predicate{wlp}$
+    
+    %% information monotonic - required?
+    We further assume that this predicate is monotonic in the precondition w.r.t. implication:
+    \begin{align*}
+    \forall \overline{s} \in \setStmts.~& \\
+    \forall \phi_1, \phi_2 \in \setFormula.~&\\
+    \forall \phi_1' \in \setFormula.~&
+    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\
+    \implies
+    \exists \phi_2' \in \setFormula.~&
+    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {\overline{s}} {\phi_2'}
+    \end{align*}
+    
+    Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.
+    
     
 \item[Notion of Well-Formedness]
     
     
     
 \item[Dynamic Semantics]~\\
-    We assume that there is a dynamic semantics (e.g. small-step) describing precisely whether and how program state is updated.
-    This is required mainly for reasoning about soundness of the static semantics.
-    % NOTE: allow for non-deterministic semantics!
+    We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightharpoonup \setProgramState$ describing precisely how program state can be updated.
+    %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
+    %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
+    %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
+    
+    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular (or exceptional) termination of the program.
+    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
+    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
+    To simplify reasoning about program states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$
+    
+    %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
+    %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.
+    
+    % Execution is considered to be stuck iff there are no more 
+    
+    % define \evalphiXGen{arg1}{arg2}
     
 \item[Soundness]~\\
     We expect that given static semantics are sound w.r.t. given dynamic semantics.
-    This means that programs satisfying ... 
+    \begin{mathpar}
+        \inferrule* [Right=Soundness]
+        {
+            \thoare{~}{\phi_1}{s}{\phi_2} \\ 
+            \pi_s \in \setProgramState_s\\
+            \evalphiGen{\pi_s}{\phi_1}
+        }
+        {
+            \evalphiGen{\sssem^s(\pi_s)}{\phi_2}
+        }
+    \end{mathpar}
+    Note how progress is covered by expecting that $\sssem^s(\pi_s)$ is defined.
 \end{description}

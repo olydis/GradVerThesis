@@ -31,10 +31,19 @@ We can obtain a lifted version of this hypothetical construct and demand certain
     Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
     \begin{description}
         \item[Introduction]~\\
-        Note: Similar to introduction condition of lifted partial functions, but using a predicate instead of function.
         \begin{displaymath}
-        \forall (\phi_1, \phi_2) \in P.~ \phi_2 \sqsubseteq \dgrad{P}(\phi_1)
+        \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
         \end{displaymath}
+        
+        \item[Preservation]~\\
+        \begin{mathpar}
+        \forall \phi_1 \in \setFormula, \grad{\phi_2} \in \setGFormula.~ 
+        \dgrad{P}(\phi_1) = \grad{\phi_2}\\
+        \implies\\
+        \exists \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) ~~\wedge~~ \gphiImplies{\phi_2}{\grad{\phi_2}}\\
+        \wedge\\
+        \forall \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \gphiImplies{\grad{\phi_2}}{\phi_2}
+        \end{mathpar}
         
         \item[Monotonicity]~\\
         Note: Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
