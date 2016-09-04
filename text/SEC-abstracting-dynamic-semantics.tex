@@ -8,20 +8,67 @@
 ~\defiff~
 &\forall \phi \in \setFormula.~ \evalphiGen{\grad{\pi_1}}{\phi} \implies \evalphiGen{\grad{\pi_2}}{\phi} \\
 ~~\wedge~~
+&\sqsubseteq \textit{f.a. statements}\\
+~~\wedge~~
 &\sqsubseteq \textit{f.a. statements}
 \end{align*}
+
+% TODO:
+- define statement mpt somewhere (also necessary for abstracting static semantics)
+- alter $\sssem$ in order to make static semantics complete
+- lift that (see below)
+- tango time
 
 Choose ~$\gsssem : \setGProgramState \rightharpoonup \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$.
 
 \begin{mathpar}
-    \inferrule* [Right=Soundness]
+    \inferrule* [Right=GSoundness]
     {
-        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
-        \pi_{\grad{s}} \,\in \setGProgramState_{\grad{s}}\\
-        \evalgphiGen{\pi_{\grad{s}}}{\grad{\phi_1}}
+        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
+        \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
+        \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
     }
     {
-        \evalgphiGen{\gsssem^{\grad{s}}(\pi_{\grad{s}})}{\grad{\phi_2}}
+        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=Introduction_Evalphi]
+    {
+        \inferrule* [Right=Monotonicity_SmallStep]
+        {
+            \inferrule* [Right=Introduction_SmallStep]
+            {
+                \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
+                \inferrule*
+                {
+                    \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
+                    s \in \gamma(\grad{s})
+                }
+                {
+                    \pi_s \in \setProgramState_s \\
+                    \pi_{s} \sqsubseteq_{\pi} \grad{\pi_{\grad{s}}}
+                }\\
+                \inferrule* [Right=Introduction_Evalphi_INV]
+                {
+                    \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
+                }
+                {
+                    \evalphiGen{\grad{\pi_{\grad{s}}}}{\phi_1}
+                }
+            }
+            {
+                \evalphiGen{\gsssem^{\grad{s}}(\pi_{s})}{\phi_2} \\
+                \pi_{s} \sqsubseteq_{\pi} \grad{\pi_{\grad{s}}}
+            }
+        }
+        {
+            \evalphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\phi_2}
+        }
+    }
+    {
+        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
     }
 \end{mathpar}
 

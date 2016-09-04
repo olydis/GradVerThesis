@@ -167,10 +167,10 @@ Requirements:
     %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
     %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
     
-    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular (or exceptional) termination of the program.
-    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
+    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
     W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
-    To simplify reasoning about program states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$
+    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
+    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special instruction set?
     
     %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
     %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.
