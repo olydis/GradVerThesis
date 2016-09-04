@@ -15,11 +15,11 @@
 
 % TODO:
 - define statement mpt somewhere (also necessary for abstracting static semantics)
-- alter $\sssem$ in order to make static semantics complete ($\forall s \in \setStmt, \pi_s \in \setProgramState_s.~ \pi_s \in \wsp(s) \iff \sssem^s(\pi_s) \textit{ not stuck}$)
+- alter $\sssem$ in order to make static semantics complete ($\forall s \in \setStmt, \pi_s \in \setProgramState_s.~ \pi_s \in \wsp(s) \iff \sssem^s(\pi_s) \textit{ not stuck}$) 
 - lift that (see below)
 - tango time
 
-Choose ~$\gsssem : \setGProgramState \rightharpoonup \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$.
+Choose ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$ with $\gsssem(\grad{\pi}) = \pi_{EX}$ if stuck for all concretizations.
 
 \begin{mathpar}
     \inferrule* [Right=GSoundness]
@@ -57,6 +57,19 @@ Case $\exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
     \item[15 = 10 + 14 + mono] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi}}$
     \item[16 = 9 + 15 + mono] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}$
 \end{description}
+
+
+\begin{description}
+    \item $\grad{s} \in \setGStmt$
+    \item $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$
+    \item $\grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}$
+    \item[1 = PremiseA] $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
+    \item[2 = PremiseB] $\evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}$
+    \item[3 = Case] $\neg \exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
+    \item[4 = 3 + completeness] $\forall \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \sssem^s(\pi_s) \textit{ stuck}$
+    \item[5 = 4 + def] $\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}}) = \pi_{EX}$
+    \item[6 = 5 + precision] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}$
+\end{description} 
 
 %% intro
 Static verification provides guarantees about the dynamic behavior of a program without changing it.
