@@ -9,14 +9,17 @@ Requirements:
     	s    & \in \setStmt    \\
     	\phi & \in \setFormula
     \end{align*}
+    We assume that there is a sequence operator \ttt{;} such that: $\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$
+    % or munch that into syntax figure above?
     % TODO: we make no other assumptions
     % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
-    We write $\setStmts$ for the set of lists of instructions. % TODO: formally?
-    ...and use $\overline{\cdot}$ to decorate variables representing lists of things.
-    
     % FORMALIZE \setProgramState, \setProgramState_{...}
-    
+
+\item[Program State]
+    $\setProgramState$
+    $\setProgramState_s$
+
 \item[Formula Semantics]~\\
     Formulas are used to describe program states.
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the current program state.
@@ -70,7 +73,7 @@ Requirements:
 \item[Static Semantics]~\\
     We assume that there is a Hoare logic (HL)
     \begin{displaymath}
-    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormulaA \times \setStmts \times \setFormulaA
+    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormulaA \times \setStmt \times \setFormulaA
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
     While the Hoare logic might be defined for arbitrary formulas in practice, we only ever reason about it in presence of satisfiable formulas, hence the “restricted domain”???.
@@ -96,13 +99,13 @@ Requirements:
     
     %% "wsp" - wlp, but with static instead of dynamic semantics!!!
     \begin{definition}[Weakest Static Precondition]~\\
-        Let $\wsp : \setStmts \rightarrow \PP(\setProgramState)$ be defined as
+        Let $\wsp : \setStmt \rightarrow \PP(\setProgramState)$ be defined as
         \begin{displaymath}
         \wsp(\overline{s}) = \{~ \pi \in \setProgramState ~|~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{~}{\phi_1}{\overline{s}}{\phi_2} ~~\wedge~~ \evalphiGen{\pi}{\phi_1} ~\}
         \end{displaymath}
     \end{definition}
     Intuitively, the $\wsp(\overline{s})$ is a predicate on program states, indicating whether we could deduce anything about the state after executing $\overline{s}$, using only our Hoare rules.
-    We require that $\wsp$ is computable at least for individual statements and that the resulting predicate is computable as well.
+    We require that $\wsp$ is computable at least for atomic statements and that the resulting predicate is computable as well.
     
     Example:
     \begin{itemize}
@@ -145,7 +148,7 @@ Requirements:
     %% information monotonic - required?
     We further assume that this predicate is monotonic in the precondition w.r.t. implication:
     \begin{align*}
-    \forall \overline{s} \in \setStmts.~& \\
+    \forall \overline{s} \in \setStmt.~& \\
     \forall \phi_1, \phi_2 \in \setFormula.~&\\
     \forall \phi_1' \in \setFormula.~&
     (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\

@@ -1,4 +1,5 @@
-\newcommand{\tempStmtA}{\sDeclare {$T$} {$x$}
+\newcommand{\tempStmtA}{\sSkip
+                    ~|~ \sDeclare {$T$} {$x$}
                     ~|~ \sFieldAssign {$x$} {$f$} {$y$} 
                     ~|~ \sVarAssign {$x$} {$e$}
                     ~|~ \sAlloc {$x$} {$C$} 
@@ -6,7 +7,8 @@
 \newcommand{\tempStmtB}{~~~ ~|~ \sReturn {$x$}  
                             ~|~ \sAssert {$\phi$} 
                             ~|~ \sRelease {$\phi$} 
-                            ~|~ \sHold {$\phi$} {$\overline{s}$}}
+                            ~|~ \sHold {$\phi$} {$s$}
+                            ~|~ \sSeq {$s_1$} {$s_2$}}
 \newcommand{\tempFrm}{  \phiTrue 
                     ~|~ \phiEq {$e$} {$e$} 
                     ~|~ \phiNeq {$e$} {$e$}
@@ -17,18 +19,21 @@
                     ~|~ \edot{$e$}{$f$}}
 
 \begin{align*}
-	program  & \in \setProgram  &  & ::= \ttt{$\overline{cls}$~$\overline{s}$}                         \\
-	cls      & \in \setClass    &  & ::= \class {$C$} {$\overline{field}$} {$\overline{method}$}       \\
-	field    & \in \setField    &  & ::= \field {$T$} {$f$}                                            \\
-	method   & \in \setMethod   &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$contract$} {$\overline{s}$} \\
-	contract & \in \setContract &  & ::= \ttt{requires $\phi$;~ensures $\phi$;}                        \\
-	T        & \in \setType     &  & ::= \Tint ~|~ C                                                   \\
-	s        & \in \setStmt     &  & ::= \tempStmtA                                                    \\
-	         &                  &  & \tempStmtB                                                        \\
-	\phi     & \in \setFormula  &  & ::= \tempFrm                                                      \\
-	e        & \in \setExpr     &  & ::= \tempExpr                                                     \\
-	x, y, z  & \in \setVar      &  & ::= \ethis ~|~ \eresult ~|~ name                                  \\
-	v        & \in \setVal      &  & ::= o ~|~ n ~|~ \enull                                            \\
-	n        & \in \mathbb{Z}   &  &  \\
-	C, f, m  &                  &  & ::= name
-\end{align*}
+	program  & \in \setProgram    &  & ::= \ttt{$\overline{cls}$~$\overline{s}$}                         \\
+	cls      & \in \setClass      &  & ::= \class {$C$} {$\overline{field}$} {$\overline{method}$}       \\
+	field    & \in \setField      &  & ::= \field {$T$} {$f$}                                            \\
+	method   & \in \setMethod     &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$contract$} {$\overline{s}$} \\
+	contract & \in \setContract   &  & ::= \ttt{requires $\phi$;~ensures $\phi$;}                        \\
+	T        & \in \setType       &  & ::= \Tint ~|~ C                                                   \\
+	s        & \in \setStmt       &  & ::= \tempStmtA                                                    \\
+	         &                    &  & \tempStmtB                                                        \\
+	\phi     & \in \setFormula    &  & ::= \tempFrm                                                      \\
+	e        & \in \setExpr       &  & ::= \tempExpr                                                     \\
+	x, y, z  & \in \setVar        &  & ::= \ethis ~|~ \eresult ~|~ name                                  \\
+	v        & \in \setVal        &  & ::= o ~|~ n ~|~ \enull                                            \\
+	o        & \in \setObj        &  &  \\
+	n        & \in \mathbb{Z}     &  &  \\
+	C        & \in \setClassName  &  & ::= name                                                          \\
+	f        & \in \setFieldName  &  & ::= name                                                          \\
+	m        & \in \setMethodName &  & ::= name
+\end{align*} 

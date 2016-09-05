@@ -109,7 +109,19 @@
 \newcommand{\setGFormulaB}{\tset{SfrmGFormula}\xspace}
 \newcommand{\setExpr}{\tset{Expr}\xspace}
 \newcommand{\setVal}{\tset{Val}\xspace}
+\newcommand{\setObj}{\tset{Obj}\xspace}
 \newcommand{\setVar}{\tset{Var}\xspace}
+
+\newcommand{\setHeap}{\tset{Heap}\xspace}
+\newcommand{\setStack}{\tset{Stack}\xspace}
+\newcommand{\setStackEntry}{\tset{StackEntry}\xspace}
+\newcommand{\setVarEnv}{\tset{VarEnv}\xspace}
+\newcommand{\setTypeEnv}{\tset{TypeEnv}\xspace}
+\newcommand{\setClassName}{\tset{ClassName}\xspace}
+\newcommand{\setFieldName}{\tset{FieldName}\xspace}
+\newcommand{\setMethodName}{\tset{MethodName}\xspace}
+\newcommand{\setSFootprint}{\tset{StaticFootprint}\xspace}
+\newcommand{\setDFootprint}{\tset{DynamicFootprint}\xspace}
 % expressions
 \newcommand{\ev}[1]{\ttt{#1}}
 \newcommand{\ex}[1]{\ttt{#1}}
@@ -129,15 +141,17 @@
 \newcommand{\withqm}[1]{\phiCons{\qm}{\ensuremath{#1}}}
 \newcommand{\withqmGen}[1]{\phiAnd{\ensuremath{#1}}{\qm}}
 % statements
-\newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3;}}
-\newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2;}}
-\newcommand{\sAlloc}[2]{\ttt{#1 ≔ new #2;}}
-\newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4);}}
-\newcommand{\sReturn}[1]{\ttt{return #1;}}
-\newcommand{\sAssert}[1]{\ttt{assert #1;}}
-\newcommand{\sRelease}[1]{\ttt{release #1;}}
-\newcommand{\sDeclare}[2]{\ttt{#1~#2;}}
-\newcommand{\sHold}[2]{\ttt{hold #1~\{ #2 \};}}
+\newcommand{\sSkip}{\ttt{skip}}
+\newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3}}
+\newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2}}
+\newcommand{\sAlloc}[2]{\ttt{#1 ≔ new #2}}
+\newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4)}}
+\newcommand{\sReturn}[1]{\ttt{return #1}}
+\newcommand{\sAssert}[1]{\ttt{assert #1}}
+\newcommand{\sRelease}[1]{\ttt{release #1}}
+\newcommand{\sDeclare}[2]{\ttt{#1~#2}}
+\newcommand{\sHold}[2]{\ttt{hold #1~\{ #2 \}}}
+\newcommand{\sSeq}[2]{\ttt{{#1};{#2}}}
 % type
 \newcommand{\type}[1]{\ttt{#1}}
 \newcommand{\Tint}{\type{int}}
