@@ -1,3 +1,25 @@
+
+%% intro
+Static verification provides guarantees about the dynamic behavior of a program without changing it.
+With the introduction of dynamic components to the assertion language, these guarantees potentially impossible to provide without altering the program.
+In other words, it might be inevitable to enrich the program with runtime checks ensuring properties that were impossible to ensure at compile time.
+
+%% example
+Consider a (static) Hoare logic that can verify
+\begin{displaymath}
+\thoare{~}{\phiEq{x}{3}}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
+\end{displaymath}
+The corresponding gradual logic can thus verify
+\begin{displaymath}
+\gthoare{~}{\qm}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
+\end{displaymath}
+but without additional measures there is no guarantee that every program state satisfying the precondition (here: literally every program state) will satisfy the post condition after executing the assignment.
+Adding a runtime assertion to ensure that $\phiEq{x}{3}$ holds (terminating exceptionally in case it does not) would be sufficient and minimal to reestablish soundness in the above example.
+
+We will generalize and formalize this approach, resulting in gradual dynamic semantics that reestablish the soundness of the static verification system by adding minimal runtime checks.
+
+
+
 %% first: changes in source code!!!
 % making formula gradual 
 % - cannot let execution fail 
@@ -15,14 +37,14 @@
 
 % TODO:
 - define statement mpt somewhere (also necessary for abstracting static semantics)
-- alter $\sssem$ in order to make static semantics complete ($\forall s \in \setStmt, \pi_s \in \setProgramState_s.~ \pi_s \in \wsp(s) \iff \sssem^s(\pi_s) \textit{ not stuck}$) 
+- alter $\sssem$ in order to make static semantics complete ($\forall s \in \setStmt, \pi_s \in \setProgramState_s.~ \pi_s \in \wsp(s) \iff \sssem^s(\pi_s) \textit{ not stuck}$) - these are runtime checks
 - lift that (see below)
 - tango time
 
 Choose ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$ with $\gsssem(\grad{\pi}) = \pi_{EX}$ if stuck for all concretizations.
 
 \begin{mathpar}
-    \inferrule* [Right=GSoundness]
+    \inferrule* [Right=DGSoundness]
     {
         \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
         \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
@@ -71,56 +93,14 @@ Case $\exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
     \item[6 = 5 + precision] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}$
 \end{description} 
 
-%% intro
-Static verification provides guarantees about the dynamic behavior of a program without changing it.
-With the introduction of dynamic components to the assertion language, these guarantees potentially impossible to provide without altering the program.
-In other words, it might be inevitable to enrich the program with runtime checks ensuring properties that were impossible to ensure at compile time.
-
-%% example
-Consider a (static) Hoare logic that can verify
-\begin{displaymath}
-\thoare{~}{\phiEq{x}{3}}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
-\end{displaymath}
-The corresponding gradual logic can thus verify
-\begin{displaymath}
-\gthoare{~}{\qm}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
-\end{displaymath}
-but without additional measures there is no guarantee that every program state satisfying the precondition (here: literally every program state) will satisfy the post condition after executing the assignment.
-Adding a runtime assertion to ensure that $\phiEq{x}{3}$ holds (terminating exceptionally in case it does not) would be sufficient and minimal to reestablish soundness in the above example.
-
-We will generalize and formalize this approach, resulting in gradual dynamic semantics that reestablish the soundness of the static verification system by adding minimal runtime checks.
-
-% OUTLOOK on how I develop stuff
-
-\subsection{Soundness of Gradual System}
-
-
-\subsection{Runtime Approach}
-\begin{displaymath}
-\sssem
-\end{displaymath}
-
-, a dynamic check is required, making sure that $\phiEq{x}{3}$ holds after executing the assignment.
-
-
- , i.e. without altering a given runtime.
-Often static verification formalisms are designed specifically to make 
-
-In the presence of gradual formulas, additional measures are necessary to ensure soundness at runtime.
-
-Our approach of ensuring soundness is motivated by a simple 
-
-
-
-The static guarantee provided by fully static verification system is inherently lost 
-Gradual static semantics inherently bears the risk of 
-
-
-
-
-Gradualizing static semantics potentially introduced spots where progress is no longer guaranteed.
-
-%%Naive:
-Emit “runtimeAssert” prechecks.
-
-%%Mention and explain evidence approach???
+\begin{mathpar}
+    \inferrule* [Right=GSoundness]
+    {
+        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
+        \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
+        \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
+    }
+    {
+        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
+    }
+\end{mathpar}
