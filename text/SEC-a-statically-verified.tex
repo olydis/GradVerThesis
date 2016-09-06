@@ -101,10 +101,10 @@ Requirements:
     \begin{definition}[Weakest Static Precondition]~\\
         Let $\wsp : \setStmt \rightarrow \PP(\setProgramState)$ be defined as
         \begin{displaymath}
-        \wsp(\overline{s}) = \{~ \pi \in \setProgramState ~|~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{~}{\phi_1}{\overline{s}}{\phi_2} ~~\wedge~~ \evalphiGen{\pi}{\phi_1} ~\}
+        \wsp(s) = \{~ \pi \in \setProgramState ~|~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{~}{\phi_1}{s}{\phi_2} ~~\wedge~~ \evalphiGen{\pi}{\phi_1} ~\}
         \end{displaymath}
     \end{definition}
-    Intuitively, the $\wsp(\overline{s})$ is a predicate on program states, indicating whether we could deduce anything about the state after executing $\overline{s}$, using only our Hoare rules.
+    Intuitively, the $\wsp(s)$ is a predicate on program states, indicating whether we could deduce anything about the state after executing $s$, using only our Hoare rules.
     We require that $\wsp$ is computable at least for atomic statements and that the resulting predicate is computable as well.
     
     Example:
@@ -148,13 +148,13 @@ Requirements:
     %% information monotonic - required?
     We further assume that this predicate is monotonic in the precondition w.r.t. implication:
     \begin{align*}
-    \forall \overline{s} \in \setStmt.~& \\
+    \forall s \in \setStmt.~& \\
     \forall \phi_1, \phi_2 \in \setFormula.~&\\
     \forall \phi_1' \in \setFormula.~&
-    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {\overline{s}} {\phi_1'}\\
+    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {s} {\phi_1'}\\
     \implies
     \exists \phi_2' \in \setFormula.~&
-    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {\overline{s}} {\phi_2'}
+    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {s} {\phi_2'}
     \end{align*}
     
     Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.

@@ -9,9 +9,9 @@ For the main method to be well-formed, it must satisfy our Hoare predicate, give
 \inferrule* [Right=OkProgram]
 {
 \overline{cls_i \OK} \\
-\thoare {~} {\phiTrue} {\overline{s}} {\phiTrue}
+\thoare {~} {\phiTrue} {s} {\phiTrue}
 }
-{(\overline{cls_i}~\overline{s}) \OK}
+{(\overline{cls_i}~s) \OK}
 \end{mathpar}
 
 % TODO: start with deterministic semantics!?
@@ -31,9 +31,9 @@ For the main method to be well-formed, it must satisfy our Hoare predicate, give
 {
 FV(\phi_1) \subseteq \{ x, \ethis \} \\
 FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\
-\thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {\overline{s}} {\phi_2} \\
+\thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {s} {\phi_2} \\
 \phi_1, \phi_2 \in \setFormulaB \\
 \overline{\neg \writesTo(s_i, x)}
 }
-{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$\overline{s}$}) \OKinC}
+{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$s$}) \OKinC}
 \end{mathpar}
