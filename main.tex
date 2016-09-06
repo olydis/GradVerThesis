@@ -175,6 +175,7 @@
 % framing
 \newcommand{\sfrme}{\ensuremath{\vdash_\texttt{frm}}\,}
 \newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+\newcommand{\gwo}[2]{#1\grad{\div}#2}
 \newcommand{\wo}[2]{#1\div#2}
 % evaluation
 \newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
@@ -186,7 +187,9 @@
 \newcommand{\evalphi}[1]{\evalphiGen {H,\rho,A} {#1}}
 \newcommand{\evalgphi}[1]{\evalgphiGen {H,\rho,A} {#1}}
 \newcommand{\phiImplies}[2]{{#1} \underset{\phi}{\implies} {#2}}
+\newcommand{\phiImpliesEv}[3]{#3 \vdash \phiImplies{#1}{#2}}
 \newcommand{\gphiImplies}[2]{{#1} \,\,\underset{\phi}{\grad{\implies}}\, {#2}}
+\newcommand{\gphiImpliesEv}[3]{#3 \vdash \gphiImplies{#1}{#2}}
 \newcommand{\evalphix}[4]{\evalphiGen {#1,#2,#3} {#4}}
 % extraction
 \newcommand{\fieldType}{\predicate{fieldType$_p$}}

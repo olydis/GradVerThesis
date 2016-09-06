@@ -31,19 +31,18 @@ We can obtain a lifted version of this hypothetical construct and demand certain
     Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
     \begin{description}
         \item[Introduction]~\\
+        Making sure that the function is defined when there is a valid 
         \begin{displaymath}
         \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
         \end{displaymath}
         
         \item[Preservation]~\\
         \begin{mathpar}
-        \forall \phi_1 \in \setFormula, \grad{\phi_2} \in \setGFormula.~ 
-        \dgrad{P}(\phi_1) = \grad{\phi_2}\\
-        \implies\\
-        \exists \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) ~~\wedge~~ \gphiImplies{\phi_2}{\grad{\phi_2}}\\
-        \wedge\\
-        \forall \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \gphiImplies{\grad{\phi_2}}{\phi_2}
-        \end{mathpar} 
+            \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
+            \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2}\\
+            \implies\\
+            \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \exists \phi \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi) ~\wedge~ \phiImplies{\phi}{\phi_2}
+        \end{mathpar}
         
         \item[Monotonicity]~\\
         Note: Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
@@ -55,22 +54,36 @@ We can obtain a lifted version of this hypothetical construct and demand certain
 
 ...assume we have obtained deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare triple. % TODO: notation talk
 This gradual partial function has desirable properties: % use lemmas only? PROOFS
+
+
 \begin{description}
-    \item[Obtaining Sound Gradual Lifting]
-    \begin{lemma}[Obtaining Sound Gradual Lifting]~\\
+    \item[Obtaining a Sound Gradual Lifting]
+    \begin{lemma}[Deterministic Gradual Lifting]~\\
+        Let $\dgrad{P}$ be a deterministic lifting of $P$.
+        Then
         \begin{displaymath}
-        \gthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2}} ~~\defiff~~ \exists \grad{\phi_2'}.~ \dgthoare {~} {\grad{\phi_1}} {\overline{s}} {\grad{\phi_2'}} \wedge \gphiImplies {\grad{\phi_2'}} {\grad{\phi_2}}
+        \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~~\defiff~~ \exists \grad{\phi_2'}.~ \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2'} \wedge \gphiImplies {\grad{\phi_2'}} {\grad{\phi_2}}
         \end{displaymath}
-        is a sound gradual lifting.
+        is a sound gradual lifting of $P$.
     \end{lemma}
     
     \item[Determinism]~\\
-    The verifier has no more degrees of freedom as it is now dealing with a function instead of a predicate. % So also no more of the problems/dilemmas apply
+    A verifier dealing with deterministic liftings has no more obligation of finding good intermediate formulas.
+    % So also no more of the problems/dilemmas apply
+    
     \item[Preservation]~\\
     A (gradual) postcondition returned by the lifted function is guaranteed to reflect the execution state after executing the statements in question (given that the precondition was met).
+    % LEMMA?
+    
     \item[Composability]~\\
-    Composing two ...
+    \begin{lemma}[Composability of Deterministic Lifting]~\\
+        Let $\dgrad{P_1}, \dgrad{P_2}$ be deterministic liftings of predicates $P_1, P_2$.
+        Then
+        \begin{displaymath}
+        \dgrad{P_3} ~~\defeq~~ \dgrad{P_2} \circ \dgrad{P_1}
+        \end{displaymath}
+        is a deterministic lifting of $P_3(\phi_1, \phi_3) = \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)$.
+    \end{lemma}
 \end{description}
-
 
 % EXAMPLE LIFTINGS
