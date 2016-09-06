@@ -1,0 +1,13 @@
+We will now follow along the procedure introduced in chapter \ref{ch:gradualization-of-a} to design a gradually verified language “\gvl” based on \svl.
+% BLA
+
+The path we take:
+\begin{align*} 
+&\text{Syntax:}\\
+&\grad{\phi} \quad::=\quad \phi ~|~ \withqm{\phi}\\
+\\
+&\text{Concretization:}\\
+&\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormulaB\\
+&\gamma(\withqm{\phi}) = \{~ \phi' \in \setFormulaB ~|~ \phiImplies{\phi'}{\phi} ~\}\\
+&\gamma(\grad{\phi}) = \emptyset    \quad\textit{otherwise}
+\end{align*}

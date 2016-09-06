@@ -6,8 +6,17 @@ The program state of \svl is defined as $\setProgramState = \setHeap \times \set
 	A_s    & \in \setSFootprint &  & =~~ \PP^{\setExpr \times \setFieldName}                                                    \\
 	A_d    & \in \setDFootprint &  & =~~ \PP^{\setObj \times \setFieldName}                                                     \\
 	E      & \in \setStackEntry &  & =~~ \setVarEnv \times \setDFootprint \times \setStmt                                       \\
-	S      & \in \setStack      &  & ::= E \cdot S ~|~ nil
+	S      & \in \setStack      &  & ::= E \cdot S ~|~ \nil
 \end{align*}
+
+REQUIRED?
+\begin{definition}[Topmost Stack Entry]
+    Let $\topmost : \setStack \rightharpoonup \setStackEntry$ be defined as
+    \begin{align*}
+    &\topmost(E \cdot S) = E\\
+    &\topmost(\nil) \quad\textit{ undefined}
+    \end{align*}
+\end{definition}
 
 %TODO: rethink where footprints are introduced... would make sense to know what it is prior to this figure...
 
@@ -15,5 +24,5 @@ The program state of \svl is defined as $\setProgramState = \setHeap \times \set
 
 Program states with scheduled statement $s$ are defined as
 \begin{displaymath}
-\setProgramState_s = \{  \}
+\setProgramState_s ~\defeq~ \setHeap ~\times~ \{~~ (\rho, A_d, s) \cdot S ~~|~~ \rho \in \setVarEnv,~ A_d \in \setDFootprint,~ S \in \setStack ~~\}
 \end{displaymath}

@@ -41,6 +41,7 @@
     frame=single,
     framesep=5pt,
     mathescape=true,
+    showstringspaces=false,
     %escapeinside={(*}{*)},
     keywordstyle=\color{blue}\ttfamily,
     stringstyle=\color{darkgray}\ttfamily,
@@ -92,6 +93,7 @@
 \newcommand{\setProgram}{\tset{Program}\xspace}
 \newcommand{\setGProgram}{\tset{GProgram}\xspace}
 \newcommand{\setClass}{\tset{Class}\xspace}
+\newcommand{\setGClass}{\tset{GClass}\xspace}
 \newcommand{\setField}{\tset{Field}\xspace}
 \newcommand{\setMethod}{\tset{Method}\xspace}
 \newcommand{\setGMethod}{\tset{GMethod}\xspace}
@@ -132,6 +134,7 @@
 % formulas
 \newcommand{\phiAnd}[2]{\ttt{#1\:∧\:#2}}
 \newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}
+\newcommand{\gphiCons}[2]{\ttt{#1\:$\grad{\ttt{*}}$\:#2}}
 \newcommand{\phiFalse}[0]{\ttt{false}}
 \newcommand{\phiTrue}[0]{\ttt{true}}
 \newcommand{\phiEq}[2]{\ttt{(#1 = #2)}}
@@ -172,6 +175,7 @@
 % framing
 \newcommand{\sfrme}{\ensuremath{\vdash_\texttt{frm}}\,}
 \newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+\newcommand{\wo}[2]{#1\div#2}
 % evaluation
 \newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
 \newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
@@ -190,7 +194,9 @@
 \newcommand{\mpre}{\predicate{mpre$_p$}}
 \newcommand{\mpost}{\predicate{mpost$_p$}}
 \newcommand{\mmethod}{\predicate{method$_p$}}
+\newcommand{\topmost}{\predicate{topmost}}
 % other
+\newcommand{\nil}{\predicate{nil}\xspace}
 \newcommand{\static}{\predicate{static}}
 \newcommand{\dom}{\predicate{dom}}
 \newcommand{\writesTo}{\predicate{writesTo}}

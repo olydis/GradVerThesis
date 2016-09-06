@@ -1,0 +1,195 @@
+\begin{mathpar}
+    \inferrule* [Right=GHAlloc]
+    {
+        {\wo {\grad{\phi}} {x}} = \grad{\phi'}\\
+        \sType {\Gamma} {\ex{${x}$}} {{C}} \\
+        {\fields({C})} = {{\overline{\field{$T$}{$f$}}}}
+    }
+    {
+        \dgthoare {\Gamma} {\grad{\phi}} {{\sAlloc {${x}$} {${C}$}}} {\gphiCons{$\grad{\phi'}$}{${\gphiCons{${\phiNeq {${\ex{${x}$}}$} {${\ev{${\enull}$}}$}}$}{${\overline{\gphiCons{\phiAcc {$x$} {$f_i$}}{\phiEq {\edot {$x$} {$f_i$}} {\defaultValue {$T_i$}} }}}$}}$}}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=GHFieldAssign]
+    {
+        \wo {\grad{\phi}} {\phiAcc{$x$}{$f$}} = \grad{\phi'}\\
+        \sType {\Gamma} {\ex{${x}$}} {{C}} \\
+        \sType {\Gamma} {\ex{${y}$}} {T} \\
+        \vdash {C}.{f} : {T}
+    }
+    {
+        \thoare {\Gamma} {\grad{\phi}} {{\sFieldAssign {${x}$} {${f}$} {${y}$}}} {\gphiCons{$\grad{\phi'}$}{${\gphiCons{${\phiAcc {${\ex{${x}$}}$} {${f}$}}$}{${\gphiCons{${\phiNeq {${\ex{${x}$}}$} {${\ev{${\enull}$}}$}}$}{${\ensuremath{{\phiEq {${\edot{${\ex{${x}$}}$}{${f}$}}$} {${\ex{${y}$}}$}}}}$}}$}}$}}
+    }
+\end{mathpar}
+
+
+\begin{mathpar}
+    \inferrule* [Right=GHVarAssign]
+    {{\wo {\grad{\phi}} {x}} = \grad{\phi'}\\
+        {x} \not \in {FV({e})}\\
+        {\Gamma} \vdash {{x}} : {T}\\
+        {\Gamma} \vdash {e} : {T}\\
+        {\grad{\phi'}} \grad{\implies} {\accFor {{e}}}}
+    {\Gamma~ \ghoare {\grad{\phi}} {{{x} := {e}}} {\grad{\phi'} \gsc {{({{x}} = {e})}}}}
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=GHVarAssign]
+    {
+        \gphiImplies{\grad{\phi}} {\accFor {{e}}}\\
+        {\wo {\grad{\phi}} {x}} = \grad{\phi'}\\
+        {x} \not \in {FV({e})} \\
+        \sType {\Gamma} {\ex{${x}$}} {T} \\
+        \sType {\Gamma} {e} {T}
+    }
+    {
+        \thoare {\Gamma} {\grad{\phi}} {{\sVarAssign {${x}$} {${e}$}}} {\gphiCons{$\grad{\phi'}$}{${\ensuremath{{\phiEq {${\ex{${x}$}}$} {${e}$}}}}$}}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=GHReturn]
+    {
+        {\wo {\grad{\phi}} {\eresult}} = \grad{\phi'}\\
+        \sType {\Gamma} {\ex{${x}$}} {T} \\
+        \sType {\Gamma} {\ex{${\eresult}$}} {T}
+    }
+    {
+        \thoare {\Gamma} {\grad{\phi}} {{\sReturn {${x}$}}} {\gphiCons{$\grad{\phi'}$}{${\ensuremath{{\phiEq {${\ex{${\eresult}$}}$} {${\ex{${x}$}}$}}}}$}}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=GHApp]
+    {
+        \grad{\phi} \grad{\implies} {{\grad{\phi_p}} \gsc {({{y}} \neq {{\vnull}})}}\\x \neq y \wedge x \neq z'\\\grad{\phi_p} = {\grad{\phi_{pre}}[{y}, {z'} / {\xthis}, {{z}}]}\\\grad{\phi_q} = {\grad{\phi_{post}}[{y}, {z'}, {x} / {\xthis}, {{z}}, {\xresult}]}}
+    {\Gamma~ \ghoare {\grad{\phi}} {{{x} := {y}.{m}({z'})}} {\grad{\phi'} \gsc \grad{\phi_q}}}
+\end{mathpar}
+\begin{mathpar}
+    \inferrule* [Right=GHCall]
+    {
+        \wo {\wo {\grad{\phi}} {x}} {\staticFP{\grad{\phi_p}}_{\Gamma, y, z'}} = \grad{\phi'}\\
+        \sType {\Gamma} {\ex{${y}$}} {{C}} \\
+        {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\_}$}}} \\
+        \sType {\Gamma} {\ex{${x}$}} {T_r} \\
+        \sType {\Gamma} {\ex{${z'}$}} {T_p} \\
+        {\phi} \implies {\phiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{${\phiCons{${\phi_p}$}{${\phi'}$}}$}} \\
+        x \neq y \wedge x \neq z' \\
+        {\phi_p} = {{\phi_{pre}}[{y}, {z'} / {\ethis}, {{z}}]} \\
+        {\phi_q} = {{\phi_{post}}[{y}, {z'}, {x} / {\ethis}, {{z}}, {\eresult}]}
+    }
+    {
+        \thoare {\Gamma} {\phi} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\phiCons{${\phi'}$}{${\phi_q}$}}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=HAssert]
+    {
+        {\phi} \implies {\phi'}
+    }
+    {
+        \thoare {\Gamma} {\phi} {{\sAssert {${\phi'}$}}} {\phi}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=HRelease]
+    {
+        {\phi} \implies {\phiCons{${\phi_r}$}{${\phi'}$}} \\
+        \sfrmphi {\phi'}
+    }
+    {
+        \thoare {\Gamma} {\phi} {{\sRelease {${\phi_r}$}}} {\phi'}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=HDeclare]
+    {
+        {x} \not\in \dom({\Gamma}) \\
+        \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {\overline{s}} {\phi'}
+    }
+    {
+        \thoare {\Gamma} {\phi} {{\sDeclare {${T}$} {${x}$}} {\overline{s}}} {\phi'}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=HHold]
+    {
+        \sfrmphi {\phi} \\
+        {\phi_f} \implies {\phiCons{${\phi_r}$}{${\phi'}$}} \\
+        {\phi'} \implies {\phi} \\
+        {FV(\phi')} = {FV(\phi)} \\
+        \neg {\writesTo({FV(\phi)}, {\overline{s}})} \\
+        \thoare {\Gamma} {\phi_r} {\overline{s}} {\phi_r'}
+    }
+    {
+        \thoare {\Gamma} {\phi_f} {{\sHold {${\phi}$} {${\overline{s}}$}}} {\phiCons{${\phi_r'}$}{${\phi'}$}}
+    }
+\end{mathpar}
+
+\begin{mathpar}
+    \inferrule* [Right=HSeq]
+    {
+        \thoare {\Gamma} {\phi_p} {{s_1}} {\phi_q} \\
+        \thoare {\Gamma} {\phi_q} {\overline{s_2}} {\phi_r}
+    }
+    {
+        \thoare {\Gamma} {\phi_p} {{s_1} {\overline{s_2}}} {\phi_r}
+    }
+\end{mathpar}
+
+
+
+
+
+Let $\gsc$ behave like $\hsc$ if first operand is static - otherwise its regular concatenation.
+
+
+\begin{mathpar}
+\inferrule* [Right=GHAssertBadIdea]
+{{\wo {\grad{\phi}} {\staticFP{\phi_a}}} = \grad{\phi'}\\
+    \hat{\phi} \grad{\implies} {\phi_a}}
+{\Gamma~ \ghoare {\grad{\phi}} {{\assert {\phi_a}}} {\grad{\phi'} \gsc \phi_a}}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=GHAssert]
+{\grad{\imp}(\phi_a)(\grad{\phi}) = \grad{\phi'}}
+{\Gamma~ \ghoare {\grad{\phi}} {{\assert {\phi_a}}} {\grad{\phi'}}}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=GHRelease]
+{\grad{\imp}(\phi_r)(\grad{\phi}) = \grad{\phi'}\\
+	{\wo {\grad{\phi'}} {\staticFP{\phi_r}}} = \grad{\phi''}}
+{\Gamma~ \ghoare {\grad{\phi}} {{\release {\phi_r}}} {\grad{\phi''}}}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=GHDeclare]
+{{x} \not\in \dom({\Gamma})\\{{\Gamma}, {x} : {T}} \hoare {\grad{\phi} \gsc {({{x}} = {{\texttt{defaultValue}({T})}})}} {\overline{s}} {\grad{\phi'}}}
+{\Gamma~ \ghoare {\grad{\phi}} {{{T}~{x}}; {\overline{s}}} {\grad{\phi'}}}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=GHHold]
+{
+    \sfrmphi {\phi} \\
+    \imp(\phi)(\grad{\phi_f}) = \grad{\phi_f'}\\
+    \wo {\grad{\phi_f'}} {\staticFP{\phi}} = \grad{\phi_r}\\
+    \wo {\wo {\grad{\phi_f'}} {\staticFP{\grad{\phi_r}}}}{FV(\grad{\phi_f'}) \backslash FV(\grad{\phi})} = \grad{\phi'}\\
+    {\Gamma~} \ghoare {\grad{\phi_r}} {\overline{s}} {\grad {\phi_r'}}
+}
+{{\Gamma~} \ghoare {\grad{\phi_f}} {{\sHold {$\phi$} {${\overline{s}}$}}} {\grad{\phi_r'} \gsc \grad{\phi'}}}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=GHSec]
+{\Gamma~ \ghoare {\grad{\phi_p}} {s_1} {\grad{\phi_q}}\\\Gamma~ \ghoare {\grad{\phi_q}} {\overline{s_2}} {\grad{\phi_r}}}
+{\Gamma~ \ghoare {\grad{\phi_p}} {{s_1}; \overline{s_2}} {\grad{\phi_r}}}
+\end{mathpar}
+

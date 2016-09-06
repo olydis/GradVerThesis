@@ -12,6 +12,6 @@ For reference, the full definitions:
 \\
 &\text{Concretization:}\\
 &\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormulaA\\
-&\gamma(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phi' \implies \phi ~\}\\
+&\gamma(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phi} ~\}\\
 &\gamma(\grad{\phi}) = \emptyset    \quad\textit{otherwise}
 \end{align*}

@@ -115,7 +115,9 @@ There are two typical ways of extending the formula syntax.
 
 
 
-\chapter{Implementation / Case Study / ...}
+\chapter{Case Study: Implicit Dynamic Frames}
+\label{ch:case-study--implicit}
+\input{text/CH-case-study--implicit}
 
 \section{Language}
 \label{sec:language}
@@ -128,22 +130,26 @@ There are two typical ways of extending the formula syntax.
     \subsection{Program State}
     \label{ssec:program-state}
     \input{text/SSEC-program-state}
+        
+    \subsection{Formula Semantics}
+    \label{ssec:formula-semantics}
+    \input{text/SSEC-formula-semantics}
+    
+        \subsubsection{Framing}
+        \label{sssec:framing}
+        \input{text/SSSEC-framing}
     
     \subsection{Static Semantics}
     \label{sec:static-semantics}
     \input{text/SEC-static-semantics}
+        
+        \subsubsection{Typing}
+        \label{sssec:typing}
+        \input{text/SSSEC-typing}
     
-    \subsubsection{Typing}
-    \label{sssec:typing}
-    \input{text/SSSEC-typing}
-    
-    \subsubsection{Framing}
-    \label{sssec:framing}
-    \input{text/SSSEC-framing}
-    
-    \subsubsection{Verification}
-    \label{sssec:verification}
-    \input{text/SSSEC-verification}
+        \subsubsection{Verification}
+        \label{sssec:verification}
+        \input{text/SSSEC-verification}
     
     \subsection{Well-Formedness}
     \label{sec:well-formedness}
@@ -154,17 +160,22 @@ There are two typical ways of extending the formula syntax.
     \input{text/SSEC-dynamic-semantics}
     
     \subsection{Soundness}
+    % invariants?
 
-\section{Gradual Formulas}
-The path we take:
-\begin{align*}
-&\grad{\phi} \quad ::= \quad \phi ~|~ \withqm{\phi}
-\end{align*}
+\section{Gradualization}
+\label{sec:cs-gradual-formulas}
+\input{text/SEC-cs-gradual-formulas}
 
-\subsection{Gradualize Functions}
-% IDF stuff will probably only show up here!
+    \subsection{Extension: Statements}
+    \label{ssec:extension--statements}
+    \input{text/SSEC-extension--statements}
+
+    \subsection{Extension: Program State}
+    $\setGProgramState = \setProgramState$
 
 \section{Gradualize Hoare Rules}
+\label{sec:gradualize-hoare-rules}
+\input{text/SEC-gradualize-hoare-rules}
 
 \section{Gradual Dyn. Semantics}
 % thing with HSec

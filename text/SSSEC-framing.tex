@@ -13,9 +13,6 @@ In order to guarantee that such formulas always reflect the program state (prese
 
 % EXAMPLE of verification without self-framing.
 
-% MAYBE We will introduce two subsets \setFormulaA and \setFormulaB ...
-
-
 \begin{figure}
     \boxed{A_s \sfrme e}
     \input{data/svl-sem-stat-frme}
@@ -28,13 +25,24 @@ In order to guarantee that such formulas always reflect the program state (prese
     \caption{\svl: Framing Formulas}
 \end{figure}
 
-We omit the emptyset... bla self-framing
+We omit the emptyset... 
+
+\begin{definition}[Formula Self-Framedness]
+    A formula $\phi$ is \textbf{self-framed} iff
+    \begin{displaymath}
+    \sfrmphi \phi
+    \end{displaymath}
+    Let $\setFormulaB \subseteq \setFormulaA$ be the set of \textbf{self-framed and satisfiable} formulas.
+\end{definition}
+
+As illustrated in example??? self-framed formulas are required for race-free verification.
+
+\svl will thus only consider method contracts using self-framed and satisfiable formulas well-formed (see section \ref{sec:well-formedness}).
 
 \begin{figure}
     \boxed{\staticFP {\phi} = A_s}
     \input{data/svl-sem-stat-fp}
     \caption{\svl: Static Footprint}
 \end{figure}
-
 
 %IS conservative approximation of formulas that are dynamically framed (not possible precisely anyway!)

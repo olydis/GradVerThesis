@@ -1,0 +1,18 @@
+
+%% method contract extension
+In \gvl we want the programmer to specify gradual method contracts.
+Therefore we extend their syntax as follows.
+\begin{align*}
+\grad{contract} & \in \setGContract   &  & ::= \ttt{requires $\grad{\phi}$;~ensures $\grad{\phi}$;}
+\end{align*}
+
+%%% propagation
+This extension is propagated to method declarations (now accepting gradual contracts but not changing otherwise), yielding $\setGMethod$.
+Carrying on with the same logic, we get an extended set of class definitions $\setGClass$ and finally an extended set of programs $\setGProgram$.
+Again, note that the only syntactical difference is the acceptance of gradual formulas in method contracts.
+
+%% statements
+We see no motive to extend the syntax of statements themselves and define $\setGStmt = \setStmt$.
+As postulated in section \ref{sec:gradual-statements}, the call statement hides away gradualized syntax by referencing a method with gradual contract.
+This becomes obvious when looking at its static or dynamic semantics (see \tset{HCall} and \tset{ESCall???}/\tset{ESCallFinish}) where the method name is effectively dereferenced.
+% SO we will remember that when lifting stuff...
