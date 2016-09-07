@@ -1,8 +1,18 @@
 % Inductive Semantics.hoare
 \begin{mathpar}
+\inferrule* [Right=HSkip]
+{
+    ~
+}
+{
+    \thoare {\Gamma} {\phi} {{\sSkip}} {\phi}
+}
+\end{mathpar}
+
+\begin{mathpar}
 \inferrule* [Right=HAlloc]
 {
-    {\phi} \implies {\phi'} \\
+    \phiImplies {\phi} {\phi'} \\
     \sfrmphi {\phi'} \\
     {x} \not \in {FV(\phi')} \\
     \sType {\Gamma} {\ex{${x}$}} {{C}} \\
@@ -16,7 +26,7 @@
 \begin{mathpar}
 \inferrule* [Right=HFieldAssign]
 {
-    {\phi} \implies {\phiCons{${\phiAcc {${\ex{${x}$}}$} {${f}$}}$}{${\phi'}$}} \\
+    \phiImplies {\phi} {\phiCons{${\phiAcc {${\ex{${x}$}}$} {${f}$}}$}{${\phi'}$}} \\
     \sfrmphi {\phi'} \\
     \sType {\Gamma} {\ex{${x}$}} {{C}} \\
     \sType {\Gamma} {\ex{${y}$}} {T} \\
@@ -30,8 +40,8 @@
 \begin{mathpar}
 \inferrule* [Right=HVarAssign]
 {
-    {\phi} \implies {\phi'} \\
-    {\phi} \implies {\accFor {{e}}} \\
+    \phiImplies {\phi} {\phi'} \\
+    \phiImplies {\phi} {\accFor {{e}}} \\
     \sfrmphi {\phi'} \\
     {x} \not \in {FV(\phi')} \\
     {x} \not \in {FV({e})} \\
@@ -46,7 +56,7 @@
 \begin{mathpar}
 \inferrule* [Right=HReturn]
 {
-    {\phi} \implies {\phi'} \\
+    \phiImplies {\phi} {\phi'} \\
     \sfrmphi {\phi'} \\
     {\eresult} \not \in {FV(\phi')} \\
     \sType {\Gamma} {\ex{${x}$}} {T} \\
@@ -64,7 +74,7 @@
     {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\_}$}}} \\
     \sType {\Gamma} {\ex{${x}$}} {T_r} \\
     \sType {\Gamma} {\ex{${z'}$}} {T_p} \\
-    {\phi} \implies {\phiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{${\phiCons{${\phi_p}$}{${\phi'}$}}$}} \\
+    \phiImplies {\phi} {\phiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{${\phiCons{${\phi_p}$}{${\phi'}$}}$}} \\
     \sfrmphi {\phi'} \\
     {x} \not \in {FV(\phi')} \\
     x \neq y \wedge x \neq z' \\
@@ -79,7 +89,7 @@
 \begin{mathpar}
 \inferrule* [Right=HAssert]
 {
-    {\phi} \implies {\phi'}
+    \phiImplies {\phi} {\phi'}
 }
 {
     \thoare {\Gamma} {\phi} {{\sAssert {${\phi'}$}}} {\phi}
@@ -89,7 +99,7 @@
 \begin{mathpar}
 \inferrule* [Right=HRelease]
 {
-    {\phi} \implies {\phiCons{${\phi_r}$}{${\phi'}$}} \\
+    \phiImplies {\phi} {\phiCons{${\phi_r}$}{${\phi'}$}} \\
     \sfrmphi {\phi'}
 }
 {
@@ -101,10 +111,10 @@
 \inferrule* [Right=HDeclare]
 {
     {x} \not\in \dom({\Gamma}) \\
-    \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {\overline{s}} {\phi'}
+    \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {s} {\phi'}
 }
 {
-    \thoare {\Gamma} {\phi} {{\sDeclare {${T}$} {${x}$}} {\overline{s}}} {\phi'}
+    \thoare {\Gamma} {\phi} {{\sDeclare {${T}$} {${x}$}} {s}} {\phi'}
 }
 \end{mathpar}
 
@@ -112,14 +122,14 @@
 \inferrule* [Right=HHold]
 {
     \sfrmphi {\phi} \\
-    {\phi_f} \implies {\phiCons{${\phi_r}$}{${\phi'}$}} \\
-    {\phi'} \implies {\phi} \\
+    \phiImplies {\phi_f} {\phiCons{${\phi_r}$}{${\phi'}$}} \\
+    \phiImplies {\phi'} {\phi} \\
     {FV(\phi')} = {FV(\phi)} \\
-    \neg {\writesTo({FV(\phi)}, {\overline{s}})} \\
-    \thoare {\Gamma} {\phi_r} {\overline{s}} {\phi_r'}
+    \neg {\writesTo({FV(\phi)}, {s})} \\
+    \thoare {\Gamma} {\phi_r} {s} {\phi_r'}
 }
 {
-    \thoare {\Gamma} {\phi_f} {{\sHold {${\phi}$} {${\overline{s}}$}}} {\phiCons{${\phi_r'}$}{${\phi'}$}}
+    \thoare {\Gamma} {\phi_f} {{\sHold {${\phi}$} {${s}$}}} {\phiCons{${\phi_r'}$}{${\phi'}$}}
 }
 \end{mathpar}
 

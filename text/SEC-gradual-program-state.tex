@@ -11,6 +11,10 @@ Again, we give meaning to gradual program states using concretization.
     \gamma_{\pi}(\grad{\pi}) = \{~ \pi \in \setProgramState ~|~ \textit{$\pi$ is $\grad{\pi}$ with all continuations??? replaced by a concretization} ~\}
     \end{displaymath}
 \end{definition}
+\begin{definition}[Precision of Gradual Program States]
+    Let $\mptpi \subseteq \setGProgramState \times \setGProgramState$ be a predicate defined as
+    $$\grad{\pi_a} \mptpi \grad{\pi_b}  \quad\iff\quad  \gamma_{\pi}(\grad{\pi_a}) \subseteq \gamma_{\pi}(\grad{\pi_b})$$
+\end{definition}
 
 Consequence:
 \begin{displaymath}

@@ -16,8 +16,8 @@ Let $\wsp : \setStmt \rightarrow \PP(\setProgramState)$ be defined as
      	\{~ \pi \in \setProgramState_s ~|~ \evalphiGen{\pi}{\accFor{$e$}} ~\}                               & \text{if~} s = \sVarAssign{$x$}{$e$}        \\
      	\setProgramState_s                                                                                  & \text{if~} s = \sReturn{$x$}                \\
      	\{~ \pi \in \setProgramState_s ~|~ \evalphiGen{\pi}{\phiCons{\phiNeq{$y$}{\enull}}{\mpre{$m$}}} ~\} & \text{if~} s = \sCall{$x$}{$y$}{$m$}{$z$}   \\
-     	\{~ \pi \in \setProgramState_s ~|~ \evalphiGen{\pi}{$\phi$} ~\}                                     & \text{if~} s = \sAssert{$\phi$}             \\
-     	\{~ \pi \in \setProgramState_s ~|~ \evalphiGen{\pi}{$\phi$} ~\}                                     & \text{if~} s = \sRelease{$\phi$}
+     	\{~ \pi \in \setProgramState_s ~|~ \evalphiGen{\pi}{\phi} ~\}                                       & \text{if~} s = \sAssert{$\phi$}             \\
+     	\{~ \pi \in \setProgramState_s ~|~ \evalphiGen{\pi}{\phi} ~\}                                       & \text{if~} s = \sRelease{$\phi$}
      \end{cases}
        & ~ \\ 
 \end{flalign*}

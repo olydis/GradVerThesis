@@ -1,8 +1,6 @@
-
 %% intro
-Static verification provides guarantees about the dynamic behavior of a program without changing it.
-With the introduction of dynamic components to the assertion language, these guarantees potentially impossible to provide without altering the program.
-In other words, it might be inevitable to enrich the program with runtime checks ensuring properties that were impossible to ensure at compile time.
+Static verification provides guarantees about the dynamic behavior of a program without runtime overhead.
+With the introduction of dynamic components to the assertion language, these guarantees can be impossible to provide without additional runtime checks.
 
 %% example
 Consider a (static) Hoare logic that can verify
@@ -16,9 +14,7 @@ The corresponding gradual logic can thus verify
 but without additional measures there is no guarantee that every program state satisfying the precondition (here: literally every program state) will satisfy the post condition after executing the assignment.
 Adding a runtime assertion to ensure that $\phiEq{x}{3}$ holds (terminating exceptionally in case it does not) would be sufficient and minimal to reestablish soundness in the above example.
 
-We will generalize and formalize this approach, resulting in gradual dynamic semantics that reestablish the soundness of the static verification system by adding minimal runtime checks.
-
-
+We will generalize and formalize this approach, resulting in gradual a dynamic semantics that reestablishes the soundness of the static verification system by adding minimal runtime checks.
 
 %% first: changes in source code!!!
 % making formula gradual 
@@ -43,17 +39,7 @@ We will generalize and formalize this approach, resulting in gradual dynamic sem
 
 Choose ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$ with $\gsssem(\grad{\pi}) = \pi_{EX}$ if stuck for all concretizations.
 
-\begin{mathpar}
-    \inferrule* [Right=DGSoundness]
-    {
-        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
-        \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
-        \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
-    }
-    {
-        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
-    }
-\end{mathpar}
+
 
 
 \begin{mathpar}

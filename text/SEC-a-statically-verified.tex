@@ -42,7 +42,9 @@ Requirements:
         	 & \setProgramState_s ~=~ \Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt_s\Big) ~\times~ \underbrace{\bigcup_{i \in \mathbb{N}_0}{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)^i}}_{\textit{lower frames}}
         \end{flalign*}
     \end{description}
-        
+     
+    TODO: notion of initial state?
+     
 \item[Formula Semantics]~\\
     Formulas are used to describe program states. % more verbose? can be viewed as types?
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the program state at the call site.
@@ -196,7 +198,7 @@ Requirements:
     We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
     W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
     Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
-    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special instruction set?
+    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
     
     %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
     %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.

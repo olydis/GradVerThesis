@@ -1,0 +1,13 @@
+\begin{mathpar}
+    \inferrule* [Right=DGSoundness]
+    {
+        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
+        \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
+        \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
+    }
+    {
+        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
+    }
+\end{mathpar}
+
+% talk about \gthoare

@@ -38,6 +38,10 @@ We give meaning to gradual statements using a concretization function. % MORE de
     \gamma_s(\grad{s}) = \{~ s \in \setStmt ~|~ \textit{$s$ is $\grad{s}$ with all gradual formulas replaced by some concretizations} ~\}
     \end{displaymath}
 \end{definition}
+\begin{definition}[Precision of Gradual Statement]
+    Let $\mpts \subseteq \setGStmt \times \setGStmt$ be a predicate defined as
+    $$\grad{s_a} \mpts \grad{s_b}  \quad\iff\quad  \gamma_s(\grad{s_a}) \subseteq \gamma_s(\grad{s_b})$$
+\end{definition}
 
 %% outlook
 The notion of gradual statements will become important for gradual static and dynamic semantics.
