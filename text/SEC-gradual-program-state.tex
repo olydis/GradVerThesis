@@ -1,13 +1,5 @@
-Program states as used by small step semantics must contain some notion of “remaining work”, often in form of a statement.
-TODO: reasonable to call that “continuation”?
 
-Examples:
-\begin{displaymath}
-\setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{state for evaluation???}} ~\times~ \setStmt
-\end{displaymath}
-\begin{displaymath}
-\setProgramState ~=~ \underbrace{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)}_{\textit{stack frame}} ~\times~ \Big(\setProgramState ~\cup\, \bot\Big)
-\end{displaymath}
+...continuation...
 
 Therefore the introduction of gradual statements $\setGStmt$ leads to a notion of gradual program states $\setGProgramState \supseteq \setProgramState$.
 TODO: $\setGProgramState_{\grad{s}}$

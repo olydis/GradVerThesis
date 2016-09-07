@@ -55,8 +55,30 @@ Choose ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ as lifted v
     }
 \end{mathpar}
 
-Case $\exists \phi_1 \in \gamma(\grad{\phi_1}), \pi_s \in \gamma(\grad{\pi_{\grad{s}}}), \phi \in \setFormula.~ \evalphiGen{\pi_s}{\phi_1} ~\wedge \thoare{~}{\phi_1}{s}{\phi}$\\
-Case $\exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
+
+\begin{mathpar}
+    \inferrule* [Right=DGSoundness]
+    {
+        \inferrule*
+        {
+            \inferrule*
+            {
+                \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
+                \grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}} \,\in \setGProgramState_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}\\
+                \evalgphiGen{\grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}}}{\grad{\phi_1}}
+            }
+            {
+                ...
+            }
+        }
+        {
+            \evalgphiGen{\gsssem^{\grad{s_2}}(\gsssem^{\grad{s_1}}(\grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}}))}{\grad{\phi_3}}
+        }
+    }
+    {
+        \evalgphiGen{\gsssem^{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}(\grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}})}{\grad{\phi_3}}
+    }
+\end{mathpar}
 
 \begin{description}
     \item $\grad{s} \in \setGStmt$

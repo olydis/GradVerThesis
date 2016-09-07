@@ -10,18 +10,38 @@ Requirements:
     	\phi & \in \setFormula
     \end{align*}
     We assume that there is a sequence operator \ttt{;} such that: $\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$
+    
+    Let $\setStmt_s$ be the set of all statements having $s$ as prefix.
+    % examples
+    
     % or munch that into syntax figure above?
     % TODO: we make no other assumptions
     % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
-    % FORMALIZE \setProgramState, \setProgramState_{...}
-
 \item[Program State]
-    $\setProgramState$
-    $\setProgramState_s$
+    Operational semantics (see below) are formalized as discrete transitions between program states.
+    Therefore a program state contains all information necessary to evaluate expressions and determine the next program state.
+    We assume that $\setProgramState$ is the set of all possible program states in \svl.
+    To determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
+    TODO: reasonable to call that “continuation”?
+    
+    Let $\setProgramState_s$ (with $s \in \setStmt$) be the set of program states having $s$ as upcoming work.
+    This notion will be necessary to define soundness of \svl's static semantics means.
+    
+    Examples:
+    \begin{align*}
+    &\setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{variable memory}} ~\times~ \setStmt\\
+    &\setProgramState_s ~=~ (\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt_s
+    \end{align*}
+    \begin{align*}
+    &\setProgramState ~=~ \bigcup_{i \in \mathbb{N}_+}{\underbrace{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)}_{\textit{stack frame}}}^i\\
+    &\setProgramState_s ~=~ \Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt_s\Big) ~\times~ \underbrace{\bigcup_{i \in \mathbb{N}_0}{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)^i}}_{\textit{lower frames}}
+    \end{align*}
+    
+    
 
 \item[Formula Semantics]~\\
-    Formulas are used to describe program states.
+    Formulas are used to describe program states. % more verbose? can be viewed as types?
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the current program state.
     
     We assume that we are given a computable predicate
