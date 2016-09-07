@@ -112,10 +112,10 @@ Requirements:
         \inferrule* [Right=HoareSequence]
         {
             \thoare {~} {\phi_p} {{s_1}} {\phi_q} \\
-            \thoare {~} {\phi_q} {\overline{s_2}} {\phi_r}
+            \thoare {~} {\phi_q} {{s_2}} {\phi_r}
         }
         {
-            \thoare {~} {\phi_p} {{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
+            \thoare {~} {\phi_p} {\sSeq{s_1}{s_2}} {\phi_r}
         }
     \end{mathpar}
     is derivable from given Hoare rules. % OR with both parts as lists?
@@ -124,7 +124,7 @@ Requirements:
     \begin{definition}[Weakest Static Precondition]~\\
         Let $\wsp : \setStmt \rightarrow \PP(\setProgramState)$ be defined as
         \begin{displaymath}
-        \wsp(s) = \{~ \pi \in \setProgramState ~|~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{~}{\phi_1}{s}{\phi_2} ~~\wedge~~ \evalphiGen{\pi}{\phi_1} ~\}
+        \wsp(s) = \{~ \pi \in \setProgramState_s ~|~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{~}{\phi_1}{s}{\phi_2} ~~\wedge~~ \evalphiGen{\pi}{\phi_1} ~\}
         \end{displaymath}
     \end{definition}
     Intuitively, the $\wsp(s)$ is a predicate on program states, indicating whether we could deduce anything about the state after executing $s$, using only our Hoare rules.

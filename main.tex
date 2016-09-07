@@ -183,7 +183,7 @@
 \newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
 \newcommand{\evalphiXGen}[2]{#1 \vDash_{X} #2}
 \newcommand{\evalgphiXGen}[2]{#1 \,\,\grad{\vDash_{X}}\,\, #2}
-\newcommand{\evalphiGen}[2]{#1 \vDash #2}
+\newcommand{\evalphiGen}[2]{#1 \,\,{\vDash}\,\, #2}
 \newcommand{\evalgphiGen}[2]{#1 \,\,\grad{\vDash}\,\, #2}
 \newcommand{\evalphi}[1]{\evalphiGen {H,\rho,A} {#1}}
 \newcommand{\evalgphi}[1]{\evalgphiGen {H,\rho,A} {#1}}
@@ -195,13 +195,13 @@
 % extraction
 \newcommand{\fieldType}{\predicate{fieldType$_p$}}
 \newcommand{\fields}{\predicate{fields$_p$}}
-\newcommand{\mpre}{\predicate{mpre$_p$}}
-\newcommand{\mpost}{\predicate{mpost$_p$}}
+\newcommand{\mpre}[1]{\predicate{mpre$_p$(#1)}}
+\newcommand{\mpost}[1]{\predicate{mpost$_p$(#1)}}
 \newcommand{\mmethod}{\predicate{method$_p$}}
 \newcommand{\topmost}{\predicate{topmost}}
 % other
 \newcommand{\nil}{\predicate{nil}\xspace}
-\newcommand{\static}{\predicate{static}}
+\newcommand{\static}[1]{\predicate{static(#1)}}
 \newcommand{\dom}{\predicate{dom}}
 \newcommand{\writesTo}{\predicate{writesTo}}
 \newcommand{\sType}[3]{{#1} \vdash {#2} : {#3}}
