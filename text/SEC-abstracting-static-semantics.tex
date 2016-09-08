@@ -1,38 +1,12 @@
 With the rules for lifting set up we can apply them to the static verification predicate:
 Lifting 
 $$\thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula$$
-w.r.t. both pre- and postcondition results in a predicate
-$$\gthoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setStmt \times \setGFormula$$
+w.r.t. all parameters yields
+$$\gthoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula$$
 
 % EXAMPLE verification with proof
 
 % talk about our expectation that dynamic measures are now necessary, examples, ...
-
-
-%% in practice, challanges
-The remainder of this chapter will show how to tackle lifting the verification predicate in practice.
-For this detailed description, we assume that ...
-\begin{mathpar}
-    \inferrule* [Right=VerSeqSyntaxDriven]
-    {
-        \thoare {~} {\phi_p} {{s_1}} {\phi_q} \\
-        \thoare {~} {\phi_q} {\overline{s_2}} {\phi_r}
-    }
-    {
-        \thoare {~} {\phi_p} {{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
-    }
-\end{mathpar}
-\begin{mathpar}
-    \inferrule* [Right=VerSeqFlexible]
-    {
-        \thoare {~} {\phi_p} {\overline{s_1}} {\phi_{q1}} \\
-        \phi_{q1} \implies \phi_{q2}\\
-        \thoare {~} {\phi_{q2}} {\overline{s_2}} {\phi_r}
-    }
-    {
-        \thoare {\Gamma} {\phi_p} {\overline{s_1}\ttt{;~} {\overline{s_2}}} {\phi_r}
-    }
-\end{mathpar}
 
 
 
@@ -41,16 +15,5 @@ For this detailed description, we assume that ...
 % => they might still not be optimal (we will define measure), but at least verifier is not to blame
 % => about non-optimality formalism is to blame, not some inference mechanism (conflict of interest! formulas as strong as possible, verifier as “good”/successful as possible)
 % => whether “working” intermediate formula exists is generally not even decidable! (already follows from satisfiability itself not being decidable...)
-
-\begin{align*}
-\funHoare_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoare_s = \funHoareC_s \circ \funHoareB_s \circ \funHoareA_s\\
-\funHoare_s(\pb{\phi}) = \funHoareC_s(\pb{\phi}) \quad\text{ if $\funHoareApred(s) \wedge \pb{\phi} \implies \funHoareBimp(s)$} \\
-\funHoareA_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoareA_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\funHoareApred(s)$} \\
-\funHoareB_s : \setFormulaB \rightharpoonup \setFormulaB\\
-\funHoareB_s(\pb{\phi}) = \pb{\phi} \quad\text{ if $\pb{\phi} \implies \funHoareBimp(s)$} \\
-\funHoareC_s : \setFormulaB \rightarrow \setFormulaB\\
-\end{align*}
 
 % example of determinified Hoare rule

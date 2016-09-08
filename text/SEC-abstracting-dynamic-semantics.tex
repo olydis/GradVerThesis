@@ -16,6 +16,7 @@ Adding a runtime assertion to ensure that $\phiEq{x}{3}$ holds (terminating exce
 
 We will generalize and formalize this approach, resulting in gradual a dynamic semantics that reestablishes the soundness of the static verification system by adding minimal runtime checks.
 
+
 %% first: changes in source code!!!
 % making formula gradual 
 % - cannot let execution fail 
@@ -70,7 +71,7 @@ Ex. concretization = emptyset??? could simplify things! :)
     \item[1 = PremiseA] $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
     \item[2 = PremiseB] $\evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}$
     \item[3 = Case] $\exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
-    \item[4 = 1 + concret] $\evalgphiGen{\pi_s}{\grad{\phi_1}}$
+    \item[4 = 2 + 3] $\evalgphiGen{\pi_s}{\grad{\phi_1}}$
     \item[5 = 3 + wsp def] $\exists \phi_1', \phi' \in \setFormula.~ \evalphiGen{\pi_s}{\phi_1'} ~\wedge \thoare{~}{\phi_1'}{s}{\phi'}$
     \item[6 = 4 + 5 + rule42] $\exists \phi_1 \in \gamma(\grad{\phi_1}).~ \phiImplies{\phi_1}{\phi_1'} \wedge \evalphiGen{\pi_s}{\phi_1}$
     \item[7 = 5 + 6 + mono] $\exists \phi \in \setFormula.~ \thoare{~}{\phi_1}{s}{\phi}$

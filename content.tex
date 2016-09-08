@@ -38,6 +38,8 @@
     \input{text/SSEC-implicit-dynamic-frames}
 
 
+
+
 \chapter{Gradualization of a Statically Verified Language}
 \label{ch:gradualization-of-a}
 \input{text/CH-gradualization-of-a}
@@ -67,6 +69,8 @@ There are two typical ways of extending the formula syntax.
     \label{ssec:gfconclusion}
     \input{text/SSEC-gfconclusion}
     
+    % TODO: define static() helper function somewhere
+    
 \section{Gradual Statements}
 \label{sec:gradual-statements}
 \input{text/SEC-gradual-statements}
@@ -74,8 +78,6 @@ There are two typical ways of extending the formula syntax.
 \section{Gradual Program State}
 \label{sec:gradual-program-state}
 \input{text/SEC-gradual-program-state}
-    
-    % TODO: define static() helper function somewhere
 
 \section{Lifting Predicates and Functions}
 \label{sec:lifting-predicates-and}
@@ -89,14 +91,10 @@ There are two typical ways of extending the formula syntax.
     \label{ssec:lifting-functions}
     \input{text/SSEC-lifting-functions}
     
-    \subsection{Gradual Soundness}
-    i.e. what we are going for
-
 \section{Abstracting Static Semantics}
 \label{sec:abstracting-static-semantics}
 \input{text/SEC-abstracting-static-semantics}
-% gradual statements!
-
+    
     \subsection{The Problem with a Rulewise??? Lifting}
     \label{ssec:the-problem-with}
     \input{text/SSEC-the-problem-with}
@@ -104,14 +102,51 @@ There are two typical ways of extending the formula syntax.
     \subsection{The Deterministic Approach}
     \label{ssec:the-deterministic-approach}
     \input{text/SSEC-the-deterministic-approach}
+    
+    \grad{\wsp} = optimal lifting of \wsp
+
+\section{Gradual Soundness vs Gradual Guarantee}
+\label{ssec:gradual-soundness}
+\input{text/SSEC-gradual-soundness}
+WHERE???
+i.e. what we are going for
+
+Need $\gsssem !=! \sssem$ for static inputs!
+
+\begin{flalign*}
+	 & \gtHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula                                                                                                                                                                          \\
+	 & \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ 
+\forall \langle \grad{\pi_{pre}}, \grad{\pi_{post}} \rangle \in \gsssem^{\grad{s}}.~ \evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}} \\
+	 & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\implies~                                                                                                                                                                                                                           \\
+	 & \forall \langle \pi_{pre}, \pi_{post} \rangle \in \sssem^s.~ \evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}}                                                                                                                                   \\
+	 & \forall \pi_{pre}, \pi_{post} \in \setProgramState.~ \sssem^s(\pi_{pre}) = \pi_{post} \implies \evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}}                                                                                                 \\
+	 & \forall \pi_{pre}, \pi_{post} \in \setProgramState.~ \gsssem^s(\pi_{pre}) = \pi_{post} \implies \evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}}
+\end{flalign*} 
+NOT A SOUND LIFTING!
 
 \section{Abstracting Dynamic Semantics}
 \label{sec:abstracting-dynamic-semantics}
 \input{text/SEC-abstracting-dynamic-semantics}
+
+    \begin{mathpar}
+        \inferrule* [Right=GProgress]
+        {
+            \grad{\pi} \in \wsp(\grad{s_1}) \\ 
+        }
+        {
+            \exists n \in \setNat,\, \grad{s_2} \in \setGStmt.~ \gsssem^n(\grad{\pi}) \in \wsp(\grad{s_2})
+        }
+    \end{mathpar}
+    \begin{mathpar}
+        \inferrule* [Right=GPreservation]
+        {
+            \thoare{~}{\phi_1}{s}{\phi_2}
+        }
+        {
+            \tHoare{~}{\phi_1}{s}{\phi_2}
+        }
+    \end{mathpar}
     
-    \subsection{Gradual Soundness}
-    \label{ssec:gradual-soundness}
-    \input{text/SSEC-gradual-soundness}
     
     \subsection{Perfect Knowledge}
     \label{ssec:perfect-knowledge}
@@ -124,6 +159,7 @@ There are two typical ways of extending the formula syntax.
     \subsection{Subatomic? Knowledge}
     \label{ssec:subatomic--knowledge}
     \input{text/SSEC-subatomic--knowledge}
+
 
 
 

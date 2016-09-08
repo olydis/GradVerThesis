@@ -12,8 +12,29 @@
 
 % talk about \gthoare
 
-There are several ways to achieve this!
+Consider $\phi_{pre}, \phi_{post} \in \setFormula$ and $\pi_{pre} \in \setStmt_s$ and $$ and $\evalphiGen{\pi_s}{\phi_{pre}}$.
+
+$\thoare{~}{\phi_{pre}}{s}{\phi_{post}}$
+ - yes
+ - no
+     - 
+
+3 cases (for terminating piece of code):
+    statically verifiable and progress and preservation
+not statically verifiable and progress
+not statically verifiable and no progress
+
+
+    gradually verifiable and progress and preservation
+not gradually verifiable and progress
+not gradually verifiable and no progress
+
+
+There are several ways to achieve this (variation whenever static reasoning impossible: progress exception vs. success)!
 Examples:
+
+
+
 
 {i = 10000}
 n = collatzIterations(300, i);

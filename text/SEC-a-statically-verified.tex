@@ -95,6 +95,30 @@ Requirements:
     This property is true regardless of whether \gsvl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
     
+    
+\item[Dynamic Semantics]~\\
+    We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightharpoonup \setProgramState$ describing precisely how program state can be updated.
+    %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
+    %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
+    %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
+    
+    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
+    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
+    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
+    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
+    
+    %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
+    %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.
+    
+    % Execution is considered to be stuck iff there are no more 
+    
+    \begin{flalign*}
+    	 & \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
+    	 & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
+    \forall \langle \pi_{pre}, \pi_{post} \rangle \in \sssem^s.~ \evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}}
+    \end{flalign*}
+    
+    
 \item[Static Semantics]~\\
     We assume that there is a Hoare logic (HL)
     \begin{displaymath}
@@ -184,41 +208,30 @@ Requirements:
     
     Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.
     
+    % we use this static semantics to check e.g. method contracts
     
 %\item[Notion of Well-Formedness]
     % formally that can be covered by static semantics!!!
     
-    
-\item[Dynamic Semantics]~\\
-    We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightharpoonup \setProgramState$ describing precisely how program state can be updated.
-    %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
-    %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
-    %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
-    
-    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
-    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
-    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
-    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
-    
-    %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
-    %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.
-    
-    % Execution is considered to be stuck iff there are no more 
-    
-    % define \evalphiXGen{arg1}{arg2}
-    
 \item[Soundness]~\\
     We expect that given static semantics are sound w.r.t. given dynamic semantics.
     \begin{mathpar}
-        \inferrule* [Right=Soundness]
+        \inferrule* [Right=Progress]
         {
-            \thoare{~}{\phi_1}{s}{\phi_2} \\ 
-            \pi_s \in \setProgramState_s\\
-            \evalphiGen{\pi_s}{\phi_1}
+            \pi \in \wsp(s_1) \\ 
         }
         {
-            \evalphiGen{\sssem^s(\pi_s)}{\phi_2}
+            \exists n \in \setNat,\, s_2 \in \setStmt.~ \sssem^n(\pi) \in \wsp(s_2)
         }
     \end{mathpar}
-    Note how progress is covered by expecting that $\sssem^s(\pi_s)$ is defined.
+    \begin{mathpar}
+        \inferrule* [Right=Preservation]
+        {
+            \thoare{~}{\phi_1}{s}{\phi_2}
+        }
+        {
+            \tHoare{~}{\phi_1}{s}{\phi_2}
+        }
+    \end{mathpar}
+    % progress blabla
 \end{description}
