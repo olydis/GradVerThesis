@@ -95,6 +95,7 @@ There are two typical ways of extending the formula syntax.
 \section{Abstracting Static Semantics}
 \label{sec:abstracting-static-semantics}
 \input{text/SEC-abstracting-static-semantics}
+% gradual statements!
 
     \subsection{The Problem with a Rulewise??? Lifting}
     \label{ssec:the-problem-with}
@@ -103,9 +104,6 @@ There are two typical ways of extending the formula syntax.
     \subsection{The Deterministic Approach}
     \label{ssec:the-deterministic-approach}
     \input{text/SSEC-the-deterministic-approach}
-    
-    \subsection{Gradualization of Statements}
-    % “hidden” formula gradualization thingy... e.g. call rule
 
 \section{Abstracting Dynamic Semantics}
 \label{sec:abstracting-dynamic-semantics}
@@ -141,6 +139,7 @@ There are two typical ways of extending the formula syntax.
     \subsection{Syntax}
     \label{sec:syntax}
     \input{text/SEC-syntax}
+    % if then else???
     
     \subsection{Program State}
     \label{ssec:program-state}
@@ -153,6 +152,14 @@ There are two typical ways of extending the formula syntax.
         \subsubsection{Framing}
         \label{sssec:framing}
         \input{text/SSSEC-framing}
+        
+        % RULES arising from this semantics!!! e.g. implication:
+        % - a * b => a
+        % - a !=> a * a
+        
+        An IDF assertion is self-framing if:
+        For any state in which the assertion is true,
+        it remains true if we replace the heap with any that agrees on the locations to which it requires permissions
     
     \subsection{Static Semantics}
     \label{sec:static-semantics}
