@@ -33,7 +33,7 @@ FV(\phi_1) \subseteq \{ x, \ethis \} \\
 FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\
 \thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {s} {\phi_2} \\
 \phi_1, \phi_2 \in \setFormulaB \\
-\overline{\neg \writesTo(s_i, x)}
+\neg \writesTo(s, x)
 }
 {(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$s$}) \OKinC}
 \end{mathpar}

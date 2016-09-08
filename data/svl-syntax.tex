@@ -23,7 +23,7 @@
 	cls      & \in \setClass      &  & ::= \class {$C$} {$\overline{field}$} {$\overline{method}$} \\
 	field    & \in \setField      &  & ::= \field {$T$} {$f$}                                      \\
 	method   & \in \setMethod     &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$contract$} {$s$}      \\
-	contract & \in \setContract   &  & ::= \ttt{requires $\phi$;~ensures $\phi$;}                  \\
+	contract & \in \setContract   &  & ::= \contract{$\phi$}{$\phi$;}                              \\
 	T        & \in \setType       &  & ::= \Tint ~|~ C                                             \\
 	s        & \in \setStmt       &  & ::= \tempStmtA                                              \\
 	         &                    &  & \tempStmtB                                                  \\
@@ -31,7 +31,7 @@
 	e        & \in \setExpr       &  & ::= \tempExpr                                               \\
 	x, y, z  & \in \setVar        &  & ::= \ethis ~|~ \eresult ~|~ name                            \\
 	v        & \in \setVal        &  & ::= o ~|~ n ~|~ \enull                                      \\
-	o        & \in \setObj        &  &  \\
+	o        & \in \setLoc        &  &  \\
 	n        & \in \mathbb{Z}     &  &  \\
 	C        & \in \setClassName  &  & ::= name                                                    \\
 	f        & \in \setFieldName  &  & ::= name                                                    \\

@@ -1,0 +1,19 @@
+
+Choose ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$ with $\gsssem(\grad{\pi}) = \pi_{EX}$ if stuck for all concretizations.
+
+\begin{align*}
+\wsp : \setGStmt \rightarrow \setProgramState \\
+\wsp(\grad{s}) ~\defeq~ \bigcup_{s \in \gamma_s(\grad{s})} \wsp(s)
+\end{align*}
+
+\begin{align*}
+\forall \grad{s} \in \setGStmt.~&\\ 
+\grad{\pi_{\grad{s}}} \in \setGProgramState_{\grad{s}}.~& \wsp(\grad{s}) \cap \gamma_{\pi}(\grad{\pi_{\grad{s}}}) = \emptyset
+\implies
+\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}}) = \pi_{EX}
+\end{align*}
+ 
+ 
+MINUS:
+- need above knowledge...
+- 
