@@ -31,7 +31,7 @@ $$\gtHoare{~}{\qm}{\sAssert{\phiEq{x}{3}}}{\withqmGen{\phiEq{x}{3}}}$$
 So far, our definition of $\gsssem$ as a total lifting of $\sssem$ may be to weak, breaking the subset relationship:
 \begin{description}
     \item[$\sssem$ too weak]
-    It is possible that the dynamic semantics of \gsvl defines
+    It is possible that the dynamic semantics of \svl defines
     $$\sssem^{\sAssert{\phiEq{x}{3}}}(\pi_{\phiEq{x}{4}}) = \pi'_{\phiEq{x}{4}}$$
     This is not unreasonable, since this function is guaranteed to be only called with “valid” program states in the static system!
     An additional runtime check would be overhead.

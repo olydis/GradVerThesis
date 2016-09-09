@@ -21,13 +21,13 @@ Requirements:
 \item[Program State]~\\
     Operational semantics (see below) are formalized as discrete transitions between program states.
     Therefore a program state contains all information necessary to evaluate expressions and determine the next program state.
-    We assume that $\setProgramState$ is the set of all possible program states in \gsvl.
+    We assume that $\setProgramState$ is the set of all possible program states in \svl.
     
     In order to determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
     TODO: reasonable to call that “continuation”?
     
     Let $\setProgramState_s$ (with $s \in \setStmt$) be the set of program states having $s$ as upcoming work.
-    This notion will be necessary to define soundness of \gsvl's static semantics.
+    This notion will be necessary to define soundness of \svl's static semantics.
     
     Examples:
     \begin{description}
@@ -93,7 +93,7 @@ Requirements:
     Note that the presence of an unsatisfiable formula (as invariant, pre-/postcondition, assertion, ...) in a sound verification system implies that the corresponding source code location is unreachable:
     Preservation guarantees that any reachable program state satisfies potentially annotated formulas, trivially ensuring that the formula is satisfiable.
     
-    This property is true regardless of whether \gsvl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
+    This property is true regardless of whether \svl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
     
     

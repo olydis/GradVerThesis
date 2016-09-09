@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70107" creator="Ipe 7.1.9">
-<info created="D:20160908105200" modified="D:20160909170551"/>
+<info created="D:20160908105200" modified="D:20160909183243"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -340,56 +340,76 @@ h
 <gridsize name="1 pts" value="1"/>
 <gridsize name="2 pts" value="2"/>
 <gridsize name="3 pts" value="3"/>
+<preamble>
+\usepackage{amsmath}
+\usepackage{amssymb}
+</preamble>
 <layout paper="528 400" origin="8 8" frame="512 384" crop="no"/>
 <titlestyle pos="0 475" size="largebf" color="black"  valign="baseline"/>
 </ipestyle>
 <page>
-<layer name="alpha"/>
-<view layers="alpha" active="alpha"/>
-<text layer="alpha" matrix="1 0 0 1 -96 -61" transformations="translations" pos="144 224" stroke="black" type="label" width="28.5817" height="12.6126" depth="4.067" valign="baseline" size="large">$s$\texttt{;}</text>
-<path matrix="1 0 0 1 48 -32" stroke="KITgreen" dash="dashed" arrow="normal/normal">
-112 224 m
-272 304
-272 96
-112 176 c
+<layer name="background"/>
+<layer name="neutral"/>
+<layer name="beta"/>
+<layer name="gamma"/>
+<view layers="background neutral" active="neutral"/>
+<view layers="background beta" active="beta"/>
+<view layers="background gamma" active="gamma"/>
+<text layer="background" matrix="1 0 0 1 -96 -109" transformations="translations" pos="144 224" stroke="black" type="label" width="28.5817" height="12.6126" depth="4.067" valign="baseline" size="large">$s$\texttt{;}</text>
+<path layer="beta" stroke="KITgreen" dash="dashed" arrow="normal/normal">
+160 144 m
+352 240
+352 0
+160 96 c
 </path>
-<path matrix="1 0 0 1 48 -32" stroke="KITgreen" dash="dashed" arrow="normal/normal">
-112 224 m
-224 288
-336 224 c
+<path stroke="KITgreen" dash="dashed" arrow="normal/normal">
+160 144 m
+256 208
+384 144 c
 </path>
-<use matrix="1 0 0 1 48 -32" name="mark/disk(sx)" pos="336 224" size="small" stroke="black"/>
-<text matrix="1 0 0 1 -96 -109" transformations="translations" pos="144 224" stroke="black" type="label" width="76.8859" height="16.9516" depth="2.0335" valign="baseline">\texttt{//code}</text>
-<text matrix="1 0 0 1 -96 -13" transformations="translations" pos="144 224" stroke="black" type="label" width="76.8859" height="16.9516" depth="2.0335" valign="baseline">\texttt{//code}</text>
-<path matrix="1 0 0 1 -16 -32" stroke="KITgreen" dash="dashed" arrow="normal/normal">
+<use matrix="1 0 0 1 48 -80" name="mark/disk(sx)" pos="336 224" size="small" stroke="black"/>
+<text layer="background" matrix="1 0 0 1 -96 -157" transformations="translations" pos="144 224" stroke="black" type="label" width="76.8859" height="16.9516" depth="2.0335" valign="baseline">\texttt{//code}</text>
+<text matrix="1 0 0 1 -96 -61" transformations="translations" pos="144 224" stroke="black" type="label" width="76.8859" height="16.9516" depth="2.0335" valign="baseline">\texttt{//code}</text>
+<path layer="beta" matrix="1 0 0 1 -16 -80" stroke="KITgreen" dash="dashed" arrow="normal/normal">
 176 224 m
 240 288
 320 288 c
 </path>
-<path matrix="1 0 0 1 -16 -32" stroke="KITgreen" dash="dashed">
+<path matrix="1 0 0 1 -16 -80" stroke="KITgreen" dash="dashed">
 32 0 0 32 320 320 e
 </path>
-<path matrix="1 0 0 1 -16 -32" stroke="KITred" dash="dashed" arrow="normal/normal">
+<path matrix="1 0 0 1 -16 -80" stroke="KITred" dash="dashed" arrow="normal/normal">
 176 224 m
 288 304
 400 256 c
 </path>
-<use matrix="1 0 0 1 48 0" name="mark/disk(sx)" pos="336 224" size="small" stroke="black"/>
-<text matrix="1 0 0 1 1 -4" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="54.88" height="9.5452" depth="9.128" valign="baseline" size="tiny">$\in \textsc{PS}_{|s}$</text>
-<text matrix="1 0 0 1 1 -52" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="54.88" height="9.5452" depth="9.128" valign="baseline" size="tiny">$\in \textsc{PS}_{s|}$</text>
-<text matrix="1 0 0 1 215 -4" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="55.7312" height="9.5256" depth="4.732" valign="baseline" size="tiny">$\in \textsc{PS}_{X}$</text>
-<text matrix="1 0 0 1 215 28" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="55.7312" height="9.6796" depth="4.732" valign="baseline" size="tiny">$\not\in \textsc{PS}_{X}$</text>
-<use matrix="1 0 0 1 16 -16" name="mark/disk(sx)" pos="144 256" size="small" stroke="black"/>
-<use matrix="1 0 0 1 16 -16" name="mark/disk(sx)" pos="144 208" size="small" stroke="black"/>
-<use matrix="1 0 0 1 16 -32" name="mark/disk(sx)" pos="144 176" size="small" stroke="black"/>
+<use matrix="1 0 0 1 48 -48" name="mark/disk(sx)" pos="336 224" size="small" stroke="black"/>
+<text layer="background" matrix="1 0 0 1 1 -53" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="25.377" height="8.492" depth="6.358" valign="baseline" size="small">$\pi_{|s}$</text>
+<text matrix="1 0 0 1 1 -98" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="25.377" height="8.492" depth="6.358" valign="baseline" size="small">$\pi_{s|}$</text>
+<text layer="beta" matrix="1 0 0 1 215 -52" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="55.7312" height="9.5256" depth="4.732" valign="baseline" size="tiny">$\in \textsc{PS}_{X}$</text>
+<text matrix="1 0 0 1 215 -20" transformations="translations" pos="176 192" stroke="KITblack" type="label" width="55.7312" height="9.6796" depth="4.732" valign="baseline" size="tiny">$\not\in \textsc{PS}_{X}$</text>
+<text layer="neutral" matrix="1 0 0 1 32 -16" transformations="translations" pos="240 352" stroke="KITblack" type="label" width="89.3932" height="16.9565" depth="8.673" valign="baseline">$\pi_{|s} \vDash \phi_{|s}$</text>
+<text layer="beta" matrix="1 0 0 1 -80 0" transformations="translations" pos="112 272" stroke="KITblack" type="label" width="90.2433" height="16.6967" depth="4.7285" valign="baseline">Progress</text>
+<path layer="gamma" stroke="blue" dash="dashed" arrow="normal/normal">
+160 144 m
+352 240
+352 0
+160 96 c
+</path>
+<text matrix="1 0 0 1 -80 0" transformations="translations" pos="112 272" stroke="KITblack" type="label" width="132.822" height="16.6796" depth="0" valign="baseline">Preservation</text>
+<text matrix="1 0 0 1 32 -64" transformations="translations" pos="240 352" stroke="KITgreen" type="label" width="89.3932" height="16.9565" depth="8.673" valign="baseline">$\pi_{s|} \vDash \phi_{s|}$</text>
+<use layer="background" matrix="1 0 0 1 16 -64" name="mark/disk(sx)" pos="144 208" size="small" stroke="black"/>
 <use matrix="1 0 0 1 16 -80" name="mark/disk(sx)" pos="144 176" size="small" stroke="black"/>
-<path matrix="1 0 0 1 48 -32" stroke="black" arrow="normal/normal">
+<path matrix="1 0 0 1 48 -80" stroke="black" dash="dashed" arrow="normal/normal">
 112 272 m
 112 224 l
 </path>
-<path matrix="1 0 0 1 48 -32" stroke="black" arrow="normal/normal">
-112 176 m
-112 128 l
-</path>
+<use layer="beta" matrix="1 0 0 1 16 -64" name="mark/circle(sx)" pos="144 208" size="normal" stroke="blue"/>
+<use layer="gamma" matrix="1 0 0 1 16 -112" name="mark/circle(sx)" pos="144 208" size="normal" stroke="blue"/>
+<text layer="neutral" matrix="1 0 0 1 0 -32" transformations="translations" pos="48 368" stroke="black" type="label" width="138.077" height="18.3113" depth="8.673" valign="baseline">$\{ \phi_{|s} \}~s~\{ \phi_{s|} \}$</text>
+<text layer="beta" matrix="1 0 0 1 32 -16" transformations="translations" pos="240 352" stroke="blue" type="label" width="89.3932" height="16.9565" depth="8.673" valign="baseline">$\pi_{|s} \vDash \phi_{|s}$</text>
+<text matrix="1 0 0 1 0 -32" transformations="translations" pos="48 368" stroke="blue" type="label" width="138.077" height="18.3113" depth="8.673" valign="baseline">$\{ \phi_{|s} \}~s~\{ \phi_{s|} \}$</text>
+<text layer="gamma" matrix="1 0 0 1 32 -16" transformations="translations" pos="240 352" stroke="blue" type="label" width="89.3932" height="16.9565" depth="8.673" valign="baseline">$\pi_{|s} \vDash \phi_{|s}$</text>
+<text matrix="1 0 0 1 0 -32" transformations="translations" pos="48 368" stroke="blue" type="label" width="138.077" height="18.3113" depth="8.673" valign="baseline">$\{ \phi_{|s} \}~s~\{ \phi_{s|} \}$</text>
 </page>
 </ipe>

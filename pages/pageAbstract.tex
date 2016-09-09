@@ -10,12 +10,12 @@
 %Dynamic verification uses runtime checks to ensure that deviations from the specification are detected during execution.
 Both static and dynamic program verification approaches have disadvantages potentially disqualifying them as a single methodology to rely on.
 % Proposal/Methods
-Motivated by gradual type systems, which solve a very similar dilemma in the world of type systems, we propose \textit{gradual verification}, an approach that seamlessly combines static and dynamic verification.
-Drawing on principles from abstract interpretation and recent work on \textit{abstracting gradual typing} by Garcia, Clark and Tanter, we formalize how to obtain a gradual verification system in terms of a static one.
+Motivated by gradual type systems which solve a very similar dilemma in the world of type systems, we propose \textit{gradual verification}, an approach that seamlessly combines static and dynamic verification.
+Drawing on principles from abstract interpretation and recent work on \textit{abstracting gradual typing} by Garcia, Clark and Tanter, we formalize steps to obtain a gradual verification system in terms of a static one.
 
 % Results
 This approach yields \textit{by construction} a verification system that is compatible with the original static system, but overcomes its rigidity by resorting to methods of dynamic verification if necessary.
 % gradual guarantee
-In a case study, we show the flexibility of our approach by applying it to a concurrent statically verified language that uses implicit dynamic frames to enable race-free reasoning.
+In a case study, we show the flexibility of our approach by applying it to a statically verified language that uses implicit dynamic frames to enable race-free reasoning.
 \end{minipage}
 \end{center}
