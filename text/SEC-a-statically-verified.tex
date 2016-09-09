@@ -3,30 +3,31 @@
 Requirements:
 
 \begin{description}
-\item[Syntax] ~\\
-    We assume the existence of at least the following two syntactic categories:
+\item[Syntax]~\\
+    We assume the existence of the following two syntactic categories:
     \begin{align*}
     	s    & \in \setStmt    \\
     	\phi & \in \setFormula
     \end{align*}
-    We assume that there is a sequence operator \ttt{;} such that: $\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$
+    We assume that there is a sequence operator \ttt{;} such that: $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
+    % or munch that into syntax figure above?
     
     Let $\setStmt_s$ be the set of all statements having $s$ as prefix.
     % examples, formal?
     
-    % or munch that into syntax figure above?
     % TODO: we make no other assumptions
     % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
-\item[Program State]
+\item[Program State]~\\
     Operational semantics (see below) are formalized as discrete transitions between program states.
     Therefore a program state contains all information necessary to evaluate expressions and determine the next program state.
     We assume that $\setProgramState$ is the set of all possible program states in \gsvl.
-    To determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
+    
+    In order to determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
     TODO: reasonable to call that “continuation”?
     
     Let $\setProgramState_s$ (with $s \in \setStmt$) be the set of program states having $s$ as upcoming work.
-    This notion will be necessary to define soundness of \gsvl's static semantics means.
+    This notion will be necessary to define soundness of \gsvl's static semantics.
     
     Examples:
     \begin{description}
@@ -101,6 +102,12 @@ Requirements:
     %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
     %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
     %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
+    Taking $n$ steps at once can be abbreviated as $\sssem^n$, where undefinedness is propagated.
+    
+    \begin{flalign*}
+        &\sssem^s \subseteq \setProgramState_s \times \setProgramState & \\
+        &\sssem^s(\pi_s, \pi) ~\defiff~ \exists n \in \setNat.~ \sssem^n(\pi_s) = \pi ~\wedge~ \pi \text{ is the first state after $s$ is fully consumed}
+    \end{flalign*}
     
     We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
     W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
@@ -112,6 +119,7 @@ Requirements:
     
     % Execution is considered to be stuck iff there are no more 
     
+    With this semantics we can formalize the notion of valid Hoare triples:
     \begin{flalign*}
     	 & \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
     	 & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
@@ -141,10 +149,24 @@ Requirements:
             \thoare {~} {\phi_q} {{s_2}} {\phi_r}
         }
         {
-            \thoare {~} {\phi_p} {\sSeq{s_1}{s_2}} {\phi_r}
+            \thoare {~} {\phi_p} {\sSeq{$s_1$}{$s_2$}} {\phi_r}
         }
     \end{mathpar}
     is derivable from given Hoare rules. % OR with both parts as lists?
+    
+    %% information monotonic - required?
+    We further assume that this predicate is monotonic in the precondition w.r.t. implication:
+    \begin{align*}
+    \forall s \in \setStmt.~& \\
+    \forall \phi_1, \phi_2 \in \setFormula.~&\\
+    \forall \phi_1' \in \setFormula.~&
+    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {s} {\phi_1'}\\
+    \implies
+    \exists \phi_2' \in \setFormula.~&
+    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {s} {\phi_2'}
+    \end{align*}
+    
+    Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.
     
     %% "wsp" - wlp, but with static instead of dynamic semantics!!!
     \begin{definition}[Weakest Static Precondition]~\\
@@ -154,7 +176,6 @@ Requirements:
         \end{displaymath}
     \end{definition}
     Intuitively, the $\wsp(s)$ is a predicate on program states, indicating whether we could deduce anything about the state after executing $s$, using only our Hoare rules.
-    We require that $\wsp$ is computable at least for atomic statements and that the resulting predicate is computable as well.
     
     Example:
     \begin{itemize}
@@ -193,20 +214,6 @@ Requirements:
     % TODO: x := 3; assert (x = 2);   EXAMPLE?
     
     % Note that this definition is similar to the weakest liberal precondition $\predicate{wlp}$
-    
-    %% information monotonic - required?
-    We further assume that this predicate is monotonic in the precondition w.r.t. implication:
-    \begin{align*}
-    \forall s \in \setStmt.~& \\
-    \forall \phi_1, \phi_2 \in \setFormula.~&\\
-    \forall \phi_1' \in \setFormula.~&
-    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {s} {\phi_1'}\\
-    \implies
-    \exists \phi_2' \in \setFormula.~&
-    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {s} {\phi_2'}
-    \end{align*}
-    
-    Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.
     
     % we use this static semantics to check e.g. method contracts
     

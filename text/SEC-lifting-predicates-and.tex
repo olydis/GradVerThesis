@@ -1,5 +1,5 @@
 
-The Hoare logic of our language are (PROBABLY!?) defined in terms of predicates and functions that operate on formulas.
+The Hoare logic of our language are defined in terms of predicates and functions that operate on formulas.
 Examples:
 % TODO:
 % - implication, e.g. in assertion statement
@@ -9,14 +9,10 @@ Examples:
 After introducing and giving meaning to gradual formulas, we will now describe how to redefine existing predicates and functions in order for them to deal with gradual formulas.
 
 \begin{definition}[Gradual Lifting]
-    The process of creating a “gradual version”/“lifted version” of a predicate/function.
+    The process of extending an existing predicate/function in order to deal with gradual formulas.
     The resulting predicate/function has the same signature as the original one, with occurrences of \setFormula replaced by \setGFormula.
 \end{definition}
 
-The more important question is of course how to define such lifted versions in a consistent way.
-What consistency means is a direct consequence of the gradual guarantee (definition \ref{grad-guarantee-def}), i.e. an inconsistently lifted predicate/function may cause the gradual verification system to break the gradual guarantee.
-The specifics are described in the following sections.
-
-
-
-% TODO: somewhere define lifted evaluation of formulas AND implication
+Lifted predicates and functions are not allowed to deal with gradual formulas arbitrarily but must do so in a sound way.
+What soundness means is a direct consequence of the gradual guarantee (definition \ref{grad-guarantee-def}), i.e. an unsound predicate/function may cause the gradual verification system to break the gradual guarantee.
+This idea is formalized in the following sections.

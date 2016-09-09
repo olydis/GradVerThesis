@@ -4,7 +4,7 @@ Valid Hoare triples for gradual system
 & \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ 
 \forall \langle \grad{\pi_{pre}}, \grad{\pi_{post}} \rangle \in \gsssem^{\grad{s}}.~ \evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}}
 \end{flalign*}
-(Note: NOT A gradual LIFTING! Sound lifting would accept $\gtHoare{~}{\qm}{\sVarAssign{x}{3}}{\withqmGen{\phiEq{y}{4}}}$)
+(Note: NOT A sound gradual lifting! Would accept $\gtHoare{~}{\qm}{\sVarAssign{x}{3}}{\withqmGen{\phiEq{y}{4}}}$)
 
 
 Soundness of gradual system:

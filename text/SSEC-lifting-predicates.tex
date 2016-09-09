@@ -62,17 +62,17 @@ Note that the rules for sound lifting only give a lower bound for the predicate.
 Thus $\grad{P} = \setGFormula \times \setGFormula$ is a sound predicate lifting of any binary predicate $P \subseteq \setFormula \times \setFormula$.
 
 \begin{definition}[Optimal Predicate Lifting]
-    A sound lifted predicate is \textbf{consistent/optimal} if it is the smallest set closed under the above rules.
+    A sound lifted predicate is \textbf{optimal} if it is the smallest set closed under the above rules.
 \end{definition}
 
 This definition coincides with the definition of consistent predicate lifting in AGT:
 
-\begin{lemma}[Consistent Predicate Lifting (Direct Definition)]\label{lemma:consistent-pred-lifting-direct}
+\begin{lemma}[Optimal Predicate Lifting (Direct Definition)]\label{lemma:consistent-pred-lifting-direct}
     Let $\grad{P} \subseteq \setGFormula \times \setGFormula$ be defined as
     \begin{displaymath} 
     \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)
     \end{displaymath}
-    Then $\grad{P}$ is the only consistent lifting of $P$.
+    Then $\grad{P}$ is an optimal lifting of $P$.
 \end{lemma} %PROOF
 
 % delve more into what is important, what is optional, etc.?
