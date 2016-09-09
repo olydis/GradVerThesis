@@ -1,5 +1,9 @@
 
 
+%An IDF assertion is self-framing if:
+%For any state in which the assertion is true,
+%it remains true if we replace the heap with any that agrees on the locations to which it requires permissions
+
 \svl uses the concepts of implicit dynamic frames to ensure that a statement can only access memory locations (more specifically: fields) which it is guaranteed to have exclusive access to.
 This is achieved by explicitly tracking access tokens $\phiAcc{\textit{<expression>}}{\textit{<field>}}$ as part of formulas throughout the entire program during verification.
     
