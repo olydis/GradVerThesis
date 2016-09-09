@@ -4,6 +4,17 @@ $$\thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStm
 w.r.t. all parameters yields
 $$\gthoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula$$
 
+Optimality discussion:
+\begin{verbatim}
+{i = 10000}
+n = collatzIterations(300, i);
+{1 <= n * n <= 4}
+{n = 4}
+staticAssert (n = 4);
+{n = 4}
+\end{verbatim}
+...not verifiable with optimal lifting!
+
 % EXAMPLE verification with proof
 
 % talk about our expectation that dynamic measures are now necessary, examples, ...

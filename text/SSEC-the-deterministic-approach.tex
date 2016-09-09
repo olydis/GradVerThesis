@@ -31,7 +31,6 @@ We can obtain a lifted version of this hypothetical construct and demand certain
     Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
     \begin{description}
         \item[Introduction]~\\
-        Making sure that the function is defined when there is a valid 
         \begin{displaymath}
         \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
         \end{displaymath}
@@ -72,7 +71,8 @@ This gradual partial function has desirable properties: % use lemmas only? PROOF
     % So also no more of the problems/dilemmas apply
     
     \item[Preservation]~\\
-    A (gradual) postcondition returned by the lifted function is guaranteed to reflect the execution state after executing the statements in question (given that the precondition was met).
+    A (gradual) postcondition returned by the lifted function is guaranteed to reflect the execution state after executing the statements in question (given that the precondition was met). Almost.
+    Combines all the knowledge of static rules.
     % LEMMA?
     
     \item[Composability]~\\

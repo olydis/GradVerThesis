@@ -1,0 +1,28 @@
+$\wsp$ not always known, think of sequence operator.
+Turns out we don't need it for sequence operator.
+Assume approach of previous section, but not for sequences.
+Preservation still holds:
+
+\begin{mathpar}
+    \inferrule* [Right=seq]
+    {
+        \inferrule* [Right=GSoundness]
+        {
+            \inferrule* [Right=inversion]
+            {
+                \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
+            }
+            {
+                 \dgthoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
+                 \dgthoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+            }
+        }
+        {
+            \gtHoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
+            \gtHoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+        }
+    }
+    {
+        \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}
+    }
+\end{mathpar}

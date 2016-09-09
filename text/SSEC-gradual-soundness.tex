@@ -1,44 +1,63 @@
+Valid Hoare triples for gradual system
+\begin{flalign*}
+& \gtHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula                                                                                                                                                                          \\
+& \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ 
+\forall \langle \grad{\pi_{pre}}, \grad{\pi_{post}} \rangle \in \gsssem^{\grad{s}}.~ \evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}}
+\end{flalign*}
+(Note: NOT A gradual LIFTING! Sound lifting would accept $\gtHoare{~}{\qm}{\sVarAssign{x}{3}}{\withqmGen{\phiEq{y}{4}}}$)
+
+
+Soundness of gradual system:
 \begin{mathpar}
-    \inferrule* [Right=DGSoundness]
+    \inferrule* [Right=GProgress]
     {
-        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
-        \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
-        \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
+        \grad{\pi} \in \grad{\wsp}(\grad{s_1}) \\ 
     }
     {
-        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
+        \exists n \in \setNat,\, \grad{s_2} \in \setGStmt.~ \gsssem^n(\grad{\pi}) \in \setProgramState_{\grad{s_2}}
+    }
+\end{mathpar} 
+\begin{mathpar}
+    \inferrule* [Right=GPreservation]
+    {
+        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+    {
+        \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
     }
 \end{mathpar}
 
-% talk about \gthoare
 
-Consider $\phi_{pre}, \phi_{post} \in \setFormula$ and $\pi_{pre} \in \setStmt_s$ and $$ and $\evalphiGen{\pi_s}{\phi_{pre}}$.
+Gradual guarantee:
+Let $\gthoare{~}{\cdot}{\cdot}{\cdot}$ be gradual lifting of $\thoare{~}{\cdot}{\cdot}{\cdot}$.
+Then:
+\begin{align*}
+&&\thoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&\\
+\overset{Introduction}{\implies}&&
+\gthoare {~} {\phiEq{x}{2}} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&\\
+\overset{Monotonicity}{\implies}&&
+\gthoare {~} {\qm} {\sVarAssign{y}{3}} {\phiEq{x}{2} \wedge \phiEq{y}{3}}&
+\end{align*}
+Preservation is obviously not satisfied!
 
-$\thoare{~}{\phi_{pre}}{s}{\phi_{post}}$
- - yes
- - no
-     - 
+Reiteration:
+\begin{mathpar}
+    \inferrule* [Right=Preservation']
+    {
+        \thoare{~}{\phi_1}{s}{\phi_2}
+    }
+    {
+        \tHoare{~}{\phi_1}{\sSeq{$s$}{\sAssert{$\phi_2$}}}{\phi_2}
+    }
+\end{mathpar}
+\begin{mathpar}
+    \inferrule* [Right=GPreservation']
+    {
+        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+    {
+        \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}
+    }
+\end{mathpar}
 
-3 cases (for terminating piece of code):
-    statically verifiable and progress and preservation
-not statically verifiable and progress
-not statically verifiable and no progress
-
-
-    gradually verifiable and progress and preservation
-not gradually verifiable and progress
-not gradually verifiable and no progress
-
-
-There are several ways to achieve this (variation whenever static reasoning impossible: progress exception vs. success)!
-Examples:
-
-
-
-
-{i = 10000}
-n = collatzIterations(300, i);
-{1 <= n * n <= 4}
-{n = 4}
-staticAssert (n = 4);
-{n = 4}
+TODO: more bla, like “there is fundamentally no way around this - the programmer \textit{can} specify postconditions that...”

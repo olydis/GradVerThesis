@@ -1,112 +1,50 @@
-%% intro
-Static verification provides guarantees about the dynamic behavior of a program without runtime overhead.
-With the introduction of dynamic components to the assertion language, these guarantees can be impossible to provide without additional runtime checks.
+Let $\gsssem$ be gradual lifting of $\sssem$.
 
-%% example
-Consider a (static) Hoare logic that can verify
-\begin{displaymath}
-\thoare{~}{\phiEq{x}{3}}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
-\end{displaymath}
-The corresponding gradual logic can thus verify
-\begin{displaymath}
-\gthoare{~}{\qm}{\sVarAssign{y}{4}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}}
-\end{displaymath}
-but without additional measures there is no guarantee that every program state satisfying the precondition (here: literally every program state) will satisfy the post condition after executing the assignment.
-Adding a runtime assertion to ensure that $\phiEq{x}{3}$ holds (terminating exceptionally in case it does not) would be sufficient and minimal to reestablish soundness in the above example.
+%% make progress work
+Progress: Note that premise is tautology.
+So we artificially make conclusion true by demanding that lifting is total.
+This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
 
-We will generalize and formalize this approach, resulting in gradual a dynamic semantics that reestablishes the soundness of the static verification system by adding minimal runtime checks.
+%% preservation
+Preservation: Conclusion is already a tautology.
+This is not really satisfying: An arbitrary verification predicate would satisfy this kind of preservation.
+Also, this is no guarantee for all the formulas describing intermediate program states.
+A stronger notion of preservation gives this guarantee:
+\begin{mathpar}
+    \inferrule* [Right=GPreservation]
+    {
+        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+    {
+        \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+\end{mathpar}
 
+Making this guarantee work is trickier and there are different trade-offs available.
+Without further assumptions, $\dgthoare{~}{\cdot}{\cdot}{\cdot}$ is not a subset of $\gtHoare{~}{\cdot}{\cdot}{\cdot}$.
+
+Running example:
+$$\dgthoare{~}{\qm}{\sAssert{\phiEq{x}{3}}}{\withqmGen{\phiEq{x}{3}}}$$
+holds but not
+$$\gtHoare{~}{\qm}{\sAssert{\phiEq{x}{3}}}{\withqmGen{\phiEq{x}{3}}}$$
+
+So far, our definition of $\gsssem$ as a total lifting of $\sssem$ may be to weak, breaking the subset relationship:
+\begin{description}
+    \item[$\sssem$ too weak]
+    It is possible that the dynamic semantics of \gsvl defines
+    $$\sssem^{\sAssert{\phiEq{x}{3}}}(\pi_{\phiEq{x}{4}}) = \pi'_{\phiEq{x}{4}}$$
+    This is not unreasonable, since this function is guaranteed to be only called with “valid” program states in the static system!
+    An additional runtime check would be overhead.
+    
+    \item[$\gsssem$ too weak]
+    If $\sssem^{\sAssert{\phiEq{x}{3}}}(\pi_{\phiEq{x}{4}})$ is undefined due to runtime checks.
+    Yet, the lifting is supposed to be total, so passing along the program state unchecked is again a valid realization:
+    $$\gsssem^{\sAssert{\phiEq{x}{3}}}(\pi_{\phiEq{x}{4}}) = \pi'_{\phiEq{x}{4}}$$
+    Mapping to an exception would have been better in this case.
+\end{description}
+Note that both problems are unrelated to optimality of the lifting.
 
 %% first: changes in source code!!!
 % making formula gradual 
 % - cannot let execution fail 
 % - cannot satisfy less formulas (“observational compatibility”})
-
-\begin{align*}
-\grad{\pi_1} \sqsubseteq_{\pi} \grad{\pi_2}
-~\defiff~
-&\forall \phi \in \setFormula.~ \evalphiGen{\grad{\pi_1}}{\phi} \implies \evalphiGen{\grad{\pi_2}}{\phi} \\
-~~\wedge~~
-&\sqsubseteq \textit{f.a. statements}\\
-~~\vee~~
-&\grad{\pi_1} \in \setGProgramStateEx
-\end{align*}
-Ex. concretization = emptyset??? could simplify things! :)
-
-% TODO:
-- alter $\sssem$ in order to make static semantics complete ($\forall s \in \setStmt, \pi_s \in \setProgramState_s.~ \pi_s \in \wsp(s) \iff \sssem^s(\pi_s) \textit{ not stuck}$) - these are runtime checks
-- lift that (see below)
-- tango time
-
-
-
-\begin{mathpar}
-    \inferrule* [Right=DGSoundness]
-    {
-        \inferrule*
-        {
-            \inferrule*
-            {
-                \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
-                \grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}} \,\in \setGProgramState_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}\\
-                \evalgphiGen{\grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}}}{\grad{\phi_1}}
-            }
-            {
-                ...
-            }
-        }
-        {
-            \evalgphiGen{\gsssem^{\grad{s_2}}(\gsssem^{\grad{s_1}}(\grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}}))}{\grad{\phi_3}}
-        }
-    }
-    {
-        \evalgphiGen{\gsssem^{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}(\grad{\pi_{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}})}{\grad{\phi_3}}
-    }
-\end{mathpar}
-
-\begin{description}
-    \item $\grad{s} \in \setGStmt$
-    \item $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$
-    \item $\grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}$
-    \item[1 = PremiseA] $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
-    \item[2 = PremiseB] $\evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}$
-    \item[3 = Case] $\exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
-    \item[4 = 2 + 3] $\evalgphiGen{\pi_s}{\grad{\phi_1}}$
-    \item[5 = 3 + wsp def] $\exists \phi_1', \phi' \in \setFormula.~ \evalphiGen{\pi_s}{\phi_1'} ~\wedge \thoare{~}{\phi_1'}{s}{\phi'}$
-    \item[6 = 4 + 5 + rule42] $\exists \phi_1 \in \gamma(\grad{\phi_1}).~ \phiImplies{\phi_1}{\phi_1'} \wedge \evalphiGen{\pi_s}{\phi_1}$
-    \item[7 = 5 + 6 + mono] $\exists \phi \in \setFormula.~ \thoare{~}{\phi_1}{s}{\phi}$
-    \item[8 = 7 + intro] $\exists \grad{\phi} \in \setGFormula.~ \dgthoare{~}{\phi_1}{s}{\grad{\phi}}$
-    \item[9 = 1 + 6 + 8 + mono_det_hoare] $\grad{\phi} \sqsubseteq \grad{\phi_2}$
-    \item[10 = 8 + pres] $\exists \phi_2 \in \gamma(\grad{\phi}).~ \thoare{~}{\phi_1}{s}{\phi_2}$
-    \item[11 = 6 + 10 + snd] $\evalphiGen{\sssem^s(\pi_s)}{\phi_2}$
-    \item[12 = 11 + intro] $\evalphiGen{\gsssem^s(\pi_s)}{\phi_2}$
-    \item[13 = 3 + 12 + mono] $\evalphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\phi_2}$
-    \item[14 = 13 + intro] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\phi_2}$
-    \item[15 = 10 + 14 + mono] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi}}$
-    \item[16 = 9 + 15 + mono] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}$
-\end{description}
-
-
-\begin{description}
-    \item $\grad{s} \in \setGStmt$
-    \item $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$
-    \item $\grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}$
-    \item[1 = PremiseA] $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
-    \item[2 = PremiseB] $\evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}$
-    \item[3 = Case] $\neg \exists \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \pi_s \in \wsp(s)$
-    \item[4 = 3 + completeness] $\forall \pi_s \in \gamma(\grad{\pi_{\grad{s}}}).~ \sssem^s(\pi_s) \textit{ stuck}$
-    \item[5 = 4 + def] $\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}}) = \pi_{EX}$
-    \item[6 = 5 + precision] $\evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}$
-\end{description} 
-
-\begin{mathpar}
-    \inferrule* [Right=GSoundness]
-    {
-        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}} \\ 
-        \grad{\pi_{\grad{s}}} \,\in \setGProgramState_{\grad{s}}\\
-        \evalgphiGen{\grad{\pi_{\grad{s}}}}{\grad{\phi_1}}
-    }
-    {
-        \evalgphiGen{\gsssem^{\grad{s}}(\grad{\pi_{\grad{s}}})}{\grad{\phi_2}}
-    }
-\end{mathpar}

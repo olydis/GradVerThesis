@@ -9,11 +9,12 @@ Again, we give meaning to gradual program states using concretization.
     Let $\gamma_{\pi} : \setGProgramState \rightarrow \PP(\setProgramState)$ be defined as
     \begin{displaymath}
     \gamma_{\pi}(\grad{\pi}) = \{~ \pi \in \setProgramState ~|~ \textit{$\pi$ is $\grad{\pi}$ with all continuations??? replaced by a concretization} ~\}
-    \end{displaymath}
+    \end{displaymath} 
 \end{definition}
 \begin{definition}[Precision of Gradual Program States]
     Let $\mptpi \subseteq \setGProgramState \times \setGProgramState$ be a predicate defined as
     $$\grad{\pi_a} \mptpi \grad{\pi_b}  \quad\iff\quad  \gamma_{\pi}(\grad{\pi_a}) \subseteq \gamma_{\pi}(\grad{\pi_b})$$
+    % TODO: observational instead... otherwise gradual release or call would not work
 \end{definition}
 
 Consequence:
