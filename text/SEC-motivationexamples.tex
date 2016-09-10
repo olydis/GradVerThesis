@@ -1,14 +1,19 @@
 
-\subsection{As extension to unverified setting}
-Motivating example:
+\subsection{Argument Validation}
+The following Java example motivates the use of verification for argument validation.
 \begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
-    return c.driver.age >= 18;
+    // business logic:
+    resAllocate();
+    boolean result = c.driver.age >= 18;
+    resFree();
+    return result;
 }
 \end{lstlisting}
-
-Motivating example with argument validation:
+A call to \ttt{hasLegalDriver} fails if \ttt{c} or \ttt{c.driver} evaluate to \ttt{null}.
+Note that, although the Java runtime has defined behavior in to those cases (throwing an exception), we might still have created a resource leak.
+To prevent this from happening, arguments have to be validated before entering the business logic.
 \begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
@@ -21,7 +26,22 @@ boolean hasLegalDriver(Car c)
 }
 \end{lstlisting}
 
-Motivating example with declarative approach (JML syntax):
+Note that these runtime checks dynamically verifies a method contract, having \ttt{c != null \&\& c.driver != null} as precondition.
+Naturally, the drawbacks of dynamic verification apply:
+Violations of the method contract are only detected at runtime, possibly go unnoticed for a long time and impose a runtime overhead which might not be acceptable in all scenarios.
+Java even has dedicated assertion syntax simplifying dynamic verification:
+\begin{lstlisting}
+boolean hasLegalDriver(Car c)
+{
+    assert c != null;
+    assert c.driver != null;
+
+    // business logic (requires 'c.driver.age' to evaluate)
+}
+\end{lstlisting}
+Note however that such assertions are dropped from regular builds, meaning that the method contract is no longer verified!
+
+With support of additional tools, a more declarative approach is possible using JML syntax:
 \begin{lstlisting}
 //@ requires c != null && c.driver != null;
 boolean hasLegalDriver(Car c)
@@ -32,27 +52,33 @@ boolean hasLegalDriver(Car c)
 
 There are two basic ways to turn this annotation into a guarantee:
 \begin{description}
-    \item[Static Verification (e.g. ESC/Java \cite{leino2000esc})]~\\
-    In the unlikely event that the verifier can prove the precondition at all call sites, our problem is solved.
-    Otherwise, we have to enhance the call sites in order to convince the verifier.
-    Choices:
+    \item[Static Verification (e.g. ESC/Java, see \cite{leino2000esc})]~\\
+    Verification will only succeed if the precondition is provable at all call sites.
+    This is achievable in two ways:
     \begin{itemize}
-        \item 
-        Add parameter validation, effectively duplicating the original runtime check across the program.
         \item
-        Add further annotations, guiding the verifier towards a proof.
-        This might not always work due to limitations of the verifier or decidability in general.
+        Rigorously annotate the call sites, guiding the verifier towards a proof.
+        \item 
+        Add parameter validation to the call sites, effectively duplicating the original runtime check across the program.
+        Note that this approach combines static and dynamic validation in order to get a performance benefit (no more runtime checks required where precondition was provable) and circumvent rigorous annotation.
+        The drawback is of course code duplication.
     \end{itemize}
-    There are obvious limitations to this approach, static verification tends to be invasive.
-    At least there is a performance benefit: 
-    Runtime checks (originally part of every call) are now only necessary in places where verification would not succeed otherwise.
+    % benefits, drawbacks
     
-    \item[Runtime Assertion Checking (e.g. run JML4c \cite{sarcar2010new}]~\\
-    This approach basically converts the annotation back into a runtime check equivalent to our manual argument validation.
-    It is therefore less invasive, not requiring further changes to the code, but also lacks the advantages (no perf. impact, static guarantee) of static verification.
+    %There are obvious limitations to this approach, static verification tends to be invasive.
+    %At least there is a performance benefit: 
+    %Runtime checks (originally part of every call) are now only necessary in places where verification would not succeed otherwise.
+    
+    \item[Dynamic Verification (e.g. run JML4c, see \cite{sarcar2010new}]~\\
+    This approach basically converts the annotation back into a runtime check equivalent to our original argument validation.
+    % benefits, drawbacks
 \end{description}
 
-\subsection{As extension to fully verified setting}
+A gradual verifier would pursue the combined approach without (visible) code duplication:
+It would try verifying the contract statically but resort to dynamic methods in case this fails.
+As a result, there are no further obligation 
+
+\subsection{Statically Verified Setting}
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
     requires 0 < start;
