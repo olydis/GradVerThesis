@@ -1,19 +1,18 @@
 %% program verification
 Program verification aims to check a compute program against its specification.
-Automated methods require this specification to be formalized, for example using annotations or assertions in the source code.
-Common examples are method contracts and loop invariants.
+Automated methods require this specification to be formalized, e.g. using annotations in the source code.
+Common examples are method contracts, loop invariants and assertions.
 % Successfully verified programs are guaranteed to comply with  
 
 %% static vs dynamic
-There are a variety of approaches to check whether the program behavior complies with given annotations.
-They can usually be divided into two categories:\\
+Approaches to check whether program behavior complies with given annotations can be divided into two categories:\\~\\
 \begin{tabular}{l | c | c}
      & Static verification & Dynamic verification \\ \hline
     Approach &
     \begin{minipage}{170pt}
         \vspace{3pt}
         The program is not executed. 
-        Instead \textbf{formal methods} (like Hoare logic) are used, trying to derive a proof for given assertions.
+        Instead \textbf{formal methods} (like Hoare logic or separation logic) are used, trying to derive a proof for given assertions.
         \vspace{5pt}
     \end{minipage}
     &
@@ -28,11 +27,12 @@ They can usually be divided into two categories:\\
     \begin{minipage}{170pt}
         \vspace{3pt}
         The syntax available for static verification is naturally limited by the underlying formal logic.
-        Complex conditions/behavior might thus not be expressible, resulting in inability to prove subsequent properties.
-        Furthermore, the logic itself might be unable to prove certain properties due to complex behavior of the code and undecidability in general.
+        Complex properties might thus not be expressible, resulting in inability to prove subsequent goals.
+        Furthermore, the logic itself might be unable to prove certain goals due to code complexity and undecidability in general.
         Using static verification usually requires rigorous annotation of the entire source code, as otherwise there might be too little information to find a proof.
-        While adding such annotations to own code can be tedious (yet, there are supporting tools), using unannotated libraries can become a problem:
-        Even if it is possible to add own annotations, lacking the source code, the verifier is unable to prove those annotations, resulting in inconsistent proves in case the annotation turns out to be wrong.
+        While fully annotating own code can be tedious (there are supporting tools), using unannotated libraries can become a problem:
+        Even if it is possible annotate the API afterwards, lacking the source code the verifier is unable to prove those annotations.
+        In case the annotation are wrong this results in inconsistent proves.
         \vspace{5pt}
     \end{minipage}
     &
@@ -46,49 +46,53 @@ They can usually be divided into two categories:\\
     \end{minipage}\\\hline
 \end{tabular}
 
+
+The goal of this work is to formalize “gradual verification”, an approach that seamlessly combines static and dynamic verification in order to weaken or even avoid above drawbacks.
+The resulting system provides a continuum between traditional static and dynamic verification, meaning that both extremes are compatible with, but only special cases of the gradual verification system.
+Section \ref{sec:motivationexamples} gives example scenarios of both static and dynamic verification suffering from their drawbacks, but illustrating how gradual verification could avoid them.
+% Programmers
+
+Our approach is based on recent formalizations regarding gradual typing, using the concept of abstract interpretation to define a gradual system in terms of a static one (this process is called “gradualization”).
+Gradual typing arose from drawbacks of static and dynamic type systems which are very similar to the drawbacks identified above.
+From a theoretical perspective, type systems are even a special case of program verification. 
+These similarities motivated our idea of reinterpreting and adapting the gradual typing approach to the verification setting.
+
+Chapter \ref{sec:categorization-of-existing} provides the background of our approach, introducing the concepts motivating and driving our approach.
+Furthermore it categorizes existing work that goes in a similar direction, pointing out how it differs from our work.
+In chapter \ref{ch:gradualization-of-a} we describe our approach of gradualization in a generic way, meant to be used as a manual or template for designing gradual verification systems.
+We do just that in form of case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic in order to enable race-free static reasoning.
+
+% TODO: remaining chapters
+
+\begin{verbatim}
+~\\ % more detail???
+
+
 Most modern programming languages use static methods to some degree, ruling out at least some types of runtime failure.
 %% static typing
 Static typing disciplines are among the most common representatives, guaranteeing type safety at compile time, obviating the need for dynamic checks.
 Yet, the rigidity and limitations of static type systems resulted in the introduction of dynamic aspects into the otherwise static system:
 Casts (e.g. as implemented in C\# or Java) overrule purely static reasoning, allowing the static type system to treat an expression as if it had the claimed type (usually a subtype) instead of the deduced one.
-At this location, a dynamic check is introduced, resulting in a cast exception should the programmer's claim turn out wrong.
-Note that the necessity of casts is only due one of the drawbacks of static verification, namely the limitation of formal logic.
+At this location, a runtime check is introduced, resulting in a cast exception should the programmer's claim turn out wrong.
+Note that such deviations from a purely static type system (one where there is no need for runtime checks) do not affect type safety:
+It is still guaranteed that execution does not enter an inconsistent state by simply interrupting execution whenever a runtime type check fails.
+
+Note that casts are necessary only because of a typical drawback of static systems, namely the limitation of the underlying logic.
 More sophisticated type systems (e.g. the one in Haskell) might have been able to deduce the claimed type in the first place.
+
+%% dynamic typing
+%At the other end of the spectrum are dynamically typed languages.
+%In scenarios where the limitations of a static type system would clutter up the source code, they allow expressing the same logic with less %syntactic overhead, but at the cost of less static guarantees and early bug detection.
 
 %% static verification
 In contrast, general purpose static verification techniques are not common amongst popular programming languages.
 Note that such languages are usually driven by cost-benefit and usability considerations, meaning that static verification is apparently not yet in a stage where its cost clearly outweighs its benefits.
+\end{verbatim}
 
-
+\begin{verbatim}
 %% static verification
 % example?
-These limitations not only affect programmers trying to statically verify their program.
-Most general purpose programming languages (C/C++, C\#, Java, ...), usually driven by cost-benefit and usability considerations, haven't adopted this level of static analysis in the first place.
 
-%% grad verification
-The purpose of gradual verification is to weaken if not remove some of these limitations at the cost of turning some static checks into runtime checks, whenever inevitable.
-We will present a procedure of turning a static verification into a gradual one.
-% more detail about static limitations and how runtime circumvents them?
-
-%% static typing weakened
-This idea is not new at all and actually common practice in type systems:
-In C\# or Java, explicit type casts are assertions about the actual type of a value.
-This actual type (usually a subtype of the statically known type) could not be deduced by the static type system due to its limitations.
-Such an assertion/cast allows subsequent static reasoning about the value assuming its new type at the cost of an additional runtime check, ensuring the validity of the cast.
-Note that such deviations from a “purely” static type system (one where there is no need for runtime checks) do not affect type safety:
-It is still guaranteed that execution does not enter an invalid state (one where runtime types are incompatible with statically annotated types) by simply interrupting execution whenever a runtime type check fails.
-This is usually implemented by throwing an exception.
-% mention that runtime cost reasonable, ...
-
-
-%% dyn typing
-At the other end of the spectrum are dynamically typed languages.
-In scenarios where the limitations of a static type system would clutter up the source code, they allow expressing the same logic with less syntactic overhead, but at the cost of less static guarantees and early bug detection.
-
-%% PLs are on the dynamic end of the verification spectrum
-In terms of program verification, most general purpose languages are on the dynamic end of the spectrum.
-If they exist as designated syntax, assertions are usually implemented as runtime checks and often even dropped entirely for “release” builds (the Java compiler drops them by default).
-It is common practice to implement 
 % research Eiffel!
 % Design-by-Contract!!! Eiffel!
 % D even has both
@@ -102,13 +106,6 @@ It is common practice to implement
 %    
 %\end{description}
 
-%% grad typing
-A gradual type system is more flexible, as it provides the full continuum between static and dynamic typing, letting the programmer decide ... %TODO.
-It can be seen as an extension  “unknown” type 
-
-
-This work will also show that gradual verification ... other angle!
-
 - 
 What is the thesis about?
 Why is it relevant or important?
@@ -117,3 +114,4 @@ What is the proposed solution or approach?
 What can one expect in the rest of the thesis?
 
 “Static verification checks that properties are always true, but it can be difficult and tedious to select a goal and to annotate programs for input to a static checker.” (http://www.sciencedirect.com/science/article/pii/S1571066104002567)
+\end{verbatim}
