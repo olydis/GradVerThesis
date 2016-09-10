@@ -74,86 +74,93 @@ There are two basic ways to turn this annotation into a guarantee:
     % benefits, drawbacks
 \end{description}
 
-A gradual verifier would pursue the combined approach without (visible) code duplication:
-It would try verifying the contract statically but resort to dynamic methods in case this fails.
-As a result, there are no further obligation 
+Gradual verification would pursue the combined approach without (visible) code duplication:
+Static verification is used where possible, dynamic verification where needed.
+Note that for the programmer this means that adding the method contract comes with no further obligations.
 
-\subsection{Statically Verified Setting}
+\subsection{Limitations of Static Verification}
+The following example is written in a Java-like language with dedicated syntax for method contracts (similar to Eiffel).
+We assume that this language is statically verified, i.e. static verification is part of the compilation.
+
+The example shows the limitations of static verification using the Collatz sequence as an algorithm too complex to describe concisely in a method contract:
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
-    requires 0 < start;
-    ensures  0 < result;
+    requires 1 <= start;
+    ensures  1 <= result;
 {
     // ...
 }
 
 int myRandom(int seed)
-    requires 0 < seed   && seed   < 10000;
-    ensures  0 < result && result < 4;     // not provable
+    requires 1 <= seed   && seed   <= 10000;
+    ensures  1 <= result && result <= 3;     // not provable
 {
     int result = collatzIterations(300, seed);
-    // we know: result $\in$ { 1, 2, 4 }
+    // we know:        result $\in$ { 1, 2, 4 }
+    // verifier knows: 1 <= result
+    
+    if (result == 4) result = 3;
+    return result;
+}
+\end{lstlisting}
+The first method \ttt{collatzIterations} iterates given number of times, starting at given value.
+We assume that the only provable contract is that positive start value results in positive result.
+The second method \ttt{myRandom} uses the Collatz sequence to generate a pseudo random number from given seed.
+It is known to the programmer that start values up to 10000 result in convergence of the sequence after 300 iterations.
+After mapping 4 to 3, we are thus given a number between 1 and 3, as described in the postcondition.
+
+Unfortunately, the verifier cannot deduce this fact since the postcondition of \ttt{collatzIterations} only guarantees positive result, but no specific range of values.
+Again, we can resort to dynamic methods to aid verification:
+
+\begin{lstlisting}
+...
+{
+    int result = collatzIterations(300, seed);
+    // we know:        result $\in$ { 1, 2, 4 }
+    // verifier knows: 1 <= result
+    
+    // knowledge "cast"
+    if (!(result <= 4))
+        throw new IllegalStateException("expected result <= 4");
+
+    // verifier knows: 1 <= result && result <= 4 
     
     if (result == 4) result = 3;
     return result;
 }
 \end{lstlisting}
 
-Non-solution:
+This solution is not satisfying as it required additional work by the programmer to convince the verifier.
+Furthermore, the solution is in an unintuitive location:
+The problem is not caused by \ttt{myRandom}, yet it is solved there.
+The actual problem is that the postcondition of \ttt{collatzIterations} is too weak, causing the verifier to fail deducing our knowledge.
+
+Gradual verification allows enhancing the postcondition with “unknown” knowledge that can be reinterpreted arbitrarily, adding appropriate runtime checks to guarantee that this reinterpretation was in fact valid:
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
-    requires 0 < start;
-    ensures  0 < result;
+    requires 1 <= start;
+    ensures  1 <= result && ?;
 {
     // ...
 }
 
 int myRandom(int seed)
-    requires 0 < seed   && seed   < 10000;
-    ensures  0 < result && result < 4;
-{
-    int result = collatzIterations(300, seed);
-    // we know: result $\in$ { 1, 2, 4 }
-    
-    // "cast"
-    if (!(result < 5))
-        throw new IllegalStateException("expected result < 5");
-
-    // verifier now knows:  0 < result && result < 5 
-    
-    if (result == 4) result = 3;
-    return result;
-}
-\end{lstlisting}
-This solution is not satisfying, 
-- much to write, have to think about what to write (requires you to kind of thing from verifiers perspective)
-- intuitively the problem is with the method's postcondition being too weak, i.e. we solved the problem at the wrong place!
-
-
-\begin{lstlisting}
-int collatzIterations(int iter, int start)
-    requires 0 < start;
-    ensures  0 < result && ?;
-{
-    // ...
-}
-
-int myRandom(int seed)
-    requires 0 < seed   && seed   < 10000;
-    ensures  0 < result && result < 4;
+    requires 1 <= seed   && seed   <= 10000;
+    ensures  1 <= result && result <= 3;
 {
     int result = collatzIterations(300, seed);
     // we know: result $\in$ { 1, 2, 4 }
     
     // verifier allowed to
-    //  assume 0 < result && result < 5
-    //  from   0 < result && ?
+    //  assume 1 <= start && result <= 4
+    //  from   1 <= start && ?
     // (adding runtime check)
     
     if (result == 4) result = 3;
     return result;
 }
 \end{lstlisting}
+Note the \ttt{?} in the postcondition of \ttt{collatzIterations}.
 
 % gradual:
 % - not in a sense of GraVy
