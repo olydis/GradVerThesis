@@ -6,31 +6,62 @@ Common examples are method contracts and loop invariants.
 
 %% static vs dynamic
 There are a variety of approaches to check whether the program behavior complies with given annotations.
-Static verification methods try to guarantee this compliance without executing the program.
-Instead, they resort to formal methods
+They can usually be divided into two categories:\\
+\begin{tabular}{l | c | c}
+     & Static verification & Dynamic verification \\ \hline
+    Approach &
+    \begin{minipage}{170pt}
+        \vspace{3pt}
+        The program is not executed. 
+        Instead \textbf{formal methods} (like Hoare logic) are used, trying to derive a proof for given assertions.
+        \vspace{5pt}
+    \end{minipage}
+    &
+    \begin{minipage}{170pt}
+        \vspace{3pt}
+        The specification is turned into \textbf{runtime checks}, making sure that the program adheres to its specification during execution.
+        Violations cause a runtime exception to be thrown, effectively preventing the program from entering a state that contradicts its specification.
+        Note that in practice this approach is often combined with control flow based testing techniques to detect misbehavior as early as possible.
+        \vspace{5pt}
+    \end{minipage}\\\hline
+    Drawbacks &
+    \begin{minipage}{170pt}
+        \vspace{3pt}
+        The syntax available for static verification is naturally limited by the underlying formal logic.
+        Complex conditions/behavior might thus not be expressible, resulting in inability to prove subsequent properties.
+        Furthermore, the logic itself might be unable to prove certain properties due to complex behavior of the code and undecidability in general.
+        Using static verification usually requires rigorous annotation of the entire source code, as otherwise there might be too little information to find a proof.
+        While adding such annotations to own code can be tedious (yet, there are supporting tools), using unannotated libraries can become a problem:
+        Even if it is possible to add own annotations, lacking the source code, the verifier is unable to prove those annotations, resulting in inconsistent proves in case the annotation turns out to be wrong.
+        \vspace{5pt}
+    \end{minipage}
+    &
+    \begin{minipage}{170pt}
+        \vspace{3pt}
+        Violations are only detected at runtime, with the risk of going unnoticed before software is released.
+        To minimize this risk, testing methods are required, i.e. more time has to be spent after compilation.
+        The usage of runtime checks naturally imposes a runtime overhead which is not always acceptable.
+        % To get rid of 
+        \vspace{5pt}
+    \end{minipage}\\\hline
+\end{tabular}
 
-- incomplete information about parts of the program
-- laziness, forced to annotate everything
-- unable to express due to limited syntax
-- unable to prove something facing undecidability
-
-
-Most modern programming languages use static analysis to some degree, ruling out certain types of runtime failure.
-Static analysis provides guarantees about the dynamic behavior of a program without actually running the program.
+Most modern programming languages use static methods to some degree, ruling out at least some types of runtime failure.
 %% static typing
-Static typing disciplines are among the most common representatives of static analysis, guaranteeing type safety at compile time, obviating the need for dynamic checks.
+Static typing disciplines are among the most common representatives, guaranteeing type safety at compile time, obviating the need for dynamic checks.
+Yet, the rigidity and limitations of static type systems resulted in the introduction of dynamic aspects into the otherwise static system:
+Casts (e.g. as implemented in C\# or Java) overrule purely static reasoning, allowing the static type system to treat an expression as if it had the claimed type (usually a subtype) instead of the deduced one.
+At this location, a dynamic check is introduced, resulting in a cast exception should the programmer's claim turn out wrong.
+Note that the necessity of casts is only due one of the drawbacks of static verification, namely the limitation of formal logic.
+More sophisticated type systems (e.g. the one in Haskell) might have been able to deduce the claimed type in the first place.
 
 %% static verification
-Another powerful technique is static verification of programs against their specification, i.e. statically proving their “correctness”.
-In practice this is achieved by checking that some annotated invariants or assertions (reflecting the specification) must always hold.
+In contrast, general purpose static verification techniques are not common amongst popular programming languages.
+Note that such languages are usually driven by cost-benefit and usability considerations, meaning that static verification is apparently not yet in a stage where its cost clearly outweighs its benefits.
+
+
+%% static verification
 % example?
-Unfortunately, static verification has limitations and drawbacks:
-\begin{itemize} % TODO
-    \item Syntax
-    \item Decidability
-    \item Difficult and Tedious to annotate programs
-    \item ...
-\end{itemize}
 These limitations not only affect programmers trying to statically verify their program.
 Most general purpose programming languages (C/C++, C\#, Java, ...), usually driven by cost-benefit and usability considerations, haven't adopted this level of static analysis in the first place.
 
