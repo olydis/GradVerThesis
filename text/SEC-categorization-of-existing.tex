@@ -1,64 +1,25 @@
+Design-by-Contract, a term coined by Bertrand Meyer \cite{meyer2002design}, is a paradigm aiming for verifiable source code, e.g. by adding method contracts and tightly integrating them with the compiler and runtime.
+Meyer realized this concept in his programming language Eiffel, providing compiler support for generating runtime checks required for dynamic verification (often called runtime verification).
+Combining design-by-contract with static verification techniques to was investigated by \cite{crocker2004safe} as what they call “verified design-by-contract”.
 
-% TODO: define contract somewhere
+Similar developments took place regarding Java and JML annotations.
+Static verification using theorem provers was investigated by \cite{jacobs2001logic} and is implemented as part of ESC/Java \cite{nelson2004extended}.
+Turning the annotations into runtime assertion checks (RAC) to drive dynamic verification was investigated by \cite{cheon2002runtime} and lead up to the development of JML4c \cite{sarcar2010new}.
 
-\cite{arlt2014gradual}
-GraVy:
-metric of progress of the verification process
-and allows the verification engineer to focus on the remaining statements.
-Gradual verification is not a new static verification technique. It is an extension
-that can be applied to any existing static verification techniques to provide
-additional information to the verification engineer. Thus, issues, such as handling
-of loops or aliasing are not addressed in this paper. These are problems
-related to sound verification, but gradual verification is about how to make the
-use of such verification more traceable and quantifiable
+A more recent programming language that comes with integrated support for specification and both static and dynamic verification is Spec\# \cite{the-spec-programming-system-an-overview}.
+Its compiler facilitates theorem provers for static verification and emits runtime checks for dynamic verification.
+It was developed further with current challenges of concurrent object-orientation in mind \cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs}.
+The concepts found their way to main stream programming in the form of “Code Contracts” \cite{embedded-contract-languages}, a tool-set deeply integrated with the .NET framework and thus available in a variety of programming languages.
 
-\cite{nelson2004extended} ESC/Java
-Software development and maintenance are costly endeavors.
-The cost can be reduced if more software defects are
-detected earlier in the development cycle. This paper introduces
-the Extended Static Checker for Java (ESC/Java),
-an experimental compile-time program checker that finds
-common programming errors. The checker is powered by
-verification-condition generation and automatic theorem proving
-techniques. It provides programmers with a simple
-annotation language with which programmer design decisions
-can be expressed formally. ESC/Java examines the
-annotated software and warns of inconsistencies between the
-design decisions recorded in the annotations and the actual
-code, and also warns of potential runtime errors in the code.
-This paper gives an overview of the checker architecture and
-annotation language and describes our experience applying
-the checker to tens of thousands of lines of Java programs.
+The limitations of both static and dynamic verification lead to a recent trend of using both approaches at the same time.
+Static verification is meant as a best effort service and supplemented with dynamic verification to give the guarantee that static verification potentially failed to provide.
+Recent work focuses on combining both approaches in a more meaningful and complementary way by focusing dynamic verification and testing efforts specifically to code areas where static verification had less success.
+\cite{ChristakisMuellerWuestholz16} describe how programs can be annotated during static verification in order to prioritize certain tests over others or even prune the search space by aborting tests that lead to fully verified code.
 
-\cite{jacobs2001logic} JML => static verification
+Still static and dynamic verification concepts are treated as independent for the most part.
+The same was once true for static and dynamic type systems, before advances in formalizing gradual type systems seamlessly bridged the gap.
+Our goal is to achieve the same for program verification, i.e. static and dynamic verification are no longer to be treated as independent concepts (that are combines as smart as possible) but instead treated as complementary and tightly coupled.
 
-\cite{cheon2002runtime} JML => RAC
-...lead up to
-\cite{sarcar2010new} JML4c
-
-\cite{the-spec-programming-system-an-overview} Spec\#
-
-\cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs} Spec\# extension (concurrent OO)
-
-\cite{meyer2002design} Design-by-Contract
-then also: Eiffel by Bertrand Meyer 
-
-\cite{embedded-contract-languages} Code Contracts! Combines runtime and static checking
-
-\cite{crocker2004safe} “verified design-by-contract”
-
-\cite{ChristakisMuellerWuestholz16}
-= static verification plus directed dynamic verification
-In this paper, we present a technique to complement partial
-verification results by automatic test case generation. In
-contrast to existing work, our technique supports the common
-case that the verification results are based on unsound
-assumptions. We annotate programs to reflect which executions
-have been verified, and under which assumptions.
-These annotations are then used to guide dynamic symbolic
-execution toward unverified program executions. Our main
-technical contribution is a code instrumentation that causes
-dynamic symbolic execution to abort tests that lead to verified
-executions, to prune parts of the search space, and to
-prioritize tests that cover more properties that are not fully
-verified.
+Note that \cite{arlt2014gradual} mentions gradual verification, yet it is meant as the process of “gradually” increasing the coverage of static verification.
+The work describes a metric for estimating this coverage, giving the developer feedback while annotating and closing in on fully static verification.
+A similar metric implicitly arises from our notion of gradual verification: The amount of dynamic checks injected to ensure compliance with annotations is a direct indicator of locations where static verification failed so far.
