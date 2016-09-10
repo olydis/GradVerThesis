@@ -1,4 +1,58 @@
+%% intro, aliasing problem
+Reasoning about programs using shared mutable data structures (the default in object orientation) is not possible using traditional Hoare logic.
+The following Hoare triple should not be verifiable using a sound Hoare logic due to potential aliasing.
+\begin{displaymath}
+\hoare
+{\phiAnd{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}
+{\ttt{p1.age++}}
+{\phiAnd{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}
+\end{displaymath}
+The problem is that \ttt{p1} and \ttt{p2} might be aliases, meaning that they reference the same memory.
+The increment operation would thus also affect \ttt{p2.age}, rendering the postcondition invalid.
+As we will demonstrate gradual verification on a Java-like language in chapter \ref{ch:case-study--implicit}, we need a logic that is capable of dealing with mutable data structures.
 
+%% SL
+Separation logic \cite{reynolds2002separation} is an extension of Hoare logic that explicitly tracks mutable data structures (i.e. heap references) and adds a “separating conjunction” to the formula syntax.
+In contrast to ordinary conjunction (\ttt{∧}),
+separating conjunction (\ttt{*}) ensures that both sides of the conjunction reference disjoint areas of the heap.
+The following Hoare triple would thus be verifiable:
+\begin{displaymath}
+\hoare
+{\phiCons{\phiMapsTo{p1.age}{19}}{\phiMapsTo{p2.age}{19}}}
+{\ttt{p1.age++}}
+{\phiCons{\phiMapsTo{p1.age}{20}}{\phiMapsTo{p2.age}{19}}}
+\end{displaymath}
+Note also the changed syntax explicitly tracking the values of certain heap locations.
+
+%% IDF
+A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age > 19}$) as they are not directly expressible using the explicit syntax for heap references.
+Implicit dynamic frames (IDF) \cite{smans2009implicit} addresses this issue by decoupling the concept of access to a certain heap location from assertions about its value.
+It introduces an “accessibility predicate” \ttt{acc(\textit{loc})} that represents the permission to access \textit{loc}.
+Above example can be rewritten in terms of IDF:
+\begin{displaymath}
+\hoare
+{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}}
+{\ttt{p1.age++}}
+{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}}
+\end{displaymath}
+The separating conjunction makes sure that the accessibility predicates mention disjoint memory locations, whereas it has no further meaning for “ordinary” predicates like equality.
+
+
+
+
+Reasoning about concurrent programs is not possible using traditional Hoare logic.
+Consider the following Hoare triple:
+\begin{displaymath}
+\hoare{\ttt{person ≠ \enull}}{\sSeq{\sFieldAssign{person}{age}{18}}{\ttt{person.age++}}}{\ttt{person.age = 19}}
+\end{displaymath}
+In case the programming language supports parallelism or any form of preemptive context switching, this Hoare triple should be deducible by a sound Hoare logic.
+Other code may have access to \ttt{person} and thus overwrite the \ttt{age}-field concurrently, resulting in arbitrary values of when execution reaches the end of above two statements.
+
+
+in the way it treats heap references.
+
+
+Hoare logic has been extended in order to enable reasoning concurrent programs.
 
 Race-free Assertion language! => static verification tool able to reason soundly about concurrent programs
 
@@ -6,8 +60,6 @@ Race-free Assertion language! => static verification tool able to reason soundly
 % TODO: explain Frame Problem
 % translation of separating conjuction to regular conjunction? would simplify later reasoning A LOT
 
-\cite{smans2009implicit}
-IDF
 
 
 \cite{leino2009verification}

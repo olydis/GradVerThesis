@@ -141,9 +141,10 @@
 \newcommand{\gphiCons}[2]{\ttt{#1\:$\grad{\ttt{*}}$\:#2}}
 \newcommand{\phiFalse}[0]{\ttt{false}}
 \newcommand{\phiTrue}[0]{\ttt{true}}
+\newcommand{\phiMapsTo}[2]{\ttt{(#1\:\:$\mapsto$\:\:#2)}}
 \newcommand{\phiEq}[2]{\ttt{(#1 = #2)}}
 \newcommand{\phiNeq}[2]{\ttt{(#1 ≠ #2)}}
-\newcommand{\phiAcc}[2]{\ttt{acc(#1.#2)}}
+\newcommand{\phiAcc}[2]{\ttt{\textbf{acc}(#1.#2)}}
 \newcommand{\qm}{\ttt{?}}
 \newcommand{\withqm}[1]{\phiCons{\qm}{\ensuremath{#1}}}
 \newcommand{\withqmGen}[1]{\phiAnd{\ensuremath{#1}}{\qm}}
@@ -158,7 +159,7 @@
 \newcommand{\sRelease}[1]{\ttt{release #1}}
 \newcommand{\sDeclare}[2]{\ttt{#1~#2}}
 \newcommand{\sHold}[2]{\ttt{hold #1~\{ #2 \}}}
-\newcommand{\sSeq}[2]{\ttt{{#1};{#2}}}
+\newcommand{\sSeq}[2]{\ttt{{#1};~{#2}}}
 % type
 \newcommand{\type}[1]{\ttt{#1}}
 \newcommand{\Tint}{\type{int}}
