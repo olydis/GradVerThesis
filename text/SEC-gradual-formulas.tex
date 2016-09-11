@@ -1,31 +1,37 @@
 % It is one of our design goals to make any program of the static system a valid program of the 
 % the resulting gradual system compatible with the old one (otherwise it would trivially not  satisfy the gradual guarantee \ref{grad-guarantee}).
 
-We introduce the concepts of gradual verification by introducing a wildcard formula $\qm$ into the formula syntax, resulting in a new set of gradual formulas $\setGFormula$.
-There are different ways to introduce the wildcard, we will describe two common options in the following sections.
+The fundamental concept of gradual verification is the introduction of a wildcard formula $\qm$ into the formula syntax of the static verification system.
+This wildcard is supposed to be usable as a placeholder for unknown knowledge and will be “instantiated” by the gradual verifier on demand.
 
-%% COMMON KNOWLEDGE
-Note that we want to strictly extend the existing formula syntax in order to maintain compatibility with the static system, i.e. $\setFormula \subset \setGFormula$ holds.
-This design goal ensures that any program considered syntactically valid by the static system will still be syntactically valid in the gradual system (motivated by gradual guarantee \ref{grad-guarantee}).
+Example...
 
-We decorate formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
-Using the concept of abstract interpretation, we want to reason about gradual formulas by mapping them back to a set of satisfiable static formulas (called “concretization”) and then applying static reasoning to that set.
-Intuitively, a program state satisfies a gradual formula iff it satisfies (at least) on of the static formulas of the its concretization.
+
+The first difference of \gvl in comparison to \svl is thus an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
+We decorate gradual formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
+
+Using the concept of abstract interpretation, we want to give meaning to gradual formulas by mapping them back to a set of satisfiable static formulas (called “concretization”).
+The concretization is supposed to represent a “plausible” set of static formulas
+This way we can reason about a gradual formula by applying preexisting static reasoning to the formulas concretization.
+For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\phi}$ iff $\pi$ satisfies (at least) one of the static formulas drawn from the concretization of $\grad{\phi}$.
 (This intuition is formalized in section \ref{ssec:lifting-predicates}.)
 
-% An example of that approach ... in section \ref{sec:lifting-predicates-and}
-
-Without knowing specifics of the syntax extension, we can already formalize this approach for static formulas:
 \begin{definition}[Concretization]~\\
-    Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as follows:
+    Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as
     \begin{align*}
     &\gamma(\phi) = 
         \begin{cases}
         \{~ \phi ~\}  & \phi \in \setFormulaA\\
         \emptyset     & \textit{otherwise}
         \end{cases}\\
-    &\gamma(\grad{\phi}) = \textit{to be defined when extending the syntax}     \quad\quad \forall \phi \in \setGFormula\\
+    &\gamma(\qm) = \setFormulaA
     \end{align*}
 \end{definition}
 
+
+
 % more detail about singleton mapping and why it makes sense?
+
+
+There are slightly different ways to introduce the wildcard, we will describe two common options in the following sections.
+Yet there are some rules for this step that we can already motivate.
