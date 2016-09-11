@@ -1,0 +1,40 @@
+For the following examples we assume that gradual formulas were defined as in section \ref{ssec:dedicated-wildcard-formula}:
+\begin{align*}
+&\grad{\phi} ::= \phi ~|~ \qm \\
+~\\
+&\gamma(\phi) = 
+\begin{cases}
+\{~ \phi ~\}  & \phi \in \setFormulaA\\
+\emptyset     & \textit{otherwise}
+\end{cases}\\
+&\gamma(\qm) = \setFormulaA
+\end{align*}
+
+%% phiImplies
+\begin{lemma}[Consistent Lifting of Implication]~\\
+    Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined as
+    \begin{displaymath} 
+    \gphiImplies {\grad{\phi_1}} {\grad{\phi_2}} ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies {\phi_1} {\phi_2}
+    \end{displaymath}
+    Then $~\gphiImplies{\cdot}{\cdot}~$ is a consistent lifting of $~\phiImplies{\cdot}{\cdot}~$.
+\end{lemma}
+
+%% evalphi
+The first example is the 
+\begin{lemma}[Optimal Lifting of Evaluation]~\\
+    Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined as
+    \begin{displaymath} 
+    \evalgphiGen {\pi} {\grad{\phi}} ~\defiff~ \evalphiGen {\pi} {\static{$\phi$}}
+    \end{displaymath}
+    Then $~\evalgphiGen{\cdot}{\cdot}~$ is a consistent lifting of $~\evalphiGen{\cdot}{\cdot}~$.
+\end{lemma}
+
+We define $\setGFormulaA = \{~ \grad{\phi} \in \setGFormula ~|~ \exists \pi.~ \evalgphiGen {\pi} {\grad{\phi}} ~\}$ as the set of satisfiable gradual formulas.
+
+\begin{lemma}[Restricted Domain of Concretization]~\\
+    $\restr{\gamma}{\setGFormulaA}$ never returns the empty set.
+\end{lemma}
+
+
+% TODO: simplify? needs lifted functions!
+

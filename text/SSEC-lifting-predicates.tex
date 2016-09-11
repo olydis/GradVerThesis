@@ -1,16 +1,13 @@
-
-% TODO: we dissect the gradual lifting notion of AGT
-In this section, we assume that we are dealing with a binary predicate $P \subseteq \setFormula \times \setFormula$.
+In this section, we assume that we are dealing with a binary predicate $P \subseteq \setFormula \times \setFormula$ and want to obtain a lifted predicate $\grad{P} \subseteq \setGFormula \times \setGFormula$.
 The concepts are directly applicable to predicates with different arity or with additional non-formula parameters.
-The lifted version we are targeting has signature $\grad{P} \subseteq \setGFormula \times \setGFormula$.
-W.l.o.g. we further assume that $P$ appears unnegated in the axiomatic semantics (otherwise we simply regard the negation of that predicate as $P$).
+% W.l.o.g. we further assume that $P$ appears unnegated in the axiomatic semantics (otherwise we simply regard the negation of that predicate as $P$).
 
-Rules emerging from the gradual guarantee:
+We identify the following rules:
 \begin{description}
     \item[Introduction]~\\
-    Having source code that is considered valid by the static verification system, the same source code must be considered valid by the gradual verification system.
+    We demand compatibility of the semantics of \gvl with the semantics of \svl.
     In other words, switching to the gradual system may never “break the code”.
-    This means that arguments satisfying $P$ must satisfy $\grad{P}$:
+    A predicate $\grad{P}$ that is part of the gradual semantics must thus satisfy:
     \begin{mathpar}
         \inferrule* [Right=GPredIntro]
         {
@@ -27,11 +24,8 @@ Rules emerging from the gradual guarantee:
     \end{displaymath}
     
     \item[Monotonicity]~\\
-    A central point of a gradual verification system is enabling programmers to specify contracts with less precision.
-    Source code that is rejected by the verifier might get accepted after reducing precision.
-    If the opposite would happen, though, that would be highly counter-intuitive and ...??? workflow.
-    To prevent such behavior, we expect satisfied predicates to still be satisfied after reducing the precision of arguments:
-    
+    In order to satisfy the gradual guarantee, the semantics of \gvl must be immune to reduction of precision.
+    A predicate $\grad{P}$ that is part of the gradual semantics must thus remain satisfied when reducing the precision of arguments
     \begin{mathpar}
         \inferrule* [Right=GPredMon]
         {
@@ -43,70 +37,36 @@ Rules emerging from the gradual guarantee:
             \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
         }
     \end{mathpar}
-    
-    or equivalently, thinking of predicates as boolean functions
-    \begin{displaymath}
-    \grad{P}  \text{ is monotonic w.r.t. $\sqsubseteq$}
-    \end{displaymath}
-    or something with set terminology!???
-    \begin{displaymath}
-    \grad{P}  \text{ is somewhat closed under weakening}
-    \end{displaymath}
 \end{description}
 
-\begin{definition}[Sound Predicate Lifting]
+\begin{definition}[Soundness of Predicate Lifting]
     A lifted predicate is \textbf{sound/valid} if it is closed under the above rules.
 \end{definition}
 
-Note that the rules for sound lifting only give a lower bound for the predicate.
-Thus $\grad{P} = \setGFormula \times \setGFormula$ is a sound predicate lifting of any binary predicate $P \subseteq \setFormula \times \setFormula$.
+Note that soundness only gives a lower bound for the predicate:
+$$\grad{P} = \setGFormula \times \setGFormula$$ is a sound predicate lifting of any binary predicate $$P \subseteq \setFormula \times \setFormula$$
+This observation motivates an additional notion of optimality.
 
-\begin{definition}[Optimal Predicate Lifting]
+\begin{definition}[Optimality of Predicate Lifting]
     A sound lifted predicate is \textbf{optimal} if it is the smallest set closed under the above rules.
 \end{definition}
 
-This definition coincides with the definition of consistent predicate lifting in AGT:
-
-\begin{lemma}[Optimal Predicate Lifting (Direct Definition)]\label{lemma:consistent-pred-lifting-direct}
+%% AGT
+The definition of optimal predicate lifting coincides with the definition of “consistent predicate lifting” given by AGT \cite{garcia2016abstracting}.
+\begin{lemma}[Equivalence with Consistent Predicate Lifting (AGT)]\label{lemma:consistent-pred-lifting-direct}
     Let $\grad{P} \subseteq \setGFormula \times \setGFormula$ be defined as
     \begin{displaymath} 
     \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)
     \end{displaymath}
     Then $\grad{P}$ is an optimal lifting of $P$.
 \end{lemma} %PROOF
+This is an intriguing observation since different approaches were used to end up with the same definition:
+AGT immediately defines consistent predicate lifting as above, arguing that it reflects the intuition behind gradual formulas (as placeholders for plausible static formulas).
+Therefore $\grad{P}(\grad{\phi_1}, \grad{\phi_2})$ is supposed to hold if it is plausible that there exists an instantiation satisfying the static predicate.
+This intuition is directly formalized, using concretization to map from gradual formulas back to plausible static formulas.
+We noticed early that this definition is too strong for gradual verification rules in general, due to the complexity of verification rules compared to typing rules.
+In chapter \ref{sec:abstracting-static-semantics} we will see examples of gradual predicates which are not optimal and would thus not fit into AGT's model of consistent lifting.
 
-% delve more into what is important, what is optional, etc.?
-
-% For sound rules this holds:
-% \begin{displaymath}
-% \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ (\exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2)) \implies \grad{P}(\grad{\phi_1}, \grad{\phi_2})
-% \end{displaymath}
-
-\textbf{Consistent lifting of common predicates:}
-
-%% evalphi
-\begin{lemma}[Consistent Lifting of Evaluation]~\\
-    Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined as
-    \begin{displaymath} 
-    \evalgphiGen {\pi} {\grad{\phi}} ~\defiff~ \evalphiGen {\pi} {\static(\phi)}
-    \end{displaymath}
-    Then $~\evalgphiGen{\cdot}{\cdot}~$ is a consistent lifting of $~\evalphiGen{\cdot}{\cdot}~$.
-\end{lemma}
-
-We define $\setGFormulaA = \{~ \grad{\phi} \in \setGFormula ~|~ \exists \pi.~ \evalgphiGen {\pi} {\grad{\phi}} ~\}$ as the set of satisfiable gradual formulas.
-
-\begin{lemma}[Restricted Domain of Concretization]~\\
-    $\restr{\gamma}{\setGFormulaA}$ never returns the empty set.
-\end{lemma}
-
-%% phiImplies
-\begin{lemma}[Consistent Lifting of Implication]~\\
-    Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined as
-    \begin{displaymath} 
-    \gphiImplies {\grad{\phi_1}} {\grad{\phi_2}} ~\defiff~ \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies {\phi_1} {\phi_2}
-    \end{displaymath}
-    Then $~\gphiImplies{\cdot}{\cdot}~$ is a consistent lifting of $~\phiImplies{\cdot}{\cdot}~$.
-\end{lemma}
-
-% TODO: simplify? needs lifted functions!
-
+Realizing that consistent lifting is actually not necessary for ending up with a sound gradual verification system, we took a different approach to define lifting.
+Identifying the bare minimum of requirements (dictated by the gradual guarantee and compatibility with the static system) we ended up with our definition of soundness.
+The optional notion of optimality bridges the gap between both approaches.

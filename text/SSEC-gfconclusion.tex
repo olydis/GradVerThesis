@@ -1,9 +1,20 @@
+Since lifted predicates and functions directly affect the gradual semantics of \gvl, they must adhere to certain rules in order to be sound.
+What soundness means is a direct consequence of the gradual guarantee for gradual verification systems, which we derive from the gradual guarantee for gradual type systems by Siek et al. \cite{siek2015refined}.
 
-With the notion of precision, we can give a formal definition of the gradual guarantee (TODO: ref) that we are aiming to satisfy.
-\begin{definition}[Gradual Guarantee (for Gradual Verification Systems)]
-    \label{grad-guarantee-def}
-    %TODO
+For simplicity we will simply call programs “correct” if they are successfully verifiable by the gradual verifier.
+
+\begin{definition}[Gradual Guarantee (Static Semantics)]
+    \label{grad-guarantee-static}
+    Correct programs remain correct when reducing precision of any formula.
 \end{definition}
+
+\begin{definition}[Gradual Guarantee (Dynamic Semantics)]
+    \label{grad-guarantee-dynamic}
+    Correct programs with certain observational behavior (termination, values of variables, output, etc.) will have the same observational behavior after reducing precision of any formula.
+\end{definition}
+
+\begin{comment}
+With the notion of precision, we can give a formal definition of the gradual guarantee (TODO: ref) that we are aiming to satisfy.
 
 
 % "static" function?
@@ -23,3 +34,4 @@ For reference, the full definitions:
 &\gamma(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phi} ~\}\\
 &\gamma(\grad{\phi}) = \emptyset    \quad\textit{otherwise}
 \end{align*}
+\end{comment}

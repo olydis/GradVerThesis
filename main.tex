@@ -31,8 +31,10 @@
 
 \newunicodechar{≠}{=\llap{/}}
 \newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
-\newunicodechar{∧}{\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}}
-
+\newunicodechar{∧}
+{\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}} \endgroup}}
+% {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}}
+% $\withqmGen{x = 3}$
 % CODE LISTINGS
 
 \definecolor{cogreen}{RGB}{0,80,0}

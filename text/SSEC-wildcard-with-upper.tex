@@ -1,4 +1,3 @@
-
 To allow combining wildcards with static knowledge, we might view \qm merely as an unknown conjunctive term within a formula:
 \begin{displaymath}
 \grad{\phi} ::= \phi ~|~ \withqmGen{\phi}
@@ -6,13 +5,28 @@ To allow combining wildcards with static knowledge, we might view \qm merely as 
 
 We pose $\qm \defeq \withqmGen{\phiTrue}$.
 
-We expect $\withqmGen{\phi}$ to be a placeholder for a formula that also “contains” $\phi$.
+We expect $\withqmGen{\phi}$ to be a placeholder for a formula that implies $\phi$.
+\begin{definition}[Concretization]~\\
+    Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as
+    \begin{align*}
+    &\gamma(\phi) = 
+    \begin{cases}
+    \{~ \phi ~\}  & \phi \in \setFormulaA\\
+    \emptyset     & \textit{otherwise}
+    \end{cases}\\
+    &\gamma(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phi} ~\}
+    \end{align*}
+\end{definition}
+
+Note that $\gamma(\qm) = \gamma(\withqmGen{\phiTrue}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phiTrue} ~\} = \setFormulaA$.
+The approach is thus compatible with the previous one.
+
+\begin{comment}
 There are two ways to express this containment, resulting in different concretizations.
 \begin{description}
     \item[Syntactic]\quad
     $\gamma_1(\withqmGen{\phi}) = \{~ \phi \wedge \phi' ~|~ \phi' \in \setFormulaA ~\}$
     \item[Semantic]\quad
-    $\gamma_2(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phi} ~\}$
 \end{description}
 
 \begin{lemma} 
@@ -23,3 +37,4 @@ There are two ways to express this containment, resulting in different concretiz
 \end{lemma}
 
 Note that $\gamma_1(\qm) = \gamma_2(\qm) = \setFormulaA$, meaning that this approach of extending the formula syntax is compatible with (but superior to) the approach introduced in the previous section.
+\end{comment}

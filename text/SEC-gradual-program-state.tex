@@ -1,14 +1,19 @@
+Recall that program state has a notion of remaining work, see section \ref{sec:a-statically-verified} for examples.
+As the set of possible statements has been augmented from $\setStmt$ to $\setGStmt$, the notion of remaining work might have to be augmented as well in order to allow encoding the additional statements.
 
-...continuation...
+This augmentation leads to a superset $\setGProgramState \supseteq \setProgramState$ of gradual program states.
+Example:
+\begin{flalign*}
+	\setProgramState ~  & =~ (\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt  \\
+    \text{is extended to} \quad\quad\quad\quad\quad\\
+	\setGProgramState ~ & =~ (\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setGStmt
+\end{flalign*}
 
-Therefore the introduction of gradual statements $\setGStmt$ leads to a notion of gradual program states $\setGProgramState \supseteq \setProgramState$.
-TODO: $\setGProgramState_{\grad{s}}$
-
-Again, we give meaning to gradual program states using concretization.
+We give meaning to gradual program states using concretization.
 \begin{definition}[Concretization of Gradual Program States]
     Let $\gamma_{\pi} : \setGProgramState \rightarrow \PP(\setProgramState)$ be defined as
     \begin{displaymath}
-    \gamma_{\pi}(\grad{\pi}) = \{~ \pi \in \setProgramState ~|~ \textit{$\pi$ is $\grad{\pi}$ with all continuations??? replaced by a concretization} ~\}
+    \gamma_{\pi}(\grad{\pi}) = \{~ \pi \in \setProgramState ~|~ \textit{$\pi$ is $\grad{\pi}$ with all continuations replaced by a concretization} ~\}
     \end{displaymath} 
 \end{definition}
 \begin{definition}[Precision of Gradual Program States]
@@ -17,10 +22,12 @@ Again, we give meaning to gradual program states using concretization.
     % TODO: observational instead... otherwise gradual release or call would not work
 \end{definition}
 
+\begin{comment}
 Consequence:
 \begin{displaymath}
 \forall \grad{\pi_{\grad{s}}} \in \setGProgramState_{\grad{s}}, \pi \in \gamma_{\pi}(\grad{\pi_{\grad{s}}}).~ \exists s \in \gamma_s(\grad{s}).~ \pi \in \setProgramState_s
 \end{displaymath}
+\end{comment}
 
-We demand that formula semantics are not affected by this extension, which is trivially the case if evaluation does not depend on the remaining work in the first place.
-Formally: $$\forall \phi \in \setFormula, \grad{\pi} \in \setGProgramState, \pi \in \gamma_{\pi}(\grad{\pi}).~~ \evalphiGen{\grad{\pi}}{\phi} \iff \evalphiGen{\pi}{\phi}$$
+We demand that formula semantics are not affected by this extension, which is trivially the case if evaluation does not depend on the continuation in the first place:
+$$\forall \phi \in \setFormula, \grad{\pi} \in \setGProgramState, \pi \in \gamma_{\pi}(\grad{\pi}).~~ \evalphiGen{\grad{\pi}}{\phi} \iff \evalphiGen{\pi}{\phi}$$

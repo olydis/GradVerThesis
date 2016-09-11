@@ -1,9 +1,8 @@
-
-Comparing gradual formulas (e.g. $\ttt{x = 3}$, $\withqmGen{x = 3}$, $\qm$) gives rise to a notion of “precision”.
-Intuitively, $\ttt{x = 3}$ is more precise than $\withqmGen{x = 3}$ which is still more precise than $\qm$.
+Comparing gradual formulas (e.g. $\ttt{x = 3}$, $\withqmGen{\ttt{x = 3}}$, $\qm$) gives rise to a notion of “precision”.
+Intuitively, $\ttt{x = 3}$ is more precise than $\withqmGen{\ttt{x = 3}}$ which is more precise than $\qm$.
 Using concretization, we can formalize this intuition.
 \begin{definition}[Formula Precision]
     $$\grad{\phi_a} \sqsubseteq \grad{\phi_b}  \quad\iff\quad  \gamma(\grad{\phi_a}) \subseteq \gamma(\grad{\phi_b})$$
     Read: Formula $\grad{\phi_a}$ is “at least as precise as” $\grad{\phi_b}$.
 \end{definition}
-The strict version $\sqsubset$ is defined accordingly.
+The strict version $\sqsubset$ is defined accordingly. 

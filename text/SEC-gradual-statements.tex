@@ -1,7 +1,9 @@
 %% intro
 Formulas play a role for some statements, extending their syntax may thus also affect the syntax of statements.
+
+
 %% assert
-A common example where formulas are even part of the syntax is the assertion statement $\sAssert{$\phi$}$.
+A common example are assertion statements $\sAssert{$\phi$}$.
 Having a gradual formula syntax available does not necessary mean that all statements have to adopt it.
 In case of the assertion statement there might be little benefit in allowing gradual formulas.
 % TODO? say why, say that it is nonsense for the syntax extensions we gave but NOT for the one in the implementation
@@ -10,7 +12,7 @@ In case of the assertion statement there might be little benefit in allowing gra
 A more complex example affected by gradualization of formulas is a call statement $\ttt{$m$();}$ in presence of method contracts.
 Although not directly visible, this statement's semantics (static and dynamic) is affected by the contract of $m$, consisting of pre- and postcondition.
 One can think of $m$ as a reference to some method definition including method contract.
-Note that in practice such method definitions usually reside in some “program context” that is then passed to static and dynamic semantics.
+Note that in practice such method definitions usually reside in a “program context” that is then passed to static and dynamic semantics.
 As the full meaning of such a statement is unknown without context, it is hard to reason about it abstractly.
 W.l.o.g. we will thus think of $m$ as syntactic sugar for 
 \begin{align*}
@@ -21,7 +23,7 @@ W.l.o.g. we will thus think of $m$ as syntactic sugar for
 
 %%% contract
 As one of the main goals of gradual verification is to allow for gradual method contracts, it makes sense to extend the syntax accordingly.
-This means that the syntax of our desugared call statement is affected:
+This means that the syntax of the desugared call statement is affected:
 \begin{align*}
 &\ttt{assert $\grad{\phi_{m_{pre}}}$;}\\
 &\ttt{// body of $m$}\\
@@ -30,7 +32,7 @@ This means that the syntax of our desugared call statement is affected:
 
 %% general
 In general, statement syntax is extended, resulting in a superset $\setGStmt \supseteq \setStmt$ of gradual statements.
-Note that the superset is induced merely by allowing $\setGFormula$ instead of $\setFormula$ in certain places (chosen freely by the gradual language designer).
+Note that the superset is induced merely by allowing $\setGFormula$ instead of $\setFormula$ in certain places (chosen by the gradual language designer).
 We give meaning to gradual statements using a concretization function. % MORE detail?
 \begin{definition}[Concretization of Gradual Statements]
     Let $\gamma_s : \setGStmt \rightarrow \PP(\setStmt)$ be defined as
@@ -44,4 +46,4 @@ We give meaning to gradual statements using a concretization function. % MORE de
 \end{definition}
 
 %% outlook
-The notion of gradual statements will become important for gradual static and dynamic semantics.
+The notion of gradual statements will become important for the gradualized semantics of \gvl.

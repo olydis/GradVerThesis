@@ -1,22 +1,15 @@
-
-The Hoare logic of our language are defined in terms of predicates and functions that operate on formulas.
-Examples:
-% TODO:
-% - implication, e.g. in assertion statement
-% - adding equality, e.g. in assignment statement (or look in static semantics for better examples...)
-% - Hoare logic itself!
-
-After introducing and giving meaning to gradual formulas, we will now describe how to redefine existing predicates and functions in order for them to deal with gradual formulas.
+The Hoare logic of \svl is a ternary predicate $\thoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setFormula \times \setStmt \times \setFormula$.
+% TODO: ensure consistency, setFormulaA vs setFormula
+Since \gvl contains gradual formulas and gradual statements, the gradualized Hoare logic is expected to have signature $\gthoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setGFormula \times \setGStmt \times \setGFormula$.
+Similarly, the gradualized small-step semantics is expected to have signature $\gsssem : \setGProgramState \rightharpoonup \setGProgramState$ instead of $\sssem : \setProgramState \rightharpoonup \setProgramState$.
+Usually semantics are defined inductively, meaning that they are defined in terms of further predicates or functions (e.g. implication between formulas).
+These functions will have new signatures as well in order to deal with the extended syntax of \gvl.
+This section will present a procedure called “lifting”, which formalizes this adaptation of predicates and functions.
 
 \begin{definition}[Gradual Lifting]
-    The process of extending an existing predicate/function in order to deal with gradual formulas.
-    The resulting predicate/function has the same signature as the original one, with occurrences of \setFormula replaced by \setGFormula.
+    The procedure of extending an existing predicate/function in order to deal with gradual formulas.
+    The resulting predicate/function has the same signature as the original one, with occurrences of \setFormula, \setStmt and \setProgramState replaced by \setGFormula, \setGStmt, \setGProgramState.
 \end{definition}
 
-Lifted predicates and functions are not allowed to deal with gradual formulas arbitrarily but must do so in a sound way.
-What soundness means is a direct consequence of the gradual guarantee (definition \ref{grad-guarantee-def}), i.e. an unsound predicate/function may cause the gradual verification system to break the gradual guarantee.
-This idea is formalized in the following sections.
-
-
-How gradual parameters have to be handled is dictated by the gradual guarantee by Siek et al. \cite{siek2015refined}.
-, so we start with a formal definition of the gradual guarantee , reinterpreted from gradual type systems to gradual verification systems.
+Our rules for lifting rely merely on the existence of a concretization function and a notion of precision.
+We will thus restrict our formalizations and explanations to (gradual) formulas, whereas they are directly applicable to other gradualized sets.

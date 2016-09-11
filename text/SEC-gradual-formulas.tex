@@ -1,19 +1,36 @@
 % It is one of our design goals to make any program of the static system a valid program of the 
 % the resulting gradual system compatible with the old one (otherwise it would trivially not  satisfy the gradual guarantee \ref{grad-guarantee}).
 
-The fundamental concept of gradual verification is the introduction of a wildcard formula $\qm$ into the formula syntax of the static verification system.
-This wildcard is supposed to be usable as a placeholder for unknown knowledge and will be “instantiated” by the gradual verifier on demand.
+The fundamental concept of gradual verification is the introduction of a wildcard formula $\qm$ into the formula syntax.
+The first difference of \gvl in comparison to \svl is an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
+The gradual verifier is supposed to succeed in presence of the wildcard, should it be plausible that there exists a static formula that would make a static verifier succeed.
+Example:
+\begin{lstlisting}
+int increment(int i)
+    requires ?;
+    ensures  result == 3;
+{
+    return i + 1;
+}
+\end{lstlisting}
+The gradual verifier is expected to successfully verify this method contract since there exists a static formula (\ttt{i == 2}), that would let static verification succeed.
 
-Example...
+On the other hand, a gradual verifier should reject the following method contract as there is no plausible (i.e. satisfiable) instantiation of \qm that would make static verification work:
+\begin{lstlisting}
+int nonSense(int i)
+    requires ?;
+    ensures  result == result + 1;
+{
+    return i;
+}
+\end{lstlisting}
 
+This intuition about \qm is formalized in the following sections.
 
-The first difference of \gvl in comparison to \svl is thus an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
 We decorate gradual formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
-
-Using the concept of abstract interpretation, we want to give meaning to gradual formulas by mapping them back to a set of satisfiable static formulas (called “concretization”).
-The concretization is supposed to represent a “plausible” set of static formulas
-This way we can reason about a gradual formula by applying preexisting static reasoning to the formulas concretization.
-For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\phi}$ iff $\pi$ satisfies (at least) one of the static formulas drawn from the concretization of $\grad{\phi}$.
+Using the concept of abstract interpretation, we want to give meaning to gradual formulas by mapping them back to a set of static formulas (called “concretization”).
+This way we can reason about a gradual formula by applying preexisting static reasoning to the formula's concretization.
+For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\phi}$ iff $\pi$ satisfies (at least) one of the formulas drawn from the concretization of $\grad{\phi}$.
 (This intuition is formalized in section \ref{ssec:lifting-predicates}.)
 
 \begin{definition}[Concretization]~\\
@@ -27,11 +44,12 @@ For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\
     &\gamma(\qm) = \setFormulaA
     \end{align*}
 \end{definition}
+% TODO: reiterate if restriction of codomain to SatFormula (and stupid singleton mapping) is really necessary
 
+Static formula are mapped to a singleton set containing just them.
+This reflects our goal to preserve the meaning of static formulas in the gradual setting.
+The wildcard is mapped to the set of all satisfiable formulas, reflecting the idea of treating it as any plausible static formula.
 
-
-% more detail about singleton mapping and why it makes sense?
-
-
-There are slightly different ways to introduce the wildcard, we will describe two common options in the following sections.
-Yet there are some rules for this step that we can already motivate.
+Note that this definition of $\gamma$ assumes that $\qm$ is the only addition to $\setGFormula$.
+In fact, this is only one possible way to realize $\setGFormula$.
+In the following two sections we will further analyze both this and a more powerful alternative.
