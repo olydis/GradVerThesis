@@ -1,7 +1,8 @@
-% generic language introduction
+%% generic language introduction
+While aiming to give a general procedure for deriving gradually verified languages, we have to make certain assumptions about \svl in order to concisely describe our approach and reason about its correctness.
+We believe that most statically verified programming languages satisfy the following assumptions and thus qualify as starting point for our procedure.
 
-Requirements:
-
+Assumptions about \svl:
 \begin{description}
 \item[Syntax]~\\
     We assume the existence of the following two syntactic categories:
@@ -9,20 +10,41 @@ Requirements:
     	s    & \in \setStmt    \\
     	\phi & \in \setFormula
     \end{align*}
+    
+    \begin{comment}
     We assume that there is a sequence operator \ttt{;} such that: $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
     % or munch that into syntax figure above?
     
     Let $\setStmt_s$ be the set of all statements having $s$ as prefix.
+    \end{comment}
+    
     % examples, formal?
     
     % TODO: we make no other assumptions
     % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
 \item[Program State]~\\
-    Operational semantics (see below) are formalized as discrete transitions between program states.
+    Dynamic semantics (see below) are formalized as discrete transitions between program states.
     Therefore a program state contains all information necessary to evaluate expressions and determine the next program state.
     We assume that $\setProgramState$ is the set of all possible program states in \svl.
     
+    Examples:
+    \begin{description}
+        \item[Primitive language with integer variables]
+        \begin{displaymath}
+        \setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{variable memory}} ~\times~ \setStmt 
+        \end{displaymath}
+        
+        \item[Language with stack]
+        \begin{displaymath}
+        \setProgramState ~=~ \bigcup_{i \in \mathbb{N}_+}{\underbrace{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)}_{\textit{stack frame}}}^i                                                      
+        \end{displaymath}
+    \end{description}
+    
+    Note how these examples use statements to represent “remaining work” of the program state, necessary for the operational semantics to deduce a state transition.
+    In general, a different representation may be used to...
+    
+    \begin{comment}
     In order to determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
     TODO: reasonable to call that “continuation”?
     
@@ -45,9 +67,37 @@ Requirements:
     \end{description}
      
     TODO: notion of initial state?
-     
+    \end{comment}
+    
+    
+\item[Dynamic Semantics]~\\
+    We assume that \svl has a structural operational semantics or small-step semantics.
+    This semantics is formalized as $~\sssem : \setProgramState \rightharpoonup \setProgramState$, describing precisely how program state can be updated. % TODO: reconsider non-deterministic
+    %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
+    %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
+    %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
+    Taking $n$ steps at once can be abbreviated as $\sssem^n$ (undefinedness is propagated).
+    
+    \begin{flalign*}
+        &\sssem^s \subseteq \setProgramState_s \times \setProgramState & \\
+        &\sssem^s(\pi_s, \pi) ~\defiff~ \exists n \in \setNat.~ \sssem^n(\pi_s) = \pi ~\wedge~ \pi \text{ is the first state after $s$ is fully consumed}
+    \end{flalign*}
+    
+    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular or exceptional termination of the program.
+    \begin{comment}
+    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
+    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
+    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
+    
+    %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
+    %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.
+    
+    % Execution is considered to be stuck iff there are no more 
+    \end{comment}
+    
 \item[Formula Semantics]~\\
-    Formulas are used to describe program states. % more verbose? can be viewed as types?
+    Formulas are used for annotations like method contracts or invariants.
+    Formally they constrain program states. % more verbose? can be viewed as types?
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the program state at the call site.
     
     We assume that we are given a computable predicate
@@ -96,36 +146,12 @@ Requirements:
     This property is true regardless of whether \svl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
     
-    
-\item[Dynamic Semantics]~\\
-    We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightharpoonup \setProgramState$ describing precisely how program state can be updated.
-    %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
-    %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
-    %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
-    Taking $n$ steps at once can be abbreviated as $\sssem^n$, where undefinedness is propagated.
-    
-    \begin{flalign*}
-        &\sssem^s \subseteq \setProgramState_s \times \setProgramState & \\
-        &\sssem^s(\pi_s, \pi) ~\defiff~ \exists n \in \setNat.~ \sssem^n(\pi_s) = \pi ~\wedge~ \pi \text{ is the first state after $s$ is fully consumed}
-    \end{flalign*}
-    
-    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
-    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
-    Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
-    To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
-    
-    %To indicate that states $\overline{\pi_2}$ can be obtained from state $\pi_1$ in $n$ steps, we write $\sssem^n(\pi_1)$.
-    %If the specific number of steps is irrelevant, we write $\sssem^*(\pi_1, \pi_2)$.
-    
-    % Execution is considered to be stuck iff there are no more 
-    
     With this semantics we can formalize the notion of valid Hoare triples:
     \begin{flalign*}
-    	 & \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
-    	 & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
+    & \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
+    & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
     \forall \langle \pi_{pre}, \pi_{post} \rangle \in \sssem^s.~ \evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}}
     \end{flalign*}
-    
     
 \item[Static Semantics]~\\
     We assume that there is a Hoare logic (HL)

@@ -1,16 +1,17 @@
-% TODO: at some point define what statically verified (verification as part of static semantics, no compilation without verification success) vs dynamically verified (no static measures, only (implicit) runtime cecks) means!
-
-%% why start with static language
-As illustrated earlier %MAKE SURE!
-gradual verification can be seen as an extension of both static and dynamic verification.
-% Both can be seen as the endpoints of the continuum...?
-Yet, our approach of “gradualization” formalizes the introduction of the dynamic aspect into a fully static system.
-% This chapter describes this approach 
-Later %TODO: ref
-we will show how a programming language without static verification features can be approached.
+%% why static->gradual
+As illustrated in section \ref{sec:motivationexamples} gradual verification can be seen as an extension of both static and dynamic verification.
+Yet, the approach of “gradualization” (adapted from AGT) derives the gradual semantics in terms of static semantics.
+In this chapter we will thus describe our approach of deriving a gradually verified language “\gvl” starting with a generic statically verified language “\svl”.
+An informal description of how to tackle the opposite direction can be found in section \ref{sec:enhancing-an-unverified}.
 
 %% structure of this chapter
-% TODO
+Section \ref{sec:a-statically-verified} contains the description of “\svl” or rather the assumptions we make about it.
+In section \ref{sec:gradual-formulas} we describe the syntax extensions necessary to give programmers the opportunity to deviate from purely static annotations.
+We immediately give a meaning to the new “gradual” syntax, driven by the concepts of abstract interpretation.
+In section \ref{sec:lifting-predicates-and} we explain “lifting” a procedure adapting predicates and functions in order for them to deal with gradual parameters.
+With the necessary tools for gradualization available, we apply them to the static semantics of \svl in section \ref{sec:abstracting-static-semantics}.
+Finally, we develop gradual dynamic semantics in section \ref{sec:abstracting-dynamic-semantics}.
 
-% TODO: overall approach (lift Hoare logic, then think about the places where lifted semantics reflect back into the system, e.g. function call)
+Gradual soundness section???
+
 % reference implementation chapter, explain difference (here: general, there: making use of specifics, optimality, minimal runtime overhead (0 if static, ...) ...)

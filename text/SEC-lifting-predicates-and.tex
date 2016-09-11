@@ -16,3 +16,7 @@ After introducing and giving meaning to gradual formulas, we will now describe h
 Lifted predicates and functions are not allowed to deal with gradual formulas arbitrarily but must do so in a sound way.
 What soundness means is a direct consequence of the gradual guarantee (definition \ref{grad-guarantee-def}), i.e. an unsound predicate/function may cause the gradual verification system to break the gradual guarantee.
 This idea is formalized in the following sections.
+
+
+How gradual parameters have to be handled is dictated by the gradual guarantee by Siek et al. \cite{siek2015refined}.
+, so we start with a formal definition of the gradual guarantee , reinterpreted from gradual type systems to gradual verification systems.

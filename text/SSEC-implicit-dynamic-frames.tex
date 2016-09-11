@@ -28,62 +28,25 @@ Note also the changed syntax explicitly tracking the values of certain heap loca
 A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age > 19}$) as they are not directly expressible using the explicit syntax for heap references.
 Implicit dynamic frames (IDF) \cite{smans2009implicit} addresses this issue by decoupling the concept of access to a certain heap location from assertions about its value.
 It introduces an “accessibility predicate” \ttt{acc(\textit{loc})} that represents the permission to access \textit{loc}.
+Parkinson and Summers \cite{parkinson2011relationship} worked out the formal relationship between separation logic and IDF.
 Above example can be rewritten in terms of IDF:
-\begin{displaymath}
-\hoare
-{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}}
-{\ttt{p1.age++}}
-{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}}
-\end{displaymath}
-The separating conjunction makes sure that the accessibility predicates mention disjoint memory locations, whereas it has no further meaning for “ordinary” predicates like equality.
+\begin{mathpar}
+\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}\}\\
+{\ttt{p1.age++}}\\
+\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}\}
+\end{mathpar}
+The separating conjunction makes sure that the accessibility predicates mention disjoint memory locations, whereas it has no further meaning for non-access predicates like equality.
+As formulas can mention heap locations in arbitrary predicates, it has to be ensured that the same formula contains accessibility predicates to all heap locations mentioned.
+This property of formulas is called “self-framing”.
+Above pre- and postconditions are self-framing whereas the sub-formula $\phiEq{p1.age}{20}$ would not be.
+It is essential that access cannot be duplicated and thus also not be shared between threads, allowing race-free reasoning about concurrent programs.
 
+%% Chalice
+Implicit dynamic frames was implemented as part of the Chalice verifier \cite{leino2009verification}.
+Chalice is also the name of the underlying simple imperative programming language that has constructs for thread creation and thus relies on IDF for sound race-free reasoning.
+Chalice was also implemented as a front-end of the Viper toolset. % developed at ETH Zürich.
 
+%% formal semantics
+The static semantics of our example language in chapter \ref{ch:case-study--implicit} are based on the Hoare logic for Chalice given by Summers and Drossopoulou \cite{summers2013formal}.
 
-
-Reasoning about concurrent programs is not possible using traditional Hoare logic.
-Consider the following Hoare triple:
-\begin{displaymath}
-\hoare{\ttt{person ≠ \enull}}{\sSeq{\sFieldAssign{person}{age}{18}}{\ttt{person.age++}}}{\ttt{person.age = 19}}
-\end{displaymath}
-In case the programming language supports parallelism or any form of preemptive context switching, this Hoare triple should be deducible by a sound Hoare logic.
-Other code may have access to \ttt{person} and thus overwrite the \ttt{age}-field concurrently, resulting in arbitrary values of when execution reaches the end of above two statements.
-
-
-in the way it treats heap references.
-
-
-Hoare logic has been extended in order to enable reasoning concurrent programs.
-
-Race-free Assertion language! => static verification tool able to reason soundly about concurrent programs
-
-% separating conjuction (= Multiplicative conjunction ⊗, lollipop, ...), access is resource, cannot duplicate access, ...
-% TODO: explain Frame Problem
-% translation of separating conjuction to regular conjunction? would simplify later reasoning A LOT
-
-
-
-\cite{leino2009verification}
-Chalice, a verification methodology based on implicit dynamic frames
-
-Chalice’s verification methodology centers around permissions and permission transfer. In particular, a memory location may be accessed by a thread only if that thread has permission to do so. Proper use of permissions allows Chalice to deduce upper bounds on the set of locations modifiable by a method and guarantees the absence of data races for concurrent programs. The lecture notes informally explain how Chalice works through various examples.
-
-also: Viper (Verification Infrastructure for Permission-based Reasoning; is a suite of tools developed at ETH Zurich, providing an architecture on which new verification tools and prototypes can be developed simply and quickly.) has Chalice as front-end
-
-\cite{summers2013formal}
-In this paper, we provide both an isorecursive and an equirecursive formal
-semantics for recursive definitions in the context of Chalice
-
-\cite{parkinson2011relationship}
-VERY IMPORTANT: chapter 2.2
-
-Finally, we show that we can encode the separation
-logic fragment of our logic into the implicit dynamic frames fragment, preserving
-semantics. For the connectives typically supported by tools, this shows that separation
-logic can be faithfully encoded in a first-order automatic verification tool (Chalice).
-
-Although IDF was partially inspired by separation logic, there are many differences
-between SL and IDF that make understanding their relationship difficult. SL does not
-allow expressions that refer to the heap, while IDF does. SL is defined on partial heaps,
-while IDF is defined using total heaps and permission masks. The semantics of IDF are only defined by its translation to first-order verification conditions, while SL has a direct
-Kripke semantics for its assertions.
 
