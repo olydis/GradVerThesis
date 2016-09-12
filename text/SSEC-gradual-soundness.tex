@@ -47,7 +47,7 @@ Gradual preservation is therefore unsatisfiable if formalized as above.
 %% moral: we need dynamic checks
 This conflict is nothing but a reminder that gradualization is not for free, but may require runtime checks in order to be sound.
 With this in mind we can reiterate our notion of preservation.
-We introduce an assertion statement $\sAssert{\phi}$ (if not already available).
+We introduce an assertion statement $\sAssert{$\phi$}$ (if not already available) that throws an exception should the condition not hold.
 Preservation of \svl can then be rewritten as
 \begin{mathpar}
     \inferrule* [Right=Preservation']

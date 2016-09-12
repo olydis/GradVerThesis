@@ -1,11 +1,13 @@
-Let $\gsssem$ be gradual lifting of $\sssem$.
+Let $\gsssem : \setGProgramState \rightharpoonup \setGProgramState$ be a sound gradual lifting of $\sssem : \setProgramState \rightharpoonup \setProgramState$.
 
 %% make progress work
+TODO when progress definition is final
 Progress: Note that premise is tautology.
 So we artificially make conclusion true by demanding that lifting is total.
 This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
 
 %% preservation
+
 Preservation: Conclusion is already a tautology.
 This is not really satisfying: An arbitrary verification predicate would satisfy this kind of preservation.
 Also, this is no guarantee for all the formulas describing intermediate program states.

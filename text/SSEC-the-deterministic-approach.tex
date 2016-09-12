@@ -90,7 +90,7 @@ Soundness and optimality are defined as usual (see sections \ref{ssec:lifting-pr
 Assume we have obtained the deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare logic.
 This gradual partial function has desirable properties:
 \begin{description}
-    \item[Obtaining a Sound Gradual Lifting]
+    \item[(a) Obtaining a Sound Gradual Lifting]
     \begin{lemma}[Deterministic Lifting as Sound Lifting]~\\
         Let $\dgrad{P}$ be a deterministic lifting of $P$.
         Then
@@ -102,11 +102,11 @@ This gradual partial function has desirable properties:
     
     This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
     
-    \item[Determinism of Verifier]~\\
+    \item[(b) Determinism of Verifier]~\\
     As the name suggests, deterministic liftings leave no room for choice.
     For the gradual verifier this means that there is no more responsibility to infer intermediate formulas.
     
-    \item[Preservation]~\\
+    \item[(c) Preservation]~\\
     Thanks to the “Preservation” rule of deterministic liftings (see above), a postcondition returned by $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ is testified by the static Hoare logic.
     
     It is thus possible to define a preservation rule that does not rely on assertions in order to hold.
@@ -119,7 +119,7 @@ This gradual partial function has desirable properties:
             \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
         }
     \end{mathpar}
-    Note however, that this rule is not yet guaranteed to be satisfied, since this also depends on the gradual dynamic semantics.
+    Note however, that this rule is not automatically satisfied, this also depends on the gradual dynamic semantics of \gvl.
     
     Example:
     Assume that \svl contains an assertion statement with corresponding Hoare rule.
@@ -140,5 +140,5 @@ This gradual partial function has desirable properties:
     \dgthoare{~}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}
     \end{displaymath}
     However, if the gradual dynamic semantics of \gvl still implement assertions as a no-operation, then $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold.
-    On the other hand, adding a runtime assertion check that throws an exception on failure would restore preservation.
+    On the other hand, adding a runtime check that throws an exception on failure would restore preservation.
 \end{description}

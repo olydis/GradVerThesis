@@ -84,8 +84,9 @@ Assumptions about \svl:
     \end{flalign*}
     
     We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular or exceptional termination of the program.
+    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, i.e. final states are stuck.
+    We say a statement “throws an exception” if its small-step semantics transitions into an exceptional state.
     \begin{comment}
-    W.l.o.g. we assume $\dom(\sssem) \cap \setProgramStateFin = \emptyset$, e.g. final states are stuck.
     Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
     To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
     
