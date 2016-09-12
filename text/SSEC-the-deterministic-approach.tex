@@ -34,57 +34,57 @@ Our approach is based on the idea to treat the Hoare predicate as a (multivalued
 From this multivalued function we can obtain a lifted version, following similar rules to the ones for lifted partial functions (see \ref{sssec:lifting-partial-functions}).
 
 %% def
-\begin{definition}[Deterministic Lifting]
-    Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
-    \begin{description}
-        \item[Introduction]~\\
-        The deterministic lifting should be defined whenever the underlying predicate is.
-        \begin{displaymath}
-        \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
-        \end{displaymath}
-        
-        \item[Preservation]~\\
-        A return value of the deterministic lifting should agree with all instantiations of the underlying predicate.
-        \begin{mathpar}
-            \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
-            \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2}\\
-            \implies\\
-            \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi \in \setFormula.~ P(\phi_1, \phi) \implies \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ \phiImplies{\phi_2}{\phi}
-        \end{mathpar}
-        
-        The following example illustrates the effects of the rule:
-        Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
-        \begin{flalign*}
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
-        \end{flalign*}
-        Then valid return values for the deterministic lifting are
-        \begin{flalign*}
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\qm}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{x}{2}}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{2}{x}}}
-        \end{flalign*}
-        Not valid are weaker static values like
-        \begin{flalign*}
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
-        \end{flalign*}
-        or stronger values like
-        \begin{flalign*}
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiAnd{\phiEq{y}{3}}{\phiEq{x}{2}}}
-        \end{flalign*}
-        
-        \item[Monotonicity]~\\
-        Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
-        \begin{displaymath}
-        \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\dgrad{P}) \implies \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
-        \end{displaymath}
-    \end{description}
-\end{definition}
+Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
+\begin{description}
+    \item[Introduction]~\\
+    The deterministic lifting should be defined whenever the underlying predicate is.
+    \begin{displaymath}
+    \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
+    \end{displaymath}
+    
+    \item[Preservation]~\\
+    A return value of the deterministic lifting should agree with all instantiations of the underlying predicate.
+    \begin{mathpar}
+        \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
+        \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2}\\
+        \implies\\
+        \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi \in \setFormula.~ P(\phi_1, \phi) \implies \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ \phiImplies{\phi_2}{\phi}
+    \end{mathpar}
+    
+    The following example illustrates the effects of the rule:
+    Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
+    \begin{flalign*}
+    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
+    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
+    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
+    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+    \end{flalign*}
+    Then valid return values for the deterministic lifting are
+    \begin{flalign*}
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\qm}\\
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{x}{2}}}\\
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{2}{x}}}
+    \end{flalign*}
+    Not valid are weaker static values like
+    \begin{flalign*}
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+    \end{flalign*}
+    or stronger values like
+    \begin{flalign*}
+    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiAnd{\phiEq{y}{3}}{\phiEq{x}{2}}}
+    \end{flalign*}
+    
+    \item[Monotonicity]~\\
+    Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\dgrad{P}) \implies \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
+    \end{displaymath}
+\end{description}
+
+Soundness and optimality are defined as usual (see sections \ref{ssec:lifting-predicates} or \ref{text/SSEC-lifting-functions}).
 
 %% application & properties
 Assume we have obtained the deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare logic.
@@ -102,14 +102,14 @@ This gradual partial function has desirable properties:
     
     This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
     
-    \item[Determinism]~\\
+    \item[Determinism of Verifier]~\\
     As the name suggests, deterministic liftings leave no room for choice.
     For the gradual verifier this means that there is no more responsibility to infer intermediate formulas.
     
     \item[Preservation]~\\
-    Thanks to the “Preservation” rule of deterministic liftings (see above), a postcondition returned by $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ is testified by static knowledge.
+    Thanks to the “Preservation” rule of deterministic liftings (see above), a postcondition returned by $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ is testified by the static Hoare logic.
     
-    It is thus possible 
+    It is thus possible to define a preservation rule that does not rely on assertions in order to hold.
     \begin{mathpar}
         \inferrule* [Right=GDPreservation]
         {
@@ -119,16 +119,26 @@ This gradual partial function has desirable properties:
             \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
         }
     \end{mathpar}
+    Note however, that this rule is not yet guaranteed to be satisfied, since this also depends on the gradual dynamic semantics.
     
-    \item[Composability]~\\
-    \begin{lemma}[Composability of Deterministic Lifting]~\\
-        Let $\dgrad{P_1}, \dgrad{P_2}$ be deterministic liftings of predicates $P_1, P_2$.
-        Then
-        \begin{displaymath}
-        \dgrad{P_3} ~~\defeq~~ \dgrad{P_2} \circ \dgrad{P_1}
-        \end{displaymath}
-        is a deterministic lifting of $P_3(\phi_1, \phi_3) = \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)$.
-    \end{lemma}
+    Example:
+    Assume that \svl contains an assertion statement with corresponding Hoare rule.
+    \begin{mathpar}
+        \inferrule* [Right=HAssert]
+        {
+            \phiImplies{\phi}{\phi_a}
+        }
+        {
+            \thoare{~}{\phi}{\sAssert{$\phi_a$}}{\phi}
+        }
+    \end{mathpar}
+    Soundness of the Hoare logic implies that assertions are guaranteed to hold at runtime.
+    It is therefore reasonable for \svl to implement assertions as no-operations.
+    
+    A valid deterministic lifting of \tset{HAssert} is able to verify
+    \begin{displaymath}
+    \dgthoare{~}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}
+    \end{displaymath}
+    However, if the gradual dynamic semantics of \gvl still implement assertions as a no-operation, then $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold.
+    On the other hand, adding a runtime assertion check that throws an exception on failure would restore preservation.
 \end{description}
-
-% EXAMPLE LIFTINGS
