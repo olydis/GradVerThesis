@@ -1,0 +1,71 @@
+Having introduced a lot of concepts that all play together, it is worth going through a gradual verification process in its entirety.
+We assume that \gvl knows the Hoare rules lifted in section \ref{sssec:examples-lift-determ}.
+
+Example \gvl program:
+\begin{lstlisting}
+int getFourA(int i)
+    requires true;
+    ensures  result = 4;
+{
+    i := 4;
+    return i;
+}
+
+int getFourB(int i)
+    requires ?; // too lazy to figure that one out, yet
+    ensures  result = 4;
+{
+    i := i + 1;
+    return i;
+}
+\end{lstlisting}
+We assume that $\sReturn{i}$ is syntactic sugar for an assignment $\sVarAssign{result}{i}$ to the reserved variable \ttt{result}.
+
+During compilation, the gradual verifier is expected to verify the method contracts which is equivalent to deducing
+\begin{displaymath}
+\gthoare{~}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}
+\end{displaymath}
+and
+\begin{displaymath}
+\gthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}
+\end{displaymath}
+
+As established in section \ref{ssec:gradual-soundness}, runtime assertions have to be injected whenever such a judgment is made, in order to guarantee preservation.
+Resulting program (in fantasy-notation), as seen from small-step semantics:
+\begin{lstlisting}
+int getFourA(int i)
+{
+    i := 4;
+    result := i;
+    assert (result = 4);
+}
+
+int getFourB(int i)
+{
+    i := i + 1;
+    result := i;
+    assert (result = 4);
+}
+\end{lstlisting}
+
+
+Note that the gradual verifier has not yet verified above judgments.
+It does so by applying the deterministic lifting (as determined in section \ref{sssec:examples-lift-determ}) and then using the relationship with the gradual lifting established in section \ref{ssec:the-deterministic-approach} (see “Obtaining a Sound Gradual Lifting”).
+Deducing $\gthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}$:
+\begin{mathpar}
+    \inferrule* [right=DGHSeq]
+    {
+        \inferrule* [right=DGHSeq]
+        {
+            \dgthoare{~}{\phiTrue}{\sVarAssign{i}{4}}{\phiAnd{\phiTrue}{\phiEq{i}{4}}} \\
+            \dgthoare{~}{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\sVarAssign{result}{i}}{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}
+        }
+        {
+            \dgthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}
+        }
+\end{mathpar}DGHAssign1
+
+and
+\begin{displaymath}
+\dgthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}
+\end{displaymath}

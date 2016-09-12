@@ -7,9 +7,33 @@ So we artificially make conclusion true by demanding that lifting is total.
 This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
 
 %% preservation
+\begin{mathpar}
+    \inferrule* [Right=GPreservation']
+    {
+        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+    {
+        \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}
+    }
+\end{mathpar}
+Conclusion is a tautology.
 
-Preservation: Conclusion is already a tautology.
-This is not really satisfying: An arbitrary verification predicate would satisfy this kind of preservation.
+%% preservationX
+In case the deterministic lifting approach was used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}.
+\begin{mathpar}
+    \inferrule* [Right=GDPreservation]
+    {
+        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+    {
+        \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+    }
+\end{mathpar}
+Satisfying this rule is theoretically not necessary as injecting assertions \tset{GPreservation'} suffices 
+
+
+This is not really satisfying: 
+An arbitrary verification predicate would satisfy this kind of preservation.
 Also, this is no guarantee for all the formulas describing intermediate program states.
 A stronger notion of preservation gives this guarantee:
 \begin{mathpar}
