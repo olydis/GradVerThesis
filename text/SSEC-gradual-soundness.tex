@@ -13,7 +13,7 @@ We define gradual soundness of \gvl as follows:
     {
         ???
     }
-\end{mathpar} 
+\end{mathpar}
 \begin{mathpar}
     \inferrule* [Right=GPreservation]
     {
@@ -70,5 +70,10 @@ Updating gradual preservation accordingly:
         \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}
     }
 \end{mathpar}
+
+Note that there is room for an optimized implementation of the injected assertions.
+Example:
+Deducing $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ would lead to the injection of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$.
+However, it is known that $\phiEq{y}{2}$ holds after the assignment, making it legal to instead only assert $\phiEq{x}{3}$.
 
 % address fact that checking that is expensive => would be cool to have static guaranteed knowledge to reduce checking => deterministic lifting...

@@ -24,40 +24,74 @@
 % =>
 % { (x = 0) }
 
-The approach we propose is based on the idea to treat the Hoare predicate as a (multivalued) function, mapping preconditions to the set of possible/verifiable postconditions.
-We can obtain a lifted version of this hypothetical construct and demand certain properties similar to the ones defined in section \ref{text/SSEC-lifting-functions}:
+%% intro
+In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) not too strict (making assumptions that are neither general nor required by the following judgment and thus alter runtime behavior).
+While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
+In this section we define a deterministic gradual Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has very desirable properties and fits well into our existing model, as described later.
 
+%% approach idea
+Our approach is based on the idea to treat the Hoare predicate as a (multivalued) function, mapping preconditions to the set of possible/verifiable postconditions.
+From this multivalued function we can obtain a lifted version, following similar rules to the ones for lifted partial functions (see \ref{sssec:lifting-partial-functions}).
+
+%% def
 \begin{definition}[Deterministic Lifting]
     Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
     \begin{description}
         \item[Introduction]~\\
+        The deterministic lifting should be defined whenever the underlying predicate is.
         \begin{displaymath}
         \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
         \end{displaymath}
         
         \item[Preservation]~\\
+        A return value of the deterministic lifting should agree with all instantiations of the underlying predicate.
         \begin{mathpar}
             \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
             \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2}\\
             \implies\\
-            \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \implies \exists \phi \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi) ~\wedge~ \phiImplies{\phi}{\phi_2}
+            \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi \in \setFormula.~ P(\phi_1, \phi) \implies \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ \phiImplies{\phi_2}{\phi}
         \end{mathpar}
         
+        The following example illustrates the effects of the rule:
+        Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
+        \begin{flalign*}
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+        \end{flalign*}
+        Then valid return values for the deterministic lifting are
+        \begin{flalign*}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\qm}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{x}{2}}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{2}{x}}}
+        \end{flalign*}
+        Not valid are weaker static values like
+        \begin{flalign*}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+        \end{flalign*}
+        or stronger values like
+        \begin{flalign*}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiAnd{\phiEq{y}{3}}{\phiEq{x}{2}}}
+        \end{flalign*}
+        
         \item[Monotonicity]~\\
-        Note: Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
+        Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
         \begin{displaymath}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\dgrad{P}) \implies \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
         \end{displaymath}
     \end{description}
 \end{definition}
 
-...assume we have obtained deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare triple. % TODO: notation talk
-This gradual partial function has desirable properties: % use lemmas only? PROOFS
-
-
+%% application & properties
+Assume we have obtained the deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare logic.
+This gradual partial function has desirable properties:
 \begin{description}
     \item[Obtaining a Sound Gradual Lifting]
-    \begin{lemma}[Deterministic Gradual Lifting]~\\
+    \begin{lemma}[Deterministic Lifting as Sound Lifting]~\\
         Let $\dgrad{P}$ be a deterministic lifting of $P$.
         Then
         \begin{displaymath}
@@ -66,14 +100,25 @@ This gradual partial function has desirable properties: % use lemmas only? PROOF
         is a sound gradual lifting of $P$.
     \end{lemma}
     
+    This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
+    
     \item[Determinism]~\\
-    A verifier dealing with deterministic liftings has no more obligation of finding good intermediate formulas.
-    % So also no more of the problems/dilemmas apply
+    As the name suggests, deterministic liftings leave no room for choice.
+    For the gradual verifier this means that there is no more responsibility to infer intermediate formulas.
     
     \item[Preservation]~\\
-    A (gradual) postcondition returned by the lifted function is guaranteed to reflect the execution state after executing the statements in question (given that the precondition was met). Almost.
-    Combines all the knowledge of static rules.
-    % LEMMA?
+    Thanks to the “Preservation” rule of deterministic liftings (see above), a postcondition returned by $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ is testified by static knowledge.
+    
+    It is thus possible 
+    \begin{mathpar}
+        \inferrule* [Right=GDPreservation]
+        {
+            \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+        }
+        {
+            \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
+        }
+    \end{mathpar}
     
     \item[Composability]~\\
     \begin{lemma}[Composability of Deterministic Lifting]~\\

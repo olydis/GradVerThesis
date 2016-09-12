@@ -66,7 +66,7 @@ Note the usage of composite predicate lifting for \tset{GHSeq}.
 The overall Hoare predicate $\thoare {} {\cdot} {\cdot} {\cdot}$ can be thought of as a disjunction of all inductive rules.
 It follows that $\gthoare {} {\cdot} {\cdot} {\cdot}$, being the disjunction of above lifted rules is also a sound lifting.
 
-%% theory vs verifier practice
+%% theory vs verifier practice (many choices)
 Unfortunately, a gradual verifier using $\gthoare {} {\cdot} {\cdot} {\cdot}$ gets into a practical dilemma.
 Consider the Hoare triple
 \begin{displaymath}
@@ -82,31 +82,45 @@ Using rule inversion it can deduce that
 has to hold for some $\grad{\phi_{q1}}, \grad{\phi_{q2}} \in \setGFormula$.
 There are a variety of valid instantiations for both variables:
 \begin{description}
-    \item[$\grad{\phi_{q1}} = \phiEq{y}{2},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
+    \item[Good: $\grad{\phi_{q1}} = \phiEq{y}{2},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
     This instantiation aims to use static formulas as early as possible.
     The implication trivially holds.
         
-    \item[$\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
+    \item[Too strict: $\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
     The instantiation is stricter than necessary -- but nevertheless valid according to the rules.
     The implication holds (the knowledge about \ttt{x} is dropped), and $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ holds since $\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ does.
     This instantiation illustrates the requirement of runtime checks to ensure preservation as described in section \ref{ssec:gradual-soundness}.
-    The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}$ right after the assignment.
+    The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ right after the assignment.
     Unfortunately, this assertion alters runtime behavior:
     Code that would have never thrown an exception when evaluated with the runtime of \svl might now throw an exception.
     This is a violation of the dynamic part of the gradual guarantee.
-    Note however that it is the small-step semantics breaking the guarantee, 
+    Note that it is actually the runtime semantics breaking the guarantee, yet it is the verifiers “bad decision” that leads up to it.
+    
+    Consequently, further rules are necessary to prevent the verifier from making decisions that are, as in this case, not general.
+    
+    \item[Too weak: $\grad{\phi_{q1}} = \qm,~ \grad{\phi_{q2}} = \qm$]~\\
+    Using the wildcard is a valid option which also circumvents the trouble illustrated above.
+    Note however, that the knowledge about the first statement is lost which results in the necessity of dynamic checks to ensure $\phiEq{x}{3}$ after $\sVarAssign{y}{2}$.
+    Before this check could have been optimized away.
+    In general, choosing \qm as intermediate gradual formulas allows verifying arbitrary inconsistent judgments (a manifestation of the lack of optimality of $\gthoare {} {\cdot} {\cdot} {\cdot}$).
+    For example, 
+    \begin{displaymath}
+    \gthoare{}{\phiTrue}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiEq{y}{100}}
+    \end{displaymath}
+    is verifiable if the gradual verifier chooses \qm as intermediate gradual formulas.
+    
+    Consequently, the verifier should somehow try to be “as static as possible” in order to detect inconsistencies at compile time.
 \end{description}
 
-% There is no way around this (the programmer simply \textit{is} able to specify postconditions that are not guaranteed to hold)
-Yet, there is a more fundamental design issue connected to the gradual lifting approach which we will illustrate in this section.
+%% comparison: static verifier
+Note that above observations do not apply to a static verifier:
+Its only goal is to find a proof for given Hoare triple.
+There is no wildcard, meaning that inconsistencies are guaranteed to be detected statically.
+There is also no notion of choosing an intermediate formula that is too strict since preservation does not rely on runtime checks which might fail if the formula is not general enough.
 
-%% Rule-wise approach
-...rule-wise lifting yields overall lifting... neat.
+%% dilemma, consequence
+On the other side, decisions of the gradual verifier have the power to change the runtime behavior or let obvious inconsistencies go unnoticed.
+We propose a different approach, formalizing above intuition about being neither too weak nor too strong as part of a deterministic gradual Hoare logic which also obviates the need of injecting runtime assertions.
 
-%% problem
-Problem: non-deterministic! Compiler has to find “good” intermediate formulas
-\begin{description}
-    \item[too weak] could always choose $\qm$
-    \item[too strong] could choose stuff that is not guaranteed by runtime... (so: inject runtime assertions? yes: could be wrong! no: could enter method violating precondition)
-\end{description}
-% other problem: compositition and guessing
+
+
