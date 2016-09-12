@@ -1,0 +1,28 @@
+Semantics can be defined in terms of partial functions or even be a partial function as is the case for the small-step semantics of \svl.
+We derive rules for lifting partial functions using the following decomposition:
+
+\begin{lemma}[Partial Function Decomposition]
+    Let $f : \setFormula \rightharpoonup \setFormula$ be a partial function.
+    Then there exists a total function $f' : \setFormula \rightarrow \setFormula$ and a predicate $F \subseteq \setFormula$ such that
+    \begin{flalign*}
+    &f(\phi) = f'(\phi)  \quad\text{ if } F(\phi)\\
+    &f ~\text{ undefined otherwise}
+    \end{flalign*}
+\end{lemma}
+
+Composing $\grad{f}$ from the gradual liftings of $f$'s decomposition gives rise to the following rules for lifting partial functions.
+
+\begin{description}
+    \item[Introduction]~\\
+    \begin{displaymath}
+    \forall \phi \in \setFormula \cap \dom(f).~ f(\phi) \sqsubseteq \grad{f}(\phi)
+    \end{displaymath}
+    
+    \item[Monotonicity]~\\
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
+    \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\grad{f}) \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})
+    \end{displaymath}
+\end{description}
+
+Soundness and optimality are defined as usual.

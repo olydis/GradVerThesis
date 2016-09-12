@@ -11,10 +11,10 @@ Assumptions about \svl:
     	\phi & \in \setFormula
     \end{align*}
     
-    \begin{comment}
     We assume that there is a sequence operator \ttt{;} such that: $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
     % or munch that into syntax figure above?
     
+    \begin{comment}
     Let $\setStmt_s$ be the set of all statements having $s$ as prefix.
     \end{comment}
     
@@ -251,12 +251,21 @@ Assumptions about \svl:
     \begin{mathpar}
         \inferrule* [Right=Progress]
         {
+            ???
+        }
+        {
+            ???
+        }
+    \end{mathpar}
+    \begin{comment}
+        \inferrule* [Right=Progress]
+        {
             \pi \in \wsp(s_1) \\ 
         }
         {
             \exists n \in \setNat,\, s_2 \in \setStmt.~ \sssem^n(\pi) \in \setProgramState_{s_2}
         }
-    \end{mathpar}
+    \end{comment}
     \begin{mathpar}
         \inferrule* [Right=Preservation]
         {

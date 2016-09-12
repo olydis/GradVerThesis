@@ -1,0 +1,22 @@
+~P(~p1, ~p2) = EX p1 IN ~p1, p2 IN ~p2. P(p1, p2)
+~Q(~p2, ~p3) = EX p2 IN ~p2, p3 IN ~p3. P(p2, p3)
+
+P.Q(p1, p3) = EX p2. P(p1, p2) /\ Q(p2, p3)
+~P.~Q(~p1, ~p3) = EX ~p2. ~P(~p1, ~p2) /\ ~Q(~p2, ~p3)
+~(P.Q)(~p1, ~p3) = EX p1 IN ~p1, p3 IN ~p3. P.Q(p1, p3)
+
+==GOAL==
+~(P.Q)(~p1, ~p3)    <=     ~P.~Q(~p1, ~p3)
+
+==PROOF==
+
+~(P.Q)(~p1, ~p3)
+EX p1 IN ~p1, p3 IN ~p3. P.Q(p1, p3)
+EX p1 IN ~p1, p3 IN ~p3. EX p2. P(p1, p2) /\ Q(p2, p3)
+
+
+EX ~p2. EX p1 IN ~p1, p2 IN ~p2. P(p1, p2) /\ EX p2 IN ~p2, p3 IN ~p3. P(p2, p3)
+EX ~p2. ~P(~p1, ~p2) /\ ~Q(~p2, ~p3)
+~P.~Q(~p1, ~p3)
+
+

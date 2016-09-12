@@ -1,9 +1,11 @@
-With the rules for lifting set up we can apply them to the static verification predicate:
 Lifting 
 $$\thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula$$
 w.r.t. all parameters yields
 $$\gthoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula$$
 
+\begin{comment}
+It is worth noting that optimality of $\gthoare {~} {\cdot} {\cdot} {\cdot}$ is not required and in practice even potentially contra-productive in the light of decidability.
+Consider the example:
 Optimality discussion:
 \begin{verbatim}
 {i = 10000}
@@ -14,6 +16,7 @@ staticAssert (n = 4);
 {n = 4}
 \end{verbatim}
 ...not verifiable with optimal lifting!
+\end{comment}
 
 % EXAMPLE verification with proof
 

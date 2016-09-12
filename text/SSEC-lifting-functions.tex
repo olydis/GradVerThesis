@@ -1,15 +1,12 @@
 % assuming total for now (otherwise: split partial function into total function and definedness predicate)
 
-Static verification rules may contain functions manipulating formulas. % EX
-We can also derive rules for lifting such functions from the gradual guarantee.
-In this section, we assume that we are dealing with a function $f : \setFormula \rightarrow \setFormula$.
-Again, the concepts are directly applicable to functions with higher arity.
+In this section, we assume that we are dealing with a total function $f : \setFormula \rightarrow \setFormula$.
+The concepts are directly applicable to functions with higher arity.
 
-Restrictions imposed by the gradual guarantee:
 \begin{description}
     \item[Introduction]~\\
-    We ensure that our verification system is “immune” to reduction of precision.
-    Thus, when passing a static formula $\phi$ to $\grad{f}$, the result must be the same or less precise than $f(\phi)$.
+    By making sure to comply with the gradual guarantee, we made design a gradual verification system immune to reduction of precision at any stage.
+    Therefore, when replacing function $f$ with its gradual lifting $\grad{f}$, we expect the result to be the same or less precise.
     \begin{displaymath}
     \forall \phi \in \setFormula.~ f(\phi) \sqsubseteq \grad{f}(\phi)
     \end{displaymath}
@@ -20,7 +17,7 @@ Restrictions imposed by the gradual guarantee:
     
     \item[Monotonicity]~\\
     Reducing precision of a parameter may only result in a loss of precision of the result.
-    In other words, the function must be monotonic w.r.t. $\sqsubseteq$ (in every argument).
+    In other words, the function must be monotonic w.r.t. $\sqsubseteq$.
     
     \begin{displaymath}
     \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
@@ -36,61 +33,24 @@ Restrictions imposed by the gradual guarantee:
 
 Note that the rules for sound lifting only give a lower bound for the gradual return values.
 Thus a function $\grad{f} : \setGFormula \rightarrow \setGFormula$ constantly returning $\qm$ is a sound lifting of any function $f : \setFormula \rightarrow \setFormula$.
+This observation motivates an additional notion of optimality.
 
 \begin{definition}[Optimal Function Lifting]
-    A sound lifted function is \textbf{optimal} if its return values are as precise as possible.
-    %TODO: formally?
+    A sound lifted function is \textbf{optimal} if its return values are at least as precise as the return values of any other sound lifted function.
 \end{definition}
 
-This definition coincides with the definition of consistent function lifting in AGT:
-
-\begin{lemma}[Optimal Function Lifting (Direct Definition)]\label{lemma:consistent-func-lifting-direct}~\\
+%% AGT
+Again, definition of optimal function lifting coincides with the definition of “consistent function lifting” given by AGT.
+\begin{lemma}[Equivalence with Consistent Function Lifting (AGT)]\label{lemma:consistent-func-lifting-direct}~\\
     Let $\alpha : \PP(\setFormulaA) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ f \}$-partial Galois connection.\\ 
     Let $\grad{f} : \setGFormula \rightarrow \setGFormula$ be defined as
     \begin{displaymath}
     \grad{f}(\grad{\phi}) \defeq \alpha(\overline{f}(\gamma(\grad{\phi})))
     \end{displaymath}
+    where $\overline{f}$ means that $f$ is applied to every element of the set.
     Then $\grad{f}$ is an optimal lifting of $f$.
-\end{lemma} %PROOF
+\end{lemma} %PROOF (hard part by contradiction! :-)
 
-
-
-
-\textbf{Examples}
-
-\begin{displaymath}
-\alpha(\overline{\phi}) = \min_{\sqsubseteq} {\{~ \grad{\phi} ~|~ \overline{\phi} \subseteq \gamma(\grad{\phi}) ~\}}
-\end{displaymath}
-
-The logical and operator $\phiAnd{$\cdot$}{$\cdot$}$ of our formula syntax can be viewed as a binary function on formulas.
-\begin{align*}
-\grad{f}(\grad{\phi_1}, \grad{\phi_2}) = \alpha(\{~ \phiAnd{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) ~\})
-\end{align*}
-
-
-
-%Holds (but prob. unimportant...)
-%\begin{align*}
-%\forall \phi \in \setFormula.~ &f(\phi) \sqsubseteq \grad{f}(\phi)\\
-%~\wedge~
-%\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ &\grad{\phi_1} \sqsubseteq \grad{\phi_2} \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})\\
-%\implies\\
-%\forall \grad{\phi} \in \setGFormula, \phi \in \setFormula.~ &\phi \sqsubseteq \grad{\phi} \implies f(\phi) \sqsubseteq \grad{f}(\grad{\phi})\\
-%\end{align*}
-
-
-% TODO: Partiality same as predicates + monotonicity in terms of \sqsubseteq???
-PARTIAL:
-
-\begin{displaymath}
-\forall \phi \in \setFormula \cap \dom(f).~ f(\phi) \sqsubseteq \grad{f}(\phi)
-\end{displaymath}
-
-\begin{displaymath}
-\forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\grad{f}) \implies \grad{f}(\grad{\phi_1}) \sqsubseteq \grad{f}(\grad{\phi_2})
-\end{displaymath}
-
-
-% mention alpha(...), galois connection (does not always exist, make example... so partial GC instead (reference)...)
-
-% function composition (soundness, optimality?), ...
+%\begin{displaymath}
+%\alpha(\overline{\phi}) = \min_{\sqsubseteq} {\{~ \grad{\phi} ~|~ \overline{\phi} \subseteq \gamma(\grad{\phi}) ~\}}
+%\end{displaymath}
