@@ -89,6 +89,42 @@ While theoretically possible, there is no point in lifting evaluation w.r.t. the
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \circ Q)}$.
 \end{lemma}
 
+%% conjunction
+\begin{lemma}[Sound Lifting of Conjunctive Predicate]~\\
+    Let $P, Q \subseteq \setFormula$ be arbitrary binary predicates.
+    Let $(P \wedge Q) \subseteq \setFormula$ be defined as
+    \begin{displaymath}
+    (P \wedge Q)(\phi) ~\defiff~ P(\phi) \wedge Q(\phi)
+    \end{displaymath}
+    
+    Let $\grad{(P \wedge Q)} \subseteq \setGFormula$ be defined as
+    \begin{displaymath}
+    \grad{(P \wedge Q)} ~\defeq~ \grad{P} \wedge \grad{Q}
+    \end{displaymath}
+    with sound liftings $\grad{P}$ and $\grad{Q}$.
+    
+    Then $\grad{(P \wedge Q)}$ is a sound lifting of $(P \vee Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
+    Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \wedge Q)}$.
+\end{lemma}
+
+%% disjunction
+\begin{lemma}[Optimal Lifting of Disjunctive Predicate]~\\
+    Let $P, Q \subseteq \setFormula$ be arbitrary binary predicates.
+    Let $(P \vee Q) \subseteq \setFormula$ be defined as
+    \begin{displaymath}
+    (P \vee Q)(\phi) ~\defiff~ P(\phi) \vee Q(\phi)
+    \end{displaymath}
+    
+    Let $\grad{(P \vee Q)} \subseteq \setGFormula$ be defined as
+    \begin{displaymath}
+    \grad{(P \vee Q)} ~\defeq~ \grad{P} \vee \grad{Q}
+    \end{displaymath}
+    with sound liftings $\grad{P}$ and $\grad{Q}$.
+    
+    Then $\grad{(P \vee Q)}$ is a sound lifting of $(P \vee Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
+    Optimality of $\grad{P}$ and $\grad{Q}$ does imply optimality of $\grad{(P \vee Q)}$.
+\end{lemma}
+
 \begin{comment}
 We define $\setGFormulaA = \{~ \grad{\phi} \in \setGFormula ~|~ \exists \pi.~ \evalgphiGen {\pi} {\grad{\phi}} ~\}$ as the set of satisfiable gradual formulas.
 

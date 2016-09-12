@@ -47,7 +47,7 @@ Gradual preservation is therefore unsatisfiable if formalized as above.
 %% moral: we need dynamic checks
 This conflict is nothing but a reminder that gradualization is not for free, but may require runtime checks in order to be sound.
 With this in mind we can reiterate our notion of preservation.
-We introduce an assertion statement $\sAssert{\phi}$ (if not already available) that is stuck at runtime should the condition not be satisfied.
+We introduce an assertion statement $\sAssert{\phi}$ (if not already available).
 Preservation of \svl can then be rewritten as
 \begin{mathpar}
     \inferrule* [Right=Preservation']
@@ -71,4 +71,4 @@ Updating gradual preservation accordingly:
     }
 \end{mathpar}
 
-% adress fact that checking that is expensive => would be cool to have static guaranteed knowledge => deterministic lifting...
+% address fact that checking that is expensive => would be cool to have static guaranteed knowledge to reduce checking => deterministic lifting...

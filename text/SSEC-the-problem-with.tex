@@ -1,6 +1,102 @@
-
 %% Intro
-As seen in section \ref{ssec:gradual-soundness}, the lifted Hoare predicate in general requires an additional assertion to guarantee preservation.
+As seen in section \ref{ssec:gradual-soundness}, the lifted Hoare predicate in general requires an additional runtime assertion to guarantee preservation.
+In case the Hoare rules of \svl are given inductively, we can make use of the rules for composite, disjunctive and conjunctive predicate lifting (see section \ref{sssec:examples-lift-predicates}).
+The rules allow us to soundly lift each individual inductive rule in order to end up with a sound lifting of the overall predicate predicate.
+
+%% example
+Example Hoare logic:
+\begin{mathpar}
+    \inferrule* [right=HSeq]
+    {
+        \phiImplies{\phi_{q1}} {\phi_{q2}} \\\\
+        \thoare {} {\phi_p} {{s_1}} {\phi_{q1}} \\
+        \thoare {} {\phi_{q2}} {{s_2}} {\phi_r}
+    }
+    {
+        \thoare {} {\phi_p} {\sSeq{$s_1$}{$s_2$}} {\phi_r}
+    }
+    
+    \inferrule* [Right=HAssign]
+    {
+        ~
+    }
+    {
+        \thoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
+    }
+\end{mathpar}
+Rule-wise lifting (assuming that \qm is introduced as single dedicated formula):
+\begin{mathpar}
+    \inferrule* [right=GHSeq]
+    {
+        \gphiImplies{\grad{\phi_{q1}}} {\grad{\phi_{q2}}} \\\\
+        \gthoare {} {\grad{\phi_p}} {{s_1}} {\grad{\phi_{q1}}} \\
+        \gthoare {} {\grad{\phi_{q2}}} {{s_2}} {\grad{\phi_r}}
+    }
+    {
+        \gthoare {} {\grad{\phi_p}} {\sSeq{$s_1$}{$s_2$}} {\grad{\phi_r}}
+    }
+    
+    \inferrule* [right=GHAssign1]
+    {
+        ~
+    }
+    {
+        \gthoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
+    }
+    
+    \inferrule* [right=GHAssign2]
+    {
+        ~
+    }
+    {
+        \gthoare {} {\qm} {\sVarAssign{$x$}{$e$}} {\grad{\phi}}
+    }
+    
+    \inferrule* [right=GHAssign3]
+    {
+        ~
+    }
+    {
+        \gthoare {} {\grad{\phi}} {\sVarAssign{$x$}{$e$}} {\qm}
+    }
+\end{mathpar}
+
+%% example descr
+Note the usage of composite predicate lifting for \tset{GHSeq}.
+The overall Hoare predicate $\thoare {} {\cdot} {\cdot} {\cdot}$ can be thought of as a disjunction of all inductive rules.
+It follows that $\gthoare {} {\cdot} {\cdot} {\cdot}$, being the disjunction of above lifted rules is also a sound lifting.
+
+%% theory vs verifier practice
+Unfortunately, a gradual verifier using $\gthoare {} {\cdot} {\cdot} {\cdot}$ gets into a practical dilemma.
+Consider the Hoare triple
+\begin{displaymath}
+\hoare{\qm}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
+\end{displaymath}
+It is the job of the gradual verifier to prove the triple using above gradual inductive rules.
+Using rule inversion it can deduce that 
+\begin{align*}
+&\gphiImplies{\grad{\phi_{q1}}} {\grad{\phi_{q2}}} \\
+&\gthoare {} {\qm} {\sVarAssign{y}{2}} {\grad{\phi_{q1}}} \\
+&\gthoare {} {\grad{\phi_{q2}}} {\sVarAssign{x}{3}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
+\end{align*}
+has to hold for some $\grad{\phi_{q1}}, \grad{\phi_{q2}} \in \setGFormula$.
+There are a variety of valid instantiations for both variables:
+\begin{description}
+    \item[$\grad{\phi_{q1}} = \phiEq{y}{2},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
+    This instantiation aims to use static formulas as early as possible.
+    The implication trivially holds.
+        
+    \item[$\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
+    The instantiation is stricter than necessary -- but nevertheless valid according to the rules.
+    The implication holds (the knowledge about \ttt{x} is dropped), and $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ holds since $\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ does.
+    This instantiation illustrates the requirement of runtime checks to ensure preservation as described in section \ref{ssec:gradual-soundness}.
+    The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}$ right after the assignment.
+    Unfortunately, this assertion alters runtime behavior:
+    Code that would have never thrown an exception when evaluated with the runtime of \svl might now throw an exception.
+    This is a violation of the dynamic part of the gradual guarantee.
+    Note however that it is the small-step semantics breaking the guarantee, 
+\end{description}
+
 % There is no way around this (the programmer simply \textit{is} able to specify postconditions that are not guaranteed to hold)
 Yet, there is a more fundamental design issue connected to the gradual lifting approach which we will illustrate in this section.
 
