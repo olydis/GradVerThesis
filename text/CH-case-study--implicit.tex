@@ -1,0 +1,10 @@
+To show the flexibility of our approach, we apply it to a simple statically verified Java-like language \svlidf that uses implicit dynamic frames to enable safe reasoning about mutable state (see section \ref{ssec:implicit-dynamic-frames} for introduction and examples).
+The usage of implicit dynamic frames poses a challenge as it introduces elements of linear logic into formula semantics.
+However, despite the fact that we used classical logic for the examples throughout chapter \ref{ch:gradualization-of-a}, our approach never made an assumption about it.
+The logic at hand is abstracted away behind formula semantics $\evalphiGen{\pi}{\phi}$.
+
+This chapter roughly follows the structure of chapter \ref{ch:gradualization-of-a}, obtaining a gradually verified language \gvlidf from \svlidf.
+It starts with a full definition of \svlidf in section \ref{sec:language}, instantiating the elements postulated in section \ref{sec:a-statically-verified}.
+Section \ref{sec:cs-gradual-formulas} describes our decisions regarding the syntax of \gvlidf, defining \setGFormula, \setGStmt and \setGProgramState.
+Using the concept of deterministic lifting introduced in section \ref{ssec:the-deterministic-approach} we will obtain gradual Hoare logic of \gvlidf in section \ref{sec:gradualize-hoare-rules}.
+In section \ref{sec:gradual-dyn--semantics} we derive gradual small-step semantics in a way that makes the gradual verification system sound and also complies with the stronger notion of preservation postulated in section \ref{ssec:gradual-soundness}.
