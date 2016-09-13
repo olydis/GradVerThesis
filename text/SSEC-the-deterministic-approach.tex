@@ -44,7 +44,7 @@ As before, the same rules can easily be adapted to different parameter types and
     \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
     \end{displaymath}
     
-    \item[Preservation]~\\
+    \item[Strength]~\\
     A return value of the deterministic lifting should agree with all instantiations of the underlying predicate.
     \begin{mathpar}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
@@ -53,6 +53,7 @@ As before, the same rules can easily be adapted to different parameter types and
         \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi \in \setFormula.~ P(\phi_1, \phi) \implies \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ \phiImplies{\phi_2}{\phi}
     \end{mathpar}
     
+    For Hoare rules this means that the postcondition returned must be at least as strong as every postcondition returned by static Hoare logic (it might be less precise, though).
     The following example illustrates the effects of the rule:
     Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
     \begin{flalign*}
