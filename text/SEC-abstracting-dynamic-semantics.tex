@@ -1,10 +1,12 @@
 Let $\gsssem : \setGProgramState \rightharpoonup \setGProgramState$ be a sound gradual lifting of $\sssem : \setProgramState \rightharpoonup \setProgramState$.
 
+\begin{comment}
 %% make progress work
 TODO when progress definition is final
 Progress: Note that premise is tautology.
 So we artificially make conclusion true by demanding that lifting is total.
 This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
+\end{comment}
 
 %% preservation
 \begin{mathpar}
@@ -16,10 +18,10 @@ This always works since the lifting can be defined arbitrarily wherever the orig
         \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}
     }
 \end{mathpar}
-Conclusion is a tautology.
+The conclusion is a tautology.
 
 %% preservationX
-In case the deterministic lifting approach was used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}.
+In case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}:
 \begin{mathpar}
     \inferrule* [Right=GDPreservation]
     {
@@ -29,25 +31,13 @@ In case the deterministic lifting approach was used to derive a gradual Hoare lo
         \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
     }
 \end{mathpar}
-Satisfying this rule is theoretically not necessary as injecting assertions \tset{GPreservation'} suffices 
+This stronger notion is allows considering return values of the deterministic lifting as static knowledge.
+As illustrated in section \ref{sssec:gradual-verification-illustrated}, such static knowledge can be used for optimizations.
 
+To summarize, \tset{GPreservation'} is sufficient for soundness of the gradual system whereas \tset{GDPreservation} is valuable for optimizations.
 
-This is not really satisfying: 
-An arbitrary verification predicate would satisfy this kind of preservation.
-Also, this is no guarantee for all the formulas describing intermediate program states.
-A stronger notion of preservation gives this guarantee:
-\begin{mathpar}
-    \inferrule* [Right=GPreservation]
-    {
-        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-    {
-        \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-\end{mathpar}
-
-Making this guarantee work is trickier and there are different trade-offs available.
-Without further assumptions, $\dgthoare{~}{\cdot}{\cdot}{\cdot}$ is not a subset of $\gtHoare{~}{\cdot}{\cdot}{\cdot}$.
+~\\
+When first introducing \tset{GDPreservation} in section \ref{ssec:the-deterministic-approach}, we also gave an example illustrating that whether it holds or not can depend on the small-step semantics of \gvl.
 
 Running example:
 $$\dgthoare{~}{\qm}{\sAssert{\phiEq{x}{3}}}{\withqmGen{\phiEq{x}{3}}}$$

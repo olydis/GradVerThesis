@@ -1,0 +1,36 @@
+% Inductive Semantics.hasStaticType
+\begin{mathpar}
+\inferrule* [right=STValNum]
+{
+    ~
+}
+{
+    \sType {\Gamma} {\ev{${{n}}$}} {\Tint}
+}
+
+\inferrule* [right=STValNull]
+{
+    ~
+}
+{
+    \sType {\Gamma} {\ev{${\enull}$}} {{C}}
+}
+
+\inferrule* [right=STVar]
+{
+    {\Gamma(x)} = {{T}}
+}
+{
+    \sType {\Gamma} {\ex{${x}$}} {T}
+}
+
+\inferrule* [right=STField]
+{
+    \sType {\Gamma} {e} {{C}} \\
+    {\fieldType({C}, {f})} = {{T}}
+}
+{
+    \sType {\Gamma} {\edot{${e}$}{${f}$}} {T}
+}
+\end{mathpar}
+

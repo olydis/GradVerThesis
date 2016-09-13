@@ -1,5 +1,19 @@
+Let ~$\sssem' : \setProgramState \rightharpoonup \setProgramState$~ be defined such that
+\begin{flalign*}
+\sssem'^s(\pi_1, \pi_2) ~\defiff~ \sssem^s(\pi_1, \pi_2) ~\wedge~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
+\end{flalign*}
+Intuitively, $\sssem'$ is the same as $\sssem$, but is artificially made undefined/exceptional whenever there exists no Hoare rule that would be able to deduce static information about the execution.
 
-Choose ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ as lifted version of ~$\sssem : \setProgramState \rightharpoonup \setProgramState$ with $\gsssem(\grad{\pi}) = \pi_{EX}$ if stuck for all concretizations.
+\begin{lemma}[Restricted Domain of Small-Step Semantics]
+    Replacing the small-step \sssem semantics of \svl with \sssem' as defined above would have no observable effects.
+\end{lemma}
+
+
+
+ ~$\sssem : \setProgramState \rightharpoonup \setProgramState$, but stuck for all .
+Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$~ be defined as
+\
+$\gsssem(\grad{\pi}) = \pi_{EX}$ if stuck for all concretizations.
 
 \begin{align*}
 \wsp : \setGStmt \rightarrow \setProgramState \\
@@ -25,7 +39,7 @@ MINUS:
     staticAssert (n = 4);
     {n = 4}
     \end{verbatim}
-    would throw exception!?
+    would throw exception
     
 Proof:
 \begin{description}
