@@ -31,7 +31,7 @@ and
 \end{displaymath}
 
 As established in section \ref{ssec:gradual-soundness}, runtime assertions have to be injected whenever such a judgment is made, in order to guarantee preservation.
-Resulting program (in fantasy-notation), as seen from small-step semantics:
+Resulting program, as executed by small-step semantics:
 \begin{lstlisting}
 int getFourA(int i)
 {
@@ -50,22 +50,137 @@ int getFourB(int i)
 
 
 Note that the gradual verifier has not yet verified above judgments.
-It does so by applying the deterministic lifting (as determined in section \ref{sssec:examples-lift-determ}) and then using the relationship with the gradual lifting established in section \ref{ssec:the-deterministic-approach} (see “Obtaining a Sound Gradual Lifting”).
+It does so by applying the deterministic lifting (as determined in section \ref{sssec:examples-lift-determ}) and then using lemma \ref{lem:det2grad} to deduce the gradual lifting.
+
+~\\~\\
 Deducing $\gthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}$:
 \begin{mathpar}
-    \inferrule* [right=DGHSeq]
+    \inferrule* [Right=Lemma \ref{lem:det2grad}]
     {
         \inferrule* [right=DGHSeq]
         {
-            \dgthoare{~}{\phiTrue}{\sVarAssign{i}{4}}{\phiAnd{\phiTrue}{\phiEq{i}{4}}} \\
-            \dgthoare{~}{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\sVarAssign{result}{i}}{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}
+            \inferrule* [right=DGHAssign1]
+            {
+                \ttt{i} \not \in \FV(\phiTrue) \\\\
+                \ttt{i} \not \in \FV(\ttt{4})
+            }
+            {
+                \mathcal{D}_1
+            }
+            \\
+            \inferrule* [Right=DGHAssign1]
+            {
+                \ttt{result} \not \in \FV({\phiAnd{\phiTrue}{\phiEq{i}{4}}}) \\\\
+                \ttt{result} \not \in \FV(\ttt{i})
+            }
+            {
+                \mathcal{D}_2
+            }
         }
         {
-            \dgthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}
-        }
-\end{mathpar}DGHAssign1
+            \mathcal{D}
+        }\\
+        \mathcal{I}
+    }
+    {
+        \gthoare{}
+        {\phiTrue}
+        {\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}
+        {\phiEq{result}{4}}
+    }
+\end{mathpar}
+where
+\begin{flalign*}
+\mathcal{D}_1 \equiv& 
+\dgthoare{~}
+{\phiTrue}
+{\sVarAssign{i}{4}}
+{\phiAnd{\phiTrue}{\phiEq{i}{4}}}
+\\
+\mathcal{D}_2 \equiv& 
+\dgthoare{~}
+{\phiAnd{\phiTrue}{\phiEq{i}{4}}}
+{\sVarAssign{result}{i}}
+{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}
+\\
+\mathcal{D} \equiv& 
+\dgthoare{~}
+{\phiTrue}
+{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}
+{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}
+\\
+\mathcal{I} \equiv&~ 
+\gphiImplies{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}}{\phiEq{result}{4}}
+\end{flalign*}
 
-and
-\begin{displaymath}
-\dgthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}
-\end{displaymath}
+
+~\\~\\
+Deducing $\gthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}$:
+\begin{mathpar}
+    \inferrule* [Right=Lemma \ref{lem:det2grad}]
+    {
+        \inferrule* [right=DGHSeq]
+        {
+            \inferrule* [right=DGHAssign2]
+            {~}
+            {
+                \mathcal{D}_1
+            }
+            \\
+            \inferrule* [right=DGHAssign2]
+            {~}
+            {
+                \mathcal{D}_2
+            }
+        }
+        {
+            \mathcal{D}
+        }\\
+        \mathcal{I}
+    }
+    {
+        \gthoare{~}
+        {\qm}
+        {\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}
+        {\phiEq{result}{4}}
+    }
+\end{mathpar}
+where
+\begin{flalign*}
+\mathcal{D}_1 \equiv& 
+\dgthoare{~}
+{\qm}
+{\sVarAssign{i}{i + 1}}
+{\qm}
+\\
+\mathcal{D}_2 \equiv& 
+\dgthoare{~}
+{\qm}
+{\sVarAssign{result}{i}}
+{\qm}
+\\
+\mathcal{D} \equiv& 
+\dgthoare{~}
+{\qm}
+{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}
+{\qm}
+\\
+\mathcal{I} \equiv&~ 
+\gphiImplies{\qm}{\phiEq{result}{4}}
+\end{flalign*}
+
+~\\~\\
+Comparing \ttt{getFourA} and \ttt{getFourB} one can observe a difference regarding the injected runtime assertions.
+On the one hand, the check in \ttt{getFourA} is unnecessary since it will always succeed.
+On the other hand, the check in \ttt{getFourB} seems necessary in order for the postcondition to be satisfied (for all executions that reach it).
+This difference is also indicated in the deduction of both contracts.
+Verifying \ttt{getFourA}, the deterministic lifting determined $\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}$ as postcondition, before being weakened to $\phiEq{result}{4}$.
+However, verifying \ttt{getFourB}, the deterministic lifting ends up with $\qm$ as knowledge, from which $\phiEq{result}{4}$ can only be implied by instantiating $\qm$ accordingly.
+
+The intuition behind the negligible assertion can be formalized:
+In case \tset{GDPreservation} holds, we are guaranteed that the postcondition returned by the deterministic lifting actually holds for every execution.
+In other words, it is static knowledge that can be used to reason about the outcome of runtime assertions at verification time.
+In case of function \ttt{getFourA}, the compiler would be able to treat $\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}$ as static knowledge that is usable to formally guarantee the success of $\sAssert{\phiEq{result}{4}}$.
+
+
+
