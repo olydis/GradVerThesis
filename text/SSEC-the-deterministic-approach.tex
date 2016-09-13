@@ -27,7 +27,8 @@
 %% intro
 In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) not too strict (making assumptions that are neither general nor required by the following judgment and thus alter runtime behavior).
 While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
-In this section we define a deterministic gradual Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has very desirable properties and fits well into our existing model, as described later.
+In this section we define a deterministic gradual Hoare logic $\dgrad{\vdash} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has very desirable properties and fits well into our existing model, as described later.
+We will use our familiar notation $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ as an alias for $~\dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}$
 
 ~\\
 %% approach idea
@@ -36,13 +37,19 @@ From this multivalued function we can obtain a lifted version, following similar
 
 %% def
 Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met.
-As before, the same rules can easily be adapted to different parameter types and higher arity.
+As before, the rules can be adapted to different parameter types and higher arity.
+We indicate an adaptation to Hoare logic in light gray using function notation for $\dgrad{\vdash}$.
 \begin{description}
     \item[Introduction]~\\
     The deterministic lifting should be defined whenever the underlying predicate is.
     \begin{displaymath}
-    \forall (\phi_1, \phi_2) \in P.~ \phi_1 \in \dom(\dgrad{P})
+    \forall \langle \phi_1, \phi_2 \rangle \in P.~ \phi_1 \in \dom(\dgrad{P})
     \end{displaymath}
+    \textcolor{gray}{
+        \begin{displaymath}
+        \forall \langle \phi_1, s, \phi_2 \rangle \in \thoare{}{\cdot}{\cdot}{\cdot}.~ \langle \phi_1, s \rangle \in \dom(\dgrad{\vdash})
+        \end{displaymath}
+    }
     
     \item[Strength]~\\
     A return value of the deterministic lifting should agree with all instantiations of the underlying predicate.
@@ -50,8 +57,18 @@ As before, the same rules can easily be adapted to different parameter types and
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
         \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2}\\
         \implies\\
-        \forall \phi_1 \in \gamma(\grad{\phi_1}), \phi \in \setFormula.~ P(\phi_1, \phi) \implies \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ \phiImplies{\phi_2}{\phi}
+        \forall \phi_1 \in \gamma(\grad{\phi_1}),\, \phi \in \setFormula.~ P(\phi_1, \phi) \implies\\
+        \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ (\phiImplies{\phi_2}{\phi})
     \end{mathpar}
+    \textcolor{gray}{
+        \begin{mathpar}
+        \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s} \in \setGStmt.~ 
+        \dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}\\
+        \implies\\
+        \forall \phi_1 \in \gamma(\grad{\phi_1}),\, s \in \gamma(\grad{s}),\, \phi \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi} \implies\\
+        \exists \phi_2 \in \gamma(\grad{\phi_2}).~ \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ (\phiImplies{\phi_2}{\phi})
+        \end{mathpar}
+    }
     
     For Hoare rules this means that the postcondition returned must be at least as strong as every postcondition returned by static Hoare logic (it might be less precise, though).
     The following example illustrates the effects of the rule:
@@ -83,8 +100,19 @@ As before, the same rules can easily be adapted to different parameter types and
     \item[Monotonicity]~\\
     Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
     \begin{displaymath}
-    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\dgrad{P}) \implies \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
+    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
+    \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom(\dgrad{P}) 
+    \implies 
+    \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
     \end{displaymath}
+    \textcolor{gray}{
+        \begin{displaymath}
+        \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ 
+        \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom(\dgrad{\vdash}) 
+        \implies 
+        \dgrad{\vdash}(\grad{\phi_1}, \grad{s_1}) \sqsubseteq \dgrad{\vdash}(\grad{\phi_2}, \grad{s_2})
+        \end{displaymath}
+    }
 \end{description}
 
 Soundness and optimality are defined as usual (see sections \ref{ssec:lifting-predicates} or \ref{text/SSEC-lifting-functions}).
