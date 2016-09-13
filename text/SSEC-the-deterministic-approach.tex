@@ -29,12 +29,14 @@ In the previous section we built an intuition about intermediate gradual formula
 While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
 In this section we define a deterministic gradual Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has very desirable properties and fits well into our existing model, as described later.
 
+~\\
 %% approach idea
 Our approach is based on the idea to treat the Hoare predicate as a (multivalued) function, mapping preconditions to the set of possible/verifiable postconditions.
 From this multivalued function we can obtain a lifted version, following similar rules to the ones for lifted partial functions (see \ref{sssec:lifting-partial-functions}).
 
 %% def
-Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met:
+Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $\dgrad{P} : \setFormula \rightharpoonup \setFormula$ \textbf{deterministic lifting} of $P$ if the following conditions are met.
+As before, the same rules can easily be adapted to different parameter types and higher arity.
 \begin{description}
     \item[Introduction]~\\
     The deterministic lifting should be defined whenever the underlying predicate is.
@@ -78,7 +80,7 @@ Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a 
     \end{flalign*}
     
     \item[Monotonicity]~\\
-    Identical to monotonicity condition of lifted partial functions. % say why? P/f doesn't show up.
+    Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
     \begin{displaymath}
     \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \grad{\phi_1} \sqsubseteq \grad{\phi_2} \wedge \grad{\phi_1} \in \dom(\dgrad{P}) \implies \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
     \end{displaymath}
@@ -102,15 +104,22 @@ This gradual partial function has desirable properties:
     \end{lemma}
     
     This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
+    Optimality of the deterministic lifting does not imply optimality of the obtained gradual lifting.
     
     \item[(b) Determinism of Verifier]~\\
     As the name suggests, deterministic liftings leave no room for choice.
-    For the gradual verifier this means that there is no more responsibility to infer intermediate formulas.
+    For the gradual verifier this means that there is no need to infer intermediate formulas, averting the risk of choosing the wrong formulas (as illustrated in section \ref{ssec:the-problem-with}).
     
-    \item[(c) Preservation]~\\
-    Thanks to the “Preservation” rule of deterministic liftings (see above), a postcondition returned by $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ is testified by the static Hoare logic.
+    \item[(c) Free Transitivity]~\\
+    Furthermore, applying Hoare rules transitively induces no more additional runtime cost:
+    As described in \ref{ssec:gradual-soundness}, every judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ must be accompanied with the injection of a runtime check in order to guarantee preservation.
+    Note that applying gradual Hoare logic to a sequence of statements (using GHSec) requires such judgment for every single statement, resulting in assertions between every pair of statements.
     
-    It is thus possible to define a preservation rule that does not rely on assertions in order to hold.
+    Using a deterministic lifting transitively induces no such runtime cost since the no judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ is made.
+    Only after applying lemma \ref{lem:det2grad} in the very end of verification, an assertion will be injected to ensure preservation for the overall judgment.
+    
+    \item[(d) Preservation]~\\
+    Deterministic liftings are designed in a way that enables defining a stronger notion of preservation that does not rely on runtime assertions.
     \begin{mathpar}
         \inferrule* [Right=GDPreservation]
         {
