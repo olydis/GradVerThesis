@@ -1,7 +1,7 @@
 \begin{description}
     \item[Extraction]
     To extract elements from a given program $p \in \setProgram$ we define the following functions:
-    \begin{flalign*}
+    \begin{align*}
     	 & \fieldType : \setClassName \times \setFieldName \rightharpoonup \setType                & ~ \\
     	 & \fieldType(C, f) = \text{type of field $f$ in class $C$ in $p$}                         &  \\
     	 & ~                                                                                       &  \\
@@ -16,7 +16,7 @@
     	 & ~                                                                                       &  \\
     	 & \predicate{mpost$_p$} : \setClassName \times \setMethodName \rightharpoonup \setFormula &  \\
     	 & \mpost{C, m} = \text{postcondition of method $m$ in class $C$ in $p$}                   &
-    \end{flalign*}
+    \end{align*}
     
     \item[Free Variables]~\\
     The semantics of \svlidf will sometimes reason about the free variables of expressions or formulas.
@@ -44,7 +44,7 @@
     \end{alignat*}
     
     \item[Required Access]~\\
-    Expressions mentioning fields are heap dependent and thus require access.
+    Expressions mentioning fields are heap-dependent and thus require access.
     To enable treating expressions in a uniform fashion, we define a pseudo accessibility-predicate which is also defined for expressions that do not mention fields.
     
     Let $\predicate{acc} : \setExpr \rightarrow \setFormula$ be defined as

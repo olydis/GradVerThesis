@@ -1,6 +1,8 @@
 The static semantics of \svlidf consist of typing rules and a Hoare logic making use of those typing rules.
 All the rules are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field in the following typing rules.
 
+% TODO: \Gamma & \in \setTypeEnv    &  & =~~ \setVar \rightharpoonup \setType
+
 \begin{figure}[h]
     \boxed{\sType{\Gamma}{e}{T}}
     \input{data/svl-sem-stat-typing}
@@ -12,6 +14,8 @@ All the rules are implicitly parameterized over some program $p \in \setProgram$
     \input{data/svl-sem-stat-hoare}
     \caption{\svlidf: Hoare Logic} 
 \end{figure}
+
+% TODO: Hoare logic ensures self-framing and prevents duplication (should be consequence of soundness)
 
 \begin{comment}
 Let $\wsp : \setStmt \rightarrow \PP(\setProgramState)$ be defined as

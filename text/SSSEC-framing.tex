@@ -1,4 +1,23 @@
+The integral advantage of IDF is the ability to use heap-dependent predicates in formulas.
+In case of \svlidf, this means that fields may be used in formulas.
+As illustrated in section \ref{ssec:implicit-dynamic-frames}, a formula must contain accessibility-predicates for all fields it references.
+Otherwise, one cannot reason safely about writes to the heap.
+% Accessibility-predicates are explicitly tracked as part of formulas and thus reflect a static
+In this section we will formalize the requirements 
 
+To guarantee safe reasoning about such formulas, they must contain accessibility predicates for all locations they are referencing.
+
+
+
+%% other stuff
+For future reference, we give further (non-syntactic) definitions:
+\begin{figure}[h]
+    \begin{align*}
+    	A_s    & \in \setSFootprint &  & =~~ \PP^{\setExpr \times \setFieldName} \\
+    	A_d    & \in \setDFootprint &  & =~~ \PP^{\setLoc \times \setFieldName} 
+    \end{align*}
+    \caption{\svlidf: Further Definitions}
+\end{figure}
 
 %An IDF assertion is self-framing if:
 %For any state in which the assertion is true,
