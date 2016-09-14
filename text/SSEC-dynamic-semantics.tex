@@ -1,7 +1,12 @@
 % MENTION that most of that stuff is completely redundant if soundness holds - and only used to prove just that!
 
+We define the small-step semantics $\sssem$ of \svlidf inductively, using the commonly used predicate syntax $\sstep{\cdot}{\cdot}$.
+Figure \ref{fig:svl-sem-dyn-sstep} shows the inductive rules.
+Note that right-associativity of \ttt{;} and terminating sequences with $\sSkip$ (see section \ref{sec:syntax}) obviates the need for a sequence rule.
+
 \begin{figure}
     \boxed{\sstep{\pi}{\pi}}
     \input{data/svl-sem-dyn-sstep}
     \caption{\svlidf: Small-Step Semantics}
+    \label{fig:svl-sem-dyn-sstep}
 \end{figure}

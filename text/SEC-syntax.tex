@@ -7,6 +7,22 @@
 \end{figure}
 
 We pose $\phiFalse \defeq \phiNeq{\enull}{\enull}$.
+We define $\ttt{;}$ to be right-associative and assume that parsing a sequence of statements (e.g. method body) operates analogously, obviating the need for parenthesis.
+Furthermore we assume that the parser terminates every sequence with $\sSkip$.
+\begin{exmp}~
+    \begin{lstlisting}
+    ...
+    {
+        $s_1$;
+        $s_2$;
+        $s_3$;
+    }
+    \end{lstlisting}
+    is parsed as
+    
+    \includegraphics[trim={3cm 3cm 3cm 3cm}, clip, width=6cm]{graphics/rightAssocSkip}
+\end{exmp}
+These assumptions highly simplify reasoning about statements.
 
 For future reference, we give further (non-syntactic) definitions:
 \begin{figure}[h]
