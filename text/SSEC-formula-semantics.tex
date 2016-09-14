@@ -2,17 +2,31 @@
 \begin{figure}
     \boxed{\dynamicFP {H} {\rho} {\phi} = A_d}
     \input{data/svl-sem-dyn-fp}
-    \caption{\svl: Dynamic Footprint}
+    \caption{\svlidf: Dynamic Footprint}
 \end{figure}
 
 \begin{figure}
     \boxed{\evale {e} {v}}
     \input{data/svl-sem-dyn-expr}
-    \caption{\svl: Evaluating Expressions}
+    \caption{\svlidf: Evaluating Expressions}
 \end{figure}
 
 \begin{figure}
     \boxed{\evalphi \phi}
     \input{data/svl-sem-dyn-form}
-    \caption{\svl: Evaluating Expressions}
+    \caption{\svlidf: Evaluating Formulas}
+\end{figure}
+
+\begin{figure}
+    \boxed{\evalphiGen {\pi} {\phi}}
+    \begin{mathpar}
+        \inferrule* [Right=EvalFrm]
+        {
+            \evalphi {\phi}
+        }
+        {
+            \evalgphiGen{(H, (\rho, A, s) \cdot S)}{\phi}
+        }
+    \end{mathpar}
+    \caption{\svlidf: Evaluating Formulas}
 \end{figure}
