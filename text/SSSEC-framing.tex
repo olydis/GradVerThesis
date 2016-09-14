@@ -4,10 +4,10 @@
 %For any state in which the assertion is true,
 %it remains true if we replace the heap with any that agrees on the locations to which it requires permissions
 
-\svl uses the concepts of implicit dynamic frames to ensure that a statement can only access memory locations (more specifically: fields) which it is guaranteed to have exclusive access to.
+\svlidf uses the concepts of implicit dynamic frames to ensure that a statement can only access memory locations (more specifically: fields) which it is guaranteed to have exclusive access to.
 This is achieved by explicitly tracking access tokens $\phiAcc{\textit{<expression>}}{\textit{<field>}}$ as part of formulas throughout the entire program during verification.
     
-The Hoare rules of \svl also make sure that access is never duplicated within or across stack frames, effectively ruling out concurrent access to any field during runtime.
+The Hoare rules of \svlidf also make sure that access is never duplicated within or across stack frames, effectively ruling out concurrent access to any field during runtime.
 
 Implicit dynamic frames also allows static reasoning about the values of fields during verification, i.e. as part of verification formulas.
 In order to guarantee that such formulas always reflect the program state (preservation), formulas mentioning a certain field must also contain the access token to that very field:
@@ -31,7 +31,7 @@ In order to guarantee that such formulas always reflect the program state (prese
 
 We omit the emptyset... 
 
-\begin{definition}[Formula Self-Framedness]
+\begin{definition}[Self-Framing Formula]
     A formula $\phi$ is \textbf{self-framing} iff
     \begin{displaymath}
     \sfrmphi \phi
@@ -39,7 +39,6 @@ We omit the emptyset...
     Let $\setFormulaB \subseteq \setFormulaA$ be the set of \textbf{self-framing and satisfiable} formulas.
 \end{definition}
 
-As illustrated in example??? self-framing formulas are required for race-free verification.
 
 \svl will thus only consider method contracts using self-framing and satisfiable formulas well-formed (see section \ref{sec:well-formedness}).
 

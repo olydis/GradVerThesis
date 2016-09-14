@@ -1,10 +1,10 @@
-
+The notion of well-formedness has to be adjusted...
 
 \begin{mathpar}
 \inferrule* [Right=\gradT OkProgram]
 {
 \overline{cls_i \gOK} \\
-\thoare {~} {\qm} {s} {\qm}
+\gthoare {~} {\qm} {\grad{s}} {\qm}
 }
 {(\overline{cls_i}~s) \gOK}
 \end{mathpar}
@@ -30,4 +30,4 @@
     \neg \writesTo(\grad{s}, x)
 }
 {(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\grad{\phi_1}$} {$\grad{\phi_2}$}} {$\grad{s}$}) \gOKinC}
-\end{mathpar}
+\end{mathpar} 

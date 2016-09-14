@@ -43,11 +43,11 @@ We indicate an adaptation to Hoare logic in light gray using function notation f
     \item[Introduction]~\\
     The deterministic lifting should be defined whenever the underlying predicate is.
     \begin{displaymath}
-    \forall \langle \phi_1, \phi_2 \rangle \in P.~ \phi_1 \in \dom(\dgrad{P})
+    \forall \langle \phi_1, \phi_2 \rangle \in P.~ \phi_1 \in \dom{\dgrad{P}}
     \end{displaymath}
     \textcolor{gray}{
         \begin{displaymath}
-        \forall \langle \phi_1, s, \phi_2 \rangle \in \thoare{}{\cdot}{\cdot}{\cdot}.~ \langle \phi_1, s \rangle \in \dom(\dgrad{\vdash})
+        \forall \langle \phi_1, s, \phi_2 \rangle \in \thoare{}{\cdot}{\cdot}{\cdot}.~ \langle \phi_1, s \rangle \in \dom{\dgrad{\vdash}}
         \end{displaymath}
     }
     
@@ -101,21 +101,21 @@ We indicate an adaptation to Hoare logic in light gray using function notation f
     Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
     \begin{displaymath}
     \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
-    \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom(\dgrad{P}) 
+    \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom{\dgrad{P}} 
     \implies 
     \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
     \end{displaymath}
     \textcolor{gray}{
         \begin{displaymath}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ 
-        \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom(\dgrad{\vdash}) 
+        \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom{\dgrad{\vdash}}
         \implies 
         \dgrad{\vdash}(\grad{\phi_1}, \grad{s_1}) \sqsubseteq \dgrad{\vdash}(\grad{\phi_2}, \grad{s_2})
         \end{displaymath}
     }
 \end{description}
 
-Soundness and optimality are defined as usual (see sections \ref{ssec:lifting-predicates} or \ref{text/SSEC-lifting-functions}).
+Soundness and optimality are defined as usual (see sections \ref{ssec:lifting-predicates} or \ref{ssec:lifting-functions}).
 
 %% application & properties
 Assume we have obtained the deterministic lifting $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ of our Hoare logic.

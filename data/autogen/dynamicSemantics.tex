@@ -5,7 +5,7 @@
     ~
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sSkip} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho}, {A}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sSkip}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho}, {A}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -18,7 +18,7 @@
     {H'} = {{H}[{o} \mapsto [{f} \mapsto {v_y}]]}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sFieldAssign {${x}$} {${f}$} {${y}$}} {s}})} \cdot {S}})} \rightarrow {({H'}, {{({{\rho}, {A}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sFieldAssign {${x}$} {${f}$} {${y}$}}$}{${s}$}})} \cdot {S}})} {({H'}, {{({{\rho}, {A}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -29,21 +29,21 @@
     {\rho'} = {{\rho}[{x} \mapsto {v}]}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sVarAssign {${x}$} {${e}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sVarAssign {${x}$} {${e}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho'}, {A}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
 \begin{mathpar}
 \inferrule* [Right=ESAlloc]
 {
-    {o} \not\in \dom({H}) \\
-    {\fields({C})} = {{\overline{\field{$T$}{$f$}}}} \\
+    {o} \not\in \dom{{H}} \\
+    {\fields{{C}}} = {{\overline{\field{$T$}{$f$}}}} \\
     {\rho'} = {{\rho}[{x} \mapsto {{o}}]} \\
     {A'} = {{A} \cup {\overline{({o}, f_i)}}} \\
     {H'} = {{H}[{o} \mapsto [\overline{f_i \mapsto \defaultValue{$T_i$}}]]}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sAlloc {${x}$} {${C}$}} {s}})} \cdot {S}})} \rightarrow {({H'}, {{({{\rho'}, {A'}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sAlloc {${x}$} {${C}$}}$}{${s}$}})} \cdot {S}})} {({H'}, {{({{\rho'}, {A'}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -54,7 +54,7 @@
     {\rho'} = {{\rho}[{\eresult} \mapsto {v_x}]}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sReturn {${x}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sReturn {${x}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho'}, {A}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -63,14 +63,14 @@
 {
     \evalex {H} {\rho} {\ex{${y}$}} {{o}} \\
     \evalex {H} {\rho} {\ex{${z}$}} {v} \\
-    {H(o)} = {{({C}, {\_})}} \\
-    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\contract {${\phi}$} {${\_}$}}$} {${\overline{r}}$}}} \\
+    {H(o)} = {{({C}, {\usc})}} \\
+    {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T}$} {${w}$} {${\contract {${\phi}$} {${\usc}$}}$} {${r}$}}} \\
     {\rho'} = {[{\eresult} \mapsto {\defaultValue{${T_r}$}}, {\ethis} \mapsto {{o}}, {{w}} \mapsto {v}]} \\
     \evalphix {H} {\rho'} {A} {\phi} \\
     {A'} = {\dynamicFP {H} {\rho'} {\phi}}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A'}}, {\overline{r}})} \cdot {{({{\rho}, {{A} \backslash {A'}}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {s}})} \cdot {S}}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho'}, {A'}}, {r})} \cdot {{({{\rho}, {{A} \backslash {A'}}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}})} \cdot {S}}})}
 }
 \end{mathpar}
 
@@ -78,14 +78,14 @@
 \inferrule* [Right=ESCallFinish]
 {
     \evalex {H} {\rho} {\ex{${y}$}} {{o}} \\
-    {H(o)} = {{({C}, {\_})}} \\
-    {\mpost({C}, {m})} = {{\phi}} \\
+    {H(o)} = {{({C}, {\usc})}} \\
+    {\mpost{{C}, {m}}} = {{\phi}} \\
     \evalphix {H} {\rho'} {A'} {\phi} \\
     {A''} = {\dynamicFP {H} {\rho'} {\phi}} \\
     \evalex {H} {\rho'} {\ex{${\eresult}$}} {v_r}
 }
 {
-    {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sCall {${x}$} {${y}$} {${m}$} {${z}$}} {s}})} \cdot {S}}})} \rightarrow {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A''}}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}})} \cdot {S}}})} {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A''}}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -95,7 +95,7 @@
     \evalphix {H} {\rho} {A} {\phi}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sAssert {${\phi}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho}, {A}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sAssert {${\phi}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho}, {A}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -106,7 +106,7 @@
     {A'} = {{A} \backslash {\dynamicFP {H} {\rho} {\phi}}}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sRelease {${\phi}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho}, {A'}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sRelease {${\phi}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho}, {A'}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -116,7 +116,7 @@
     {\rho'} = {{\rho}[{x} \mapsto {\defaultValue{${T}$}}]}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sDeclare {${T}$} {${x}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho'}, {A}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sDeclare {${T}$} {${x}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho'}, {A}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -127,7 +127,7 @@
     {A'} = {\dynamicFP {H} {\rho} {\phi}}
 }
 {
-    {({H}, {{({{\rho}, {A}}, {{\sHold {${\phi}$} {${\overline{s'}}$}} {s}})} \cdot {S}})} \rightarrow {({H}, {{({{\rho}, {{A} \backslash {A'}}}, {\overline{s'}})} \cdot {{({{\rho}, {A'}}, {{\sHold {${\phi}$} {${\overline{s'}}$}} {s}})} \cdot {S}}})}
+    \sstep {({H}, {{({{\rho}, {A}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}})} \cdot {S}})} {({H}, {{({{\rho}, {{A} \backslash {A'}}}, {s'})} \cdot {{({{\rho}, {A'}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}})} \cdot {S}}})}
 }
 \end{mathpar}
 
@@ -137,7 +137,7 @@
     ~
 }
 {
-    {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {{\sHold {${\phi}$} {${\overline{s'}}$}} {s}})} \cdot {S}}})} \rightarrow {({H}, {{({{\rho'}, {{A} \cup {A'}}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}})} \cdot {S}}})} {({H}, {{({{\rho'}, {{A} \cup {A'}}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 

@@ -16,7 +16,7 @@
     \sfrmphi {\phi'} \\
     {x} \not \in {FV(\phi')} \\
     \sType {\Gamma} {\ex{${x}$}} {{C}} \\
-    {\fields({C})} = {{\overline{\field{$T$}{$f$}}}}
+    {\fields{{C}}} = {{\overline{\field{$T$}{$f$}}}}
 }
 {
     \thoare {\Gamma} {\phi} {{\sAlloc {${x}$} {${C}$}}} {\phiCons{${\phi'}$}{${\phiCons{${\phiNeq {${\ex{${x}$}}$} {${\ev{${\enull}$}}$}}$}{${\overline{\phiCons{\phiAcc {$x$} {$f_i$}}{\phiEq {\edot {$x$} {$f_i$}} {\defaultValue {$T_i$}} }}}$}}$}}
@@ -44,7 +44,7 @@
     \phiImplies {\phi} {\accFor {{e}}} \\
     \sfrmphi {\phi'} \\
     {x} \not \in {FV(\phi')} \\
-    {x} \not \in {FV({e})} \\
+    {x} \not \in {\FV({e})} \\
     \sType {\Gamma} {\ex{${x}$}} {T} \\
     \sType {\Gamma} {e} {T}
 }
@@ -71,7 +71,7 @@
 \inferrule* [Right=HCall]
 {
     \sType {\Gamma} {\ex{${y}$}} {{C}} \\
-    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\_}$}}} \\
+    {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\usc}$}}} \\
     \sType {\Gamma} {\ex{${x}$}} {T_r} \\
     \sType {\Gamma} {\ex{${z'}$}} {T_p} \\
     \phiImplies {\phi} {\phiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{${\phiCons{${\phi_p}$}{${\phi'}$}}$}} \\
@@ -110,11 +110,11 @@
 \begin{mathpar}
 \inferrule* [Right=HDeclare]
 {
-    {x} \not\in \dom({\Gamma}) \\
+    {x} \not\in \dom{{\Gamma}} \\
     \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {s} {\phi'}
 }
 {
-    \thoare {\Gamma} {\phi} {{\sDeclare {${T}$} {${x}$}} {s}} {\phi'}
+    \thoare {\Gamma} {\phi} {\sSeq{${\sDeclare {${T}$} {${x}$}}$}{${s}$}} {\phi'}
 }
 \end{mathpar}
 
@@ -137,10 +137,10 @@
 \inferrule* [Right=HSeq]
 {
     \thoare {\Gamma} {\phi_p} {{s_1}} {\phi_q} \\
-    \thoare {\Gamma} {\phi_q} {\overline{s_2}} {\phi_r}
+    \thoare {\Gamma} {\phi_q} {s_2} {\phi_r}
 }
 {
-    \thoare {\Gamma} {\phi_p} {{s_1} {\overline{s_2}}} {\phi_r}
+    \thoare {\Gamma} {\phi_p} {\sSeq{${s_1}$}{${s_2}$}} {\phi_r}
 }
 \end{mathpar}
 

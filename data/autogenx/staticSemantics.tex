@@ -12,9 +12,9 @@
 {
     \phiImplies {\phi} {\phi'} \\
     \sfrmphi {\phi'} \\
-    {x} \not \in {FV(\phi')} \\
+    {x} \not \in {\FV(\phi')} \\
     \sType {\Gamma} {\ex{${x}$}} {{C}} \\
-    {\fields({C})} = {{\overline{\field{$T$}{$f$}}}}
+    {\fields{C}} = {{\overline{\field{$T$}{$f$}}}}
 }
 {
     \thoare {\Gamma} {\phi} {{\sAlloc {${x}$} {${C}$}}} {\phiCons{${\phi'}$}{${\phiCons{${\phiNeq {${\ex{${x}$}}$} {${\ev{${\enull}$}}$}}$}{${\overline{\phiCons{\phiAcc {$x$} {$f_i$}}{\phiEq {\edot {$x$} {$f_i$}} {\defaultValue {$T_i$}}}}}$}}$}}
@@ -37,8 +37,8 @@
     \phiImplies {\phi} {\phi'} \\
     \phiImplies {\phi} {\accFor {{e}}} \\
     \sfrmphi {\phi'} \\
-    {x} \not \in {FV(\phi')} \\
-    {x} \not \in {FV({e})} \\
+    {x} \not \in {\FV(\phi')} \\
+    {x} \not \in {\FV({e})} \\
     \sType {\Gamma} {\ex{${x}$}} {T} \\
     \sType {\Gamma} {e} {T}
 }
@@ -50,7 +50,7 @@
 {
     \phiImplies {\phi} {\phi'} \\
     \sfrmphi {\phi'} \\
-    {\eresult} \not \in {FV(\phi')} \\
+    {\eresult} \not \in {\FV(\phi')} \\
     \sType {\Gamma} {\ex{${x}$}} {T} \\
     \sType {\Gamma} {\ex{${\eresult}$}} {T}
 }
@@ -61,12 +61,12 @@
 \inferrule* [right=HCall]
 {
     \sType {\Gamma} {\ex{${y}$}} {{C}} \\
-    {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\_}$}}} \\
+    {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\_}$}}} \\
     \sType {\Gamma} {\ex{${x}$}} {T_r} \\
     \sType {\Gamma} {\ex{${z'}$}} {T_p} \\
     \phiImplies {\phi} {\phiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{${\phiCons{${\phi_p}$}{${\phi'}$}}$}} \\
     \sfrmphi {\phi'} \\
-    {x} \not \in {FV(\phi')} \\
+    {x} \not \in {\FV(\phi')} \\
     x \neq y \wedge x \neq z' \\
     {\phi_p} = {{\phi_{pre}}[{y}, {z'} / {\ethis}, {{z}}]} \\
     {\phi_q} = {{\phi_{post}}[{y}, {z'}, {x} / {\ethis}, {{z}}, {\eresult}]}
@@ -94,7 +94,7 @@
 
 \inferrule* [right=HDeclare]
 {
-    {x} \not\in \dom({\Gamma}) \\
+    {x} \not\in \dom{\Gamma} \\
     \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {s} {\phi'}
 }
 {
@@ -106,8 +106,8 @@
     \sfrmphi {\phi} \\
     \phiImplies {\phi_f} {\phiCons{${\phi_r}$}{${\phi'}$}} \\
     \phiImplies {\phi'} {\phi} \\
-    {FV(\phi')} = {FV(\phi)} \\
-    \neg {\writesTo({FV(\phi)}, {s})} \\
+    {\FV(\phi')} = {\FV(\phi)} \\
+    \neg {\writesTo({\FV(\phi)}, {s})} \\
     \thoare {\Gamma} {\phi_r} {s} {\phi_r'}
 }
 {
