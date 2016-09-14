@@ -31,26 +31,13 @@ In our design of gradual formulas we aim for “gradual formulas with upper boun
     \end{exmp}
 \end{description}
 
-
-%% method contract extension
-In \gvlidf we want the programmer to specify gradual method contracts.
-Therefore we extend their syntax as follows.
-\begin{align*}
-\grad{contract} & \in \setGContract   &  & ::= \ttt{requires $\grad{\phi}$;~ensures $\grad{\phi}$;}
-\end{align*}
-
-%%% propagation
-This extension is propagated to method declarations (now accepting gradual contracts but not changing otherwise), yielding $\setGMethod$.
-Carrying on with the same logic, we get an extended set of class definitions $\setGClass$ and finally an extended set of programs $\setGProgram$.
-Again, note that the only syntactical difference is the acceptance of gradual formulas in method contracts.
-
-%% statements
-We see no motive to extend the syntax of statements themselves and define $\setGStmt = \setStmt$.
-As postulated in section \ref{sec:gradual-statements}, the call statement hides away gradualized syntax by referencing a method with gradual contract.
-This becomes obvious when looking at its static or dynamic semantics (see \tset{HCall} and \tset{ESCall???}/\tset{ESCallFinish}) where the method name is effectively dereferenced.
-% SO we will remember that when lifting stuff...
-
-
-
-
-$\setGProgramState = \setProgramState$
+%% gradual syntax
+We want to only allow gradual formulas in method contracts, resulting in the following gradual syntax:
+\begin{figure}[h]
+    \input{data/gvl-syntax}
+    \caption{\gvlidf: Syntax}
+    \label{fig:gidf-syntax}
+\end{figure}
+Note how the small change propagates throughout other constructs, all the way up to gradual programs.
+The change has no direct impact on statement syntax, allowing us to define $\setGStmt \defeq \setStmt$ and therefore $\setGProgramState \defeq \setProgramState$.
+However, note that static and dynamic semantics of the call statement $\sCall {$x$} {$y$} {$m$} {$z$}$ will still have to be lifted as $m$ now references a gradual method contract (see section \ref{sec:gradual-statements} for detailed discussion).
