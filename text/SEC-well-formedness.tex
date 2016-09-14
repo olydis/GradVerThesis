@@ -1,42 +1,29 @@
+Apart from checking method contracts, a verifier or compiler may enforce further rules before accepting a program as “well formed”.
+For \svlidf we give the following rules.
 
+\begin{figure}[h]
+    \input{data/svlidf-wf}
+    \caption{\svlidf: Well-Formedness}
+    \label{fig:idf-wf}
+\end{figure}
 
-With static semantics in place, we can define what makes programs well-formed.
-Well-formedness is required to ...
-The following predicates 
+%% OkMethod
+The premises of $\tset{OkMethod}$ make sure that reasoning about calls is sound.
+As expected, the method contract is checked, while also making sure that it contains self-framing formulas.
+Furthermore, the free variables are restricted to those occurring in the method signature.
 
-A program is well-formed if both its classes and main method are.
-For the main method to be well-formed, it must satisfy our Hoare predicate, given no assumptions.
-
-\begin{mathpar}
-\inferrule* [Right=OkProgram]
+%% example
+Counterexample:
+\begin{lstlisting}
+int identity(int a)
+    requires true;
+    ensures  (b = 3);
 {
-\overline{cls_i \OK} \\
-\thoare {~} {\phiTrue} {s} {\phi}
+    int b;
+    b = 3;
+    return a;
 }
-{(\overline{cls_i}~s) \OK}
-\end{mathpar}
-
-\begin{mathpar}
-\inferrule* [Right=OkClass]
-{
-\text{unique $field$-names} \\
-\text{unique $method$-names} \\
-\overline{method_i \OKinC}
-}
-{(\class {$C$} {$\overline{field_i}$} {$\overline{method_i}$}) \OK}
-\end{mathpar}
-
-\begin{mathpar}
-\inferrule* [Right=OkMethod]
-{
-    \thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {s} {\phi_2} \\\\
-    \FV(\phi_1) \subseteq \{ x, \ethis \} \\
-    \FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\\\
-    \sfrmphi \phi_1 \\
-    \sfrmphi \phi_2 \\
-    \neg \writesTo(s, x)
-}
-{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$s$}) \OKinC}
-\end{mathpar}
-
-% TODO: Give examples of what rules mean - semantics are defined!
+\end{lstlisting}
+While the method passes static verification, it could lead to unsound proofs.
+Note how \tset{HCall} forwards the postcondition after replacing known variables with their counterparts.
+\phiEq{b}{3} is unaffected by this replacement, ending up in the postcondition of the call statement.

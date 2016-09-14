@@ -1,0 +1,32 @@
+
+\begin{mathpar}
+\inferrule* [Right=OkProgram]
+{
+\overline{cls_i \OK} \\
+\thoare {~} {\phiTrue} {s} {\phi}
+}
+{(\overline{cls_i}~s) \OK}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=OkClass]
+{
+\text{unique $field$-names} \\
+\text{unique $method$-names} \\
+\overline{method_i \OKinC}
+}
+{(\class {$C$} {$\overline{field_i}$} {$\overline{method_i}$}) \OK}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=OkMethod]
+{
+    \thoare {x : T_x, \ethis : C, \eresult : T_m} {\phi_1} {s} {\phi_2} \\\\
+    \FV(\phi_1) \subseteq \{ x, \ethis \} \\
+    \FV(\phi_2) \subseteq \{ x, \ethis, \eresult \} \\\\
+    \sfrmphi \phi_1 \\
+    \sfrmphi \phi_2 \\
+    \neg \writesTo(s, x)
+}
+{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\phi_1$} {$\phi_2$}} {$s$}) \OKinC}
+\end{mathpar}
