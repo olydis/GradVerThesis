@@ -6,6 +6,7 @@
     \label{fig:idf-syntax}
 \end{figure}
 
+%% parser rassoc, skip
 We pose $\phiFalse \defeq \phiNeq{\enull}{\enull}$.
 We define $\ttt{;}$ to be right-associative and assume that parsing a sequence of statements (e.g. method body) operates analogously, obviating the need for parenthesis.
 Furthermore we assume that the parser terminates every sequence with $\sSkip$.
@@ -24,6 +25,16 @@ Furthermore we assume that the parser terminates every sequence with $\sSkip$.
 \end{exmp}
 These assumptions highly simplify reasoning about statements.
 
+%% helper methods
+We define the following helper methods:
+\begin{figure}[h]
+    \input{data/svl-helpers}
+    \caption{\svlidf: Helper Methods}
+    \label{fig:idf-helpers}
+\end{figure}
+
+
+%% other stuff
 For future reference, we give further (non-syntactic) definitions:
 \begin{figure}[h]
     \begin{align*}

@@ -28,3 +28,8 @@ While the method passes static verification, it could lead to unsound proofs.
 Note how \tset{HCall} forwards the postcondition after replacing known variables with their counterparts.
 \phiEq{b}{3} is unaffected by this replacement, ending up in the postcondition of the call statement.
 \end{example}
+
+For similar reasons, we prevent writes to the method's parameter.
+Changes to the parameter could legally be stated in the postcondition which is forwarded to the call site.
+Information about the parameter is then reflected back on the variable passed for the method call.
+However, since variables are passed by value, this information would be false.

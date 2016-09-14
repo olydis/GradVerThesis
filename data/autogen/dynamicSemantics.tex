@@ -85,7 +85,7 @@
     \evalex {H} {\rho'} {\ex{${\eresult}$}} {v_r}
 }
 {
-    \sstep {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}})} \cdot {S}}})} {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A''}}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho'}, {A'}}, {\sSkip})} \cdot {{({{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}})} \cdot {S}}})} {({H}, {{({{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A''}}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 
@@ -137,7 +137,7 @@
     ~
 }
 {
-    \sstep {({H}, {{({{\rho'}, {A'}}, {\emptyset})} \cdot {{({{\rho}, {A}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}})} \cdot {S}}})} {({H}, {{({{\rho'}, {{A} \cup {A'}}}, {s})} \cdot {S}})}
+    \sstep {({H}, {{({{\rho'}, {A'}}, {\sSkip})} \cdot {{({{\rho}, {A}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}})} \cdot {S}}})} {({H}, {{({{\rho'}, {{A} \cup {A'}}}, {s})} \cdot {S}})}
 }
 \end{mathpar}
 

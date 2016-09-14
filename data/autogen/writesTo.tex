@@ -1,0 +1,62 @@
+% Inductive writesTo
+\begin{mathpar}
+\inferrule* [Right=wtVarAssign]
+{
+    ~
+}
+{
+    \writesTo({x}, {\sVarAssign {${x}$} {${e}$}})
+}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=wtAlloc]
+{
+    ~
+}
+{
+    \writesTo({x}, {\sAlloc {${x}$} {${C}$}})
+}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=wtCall]
+{
+    ~
+}
+{
+    \writesTo({x}, {\sCall {${x}$} {${y}$} {${m}$} {${z}$}})
+}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=wtReturn]
+{
+    ~
+}
+{
+    \writesTo({\eresult}, {\sReturn {${x}$}})
+}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=wtDeclare]
+{
+    ~
+}
+{
+    \writesTo({x}, {\sDeclare {${T}$} {${x}$}})
+}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=wtHold]
+{
+    {s} \in {ss} \\
+    \writesTo({x}, {s})
+}
+{
+    \writesTo({x}, {\sHold {${p}$} {${ss}$}})
+}
+\end{mathpar}
+

@@ -1,0 +1,128 @@
+\begin{description}
+    \item[Extraction]
+    To extract elements from a given program $p \in \setProgram$ we define the following functions:
+    \begin{flalign*}
+    	 & \fieldType : \setClassName \times \setFieldName \rightharpoonup \setType                & ~ \\
+    	 & \fieldType(C, f) = \text{type of field $f$ in class $C$ in $p$}                         &  \\
+    	 & ~                                                                                       &  \\
+    	 & \predicate{fields$_p$} : \setClassName \rightharpoonup \PP^{\setField}                  &  \\
+    	 & \fields{C} = \text{field declarations of class $C$ in $p$}                              &  \\
+    	 & ~                                                                                       &  \\
+    	 & \predicate{method$_p$} : \setClassName \times \setMethodName \rightharpoonup \setMethod &  \\
+    	 & \mmethod{C, m} = \text{declaration of method $m$ in class $C$ in $p$}                   &  \\
+    	 & ~                                                                                       &  \\
+    	 & \predicate{mpre$_p$} : \setClassName \times \setMethodName \rightharpoonup \setFormula  &  \\
+    	 & \mpre{C, m} = \text{precondition of method $m$ in class $C$ in $p$}                    &  \\
+    	 & ~                                                                                       &  \\
+    	 & \predicate{mpost$_p$} : \setClassName \times \setMethodName \rightharpoonup \setFormula &  \\
+    	 & \mpost{C, m} = \text{postcondition of method $m$ in class $C$ in $p$}                   &
+    \end{flalign*}
+    
+    \item[Free Variables]~\\
+    The semantics of \svlidf will sometimes reason about the free variables of expressions or formulas.
+    
+    Let $\FV : (\setExpr \cup \setFormula) \rightarrow \PP^{\setVar}$ be defined as
+    \begin{alignat*}{3}
+    	  & \FV(v)                            &  & = \emptyset                    & ~ \\
+    	  & \FV(x)                            &  & = \{ x \}                      &  \\
+    	  & \FV(\edot{$e$}{$f$})              &  & = \FV(e)                       &  \\
+    	~ &  \\
+    	  & \FV(\phiTrue)                     &  & = \emptyset                    &  \\
+    	  & \FV(\phiEq{$e_1$}{$e_2$})         &  & = \FV(e_1) \cup \FV(e_2)       &  \\
+    	  & \FV(\phiNeq{$e_1$}{$e_2$})        &  & = \FV(e_1) \cup \FV(e_2)       &  \\
+    	  & \FV(\phiAcc{$e$}{$f$})            &  & = \FV(e)                       &  \\
+    	  & \FV(\phiCons{$\phi_1$}{$\phi_1$}) &  & = \FV(\phi_1) \cup \FV(\phi_2) &
+    \end{alignat*}
+    
+    \item[Default Value of Type]~\\
+    \svlidf assigns default values to declared variables.
+    
+    Let $\predicate{defaultValue} : \setType \rightarrow \setVal$ be defined as
+    \begin{alignat*}{3}
+    	 & \defaultValue{\Tint} &  & = 0      & ~ \\
+    	 & \defaultValue{$C$}   &  & = \enull &
+    \end{alignat*}
+    
+    \item[Required Access]~\\
+    Expressions mentioning fields are heap dependent and thus require access.
+    To enable treating expressions in a uniform fashion, we define a pseudo accessibility-predicate which is also defined for expressions that do not mention fields.
+    
+    Let $\predicate{acc} : \setExpr \rightarrow \setFormula$ be defined as
+    \begin{alignat*}{3}
+    	 & \accFor{v}               &  & = \phiTrue          & ~ \\
+    	 & \accFor{x}               &  & = \phiTrue          & ~ \\
+    	 & \accFor{\edot{$e$}{$f$}} &  & = \phiAcc{$e$}{$f$} &
+    \end{alignat*}
+    
+    \item[Preventing Writes]
+    Under rare circumstances, overwriting a certain variable is not allowed in \svlidf.
+    To reliably check whether a variable is written to by a statement, we define the following predicate.
+    
+    Let $\writesTo \subseteq \setStmt \times \setVar$ be defined inductively as
+    %\input{data/autogen/writesTo}
+    \begin{mathpar}
+        \inferrule* [right=wtVarAssign]
+        {
+            ~
+        }
+        {
+            \writesTo({x},\, {\sVarAssign {${x}$} {${e}$}})
+        }
+        
+        \inferrule* [right=wtAlloc]
+        {
+            ~
+        }
+        {
+            \writesTo({x},\, {\sAlloc {${x}$} {${C}$}})
+        }
+        
+        \inferrule* [right=wtCall]
+        {
+            ~
+        }
+        {
+            \writesTo({x},\, {\sCall {${x}$} {${y}$} {${m}$} {${z}$}})
+        }
+        
+        \inferrule* [right=wtReturn]
+        {
+            ~
+        }
+        {
+            \writesTo({\eresult},\, {\sReturn {${x}$}})
+        }
+        
+        \inferrule* [right=wtDeclare]
+        {
+            ~
+        }
+        {
+            \writesTo({x}, {\sDeclare {${T}$} {${x}$}})
+        }
+        
+        \inferrule* [right=wtHold]
+        {
+            \writesTo({x},\, {s})
+        }
+        {
+            \writesTo({x},\, {\sHold {${p}$} {${s}$}})
+        }
+        
+        \inferrule* [right=wtSeq1]
+        {
+            \writesTo({x},\, {s_1})
+        }
+        {
+            \writesTo({x},\, \sSeq{$s_1$}{$s_2$})
+        }
+        
+        \inferrule* [right=wtSeq2]
+        {
+            \writesTo({x},\, {s_2})
+        }
+        {
+            \writesTo({x},\, \sSeq{$s_1$}{$s_2$})
+        }
+    \end{mathpar}
+\end{description}
