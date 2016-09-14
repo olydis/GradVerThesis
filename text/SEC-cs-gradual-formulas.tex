@@ -1,13 +1,56 @@
-We will now follow along the procedure introduced in chapter \ref{ch:gradualization-of-a} to design a gradually verified language “\gvl” based on \svl.
-% BLA
+%% intro
+The first step of deriving \gvlidf is defining its modified syntax.
+As motivated in section \ref{sec:gradual-formulas} we first extend the formula syntax, afterwards everything that depends on it.
 
-The path we take:
-\begin{align*} 
-&\text{Syntax:}\\
-&\grad{\phi} \quad::=\quad \phi ~|~ \withqm{\phi}\\
-\\
-&\text{Concretization:}\\
-&\gamma(\phi) = \{~ \phi ~\}     \quad\quad \forall \phi \in \setFormulaB\\
-&\gamma(\withqm{\phi}) = \{~ \phi' \in \setFormulaB ~|~ \phiImplies{\phi'}{\phi} ~\}\\
-&\gamma(\grad{\phi}) = \emptyset    \quad\textit{otherwise}
+%% formula syntax & concretization
+In our design of gradual formulas we aim for “gradual formulas with upper bound” as introduced in section \ref{ssec:wildcard-with-upper}:
+\begin{description}
+    \item[Syntax] 
+    \begin{flalign*}
+    	 & \grad{\phi} \quad::=\quad \phi ~|~ \withqm{\phi} &
+    \end{flalign*}
+    We pose $\qm \defeq \withqm{\phiTrue}$.
+    
+    \item[Concretization]
+    \begin{flalign*}
+    & \gamma(\phi) = \{~ \phi ~\}                                                         & ~ \\
+    & \gamma(\withqm{\phi}) = \{~ \phi' \in \setFormulaB ~|~ \phiImplies{\phi'}{\phi} ~\} &
+    \end{flalign*}
+    
+    Note that we do not require the static part of $\withqm{\phi}$ to be self-framing.
+    On the contrary, we want concretizations to be able to provide framing for an otherwise unframed formula.
+    (We decided to put $\qm$ in front of the static part to emphasize that fact.)
+    This allows programmers to resort to gradual formulas when being uncertain or indifferent about the concrete framing of a heap-dependent formula.
+    \begin{exmp}~\\
+        The programmer may want to express $\phiEq{a.color}{b.color}$, but is indifferent about whether \ttt{a} and \ttt{b} alias or not.
+        Fortunately, $\qm$ can be used to frame the formula, covering both alternatives:
+        \begin{flalign*}
+        	\phiCons{\phiCons{\phiAcc{a}{color}}{\phiAcc{b}{color}}}{\phiEq{a.color}{b.color}} & \in \gamma(\withqm{\phiEq{a.color}{b.color}}) & ~ \\
+        	\phiCons{\phiCons{\phiEq{a}{b}}{\phiAcc{b}{color}}}{\phiEq{b.color}{b.color}}      & \in \gamma(\withqm{\phiEq{a.color}{b.color}}) &
+        \end{flalign*}
+    \end{exmp}
+\end{description}
+
+
+%% method contract extension
+In \gvlidf we want the programmer to specify gradual method contracts.
+Therefore we extend their syntax as follows.
+\begin{align*}
+\grad{contract} & \in \setGContract   &  & ::= \ttt{requires $\grad{\phi}$;~ensures $\grad{\phi}$;}
 \end{align*}
+
+%%% propagation
+This extension is propagated to method declarations (now accepting gradual contracts but not changing otherwise), yielding $\setGMethod$.
+Carrying on with the same logic, we get an extended set of class definitions $\setGClass$ and finally an extended set of programs $\setGProgram$.
+Again, note that the only syntactical difference is the acceptance of gradual formulas in method contracts.
+
+%% statements
+We see no motive to extend the syntax of statements themselves and define $\setGStmt = \setStmt$.
+As postulated in section \ref{sec:gradual-statements}, the call statement hides away gradualized syntax by referencing a method with gradual contract.
+This becomes obvious when looking at its static or dynamic semantics (see \tset{HCall} and \tset{ESCall???}/\tset{ESCallFinish}) where the method name is effectively dereferenced.
+% SO we will remember that when lifting stuff...
+
+
+
+
+$\setGProgramState = \setProgramState$

@@ -7,7 +7,21 @@
 
 We pose $\phiFalse \defeq \phiNeq{\enull}{\enull}$.
 
-\setLoc is an infinite set of memory locations.
+For future reference, we give further (non-syntactic) definitions:
+\begin{figure}[h]
+    \begin{align*}
+    A_s    & \in \setSFootprint &  & =~~ \PP^{\setExpr \times \setFieldName}                                                    \\
+    A_d    & \in \setDFootprint &  & =~~ \PP^{\setLoc \times \setFieldName}                                                     \\
+    \Gamma & \in \setTypeEnv    &  & =~~ \setVar \rightharpoonup \setType                                                       \\
+    \rho   & \in \setVarEnv     &  & =~~ \setVar \rightharpoonup \setVal                                                        \\
+    E      & \in \setStackEntry &  & =~~ \setVarEnv \times \setDFootprint \times \setStmt                                       \\
+    S      & \in \setStack      &  & ::= E \cdot S ~|~ \nil                                                                     \\
+    H      & \in \setHeap       &  & =~~ \setLoc \rightharpoonup (\setClassName \times (\setFieldName \rightharpoonup \setVal))
+    \end{align*}
+    \caption{\svlidf: Further Definitions}
+\end{figure}
+
+
 
 % Programs consist of classes and a main method, represented directly as the list of its instructions.
 % TODO: introduce all the extraction predicates/functions!

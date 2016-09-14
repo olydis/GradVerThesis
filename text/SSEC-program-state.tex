@@ -1,13 +1,5 @@
-The set of program states as $\setProgramState = \setHeap \times \setStack$ with
-\begin{align*}
-	H      & \in \setHeap       &  & =~~ \setLoc \rightharpoonup (\setClassName \times (\setFieldName \rightharpoonup \setVal)) \\
-	\rho   & \in \setVarEnv     &  & =~~ \setVar \rightharpoonup \setVal                                                        \\
-	\Gamma & \in \setTypeEnv    &  & =~~ \setVar \rightharpoonup \setType                                                       \\
-	A_s    & \in \setSFootprint &  & =~~ \PP^{\setExpr \times \setFieldName}                                                    \\
-	A_d    & \in \setDFootprint &  & =~~ \PP^{\setLoc \times \setFieldName}                                                     \\
-	E      & \in \setStackEntry &  & =~~ \setVarEnv \times \setDFootprint \times \setStmt                                       \\
-	S      & \in \setStack      &  & ::= E \cdot S ~|~ \nil
-\end{align*}
+The set of program states is defined as $\setProgramState = \setHeap \times \setStack$.
+
 
 \begin{comment}
 REQUIRED?
