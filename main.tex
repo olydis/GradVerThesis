@@ -19,10 +19,28 @@
 \usepackage{listings}
 \usepackage{newunicodechar}
 \usepackage{xspace}
+\usepackage{framed}
 \usepackage[labelsep=period, labelfont=bf]{caption}
 % \usepackage{MnSymbol} % FOR BETTER? UNDERBRACES
 
 \setcounter{secnumdepth}{4}
+
+%%LEFTBAR
+\newlength{\leftbarwidth}
+\setlength{\leftbarwidth}{0.5pt}
+\newlength{\leftbarsep}
+\setlength{\leftbarsep}{20pt}
+
+\newcommand*{\leftbarcolorcmd}{\color{leftbarcolor}}% as a command to be more flexible
+\colorlet{leftbarcolor}{gray}
+
+\renewenvironment{leftbar}{%
+    \def\FrameCommand{{\leftbarcolorcmd{\vrule width \leftbarwidth\relax\hspace {\leftbarsep}}}}%
+    \MakeFramed {\advance \hsize -\width \FrameRestore }%
+}{%
+\endMakeFramed
+}
+%%LEFTBAR
 
 \makeatletter
 \newcommand*{\shifttext}[2]{%
@@ -56,12 +74,14 @@
 }
 
 % THEOREMS
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}[chapter]
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{lemma}[definition]{Lemma}
 \newtheorem{corollary}[definition]{Corollary}
 \theoremstyle{definition}
 \newtheorem{exmp}[definition]{Example}
+
+\newenvironment{example}[1]{\begin{leftbar}\begin{exmp}[#1]\\}{\end{exmp}\end{leftbar}}
 
 % BIB
 \bibliographystyle{plain}

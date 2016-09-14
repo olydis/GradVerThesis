@@ -21,14 +21,14 @@ In our design of gradual formulas we aim for “gradual formulas with upper boun
     On the contrary, we want concretizations to be able to provide framing for an otherwise unframed formula.
     (We decided to put $\qm$ in front of the static part to emphasize that fact.)
     This allows programmers to resort to gradual formulas when being uncertain or indifferent about the concrete framing of a heap-dependent formula.
-    \begin{exmp}~\\
+    \begin{example}{Unknown Framing}
         The programmer may want to express $\phiEq{a.color}{b.color}$, but is indifferent about whether \ttt{a} and \ttt{b} alias or not.
         Fortunately, $\qm$ can be used to frame the formula, covering both alternatives:
         \begin{flalign*}
         	\phiCons{\phiCons{\phiAcc{a}{color}}{\phiAcc{b}{color}}}{\phiEq{a.color}{b.color}} & \in \gamma(\withqm{\phiEq{a.color}{b.color}}) & ~ \\
         	\phiCons{\phiCons{\phiEq{a}{b}}{\phiAcc{b}{color}}}{\phiEq{b.color}{b.color}}      & \in \gamma(\withqm{\phiEq{a.color}{b.color}}) &
         \end{flalign*}
-    \end{exmp}
+    \end{example}
 \end{description}
 
 %% gradual syntax

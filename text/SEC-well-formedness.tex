@@ -13,7 +13,7 @@ As expected, the method contract is checked, while also making sure that it cont
 Furthermore, the free variables are restricted to those occurring in the method signature.
 
 %% example
-Counterexample:
+\begin{example}{Leaking Postcondition}
 \begin{lstlisting}
 int identity(int a)
     requires true;
@@ -27,3 +27,4 @@ int identity(int a)
 While the method passes static verification, it could lead to unsound proofs.
 Note how \tset{HCall} forwards the postcondition after replacing known variables with their counterparts.
 \phiEq{b}{3} is unaffected by this replacement, ending up in the postcondition of the call statement.
+\end{example}
