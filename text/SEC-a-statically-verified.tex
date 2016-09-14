@@ -28,18 +28,16 @@ Assumptions about \svl:
     Therefore a program state contains all information necessary to evaluate expressions and determine the next program state.
     We assume that $\setProgramState$ is the set of all possible program states in \svl.
     
-    Examples:
-    \begin{description}
-        \item[Primitive language with integer variables]
+    \begin{example}{Program State: Primitive language with integer variables}
         \begin{displaymath}
         \setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{variable memory}} ~\times~ \setStmt 
         \end{displaymath}
-        
-        \item[Language with stack]
+    \end{example}
+    \begin{example}{Program State: Language with stack}
         \begin{displaymath}
         \setProgramState ~=~ \bigcup_{i \in \mathbb{N}_+}{\underbrace{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)}_{\textit{stack frame}}}^i                                                      
         \end{displaymath}
-    \end{description}
+    \end{example}
     
     Note how these examples use statements to represent continuations (the “remaining work”), necessary for the operational semantics to deduce a state transition.
     In general, a different representation may be used to...

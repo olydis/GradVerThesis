@@ -72,30 +72,32 @@ We indicate an adaptation to Hoare logic in light gray using function notation f
     
     For Hoare rules this means that the postcondition returned must be at least as strong as every postcondition returned by static Hoare logic (it might be less precise, though).
     The following example illustrates the effects of the rule:
-    Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
-    \begin{flalign*}
-    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
-    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
-    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
-    \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
-    \end{flalign*}
-    Then valid return values for the deterministic lifting are
-    \begin{flalign*}
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\qm}\\
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{x}{2}}}\\
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{2}{x}}}
-    \end{flalign*}
-    Not valid are weaker static values like
-    \begin{flalign*}
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
-    \end{flalign*}
-    or stronger values like
-    \begin{flalign*}
-    &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiAnd{\phiEq{y}{3}}{\phiEq{x}{2}}}
-    \end{flalign*}
+    \begin{example}{Deterministic Lifting Strength}
+        Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
+        \begin{flalign*}
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+        \end{flalign*}
+        Then valid return values for the deterministic lifting are
+        \begin{flalign*}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\qm}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{x}{2}}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{2}{x}}}
+        \end{flalign*}
+        Not valid are weaker static values like
+        \begin{flalign*}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+        \end{flalign*}
+        or stronger values like
+        \begin{flalign*}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiAnd{\phiEq{y}{3}}{\phiEq{x}{2}}}
+        \end{flalign*}
+    \end{example}
     
     \item[Monotonicity]~\\
     Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
