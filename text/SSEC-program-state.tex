@@ -1,4 +1,4 @@
-The program state of \svl is defined as $\setProgramState = \setHeap \times \setStack$ with
+The set of program states as $\setProgramState = \setHeap \times \setStack$ with
 \begin{align*}
 	H      & \in \setHeap       &  & =~~ \setLoc \rightharpoonup (\setClassName \times (\setFieldName \rightharpoonup \setVal)) \\
 	\rho   & \in \setVarEnv     &  & =~~ \setVar \rightharpoonup \setVal                                                        \\
@@ -9,6 +9,7 @@ The program state of \svl is defined as $\setProgramState = \setHeap \times \set
 	S      & \in \setStack      &  & ::= E \cdot S ~|~ \nil
 \end{align*}
 
+\begin{comment}
 REQUIRED?
 \begin{definition}[Topmost Stack Entry]
     Let $\topmost : \setStack \rightharpoonup \setStackEntry$ be defined as
@@ -17,12 +18,13 @@ REQUIRED?
     &\topmost(\nil) \quad\textit{ undefined}
     \end{align*}
 \end{definition}
+\end{comment}
 
 %TODO: rethink where footprints are introduced... would make sense to know what it is prior to this figure...
 
-
-
+\begin{comment}
 Program states with scheduled statement $s$ are defined as
 \begin{displaymath}
 \setProgramState_s ~\defeq~ \setHeap ~\times~ \{~~ (\rho, A_d, s) \cdot S ~~|~~ \rho \in \setVarEnv,~ A_d \in \setDFootprint,~ S \in \setStack ~~\}
 \end{displaymath}
+\end{comment}
