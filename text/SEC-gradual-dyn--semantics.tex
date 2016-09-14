@@ -1,0 +1,14 @@
+We follow the pattern introduced in section \ref{ssec:dynamic-semantics} and define $\gsssem$ using a predicate $\gsstep{\cdot}{\cdot}$
+\begin{displaymath}
+\gsssem(\pi) = \pi' \defiff \gsstep{\pi}{\pi'}
+\end{displaymath}
+Note that the changes compared to $\sstep{\cdot}{\cdot}$ are minimal.
+The call statement is the only one affected by the introduction of gradual formulas and therefore the only statement that requires adjusted rules:
+\begin{figure}
+    \boxed{\gsstep{\pi}{\pi}}
+    \input{data/gvl-sem-dyn-sstep}
+    \caption{\gvlidf: Small-Step Semantics for Method Call}
+    \label{fig:gvl-sem-dyn-sstep}
+\end{figure}
+
+The other rules are identical to their counterparts in figure \ref{fig:svl-sem-dyn-sstep}.

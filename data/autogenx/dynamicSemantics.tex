@@ -69,11 +69,10 @@
     {H(o)} = {{\langle{C}, {\usc}\rangle}} \\
     {\mpost{{C}, {m}}} = {{\phi}} \\
     \evalphix {H} {\rho'} {A'} {\phi} \\
-    {A''} = {\dynamicFP {H} {\rho'} {\phi}} \\
     \evalex {H} {\rho'} {\ex{${\eresult}$}} {v_r}
 }
 {
-    \sstep {\langle{H}, {{\langle{{\rho'}, {A'}}, {\sSkip}\rangle} \cdot {{\langle{{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}}\rangle} \cdot {S}}}\rangle} {\langle{H}, {{\langle{{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A''}}}, {s}\rangle} \cdot {S}}\rangle}
+    \sstep {\langle{H}, {{\langle{{\rho'}, {A'}}, {\sSkip}\rangle} \cdot {{\langle{{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}}\rangle} \cdot {S}}}\rangle} {\langle{H}, {{\langle{{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A'}}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
 \inferrule* [Right=ESAssert]

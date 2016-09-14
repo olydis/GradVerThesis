@@ -1,7 +1,7 @@
 \begin{align*}
-	\grad{program}  & \in \setGProgram  &  & ::= \ttt{$\overline{\grad{cls}}$~$\grad{s}$}                         \\
-	\grad{cls}      & \in \setGClass    &  & ::= \class {$C$} {$\overline{field}$} {$\overline{\grad{method}}$}   \\
-	\grad{method}   & \in \setGMethod   &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$\grad{contract}$} {$\grad{s}$} \\
-	\grad{contract} & \in \setGContract &  & ::= \contract{$\grad{\phi}$}{$\grad{\phi}$}                          \\
+	\grad{program}  & \in \setGProgram  &  & ::= \ttt{$\overline{\grad{cls}}$~$s$}                              \\
+	\grad{cls}      & \in \setGClass    &  & ::= \class {$C$} {$\overline{field}$} {$\overline{\grad{method}}$} \\
+	\grad{method}   & \in \setGMethod   &  & ::= \method {$T$} {$m$} {$T$} {$x$} {$\grad{contract}$} {$s$}      \\
+	\grad{contract} & \in \setGContract &  & ::= \contract{$\grad{\phi}$}{$\grad{\phi}$}                        \\
 	\grad{\phi}     & \in \setGFormula  &  & ::= \phi ~|~ \withqm{\phi}
 \end{align*}

@@ -1,6 +1,10 @@
 % MENTION that most of that stuff is completely redundant if soundness holds - and only used to prove just that!
 
-We define the small-step semantics $\sssem$ of \svlidf inductively, using the commonly used predicate syntax $\sstep{\cdot}{\cdot}$.
+We define the small-step semantics $\sssem$ of \svlidf inductively, using the common predicate syntax $\sstep{\cdot}{\cdot}$.
+Formally: 
+\begin{displaymath}
+\sssem(\pi) = \pi' \defiff \sstep{\pi}{\pi'}
+\end{displaymath}
 Figure \ref{fig:svl-sem-dyn-sstep} shows the inductive rules.
 \begin{figure}
     \boxed{\sstep{\pi}{\pi}}

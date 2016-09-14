@@ -3,14 +3,12 @@
     {
         {\wo {\grad{\phi}} {x}} = \grad{\phi'}\\
         \sType {\Gamma} {\ex{${x}$}} {{C}} \\
-        {\fields({C})} = {{\overline{\field{$T$}{$f$}}}}
+        {\fields{C}} = {{\overline{\field{$T$}{$f$}}}}
     }
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sAlloc {${x}$} {${C}$}}} {\gphiCons{$\grad{\phi'}$}{${\gphiCons{${\phiNeq {${\ex{${x}$}}$} {${\ev{${\enull}$}}$}}$}{${\overline{\gphiCons{\phiAcc {$x$} {$f_i$}}{\phiEq {\edot {$x$} {$f_i$}} {\defaultValue {$T_i$}} }}}$}}$}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHFieldAssign]
     {
         \wo {\grad{\phi}} {\phiAcc{$x$}{$f$}} = \grad{\phi'}\\
@@ -21,23 +19,19 @@
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sFieldAssign {${x}$} {${f}$} {${y}$}}} {\gphiCons{$\grad{\phi'}$}{${\gphiCons{${\phiAcc {${\ex{${x}$}}$} {${f}$}}$}{${\gphiCons{${\phiNeq {${\ex{${x}$}}$} {${\ev{${\enull}$}}$}}$}{${\ensuremath{{\phiEq {${\edot{${\ex{${x}$}}$}{${f}$}}$} {${\ex{${y}$}}$}}}}$}}$}}$}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHVarAssign]
     {
         \gphiImplies{\grad{\phi}} {\accFor {{e}}}\\
         {\wo {\grad{\phi}} {x}} = \grad{\phi'}\\
-        {x} \not \in {FV({e})} \\
+        {x} \not \in {\FV({e})} \\
         \sType {\Gamma} {\ex{${x}$}} {T} \\
         \sType {\Gamma} {e} {T}
     }
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sVarAssign {${x}$} {${e}$}}} {\gphiCons{$\grad{\phi'}$}{${\ensuremath{{\phiEq {${\ex{${x}$}}$} {${e}$}}}}$}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHReturn]
     {
         {\wo {\grad{\phi}} {\eresult}} = \grad{\phi'}\\
@@ -47,14 +41,12 @@
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sReturn {${x}$}}} {\gphiCons{$\grad{\phi'}$}{${\ensuremath{{\phiEq {${\ex{${\eresult}$}}$} {${\ex{${x}$}}$}}}}$}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHCall]
     {
         \wo {\wo {\grad{\phi}} {x}} {\staticFP{\grad{\phi_p}}_{\Gamma, y, z'}} = \grad{\phi'}\\
         \sType {\Gamma} {\ex{${y}$}} {{C}} \\
-        {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\_}$}}} \\
+        {\mmethod({C}, {m})} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {${\phi_{pre}}$} {${\phi_{post}}$}}$} {${\usc}$}}} \\
         \sType {\Gamma} {\ex{${x}$}} {T_r} \\
         \sType {\Gamma} {\ex{${z'}$}} {T_p} \\
         \gphiImplies{\grad{\phi}}{\gphiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{$\grad{\phi_p}$}} \\
@@ -65,27 +57,15 @@
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
     }
-\end{mathpar}
-
-%\begin{mathpar}
-%    \inferrule* [Right=GHAssertBadIdea]
-%    {{\wo {\grad{\phi}} {\staticFP{\phi_a}}} = \grad{\phi'}\\
-%        \hat{\phi} \grad{\implies} {\phi_a}}
-%    {\Gamma~ \ghoare {\grad{\phi}} {{\assert {\phi_a}}} {\grad{\phi'} \gsc \phi_a}}
-%\end{mathpar}
-
-
-\begin{mathpar}
-    \inferrule* [Right=GHAssert]
+    
+    \inferrule* [right=GHAssert]
     {
         \gphiImpliesEv{\grad{\phi}}{\phi_a}{\grad{\phi'}}
     }
     {
-        \dgthoare {\Gamma} {\grad{\phi}} {{\sAssert {${\phi'}$}}} {\grad{\phi'}}
+        \dgthoare {\Gamma} {\grad{\phi}} {{\sAssert {${\phi_a}$}}} {\grad{\phi'}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHRelease]
     {
         \gphiImpliesEv{\grad{\phi}}{\phi_r}{\grad{\phi'}}\\
@@ -94,35 +74,29 @@
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sRelease {${\phi_r}$}}} {\grad{\phi'}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHDeclare]
     {
-        {x} \not\in \dom({\Gamma}) \\
+        {x} \not\in \dom{\Gamma} \\
         \dgthoare {{\Gamma}, {x} : {T}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
     }
     {
         \dgthoare {\Gamma} {\grad{\phi}} {\sSeq{\sDeclare {${T}$} {${x}$}}{$s$}} {\grad{\phi'}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHHold]
     {
         \sfrmphi {\phi} \\
         \gphiImpliesEv{\grad{\phi_f}}{\phi}{\grad{\phi_f'}}\\
         \wo {\grad{\phi_f'}} {\staticFP{\phi}} = \grad{\phi_r}\\
-        \wo {\wo {\grad{\phi_f'}} {\staticFP{\grad{\phi_r}}}}{FV(\grad{\phi_f'}) \backslash FV(\grad{\phi})} = \grad{\phi'}\\
-        \neg {\writesTo({FV(\phi)}, {s})} \\
+        \wo {\wo {\grad{\phi_f'}} {\staticFP{\grad{\phi_r}}}}{(\FV(\grad{\phi_f'}) \backslash \FV(\phi))} = \grad{\phi'}\\
+        \neg {\writesTo({\FV(\phi)}, {s})} \\
         \thoare {\Gamma} {\grad{\phi_r}} {s} {\grad {\phi_r'}}
     }
     {
         \dgthoare {\Gamma} {\grad{\phi_f}} {{\sHold {${\phi}$} {$s$}}} {\gphiCons{$\grad{\phi_r'}$}{$\grad{\phi'}$}}
     }
-\end{mathpar}
-
-\begin{mathpar}
+    
     \inferrule* [Right=GHSeq]
     {
         \dgthoare {\Gamma} {\grad{\phi_p}} {s_1} {\grad{\phi_q}} \\

@@ -20,6 +20,7 @@
 \usepackage{newunicodechar}
 \usepackage{xspace}
 \usepackage{framed}
+\usepackage{appendix}
 \usepackage[labelsep=period, labelfont=bf]{caption}
 % \usepackage{MnSymbol} % FOR BETTER? UNDERBRACES
 
@@ -272,9 +273,12 @@
 % dyn sem
 \newcommand{\prefix}[2]{\predicate{prefix}(#1, #2)}
 \newcommand{\progress}{\predicate{progress}_{\sssem}}
-\newcommand{\sstepGeneric}[3]{{#1} \rightarrow^{#2} {#3}}
+\newcommand{\sstepGeneric}[3]{{#1} \,\,{\rightarrow^{#2}}\,\, {#3}}
 \newcommand{\sstep}[2]{\sstepGeneric {#1} {} {#2}}
 \newcommand{\ssteps}[2]{\sstepGeneric {#1} * {#2}}
+\newcommand{\gsstepGeneric}[3]{{#1} \,\,{\grad{\rightarrow}^{#2}}\,\, {#3}}
+\newcommand{\gsstep}[2]{\gsstepGeneric {#1} {} {#2}}
+\newcommand{\gssteps}[2]{\gsstepGeneric {#1} * {#2}}
 
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
         \left.\kern-\nulldelimiterspace % automatically resize the bar with \right

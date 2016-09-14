@@ -40,4 +40,6 @@ We want to only allow gradual formulas in method contracts, resulting in the fol
 \end{figure}
 Note how the small change propagates throughout other constructs, all the way up to gradual programs.
 The change has no direct impact on statement syntax, allowing us to define $\setGStmt \defeq \setStmt$ and therefore $\setGProgramState \defeq \setProgramState$.
+Note that we also have not decorated $s$ in figure \ref{fig:gidf-syntax} although it is formally drawn from $\setGStmt$.
+There is no point in decorating statements or program state in of \gvlidf.
 However, note that static and dynamic semantics of the call statement $\sCall {$x$} {$y$} {$m$} {$z$}$ will still have to be lifted as $m$ now references a gradual method contract (see section \ref{sec:gradual-statements} for detailed discussion).
