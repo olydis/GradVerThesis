@@ -1,17 +1,23 @@
-We follow the pattern introduced in section \ref{ssec:dynamic-semantics} and define $\gsssem$ using a predicate $\gsstep{\cdot}{\cdot}$
-\begin{displaymath}
-\gsssem(\pi) = \pi' \defiff \gsstep{\pi}{\pi'}
-\end{displaymath}
-Note that the changes compared to $\sstep{\cdot}{\cdot}$ are minimal.
-The call statement is the only one affected by the introduction of gradual formulas and therefore the only statement that requires adjusted rules:
+The call statement is the only statement that is affected by the introduction of gradual formulas.
+As we do not want the semantics of any of the other statements to change, we only have to adjust the rules for calls.
+Figure \ref{fig:gvl-sem-dyn-sstep} shows those rules.
 \begin{figure}
     \boxed{\gsstep{\pi}{\pi}}
     \input{data/gvl-sem-dyn-sstep}
     \caption{\gvlidf: Small-Step Semantics for Method Call}
     \label{fig:gvl-sem-dyn-sstep}
 \end{figure}
+For all other statements $\gsstep{\cdot}{\cdot}$ is identical to $\sstep{\cdot}{\cdot}$ (see figure \ref{fig:svl-sem-dyn-sstep}).
 
-The other rules are identical to their counterparts in figure \ref{fig:svl-sem-dyn-sstep}.
+Again, we define $\gsssem$ as an alias of $\gsstep{\cdot}{\cdot}$, but additionally mapping otherwise stuck states to an exceptional state $\pi_{EX}$, in order to make $\gsssem$ total.
+\begin{displaymath}
+\gsssem(\pi) = 
+\begin{cases}
+	\pi_{EX} & \text {if } \neg \exists \pi' \in \setGFormula.~ \gsstep{\pi}{\pi'} \\
+	\pi'     & \text {otherwise ($\pi'$ drawn from above)}
+\end{cases}
+\end{displaymath}
+
 
 \begin{lemma}[$\gsssem$ Well-Defined]
     The small-step semantics of \gvlidf is well-defined.

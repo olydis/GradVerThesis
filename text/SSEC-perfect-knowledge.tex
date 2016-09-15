@@ -2,19 +2,19 @@ Let ~$\sssem' : \setProgramState \rightharpoonup \setProgramState$~ be defined s
 \begin{flalign*}
 \sssem'^s(\pi_1, \pi_2) ~\defiff~ \sssem^s(\pi_1, \pi_2) ~\wedge~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
 \end{flalign*}
-Intuitively, $\sssem'$ is the same as $\sssem$, but is artificially made exceptional whenever there exists no Hoare rule that would be able to deduce static information about the execution.
+Intuitively, $\sssem'$ is the same as $\sssem$, but is artificially made undefined whenever there exists no Hoare rule that would be able to deduce static information about the execution.
 
 \begin{lemma}[Restricted Domain of Small-Step Semantics]
     Replacing the small-step semantics $\sssem$ of \svl with $\sssem'$ as defined above would have no observable effects.
 \end{lemma}
 
-Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total gradual lifting of $\sssem'$ that is optimal in its exceptional behavior:
+Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total gradual lifting of $\sssem'$ that throws exceptions whenever all static derivations would be stuck:
 \begin{displaymath}
-\forall \grad{\pi}.~ (\forall \pi \in \gamma(\grad{\pi}).~ \sssem'(\pi) \in \setProgramStateEx) \implies \gsssem(\grad{\pi}) \in \setProgramStateEx
+\forall \grad{\pi} \in \setGProgramState.~ (\gamma(\grad{\pi}) \cap \dom{\sssem'} = \emptyset) \implies \gsssem(\grad{\pi}) \in \setProgramStateEx
 \end{displaymath}
 
-\begin{theorem}
-    If the gradual small-step semantics $\gsssem$ of \gvl are defined as above, then \gvl satisfies \tset{GDPreservation}.
+\begin{theorem}[]
+    If the gradual small-step semantics $\gsssem$ of \gvl is defined as above, then \gvl satisfies \tset{GDPreservation}.
 \end{theorem}
  
 \begin{comment} 

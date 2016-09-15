@@ -1,21 +1,22 @@
 % MENTION that most of that stuff is completely redundant if soundness holds - and only used to prove just that!
+The small-step semantics $\sssem : \setProgramState \rightharpoonup \setProgramState$ of \svlidf are defined inductively in figure \ref{fig:svl-sem-dyn-sstep}.
+Note that right-associativity of \ttt{;} and termination of sequences with $\sSkip$ (see section \ref{sec:syntax}) obviates the need for dedicated sequence rules.
 
-We define the small-step semantics $\sssem$ of \svlidf in terms of an inductively defined function $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$:
+We use arrow notation as we believe it is more readable for inductive rules.
 \begin{displaymath}
 \sssem(\pi) = \pi' \defiff \sstep{\pi}{\pi'}
 \end{displaymath}
+Using inductive rules to define a partial function, we have to make sure that only one result is deducible for every input.
+\begin{lemma}[$\sssem$ Well-Defined]
+    The small-step semantics of \svlidf is well-defined.
+\end{lemma}
 
-Note that again, the semantics is implicitly parameterized over some program $p$.
-Figure \ref{fig:svl-sem-dyn-sstep} shows the inductive rules.
 \begin{figure}
     \boxed{\sstep{\pi}{\pi}}
     \input{data/svl-sem-dyn-sstep}
     \caption{\svlidf: Small-Step Semantics}
     \label{fig:svl-sem-dyn-sstep}
 \end{figure}
-Note that right-associativity of \ttt{;} and termination of sequences with $\sSkip$ (see section \ref{sec:syntax}) obviates the need for dedicated sequence rules.
 
-Using inductive rules to define partial function may not result in more than one distinct deducible results given any parameters.
-\begin{lemma}[$\sssem$ Well-Defined]
-    The small-step semantics of \svlidf is well-defined.
-\end{lemma}
+
+% Again, the semantics is implicitly parameterized over some program $p$.
