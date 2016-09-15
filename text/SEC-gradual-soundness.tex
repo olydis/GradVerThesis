@@ -1,0 +1,6 @@
+Proposed gradual Hoare logic is sound w.r.t. the small-step semantics.
+% BY construction, what about progress? \gsssem exceptional? THEOREM?
+
+However, we would also like to satisfy the stronger notion of soundness \tset{GDPreservation}.
+We follow the idea described in section \ref{sec:abstracting-dynamic-semantics} and replace regular small-step derivations with exceptions, should there clearly be no Hoare logic derivation that would “witness” the small-step derivations.
+As a result, the small-step semantics will adhere to the Hoare logic

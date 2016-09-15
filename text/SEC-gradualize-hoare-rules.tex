@@ -8,5 +8,7 @@ Figure \ref{fig:gvl-sem-stat-hoare} shows a deterministic lifting of the Hoare l
 
 \begin{lemma}[\gvlidf: Sound Deterministic Lifting of Hoare Logic]
     The inductive definition we give induces a well-defined partial function.
-    This function is sound deterministic lifting (see \ref{ssec:the-deterministic-approach}) of the Hoare logic of \svlidf defined in section \ref{sec:static-semantics}.
+    This function is a sound deterministic lifting (see \ref{ssec:the-deterministic-approach}) of the Hoare logic of \svlidf defined in section \ref{sec:static-semantics}.
 \end{lemma}
+
+A sound predicate lifting $\gtHoare{\cdot}{\cdot}{\cdot}{\cdot}$ can be derived using lemma \ref{lem:det2grad}.

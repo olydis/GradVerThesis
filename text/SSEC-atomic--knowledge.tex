@@ -2,13 +2,13 @@ $\sssem'$ as defined previously requires a priori knowledge about whether Hoare 
 In \svl the sequence operator is key to defining more complex statements.
 
 Assume $\sssem'$ is artificially made exceptional as described in the previous section, but not for sequences.
-Example: If $\sssem^{s_1, s_2}(\pi_1, \pi_2)$ holds, then $\sssem'^{s_1, s_2}(\pi_1, \pi_2)$ may hold even if there exists no proof.
+Example: If $\sssem^{\sSeq{$s_1$}{$s_2$}}(\pi_1, \pi_2)$ holds, then $\sssem'^{\sSeq{$s_1$}{$s_2$}}(\pi_1, \pi_2)$ may hold even if there exists no proof.
 
-\tset{GDPreservation} still holds:
+\tset{GDPreservation} still holds for sequences:
 \begin{mathpar}
     \inferrule* [Right=seq]
     {
-        \inferrule* [Right=GSoundness]
+        \inferrule* [Right=GDPreservation]
         {
             \inferrule* [Right=inversion]
             {

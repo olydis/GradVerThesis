@@ -91,7 +91,7 @@
         \wo {\grad{\phi_f'}} {\staticFP{\phi}} = \grad{\phi_r}\\
         \wo {\wo {\grad{\phi_f'}} {\staticFP{\grad{\phi_r}}}}{(\FV(\grad{\phi_f'}) \backslash \FV(\phi))} = \grad{\phi'}\\
         \neg {\writesTo({\FV(\phi)}, {s})} \\
-        \thoare {\Gamma} {\grad{\phi_r}} {s} {\grad {\phi_r'}}
+        \dgthoare {\Gamma} {\grad{\phi_r}} {s} {\grad {\phi_r'}}
     }
     {
         \dgthoare {\Gamma} {\grad{\phi_f}} {{\sHold {${\phi}$} {$s$}}} {\gphiCons{$\grad{\phi_r'}$}{$\grad{\phi'}$}}
