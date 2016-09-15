@@ -1,4 +1,15 @@
-\documentclass[11pt,a4paper]{scrbook}
+\documentclass[%
+paper=a4
+,fontsize=11pt % common are 10, 11 or 12
+%,headings=big
+,parskip
+%,numbers=noendperiod % 2.3.1 vs 2.3.1. (no dot after the last chapter number)
+,twoside=true
+,toc=bibliography % Bibliography appears in Table of Contents (without a number)
+%,toc=listof % List of Figures and List of Tables appear in Table of Contents
+,version=last % Use latest version of the KOMA-Script
+,openany
+]{scrbook}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
@@ -21,6 +32,7 @@
 \usepackage{xspace}
 \usepackage{framed}
 \usepackage{appendix}
+\usepackage[section]{placeins}
 \usepackage[labelsep=period, labelfont=bf]{caption}
 % \usepackage{MnSymbol} % FOR BETTER? UNDERBRACES
 
