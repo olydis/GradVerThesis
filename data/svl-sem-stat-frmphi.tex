@@ -1,2 +1,45 @@
+%\input{data/autogen/staticFormula}
+% Inductive Semantics.sfrmphi'
 
-\input{data/autogen/staticFormula}
+\begin{mathpar}
+    \inferrule* [right=SfrmTrue]
+    {
+        ~
+    }
+    {
+        {A_s} \sfrmphi {\phiTrue}
+    }
+    
+    \inferrule* [right=SfrmEqual]
+    {
+        {A_s} \sfrme {e_1} \\
+        {A_s} \sfrme {e_2}
+    }
+    {
+        {A_s} \sfrmphi {\phiEq {${e_1}$} {${e_2}$}}
+    }
+    
+    \inferrule* [right=SfrmNEqual]
+    {
+        {A_s} \sfrme {e_1} \\
+        {A_s} \sfrme {e_2}
+    }
+    {
+        {A_s} \sfrmphi {\phiNeq {${e_1}$} {${e_2}$}}
+    }
+    
+    \inferrule* [right=SfrmAcc]
+    {
+        {A_s} \sfrme {e}
+    }
+    {
+        {A_s} \sfrmphi {\phiAcc {${e}$} {${f}$}}
+    }
+    
+    \inferrule* [right=SfrmSepOp]
+    {
+        A_s \sfrmphi \phi_1 \\ 
+        A_s \cup \staticFP {\phi_1} \sfrmphi \phi_2
+    }
+    {A_s \sfrmphi \phiCons{$\phi_1$}{$\phi_2$}}
+\end{mathpar}

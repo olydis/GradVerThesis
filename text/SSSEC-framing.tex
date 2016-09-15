@@ -1,52 +1,60 @@
+%% intro
 The integral advantage of IDF is the ability to use heap-dependent predicates in formulas.
-In case of \svlidf, this means that fields may be used in formulas.
-As illustrated in section \ref{ssec:implicit-dynamic-frames}, a formula must contain accessibility-predicates for all fields it references.
-Otherwise, one cannot reason safely about writes to the heap.
-% Accessibility-predicates are explicitly tracked as part of formulas and thus reflect a static
-In this section we will formalize the requirements 
-
-To guarantee safe reasoning about such formulas, they must contain accessibility predicates for all locations they are referencing.
-
-
-
-%% other stuff
-For future reference, we give further (non-syntactic) definitions:
-\begin{figure}[h]
-    \begin{align*}
-    	A_s    & \in \setSFootprint &  & =~~ \PP^{\setExpr \times \setFieldName} \\
-    	A_d    & \in \setDFootprint &  & =~~ \PP^{\setLoc \times \setFieldName} 
-    \end{align*}
-    \caption{\svlidf: Further Definitions}
-\end{figure}
-
+Accessibility-predicates are explicitly tracked as part of formulas and represent exclusive access to a certain field.
+As illustrated in section \ref{ssec:implicit-dynamic-frames} sound reasoning is only possible if a formula contains access $\ttt{acc}$ for all the fields it mentions.
+This property is called self-framing and will be formalized in this section.
 %An IDF assertion is self-framing if:
 %For any state in which the assertion is true,
 %it remains true if we replace the heap with any that agrees on the locations to which it requires permissions
 
-\svlidf uses the concepts of implicit dynamic frames to ensure that a statement can only access memory locations (more specifically: fields) which it is guaranteed to have exclusive access to.
-This is achieved by explicitly tracking access tokens $\phiAcc{\textit{<expression>}}{\textit{<field>}}$ as part of formulas throughout the entire program during verification.
-    
-The Hoare rules of \svlidf also make sure that access is never duplicated within or across stack frames, effectively ruling out concurrent access to any field during runtime.
+%% footprint
+To decide whether a formula contains sufficient access to be self-framing, we need to extract from it the set of fields that it has access to.
+This set is called footprint and has type $\setSFootprint \defeq \PP^{\setExpr \times \setFieldName}$.
+A function $\staticFP{\cdot} : \setFormula \rightarrow \setSFootprint$ obtaining a formulas footprint is defined in figure \ref{fig:sfp}.
+\begin{figure}[h]
+    \boxed{\staticFP {\phi} = A_s}
+    \input{data/svl-sem-stat-fp}
+    \caption{\svlidf: Static Footprint}
+    \label{fig:sfp}
+\end{figure}
 
-Implicit dynamic frames also allows static reasoning about the values of fields during verification, i.e. as part of verification formulas.
-In order to guarantee that such formulas always reflect the program state (preservation), formulas mentioning a certain field must also contain the access token to that very field:
-\begin{definition}[Self-Framing]
-    A formula is \textbf{self-framing} if it contains access to all fields it mentions.
-\end{definition}
+\begin{example}{Footprints of Formulas}
+\begin{flalign*}
+  	 & \staticFP{\phiCons{\phiEq{x}{3}}{\phiNeq{p.age}{24}}} = \emptyset                                                                                                                       \\
+  	 & \staticFP{\phiCons{\phiCons{\phiEq{x}{3}}{\phiAcc{p}{age}}}{\phiNeq{p.age}{24}}} = \{ \langle \ttt{p}, \ttt{age} \rangle \}                                                             \\
+  	 & \staticFP{\phiCons{\phiCons{\phiAcc{p}{age}}{\phiAcc{p}{name}}}{\phiAcc{x}{f}}} = \{ \langle \ttt{p}, \ttt{age} \rangle, \langle \ttt{p}, \ttt{name} \rangle, \langle \ttt{x}, \ttt{f} \rangle \}
+\end{flalign*}
+\end{example}
+% examples? more explanation?
 
-% EXAMPLE of verification without self-framing.
-
+With the notion of footprints, we can determine whether an expression is “framed” by a given footprint, i.e. whether the footprint contains all the fields the expression contains.
+We formalize this check using a predicate $\sfrme \subseteq \setSFootprint \times \setExpr$, defined in figure \ref{fig:svl-frme}.
 \begin{figure}
     \boxed{A_s \sfrme e}
     \input{data/svl-sem-stat-frme}
     \caption{\svlidf: Framing Expressions}
+    \label{fig:svl-frme}
 \end{figure}
 
+At last, we can define a predicate $\sfrmphi \subseteq \setSFootprint \times \setFormula$ that checks whether given footprint is sufficient to frame an entire formula, i.e. all the expressions the formula contains.
+Figure \ref{fig:svl-frmphi} formalizes the predicate.
 \begin{figure}
     \boxed{A_s \sfrmphi \phi}
     \input{data/svl-sem-stat-frmphi}
     \caption{\svlidf: Framing Formulas}
+    \label{fig:svl-frmphi}
 \end{figure}
+Note how \tset{SfrmSepOp} augments the footprint the right sub-formula is checked against using the footprint of the left sub-formula.
+This way, access predicates within a formula are able to frame expressions in the same formula, however only to the right.
+
+\begin{example}{Framing Formulas}
+    \begin{flalign*}
+    	\emptyset                                & \sfrmphi \phiNeq{p.age}{24}                            && \text{does not hold} \\
+    	\{ \langle \ttt{p}, \ttt{age} \rangle \} & \sfrmphi \phiNeq{p.age}{24}                            && \text{holds}         \\
+    	\emptyset                                & \sfrmphi \phiCons{\phiAcc{p}{age}}{\phiNeq{p.age}{24}} && \text{holds}         \\
+    	\emptyset                                & \sfrmphi \phiCons{\phiNeq{p.age}{24}}{\phiAcc{p}{age}} && \text{does not hold}
+    \end{flalign*}
+\end{example}
 
 We omit the emptyset... 
 
@@ -61,10 +69,5 @@ We omit the emptyset...
 
 \svl will thus only consider method contracts using self-framing and satisfiable formulas well-formed (see section \ref{sec:well-formedness}).
 
-\begin{figure}
-    \boxed{\staticFP {\phi} = A_s}
-    \input{data/svl-sem-stat-fp}
-    \caption{\svlidf: Static Footprint}
-\end{figure}
 
 %IS conservative approximation of formulas that are dynamically framed (not possible precisely anyway!)

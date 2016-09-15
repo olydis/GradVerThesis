@@ -1,43 +1,43 @@
 % Inductive Semantics.sfrmphi'
 \begin{mathpar}
-\inferrule* [Right=WFTrue]
+\inferrule* [right=WFTrue]
 {
     ~
 }
 {
-    {A} \sfrmphi {\phiTrue}
+    {A_s} \sfrmphi {\phiTrue}
 }
-\end{mathpar}
 
-\begin{mathpar}
-\inferrule* [Right=WFEqual]
+\inferrule* [right=WFEqual]
 {
-    {A} \sfrme {e_1} \\
-    {A} \sfrme {e_2}
+    {A_s} \sfrme {e_1} \\
+    {A_s} \sfrme {e_2}
 }
 {
-    {A} \sfrmphi {\phiEq {${e_1}$} {${e_2}$}}
+    {A_s} \sfrmphi {\phiEq {${e_1}$} {${e_2}$}}
 }
-\end{mathpar}
 
-\begin{mathpar}
-\inferrule* [Right=WFNEqual]
+\inferrule* [right=WFNEqual]
 {
-    {A} \sfrme {e_1} \\
-    {A} \sfrme {e_2}
+    {A_s} \sfrme {e_1} \\
+    {A_s} \sfrme {e_2}
 }
 {
-    {A} \sfrmphi {\phiNeq {${e_1}$} {${e_2}$}}
+    {A_s} \sfrmphi {\phiNeq {${e_1}$} {${e_2}$}}
 }
-\end{mathpar}
 
-\begin{mathpar}
-\inferrule* [Right=WFAcc]
+\inferrule* [right=WFAcc]
 {
-    {A} \sfrme {e}
+    {A_s} \sfrme {e}
 }
 {
-    {A} \sfrmphi {\phiAcc {${e}$} {${f}$}}
+    {A_s} \sfrmphi {\phiAcc {${e}$} {${f}$}}
 }
-\end{mathpar}
 
+\inferrule* [right=WFSepOp]
+{
+    A_s \sfrmphi \phi_1 \\ 
+    A_s \cup \staticFP {\phi_1} \sfrmphi \phi_2
+}
+{A_s \sfrmphi \phi_1 * \phi_2}
+\end{mathpar}
