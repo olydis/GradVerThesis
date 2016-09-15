@@ -1,6 +1,6 @@
 % MENTION that most of that stuff is completely redundant if soundness holds - and only used to prove just that!
 
-We define the small-step semantics $\sssem$ of \svlidf in terms of an inductively defined predicate $\sstep{\cdot}{\cdot} \subseteq \setProgramState \times \setProgramState$:
+We define the small-step semantics $\sssem$ of \svlidf in terms of an inductively defined function $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$:
 \begin{displaymath}
 \sssem(\pi) = \pi' \defiff \sstep{\pi}{\pi'}
 \end{displaymath}
@@ -15,6 +15,7 @@ Figure \ref{fig:svl-sem-dyn-sstep} shows the inductive rules.
 \end{figure}
 Note that right-associativity of \ttt{;} and termination of sequences with $\sSkip$ (see section \ref{sec:syntax}) obviates the need for dedicated sequence rules.
 
+Using inductive rules to define partial function may not result in more than one distinct deducible results given any parameters.
 \begin{lemma}[$\sssem$ Well-Defined]
-    The small-step semantics of \svlidf are well-defined.
+    The small-step semantics of \svlidf is well-defined.
 \end{lemma}
