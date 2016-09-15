@@ -1,9 +1,7 @@
 The set of program states is defined as $\setProgramState = \setHeap \times \setStack$ with
 \begin{align*}
-	H    & \in \setHeap       &  & =~~ \setLoc \rightharpoonup (\setClassName \times (\setFieldName \rightharpoonup \setVal)) \\
-	S    & \in \setStack      &  & ::= E \cdot S ~|~ \nil                                                                     \\
-	E    & \in \setStackEntry &  & =~~ \setVarEnv \times \setDFootprint \times \setStmt                                       \\
-	\rho & \in \setVarEnv     &  & =~~ \setVar \rightharpoonup \setVal
+	S & \in \setStack      &  & ::= E \cdot S ~|~ \nil                               \\
+	E & \in \setStackEntry &  & =~~ \setVarEnv \times \setDFootprint \times \setStmt
 \end{align*}
 
 \begin{comment}
