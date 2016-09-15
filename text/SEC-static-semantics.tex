@@ -1,21 +1,28 @@
+%% intro
 The static semantics of \svlidf consist of typing rules and a Hoare logic making use of those typing rules.
-All the rules are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field in the following typing rules.
+All the rules are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field or retrieve the contract of a called method.
 
-% TODO: \Gamma & \in \setTypeEnv    &  & =~~ \setVar \rightharpoonup \setType
+%% typing
+Figure \ref{fig:svl-sem-stat-typing} inductively defines a typing predicate $\sType{\cdot}{\cdot}{\cdot} \subseteq \setTypeEnv \times \setExpr \times \setType$ where
+$$\setTypeEnv \defeq \setVar \rightharpoonup \setType$$
 
 \begin{figure}[h]
     \boxed{\sType{\Gamma}{e}{T}}
     \input{data/svl-sem-stat-typing}
     \caption{\svlidf: Static Typing of Expressions}
+    \label{fig:svl-sem-stat-typing}
 \end{figure}
 
+%% Hoare logic
+Figure \ref{fig:svl-sem-stat-hoare} inductively defines a Hoare logic for \svlidf.
 \begin{figure}[h!]
     \boxed{\thoare {\Gamma} {\phi_{pre}} {s} {\phi_{post}}}
     \input{data/svl-sem-stat-hoare}
     \caption{\svlidf: Hoare Logic} 
+    \label{fig:svl-sem-stat-hoare}
 \end{figure}
 
-% TODO: Hoare logic ensures self-framing and prevents duplication (should be consequence of soundness)
+% TODO? Hoare logic ensures self-framing and prevents duplication (both should be consequence of soundness!)
 
 \begin{comment}
 Let $\wsp : \setStmt \rightarrow \PP(\setProgramState)$ be defined as
