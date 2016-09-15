@@ -8,25 +8,63 @@ This property is called self-framing and will be formalized in this section.
 %it remains true if we replace the heap with any that agrees on the locations to which it requires permissions
 
 %% footprint
-To decide whether a formula contains sufficient access to be self-framing, we need to extract from it the set of fields that it has access to.
-This set is called footprint and has type $\setSFootprint \defeq \PP^{\setExpr \times \setFieldName}$.
-A function $\staticFP{\cdot} : \setFormula \rightarrow \setSFootprint$ obtaining a formulas footprint is defined in figure \ref{fig:sfp}.
+A related concept, necessary for formalizing self-framing but also for the semantics of \svlidf in general, is the notion of footprints.
+The footprint of a formula is the set of fields it has access to, which can be interpreted in two ways.
+\begin{description}
+    \item[Static Footprint]~\\
+    Figure \ref{fig:sfp} defines $\staticFP{\cdot} : \setFormula \rightarrow \setSFootprint$, a function for obtaining static footprints where
+    \begin{displaymath}
+    \setSFootprint \defeq \PP^{\setExpr \times \setFieldName} 
+    \end{displaymath}
+    
+    Static footprints are required for static reasoning, mainly for determining whether a formula is self-framing.
+    Later, they will become helpful for formalizing the gradual Hoare logic of \gvlidf.
+    
+    \begin{example}{Static Footprints of Formulas}
+        \begin{alignat*}{2}
+        & \staticFP{\phiCons{\phiEq{x}{3}}{\phiNeq{p.age}{24}}} &&= \emptyset                                                                                                                       \\
+        & \staticFP{\phiCons{\phiCons{\phiEq{x}{3}}{\phiAcc{p}{age}}}{\phiNeq{p.age}{24}}} &&= \{ \langle \ttt{p}, \ttt{age} \rangle \}                                                             \\
+        & \staticFP{\phiCons{\phiCons{\phiAcc{p}{age}}{\phiAcc{p}{name}}}{\phiAcc{x}{f}}} &&= \{ \langle \ttt{p}, \ttt{age} \rangle, \langle \ttt{p}, \ttt{name} \rangle, \langle \ttt{x}, \ttt{f} \rangle \}
+        \end{alignat*}
+    \end{example}
+    
+    \item[Dynamic Footprint]~\\
+    Figure \ref{fig:dfp} defines $\dynamicFP{\cdot}{\cdot}{\cdot} : \setHeap \times \setVarEnv \times \setFormula \rightharpoonup \setSFootprint$, a function for obtaining dynamic footprints where
+    \begin{displaymath}
+    \setDFootprint \defeq \PP^{\setLoc \times \setFieldName} 
+    \end{displaymath}
+    
+    Dynamic footprints are required for the small-step semantics of \svlidf.
+    Note that the subtle difference of evaluating the expression (compared to static footprints) can have two effects:
+    First, evaluation might fail (e.g. due to accessing non-existing fields ir dereferencing null but also due to not returning a memory location $o$) which results in the partiality of the function.
+    Second, multiple syntactically distinct accessibility-predicates might result in one tuple for the dynamic footprint.
+    \begin{example}{Aliasing Access}\\
+        Let $H$ and $\rho$ be defined such that $a, b, c \in \setExpr$ all evaluate to the same memory location $o \in \setLoc$.
+        Then:
+        \begin{alignat*}{2}
+        & \staticFP{\phiCons{\phiAcc{a}{f}}{\phiCons{\phiAcc{b}{f}}{\phiAcc{c}{g}}}} &&= \{ \langle a, f \rangle, \langle b, f \rangle, \langle c, g \rangle \}\\
+        & \dynamicFP{H}{\rho}{\phiCons{\phiAcc{a}{f}}{\phiCons{\phiAcc{b}{f}}{\phiAcc{c}{g}}}} &&= \{ \langle o, f \rangle, \langle o, g \rangle \}
+        \end{alignat*}
+    \end{example}
+    
+    Note that this scenario violates the intuition behind the separating conjunction (introduced in section \ref{ssec:implicit-dynamic-frames}), which is supposed to guarantee that both “sides” of it have access to disjoint memory locations.
+    This principle is violated by above formula because of $\phiAcc{a}{f}$ and $\phiAcc{b}{f}$.
+    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated.
+\end{description}
 \begin{figure}[h]
     \boxed{\staticFP {\phi} = A_s}
     \input{data/svl-sem-stat-fp}
     \caption{\svlidf: Static Footprint}
     \label{fig:sfp}
 \end{figure}
+\begin{figure}[h]
+    \boxed{\dynamicFP {H} {\rho} {\phi} = A_d}
+    \input{data/svl-sem-dyn-fp}
+    \caption{\svlidf: Dynamic Footprint}
+    \label{fig:dfp}
+\end{figure}
 
-\begin{example}{Footprints of Formulas}
-\begin{flalign*}
-  	 & \staticFP{\phiCons{\phiEq{x}{3}}{\phiNeq{p.age}{24}}} = \emptyset                                                                                                                       \\
-  	 & \staticFP{\phiCons{\phiCons{\phiEq{x}{3}}{\phiAcc{p}{age}}}{\phiNeq{p.age}{24}}} = \{ \langle \ttt{p}, \ttt{age} \rangle \}                                                             \\
-  	 & \staticFP{\phiCons{\phiCons{\phiAcc{p}{age}}{\phiAcc{p}{name}}}{\phiAcc{x}{f}}} = \{ \langle \ttt{p}, \ttt{age} \rangle, \langle \ttt{p}, \ttt{name} \rangle, \langle \ttt{x}, \ttt{f} \rangle \}
-\end{flalign*}
-\end{example}
-% examples? more explanation?
-
+%% framing e
 With the notion of footprints, we can determine whether an expression is “framed” by a given footprint, i.e. whether the footprint contains all the fields the expression contains.
 We formalize this check using a predicate $\sfrme \subseteq \setSFootprint \times \setExpr$, defined in figure \ref{fig:svl-frme}.
 \begin{figure}
@@ -36,6 +74,7 @@ We formalize this check using a predicate $\sfrme \subseteq \setSFootprint \time
     \label{fig:svl-frme}
 \end{figure}
 
+%% framing phi
 At last, we can define a predicate $\sfrmphi \subseteq \setSFootprint \times \setFormula$ that checks whether given footprint is sufficient to frame an entire formula, i.e. all the expressions the formula contains.
 Figure \ref{fig:svl-frmphi} formalizes the predicate.
 \begin{figure}
@@ -56,6 +95,7 @@ This way, access predicates within a formula are able to frame expressions in th
     \end{flalign*}
 \end{example}
 
+%% self-framing
 We can now define self-framing as a special case of framing, namely framing without relying on an “external” footprint.
 \begin{definition}[Self-Framing Formula]
     A formula $\phi$ is \textbf{self-framing} iff

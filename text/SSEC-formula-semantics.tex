@@ -1,33 +1,21 @@
+Formula semantics of \svlidf only depend on the heap and on the top most stack frame of a program state (more specifically: the local variable environment and the accessible fields, but not the continuation statement).
+To drastically simplify notation, we will therefore define $\vDash \subseteq \setProgramState \times \setFormula$ (as postulated in section \ref{sec:a-statically-verified}) indirectly:
+\begin{mathpar}
+    \inferrule* [Right=EvalFrm]
+    {
+        \evalphi {\phi}
+    }
+    {
+        \evalphiGen{(H, (\rho, A, s) \cdot S)}{\phi}
+    }
+\end{mathpar}
 
-
-
+Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $\vDash \subseteq \setHeap \times \setVarEnv \times \setDFootprint \times \setFormula$.
 \begin{figure}
     \boxed{\evalphi \phi}
     \input{data/svl-sem-dyn-form}
     \caption{\svlidf: Evaluating Formulas}
+    \label{fig:svl-evalphi}
 \end{figure}
 
-\begin{figure}[h]
-    \begin{align*}
-    A_d    & \in \setDFootprint &  & =~~ \PP^{\setLoc \times \setFieldName} 
-    \end{align*}
-    \boxed{\dynamicFP {H} {\rho} {\phi} = A_d}
-    \input{data/svl-sem-dyn-fp}
-    \caption{\svlidf: Dynamic Footprint}
-    \label{fig:dfp}
-\end{figure}
-%IS conservative approximation of formulas that are dynamically framed (not possible precisely anyway!)
-
-\begin{figure}
-    \boxed{\evalphiGen {\pi} {\phi}}
-    \begin{mathpar}
-        \inferrule* [Right=EvalFrm]
-        {
-            \evalphi {\phi}
-        }
-        {
-            \evalgphiGen{(H, (\rho, A, s) \cdot S)}{\phi}
-        }
-    \end{mathpar}
-    \caption{\svlidf: Evaluating Formulas}
-\end{figure}
+% TODO: subtelties of EAAcc?

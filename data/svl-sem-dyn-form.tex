@@ -1,7 +1,45 @@
 % \input{data/autogen/dynamicFormula}
-\input{data/autogenx/dynamicFormula}
+
 
 \begin{mathpar}
+    \inferrule* [right=EATrue]
+    {
+        ~
+    }
+    {
+        \evalphix {H} {\rho} {A} {\phiTrue}
+    }
+    
+    \inferrule* [right=EAEqual]
+    {
+        \evalex {H} {\rho} {e_1} {v_1} \\
+        \evalex {H} {\rho} {e_2} {v_2} \\
+        {v_1} = {v_2}
+    }
+    {
+        \evalphix {H} {\rho} {A} {\phiEq {${e_1}$} {${e_2}$}}
+    }
+    
+    \inferrule* [right=EANEqual]
+    {
+        \evalex {H} {\rho} {e_1} {v_1} \\
+        \evalex {H} {\rho} {e_2} {v_2} \\
+        {v_1} \neq {v_2}
+    }
+    {
+        \evalphix {H} {\rho} {A} {\phiNeq {${e_1}$} {${e_2}$}}
+    }
+    
+    \inferrule* [right=EAAcc]
+    {
+        \evalex {H} {\rho} {e} {{o}} \\
+        \evalex {H} {\rho} {\edot{${e}$}{${f}$}} {v} \\
+        {\langle{o}, {f}\rangle} \in {A}
+    }
+    {
+        \evalphix {H} {\rho} {A} {\phiAcc {${e}$} {${f}$}}
+    }
+    
     \inferrule* [Right=EASepOp]
     {
         A_1 = A \backslash A_2 \\
