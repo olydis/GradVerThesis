@@ -133,6 +133,27 @@ This gradual partial function has desirable properties:
         \end{displaymath}
         is a sound gradual lifting of $P$.
     \end{lemma}
+    \begin{proof}~\\
+        Introduction
+        \begin{align*}
+        P(\phi_1, \phi_2)
+        &\overset{Introduction}{~\quad\implies\quad~} \exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2}\\
+        &\overset{Strength}{~\quad\implies\quad~} \exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi) \wedge \phiImplies{\phi}{\phi_2} \\
+        &\overset{}{~\quad\implies\quad~} \exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi}{\phi_2} \\
+        &\overset{}{~\quad\implies\quad~} \exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~  \gphiImplies{\grad{\phi_2}}{\phi_2} \\
+        &\overset{Def}{~\quad\implies\quad~} \grad{P}(\phi_1, \phi_2) \\
+        \end{align*}
+            
+        Monotonicity
+        \begin{align*}
+        \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}
+        &\overset{Def}{~\quad\implies\quad~} (\exists \grad{\phi}.~ \dgrad{P}(\grad{\phi_1}) = \grad{\phi} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        &\overset{Monotonicity}{~\quad\implies\quad~} (\exists \grad{\phi}, \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \grad{\phi} \mpt \grad{\phi'} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        &\overset{}{~\quad\implies\quad~} (\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        &\overset{}{~\quad\implies\quad~} (\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2'}})\\
+        &\overset{Def}{~\quad\implies\quad~} \grad{P}(\phi_1', \phi_2') \\
+        \end{align*}
+    \end{proof}
     
     This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
     Optimality of the deterministic lifting does not imply optimality of the obtained gradual lifting.

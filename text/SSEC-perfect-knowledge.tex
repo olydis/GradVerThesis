@@ -6,23 +6,52 @@
 \end{definition}
 
 Let ~$\sssem' : \setProgramState \rightharpoonup \setProgramState$~ be defined such that
-\begin{flalign*}
+\begin{flalign}
 \sssem'^s(\pi_1, \pi_2) ~\defiff~ \sssem^s(\pi_1, \pi_2) ~\wedge~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
-\end{flalign*}
+\label{frm:perf-def}
+\end{flalign}
 Intuitively, $\sssem'$ is the same as $\sssem$, but is artificially made undefined whenever there exists no Hoare rule that would be able to deduce static information about the execution.
 
 \begin{lemma}[Restricted Domain of Small-Step Semantics]
     Replacing the small-step semantics $\sssem$ of \svl with $\sssem'$ as defined above would have no observable effects.
 \end{lemma}
+\begin{proof}
+    \svl only ever executes a statement $s$ if it was successfully verified.
+    This means that there exists some Hoare derivation $\thoare{}{\phi_1}{s}{\phi_2}$ and a guarantee (due to the soundness of the verification logic) that $s$ will only ever be executed starting with program states satisfying $\phi_1$.
+    Thus, every for execution $\sssem^s(\pi_1, \pi_2)$, $\sssem'^s(\pi_1, \pi_2)$ must hold as well.
+\end{proof}
 
 Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total gradual lifting of $\sssem'$ that throws exceptions whenever all static derivations would be stuck:
-\begin{displaymath}
+\begin{align}
 \forall \grad{\pi} \in \setGProgramState.~ (\gamma(\grad{\pi}) \cap \dom{\sssem'} = \emptyset) \implies \gsssem(\grad{\pi}) \in \setProgramStateEx
-\end{displaymath}
+\label{frm:perf-ex}
+\end{align}
 
 \begin{theorem}[]
     If the gradual small-step semantics $\gsssem$ of \gvl is defined as above, then \gvl satisfies \tset{GDPreservation}.
 \end{theorem}
+\begin{proof}
+    To prove \tset{GDPreservation} we may assume:
+    \begin{align*}
+    \dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_1}}\\
+    \gsssem^{\grad{s}}(\grad{\pi_1}, \grad{\pi_2})\\
+    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
+    \end{align*}
+    Goal: 
+    \begin{align*}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \end{align*}
+    
+    Reversing formula \ref{frm:perf-ex} we can deduce that $\gamma(\grad{\pi_1}) \cap \dom{\sssem'} \neq \emptyset$, i.e.
+    \begin{displaymath}
+    \exists \pi_1 \in \gamma(\grad{\pi_1}), \pi \in \setProgramState.~ \sssem'(\pi_1) = \pi
+    \end{displaymath}
+    Iterating this reasoning we can deduce that
+    \begin{displaymath}
+    \exists \pi_1 \in \gamma(\grad{\pi_1}), \pi \in \setProgramState, s \in \gamma(\grad{s}).~ \sssem'^s(\pi_1, \pi)
+    \end{displaymath}
+    Using 
+\end{proof}
  
 \begin{comment} 
 MINUS:

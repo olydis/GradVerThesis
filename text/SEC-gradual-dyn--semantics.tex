@@ -22,7 +22,41 @@ Again, we define $\gsssem$ as an alias of $\gsstep{\cdot}{\cdot}$, but additiona
 \begin{lemma}[$\gsssem$ Well-Defined]
     The small-step semantics of \gvlidf is well-defined.
 \end{lemma}
+\begin{proof}
+    For $\gsssem$ to be well-defined, the inductive rules for $\gsstep{\cdot}{\cdot}$ may allow deducing at most one return value for every input.
+    For the most part, this is the case due to $\sssem$ being well-defined (see ???).
+    We show that the same is true for adjustments made in figure \ref{fig:gvl-sem-dyn-sstep}.
+    Note the adjustments do not change the fact that the inductive rules are syntax-directed.
+    
+    Rule \tset{\gradT SsCall} is deterministic:
+    $H, \rho, A, x, y, m, z, s, S$ are forwarded from the input, $\rho', A', r$ are uniquely determined by the premises.
+    
+    Rule \tset{\gradT SsCallFinish} is deterministic:
+    $H, \rho, x, A, A', s, S$ are forwarded from the input, $v_r$ is uniquely determined by the premises.
+\end{proof}
 
 \begin{lemma}[\gvlidf: Sound Lifting of Small-Step-Semantics]
     The lifting we propose is sound as defined in section \ref{sssec:lifting-partial-functions}.
 \end{lemma}
+\begin{proof}
+    For the rules copied from $\sstep{\cdot}{\cdot}$, the rules are trivially satisfied as there is no difference between gradual and non-gradual statements.
+    Precision is only meaningful for call statements, which are not handled by those rules.
+
+    
+    \tset{\gradT SsCall}
+        Introduction
+        For static precondition, \tset{\gradT SsCall} is identical to \tset{SsCall}.
+        
+        Monotonicity
+        Reducing the precision of the precondition results in all permissions being passed to the topmost stack frame.
+        Having more permissions than before cannot introduce runtime failures.
+        Succeeding executions will thus be observationally identical after reducing precision.
+        
+    \tset{\gradT SsCallFinish}
+        Introduction
+        For static postcondition, \tset{\gradT SsCallFinish} is identical to \tset{SsCallFinish}.
+        
+        Monotonicity
+        The return value of \tset{\gradT SsCallFinish} is independent of the postcondition thus monotonic w.r.t. to it.
+        In terms of definedness, reducing the precision of the postcondition cannot result in premises that were satisfied before to be unsatisfied.
+\end{proof}

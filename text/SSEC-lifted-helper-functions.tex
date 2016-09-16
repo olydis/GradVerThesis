@@ -27,7 +27,7 @@ We will thus identify the components the Hoare rules are made of (e.g. implicati
         & \dgrad{P}_{\phi_t}(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_{\phi_t}(\phi_1)}
         \end{alignat*}
         Then $\dgrad{P}_{\phi_t}$ is well-defined (modulo equivalence) and an optimal deterministic lifting of $P_{\phi_t}$.
-    \end{lemma}    
+    \end{lemma}
     We define a more intuitive notation that reflects the dual nature with \ttt{*}:
     \begin{displaymath}
     \wo{\grad{\phi}}{\phi_t} ~\defeq~ \dgrad{P}_{\phi_t}(\grad{\phi})
@@ -43,7 +43,7 @@ We will thus identify the components the Hoare rules are made of (e.g. implicati
     \begin{lemma}~\\
         Let $\dgrad{P}_x : \setGFormula \rightharpoonup \setGFormula$ be defined as
         \begin{alignat*}{2}
-        & \dgrad{P}_x(\phi_1)          & &= \underset{\phiImplies{}{}}{\max} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phi_2} \wedge x \not \in \FV(\phi_2)} ~\} \\
+        & \dgrad{P}_x(\phi_1)          & &= \underset{\phiImplies{}{}}{\max} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phi_2} \wedge x \not \in \FV(\phi_2) ~\} \\
         & \dgrad{P}_x(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_x(\phi_1)}
         \end{alignat*}
         Then $\dgrad{P}_x$ is well-defined (modulo equivalence) and an optimal deterministic lifting of $P_x$.
@@ -54,7 +54,7 @@ We will thus identify the components the Hoare rules are made of (e.g. implicati
     \end{alignat*}
     We further extend the function to deal with sets of variables element-wise
     \begin{alignat*}{2}
-    	 & \wo{\grad{\phi}}{\emptyset}        &  & ~\defeq~ \grad{\phi}                   & ~ \\
-    	 & \wo{\grad{\phi}}{(\{ x \} \cup X)} &  & ~\defeq~ \wo{(\wo{\grad{\phi}}{x})}{X} &
+    	 & \wo{\grad{\phi}}{\emptyset}        & & ~\defeq~ \grad{\phi}                   \\
+    	 & \wo{\grad{\phi}}{(\{ x \} \cup X)} & & ~\defeq~ \wo{(\wo{\grad{\phi}}{x})}{X}
     \end{alignat*}
 \end{description}

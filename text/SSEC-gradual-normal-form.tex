@@ -1,12 +1,14 @@
 %% motivation
-In section \ref{sssec:regular-conjunction} we showed that regular conjunction $\phiAnd{\cdot}{\cdot}$ is not expressible using existing syntax of \svlidf.
-Fortunately, $\phiAnd{\cdot}{\cdot} : \setGFormula \times \setGFormula \rightarrow \setGFormula$ is definable, as we will show in this section.
-Key to this definition is the existence of a normal form for partly unknown formulas $\withqm{\phi}$, that is free of accessibility-predicates.
-Having a regular conjunction at hand will prove useful for defining gradual liftings.
+In section \ref{sssec:regular-conjunction} we showed that regular non-separating conjunction ~$\phiAnd{$\cdot$}{$\cdot$}$~ is not expressible using existing syntax of \svlidf.
+Fortunately, the same is not true for \gvlidf:
+$$\phiAnd{$\cdot$}{$\cdot$} : \setGFormula \times \setGFormula \rightarrow \setGFormula$$
+is definable (and computable), as we will show in this section.
+Key to the definition is the existence of a normal form for partly unknown formulas $\withqm{\phi}$, that is free of accessibility-predicates.
+Having a non-separating conjunction at hand will prove useful for defining some gradual liftings.
 
 %% normal form
 \begin{theorem}[Gradual Normal Form]~\\
-    There exists a function $\snorm{\cdot} : \setFormula \rightarrow \setFormula$, such that
+    There exists a computable function $\snorm{\cdot} : \setFormula \rightarrow \setFormula$, such that
     \begin{description}
         \item[(a)] $\norm{\withqm{\phi}} \defeq \withqm{\snorm{\phi}}$ is equivalent to $\withqm{\phi}$ ~~~(for all $\phi \in \setFormula$)
         \item[(b)] $\phi \implies \snorm{\phi}$
@@ -15,9 +17,30 @@ Having a regular conjunction at hand will prove useful for defining gradual lift
     \end{description}
 \end{theorem}
 
-%% further use
-The gradual normal form is not only useful for the reason described above but also provides efficient implementations for a lot of concepts.
-For example, formula precision $\sqsubseteq$ is defined as comparing infinite sets...  is easily implementable
-
 %% regular conjunction
-TODO
+\begin{theorem}[Non-Separating Conjunction]~\\
+    Let $\phiAnd{$\cdot$}{$\cdot$} : \setGFormula \times \setGFormula \rightarrow \setGFormula$ be defined as 
+    \begin{displaymath}
+    \phiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$} ~\defeq~ \withqm{\phiCons{\snorm{\static{$\grad{\phi_1}$}}}{\snorm{\static{$\grad{\phi_2}$}}}}
+    \end{displaymath}
+    Then $\envs{\phiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$}} = \envs{\grad{\phi_1}} \cap \envs{\grad{\phi_2}}$
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+    \envs{\phiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$}}
+     &= \envs{\withqm{\phiCons{\snorm{\static{$\grad{\phi_1}$}}}{\snorm{\static{$\grad{\phi_2}$}}}}}\\
+     &= \{~ \pi \in \setProgramState ~|~ \evalgphiGen{\pi}{\withqm{\phiCons{\snorm{\static{$\grad{\phi_1}$}}}{\snorm{\static{$\grad{\phi_2}$}}}} } ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ \exists \phi \in \gamma(\withqm{\phiCons{\snorm{\static{$\grad{\phi_1}$}}}{\snorm{\static{$\grad{\phi_2}$}}}}).~ \evalphiGen{\pi}{\phi} ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ \exists \phi \in \setFormulaB.~ \phiImplies{\phi}{\phiCons{\snorm{\static{$\grad{\phi_1}$}}}{\snorm{\static{$\grad{\phi_2}$}}}} ~\wedge~ \evalphiGen{\pi}{\phi} ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ \exists \phi \in \setFormulaB.~ \phiImplies{\phi}{\snorm{\static{$\grad{\phi_1}$}}} ~\wedge~ \phiImplies{\phi}{\snorm{\static{$\grad{\phi_2}$}}} ~\wedge~ \evalphiGen{\pi}{\phi} ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ \exists \phi \in \setFormulaB.~ \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_1}$}}}) ~\wedge~ \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_2}$}}}) ~\wedge~ \evalphiGen{\pi}{\phi} ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ \exists \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_1}$}}}) \cap \gamma(\withqm{\snorm{\static{$\grad{\phi_2}$}}}).~ \evalphiGen{\pi}{\phi} ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ (\exists \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_1}$}}}).~ \evalphiGen{\pi}{\phi}) ~\wedge~ (\exists \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_2}$}}}).~ \evalphiGen{\pi}{\phi}) ~\}\\
+     &= \{~ \pi \in \setProgramState ~|~ \exists \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_1}$}}}).~ \evalphiGen{\pi}{\phi} ~\} \cap \{~ \pi \in \setProgramState ~|~ \exists \phi \in \gamma(\withqm{\snorm{\static{$\grad{\phi_2}$}}}).~ \evalphiGen{\pi}{\phi} ~\}\\
+     &= \envs{\withqm{\snorm{\static{$\grad{\phi_1}$}}}} \cap \envs{\withqm{\snorm{\static{$\grad{\phi_2}$}}}}
+    \end{align*}
+\end{proof}
+
+%% further use
+The normal form is not only useful for the defining a non-separating conjunction but also provides efficient implementations for a lot of concepts.
+For example, gradual formula precision $\sqsubseteq$ is originally defined as comparing (possibly infinite) concretizations for inclusion. However, with above theorem the problem is reducible to checking an implication.
