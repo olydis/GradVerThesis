@@ -19,10 +19,103 @@ Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $\vDash
 \end{figure}
 
 % TODO: subtelties of EAAcc?
-% SEPOp
+% SEPOp, making aliasing acc false, identical acc thus unsatisfiable
 
+We define implication analogous to the generic definition postulated in section \ref{sec:a-statically-verified}.
+\begin{definition}[\svlidf: Formula Implication]
+    \begin{displaymath}
+    \phiImplies{\phi_1}{\phi_2} ~\defiff~ 
+    \forall H \in \setHeap,\, \rho \in \setVarEnv,\, A \in \setDFootprint.~ 
+    \evalphi{\phi_1} \implies \evalphi{\phi_2}
+    \end{displaymath}
+\end{definition}
 
-
-% RULES arising from this semantics!!! e.g. implication:
-% - a * b => a
-% - a !=> a * a
+A number of rules arise naturally from this semantical definition of implication.
+\begin{example}{\svlidf: Derivable Rules}
+    \begin{description}
+        \item[Decomposition]
+        \begin{mathpar}
+            \inferrule* [Right=FrmDecomp1]
+            {
+                ~
+            }
+            {
+                \phiImplies
+                {\phiCons{\phi_1}{\phi_2}}
+                {\phi_1}
+            }
+        \end{mathpar}
+        \begin{mathpar}
+            \inferrule* [Right=FrmDecomp2]
+            {
+                ~
+            }
+            {
+                \phiImplies
+                {\phiCons{\phi_1}{\phi_2}}
+                {\phi_2}
+            }
+        \end{mathpar}
+        
+        \item[Transitivity]
+        \begin{mathpar}
+            \inferrule* [Right=FrmTrans]
+            {
+                \phiImplies
+                {\phi_a}
+                {\phi_b}\\
+                \phiImplies
+                {\phi_b}
+                {\phi_c}
+            }
+            {
+                \phiImplies
+                {\phi_a}
+                {\phi_c}
+            }
+        \end{mathpar}
+        \begin{mathpar}
+        \inferrule* [Right=FrmTransEq]
+            {
+                ~
+            }
+            {
+                \phiImplies
+                {\phiCons{\phiEq{$a$}{$b$}}{\phiEq{$b$}{$c$}}}
+                {\phiEq{$a$}{$c$}}
+            }
+        \end{mathpar}
+        
+        \item[Aliasing Prevention]
+        \begin{mathpar}
+            \inferrule* [Right=FrmAlias]
+            {
+                ~
+            }
+            {
+                \phiImplies
+                {\phiCons{\phiAcc{$e_1$}{$f$}}{\phiAcc{$e_2$}{$f$}}}
+                {\phiNeq{$e_1$}{$e_2$}}
+            }
+        \end{mathpar}
+        
+        \item[Conjunction]
+        \begin{mathpar}
+            \inferrule* [Right=FrmComp]
+            {
+                \phiImplies
+                {\phi}
+                {\phi_a}\\
+                \phiImplies
+                {\phi}
+                {\phi_b}\\
+                \forall H \in \setHeap,\, \rho \in \setVarEnv.~ \dynamicFP{H}{\rho}{\phi_a} \cap \dynamicFP{H}{\rho}{\phi_b} = \emptyset
+            }
+            {
+                \phiImplies
+                {\phi}
+                {\phiCons{$\phi_a$}{$\phi_b$}}
+            }
+        \end{mathpar}
+    \end{description}
+\end{example}
