@@ -52,7 +52,7 @@
     
     \inferrule* [Right=\dgradT HCall]
     {
-        \wo {\wo {\grad{\phi}} {x}} {\staticFP{\grad{\phi_p}}_{\Gamma, y, z'}} = \grad{\phi'}\\
+        \wo {\wo {\grad{\phi}} {x}} {\grad{\phi_p}} = \grad{\phi'}\\
         \sType {\Gamma} {\ex{${y}$}} {{C}} \\
         {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {$\grad{\phi_{pre}}$} {$\grad{\phi_{post}}$}}$} {${\usc}$}}} \\
         \sType {\Gamma} {\ex{${x}$}} {T_r} \\
@@ -77,7 +77,7 @@
     \inferrule* [Right=\dgradT HRelease]
     {
         \gphiImpliesEv{\grad{\phi}}{\phi_r}{\grad{\phi'}}\\
-        {\wo {\grad{\phi'}} {\staticFP{\phi_r}}} = \grad{\phi''}
+        {\wo {\grad{\phi'}} {\phi_r}} = \grad{\phi''}
     }
     {
         \dgthoare {\Gamma} {\grad{\phi}} {{\sRelease {${\phi_r}$}}} {\grad{\phi'}}
@@ -97,7 +97,7 @@
         \sfrmphi {\phi} \\
         \gphiImpliesEv{\grad{\phi_f}}{\phi}{\grad{\phi_f'}}\\
         \wo {\grad{\phi_f'}} {\staticFP{\phi}} = \grad{\phi_r}\\
-        \wo {\wo {\grad{\phi_f'}} {\staticFP{\grad{\phi_r}}}}{(\FV(\grad{\phi_f'}) \backslash \FV(\phi))} = \grad{\phi'}\\
+        \wo {\wo {\grad{\phi_f'}} {\static{$\grad{\phi_r}$}}}{(\FV(\grad{\phi_f'}) \backslash \FV(\phi))} = \grad{\phi'}\\
         \neg {\writesTo({\FV(\phi)}, {s})} \\
         \dgthoare {\Gamma} {\grad{\phi_r}} {s} {\grad {\phi_r'}}
     }

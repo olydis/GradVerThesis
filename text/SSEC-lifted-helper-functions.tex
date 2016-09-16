@@ -1,3 +1,35 @@
-Back in section \ref{sssec:examples-lift-determ} we established that inductively defined predicates can be lifted rule-wise and that composite rules can be lifted by lifting them piecewise and composing the resulting functions (lemma \ref{lemma:det-lift-comp}).
+%% Intro
+In section \ref{sssec:examples-lift-determ} we established how inductively defined predicates can be lifted rule-wise and how composite rules can be lifted by lifting them piecewise and composing the resulting functions (lemma \ref{lemma:det-lift-comp}).
+We will thus identify the components the Hoare rules are made of (e.g. implications and self-framing checks) and give sound deterministic liftings for them.
 
-% TODO
+\begin{description}
+    \item[Implication of fixed static formula: $P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phi_t} \wedge \phi_1 = \phi_2$]~\\
+    This predicate is not only a component of some rules but also the overall shape of \tset{HAssert}.
+    \begin{lemma}~\\
+        Let $\dgrad{P}_{\phi_t} : \setGFormula \rightharpoonup \setGFormula$ be defined as
+        \begin{alignat*}{2}
+        	 & \dgrad{P}_{\phi_t}(\phi)          & &= \phi  \quad\text{if } \phiImplies{\phi}{\phi_t} \\
+        	 & \dgrad{P}_{\phi_t}(\withqm{\phi}) & &= \withqm{\phiCons{\norms{\phi}}{\norms{\phi_t}}}
+        \end{alignat*}
+        Then $\dgrad{P}_{\phi_t}$ is an optimal deterministic lifting of $P_{\phi_t}$.
+    \end{lemma}
+    We define a more intuitive notation that corresponds closely with the original static predicate:
+    \begin{displaymath}
+    \gphiImpliesEv{\grad{\phi_1}}{\phi_t}{\grad{\phi_2}} ~\defiff~ \dgrad{P}_{\phi_t}(\grad{\phi_1}) = \grad{\phi_2}
+    \end{displaymath}
+    
+    \item[Formula extraction: $P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$} \wedge \sfrmphi \phi_2}$]~\\
+    This predicate is a component of \tset{HFieldAssign}, \tset{HCall}, \tset{HHold} and also is the overall shape of \tset{HRelease}.
+    \begin{lemma}~\\
+        Let $\dgrad{P}_{\phi_t} : \setGFormula \rightharpoonup \setGFormula$ be defined as
+        \begin{alignat*}{2}
+        & \dgrad{P}_{\phi_t}(\phi_1)          & &= \underset{\phiImplies{}{}}{\max} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~\} \\
+        & \dgrad{P}_{\phi_t}(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_{\phi_t}(\phi_1)}
+        \end{alignat*}
+        Then $\dgrad{P}_{\phi_t}$ is well-defined (modulo equivalence) and an optimal deterministic lifting of $P_{\phi_t}$.
+    \end{lemma}
+    We define a more intuitive notation that reflects the dual nature with \ttt{*}:
+    \begin{displaymath}
+    \wo{\grad{\phi}}{\phi_t} ~\defeq~ \dgrad{P}_{\phi_t}(\grad{\phi})
+    \end{displaymath}
+\end{description}
