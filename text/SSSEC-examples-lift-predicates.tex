@@ -69,7 +69,15 @@ For the following examples we assume that gradual formulas were defined as in se
 \end{lemma}
 
 Note that the definition of lifted evaluation was lifted only w.r.t. the second parameter.
-While theoretically possible, there is no point in lifting evaluation w.r.t. the program state since gradual program state has no impact on evaluation (see \ref{sec:gradual-program-state}).
+There is no point in lifting evaluation w.r.t. the program state since gradual program state has no impact on evaluation (see \ref{sec:gradual-program-state}).
+We define denotational semantics of gradual formulas analogous to the non-gradual variant (see definition \ref{def:frm-den-sem}):
+\begin{definition}[Denotational Formula Semantics $\envs{\cdot}$ of Gradual Formulas]~\\
+    \label{def:gfrm-den-sem}
+    Let $\envs{\cdot} : \setGFormula \rightarrow \PP^{\setProgramState}$ be defined as
+    \begin{displaymath}
+    \envs{\grad{\phi}} \defeq \{~ \pi \in \setProgramState ~|~ \evalgphiGen{\pi}{\grad{\phi}} ~\}
+    \end{displaymath}
+\end{definition}
 
 %% composite
 \begin{lemma}[Sound Lifting of Composite Predicate]~\\

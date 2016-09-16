@@ -21,14 +21,8 @@ Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $\vDash
 % TODO: subtelties of EAAcc?
 % SEPOp, making aliasing acc false, identical acc thus unsatisfiable
 
-We define implication analogous to the generic definition postulated in section \ref{sec:a-statically-verified}.
-\begin{definition}[\svlidf: Formula Implication]
-    \begin{displaymath}
-    \phiImplies{\phi_1}{\phi_2} ~\defiff~ 
-    \forall H \in \setHeap,\, \rho \in \setVarEnv,\, A \in \setDFootprint.~ 
-    \evalphi{\phi_1} \implies \evalphi{\phi_2}
-    \end{displaymath}
-\end{definition}
+We assume that denotational semantics $\envs{\cdot}$, implication and satisfiability are defined as described in section \ref{sec:a-statically-verified}.
+
 
 A number of rules arise naturally from this semantical definition of implication.
 \begin{example}{\svlidf: Derivable Rules}

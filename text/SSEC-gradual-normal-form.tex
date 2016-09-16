@@ -1,0 +1,23 @@
+%% motivation
+In section \ref{sssec:regular-conjunction} we showed that regular conjunction $\phiAnd{\cdot}{\cdot}$ is not expressible using existing syntax of \svlidf.
+Fortunately, $\phiAnd{\cdot}{\cdot} : \setGFormula \times \setGFormula \rightarrow \setGFormula$ is definable, as we will show in this section.
+Key to this definition is the existence of a normal form for partly unknown formulas $\withqm{\phi}$, that is free of accessibility-predicates.
+Having a regular conjunction at hand will prove useful for defining gradual liftings.
+
+%% normal form
+\begin{theorem}[Gradual Normal Form]~\\
+    There exists a function $\snorm{\cdot} : \setFormula \rightarrow \setFormula$, such that
+    \begin{description}
+        \item[(a)] $\norm{\withqm{\phi}} \defeq \withqm{\snorm{\phi}}$ is equivalent to $\withqm{\phi}$ ~~~(for all $\phi \in \setFormula$)
+        \item[(b)] $\phi \implies \snorm{\phi}$
+        \item[(c)] $\snorm{\phi}$ contains no accessibility-predicates
+        \item[(d)] $\withqm{\phi_1} \sqsubseteq \withqm{\phi_2}  \quad\iff\quad  \snorm{\phi_1} \implies \snorm{\phi_2}$
+    \end{description}
+\end{theorem}
+
+%% further use
+The gradual normal form is not only useful for the reason described above but also provides efficient implementations for a lot of concepts.
+For example, formula precision $\sqsubseteq$ is defined as comparing infinite sets...  is easily implementable
+
+%% regular conjunction
+TODO

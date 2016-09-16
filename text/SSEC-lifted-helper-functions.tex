@@ -18,7 +18,7 @@ We will thus identify the components the Hoare rules are made of (e.g. implicati
     \gphiImpliesEv{\grad{\phi_1}}{\phi_t}{\grad{\phi_2}} ~\defiff~ \dgrad{P}_{\phi_t}(\grad{\phi_1}) = \grad{\phi_2}
     \end{displaymath}
     
-    \item[Formula extraction: $P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$} \wedge \sfrmphi \phi_2}$]~\\
+    \item[Formula extraction: $P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~~\wedge~~ \sfrmphi \phi_2$]~\\
     This predicate is a component of \tset{HFieldAssign}, \tset{HCall}, \tset{HHold} and also is the overall shape of \tset{HRelease}.
     \begin{lemma}~\\
         Let $\dgrad{P}_{\phi_t} : \setGFormula \rightharpoonup \setGFormula$ be defined as
@@ -27,9 +27,34 @@ We will thus identify the components the Hoare rules are made of (e.g. implicati
         & \dgrad{P}_{\phi_t}(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_{\phi_t}(\phi_1)}
         \end{alignat*}
         Then $\dgrad{P}_{\phi_t}$ is well-defined (modulo equivalence) and an optimal deterministic lifting of $P_{\phi_t}$.
-    \end{lemma}
+    \end{lemma}    
     We define a more intuitive notation that reflects the dual nature with \ttt{*}:
     \begin{displaymath}
     \wo{\grad{\phi}}{\phi_t} ~\defeq~ \dgrad{P}_{\phi_t}(\grad{\phi})
     \end{displaymath}
+    We extend the domain of $\wo{}{}$ to deal with gradual parameters:
+    \begin{displaymath}
+    \wo{\grad{\phi}}{\withqm{\phi_t}} ~\defeq~ \wo{\grad{\phi}}{\static{$\phi$}}
+    \end{displaymath}
+    Formally, this extension soundly lifts the function w.r.t. its second parameter.
+        
+    \item[Variable extraction: $P_x(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phi_2} ~~\wedge~~ x \not \in \FV(\phi_2) ~~\wedge~~ \sfrmphi \phi_2$]~\\
+    This predicate is a component of \tset{HAlloc}, \tset{HVarAssign}, \tset{HReturn}, \tset{HCall} and in a sense \tset{HHold} (the equality between the free variable sets can be reformulated as repeated application of $P_x$).
+    \begin{lemma}~\\
+        Let $\dgrad{P}_x : \setGFormula \rightharpoonup \setGFormula$ be defined as
+        \begin{alignat*}{2}
+        & \dgrad{P}_x(\phi_1)          & &= \underset{\phiImplies{}{}}{\max} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phi_2} \wedge x \not \in \FV(\phi_2)} ~\} \\
+        & \dgrad{P}_x(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_x(\phi_1)}
+        \end{alignat*}
+        Then $\dgrad{P}_x$ is well-defined (modulo equivalence) and an optimal deterministic lifting of $P_x$.
+    \end{lemma}
+    We extend the domain of the extraction function $\wo{}{}$ to deal with variables:
+    \begin{alignat*}{2}
+        & \wo{\grad{\phi}}{x} ~\defeq~ \dgrad{P}_x(\grad{\phi}) & ~
+    \end{alignat*}
+    We further extend the function to deal with sets of variables element-wise
+    \begin{alignat*}{2}
+    	 & \wo{\grad{\phi}}{\emptyset}        &  & ~\defeq~ \grad{\phi}                   & ~ \\
+    	 & \wo{\grad{\phi}}{(\{ x \} \cup X)} &  & ~\defeq~ \wo{(\wo{\grad{\phi}}{x})}{X} &
+    \end{alignat*}
 \end{description}

@@ -105,29 +105,34 @@ Assumptions about \svl:
     \end{displaymath}
     that decides, whether a formula is satisfied given a concrete program state.
     
+    From this predicate we can derive a number of concepts:
+    
+    \begin{definition}[Denotational Formula Semantics $\envs{\cdot}$]~\\
+        \label{def:frm-den-sem}
+        Let $\envs{\cdot} : \setFormula \rightarrow \PP^{\setProgramState}$ be defined as
+        \begin{displaymath}
+        \envs{\phi} \defeq \{~ \pi \in \setProgramState ~|~ \evalphiGen{\pi}{\phi} ~\}
+        \end{displaymath}
+    \end{definition}
+        
     % EXAMPLES examples examples
     
-    We can derive a notion of satisfiability, implication and equivalence from this evaluation predicate.
-    
     \begin{definition}[Formula Satisfiability]~\\
-        A formula $\phi$ is \textbf{satisfiable} iff
-        \begin{displaymath}
-        \exists \pi \in \setProgramState.~ \evalphiGen{\pi}{\phi}
-        \end{displaymath}
+        A formula $\phi$ is \textbf{satisfiable} iff $$\envs{\phi} \neq \emptyset$$
         Let $\setFormulaA \subseteq \setFormula$ be the set of satisfiable formulas.
     \end{definition}
     
     \begin{definition}[Formula Implication]~\\
         A formula $\phi_1$ \textbf{implies} formula $\phi_2$ (written $\phiImplies{\phi_1}{\phi_2}$) iff
         \begin{displaymath}
-        \forall \pi \in \setProgramState.~ \evalphiGen{\pi}{\phi_1} \implies \evalphiGen{\pi}{\phi_2}
+        \envs{\phi_1} \subseteq \envs{\phi_2}
         \end{displaymath}
     \end{definition}
     
     \begin{definition}[Formula Equivalence]~\\
         Two formulas $\phi_1$ and $\phi_2$ are \textbf{equivalent} (written $\phi_1 \equiv \phi_2$) iff
         \begin{displaymath}
-        \phiImplies{\phi_1}{\phi_2} ~~\wedge~~ \phiImplies{\phi_2}{\phi_1}
+        \envs{\phi_1} = \envs{\phi_2}
         \end{displaymath}
     \end{definition} 
     

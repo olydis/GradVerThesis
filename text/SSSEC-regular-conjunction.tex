@@ -1,0 +1,35 @@
+%% motivation
+The syntax of \svlidf does not include a regular (non-separating) conjunction operator $\phiAnd{\cdot}{\cdot}$.
+It proves useful under some circumstances (e.g. to simply combine the knowledge of several formulas into one formula), but would complicate formula semantics and subsequent reasoning significantly.
+In this section we will show that there is also no way of defining the operator in terms of existing syntax, i.e. as syntactic sugar.
+
+%% def
+Intuitively, we expect a conjunction to be satisfied by a program environment iff both of its operands are satisfied by the same program environment.
+This intuition can be formalized as
+\begin{displaymath}
+\envs{\phiAnd{$\phi_1$}{$\phi_2$}} = \envs{\phi_1} \cap \envs{\phi_2}
+\end{displaymath}
+
+%% example
+\begin{example}{Tricky Access}
+    Consider $\phi \defeq \phiAnd{\phiAcc{a}{f}}{\phiAcc{b}{f}}$.
+    According to above equation, $\phi$ is satisfied by an environment $\pi$, if it contains access to $\ttt{a.f}$ and $\ttt{b.f}$.
+    Since we want to define $\phiAnd{\cdot}{\cdot}$ in terms of existing syntax, it should be possible to define $\phi$ using that syntax.
+    
+    Attempt:
+    We can prove that
+    \begin{displaymath}
+    \phi_1 = \phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}
+    \end{displaymath}
+    and
+    \begin{displaymath}
+    \phi_2 = \phiCons{\phiEq{a}{b}}{\phiAcc{b}{f}}
+    \end{displaymath}
+    are formulas that would imply $\phi$ and that there exist no larger formulas (w.r.t. $\phiImplies{}{}$) with that property.
+    
+    Unfortunately, neither $\phi_1$ nor $\phi_2$ are implied by $\phi$, which means that $\phi \not \in \setFormula$.
+\end{example}
+
+Above examples proves by shows that $\phiAnd{\cdot}{\cdot}$ cannot be defined using existing syntax of \svlidf.
+The fundamental problem is the linear nature of accessibility-predicates, which makes explicit whether certain memory locations alias or not.
+Therefore, any formula giving access to fields $\ttt{a.f}$ and $\ttt{b.f}$ will always imply either $\phiEq{a}{b}$ or $\phiNeq{a}{b}$ but never be unspecific about it, as would be necessary in the example above.
