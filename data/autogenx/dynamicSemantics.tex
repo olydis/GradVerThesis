@@ -1,6 +1,6 @@
 % Inductive Semantics.dynSem
 \begin{mathpar}
-\inferrule* [Right=ESSkip]
+\inferrule* [Right=SsSkip]
 {
     ~
 }
@@ -8,7 +8,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sSkip}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho}, {A}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESFieldAssign]
+\inferrule* [Right=SsFieldAssign]
 {
     \evalex {H} {\rho} {\ex{${x}$}} {{o}} \\
     \evalex {H} {\rho} {\ex{${y}$}} {v_y} \\
@@ -19,7 +19,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sFieldAssign {${x}$} {${f}$} {${y}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H'}, {{\langle{{\rho}, {A}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESVarAssign]
+\inferrule* [Right=SsVarAssign]
 {
     \evalex {H} {\rho} {e} {v} \\
     {\rho'} = {{\rho}[{x} \mapsto {v}]}
@@ -28,7 +28,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sVarAssign {${x}$} {${e}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho'}, {A}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESAlloc]
+\inferrule* [Right=SsAlloc]
 {
     {o} \not\in \dom{{H}} \\
     {\fields{{C}}} = {{\overline{\field{$T$}{$f$}}}} \\
@@ -40,7 +40,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sAlloc {${x}$} {${C}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H'}, {{\langle{{\rho'}, {A'}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESReturn]
+\inferrule* [Right=SsReturn]
 {
     \evalex {H} {\rho} {\ex{${x}$}} {v_x} \\
     {\rho'} = {{\rho}[{\eresult} \mapsto {v_x}]}
@@ -49,7 +49,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sReturn {${x}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho'}, {A}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESCall]
+\inferrule* [Right=SsCall]
 {
     \evalex {H} {\rho} {\ex{${y}$}} {{o}} \\
     \evalex {H} {\rho} {\ex{${z}$}} {v} \\
@@ -63,7 +63,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho'}, {A'}}, {r}\rangle} \cdot {{\langle{{\rho}, {{A} \backslash {A'}}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}}\rangle} \cdot {S}}}\rangle}
 }
 
-\inferrule* [Right=ESCallFinish]
+\inferrule* [Right=SsCallFinish]
 {
     \evalex {H} {\rho} {\ex{${y}$}} {{o}} \\
     {H(o)} = {{\langle{C}, {\usc}\rangle}} \\
@@ -75,7 +75,7 @@
     \sstep {\langle{H}, {{\langle{{\rho'}, {A'}}, {\sSkip}\rangle} \cdot {{\langle{{\rho}, {A}}, {\sSeq{${\sCall {${x}$} {${y}$} {${m}$} {${z}$}}$}{${s}$}}\rangle} \cdot {S}}}\rangle} {\langle{H}, {{\langle{{{\rho}[{x} \mapsto {v_r}]}, {{A} \cup {A'}}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESAssert]
+\inferrule* [Right=SsAssert]
 {
     \evalphix {H} {\rho} {A} {\phi}
 }
@@ -83,7 +83,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sAssert {${\phi}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho}, {A}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESRelease]
+\inferrule* [Right=SsRelease]
 {
     \evalphix {H} {\rho} {A} {\phi} \\
     {A'} = {{A} \backslash {\dynamicFP {H} {\rho} {\phi}}}
@@ -92,7 +92,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sRelease {${\phi}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho}, {A'}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESDeclare]
+\inferrule* [Right=SsDeclare]
 {
     {\rho'} = {{\rho}[{x} \mapsto {\defaultValue{${T}$}}]}
 }
@@ -100,7 +100,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sDeclare {${T}$} {${x}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho'}, {A}}, {s}\rangle} \cdot {S}}\rangle}
 }
 
-\inferrule* [Right=ESHold]
+\inferrule* [Right=SsHold]
 {
     \evalphix {H} {\rho} {A} {\phi} \\
     {A'} = {\dynamicFP {H} {\rho} {\phi}}
@@ -109,7 +109,7 @@
     \sstep {\langle{H}, {{\langle{{\rho}, {A}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}}\rangle} \cdot {S}}\rangle} {\langle{H}, {{\langle{{\rho}, {{A} \backslash {A'}}}, {\overline{s'}}\rangle} \cdot {{\langle{{\rho}, {A'}}, {\sSeq{${\sHold {${\phi}$} {${s'}$}}$}{${s}$}}\rangle} \cdot {S}}}\rangle}
 }
 
-\inferrule* [Right=ESHoldFinish]
+\inferrule* [Right=SsHoldFinish]
 {
     ~
 }

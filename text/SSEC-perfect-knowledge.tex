@@ -116,10 +116,16 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
     \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
     \label{frm:tmp14}
     \end{align}
-    For the goal to hold we would require $\grad{\phi} \mpt \grad{\phi_2}$ which we will prove via case-analysis:
-    
-    
-    Now, using monotonicity of deterministic liftings we can use (\phi_1 \mpt \grad{\phi_1}, see ) to derive
+    Now, apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can use $\envs{\phi_1} \subseteq \envs{\grad{\phi_1}}$ to derive
+    \begin{align}
+    \envs{\grad{\phi}} \subseteq \envs{\grad{\phi_2}}
+    \label{frm:tmp15}
+    \end{align}
+    and therefore
+    \begin{align}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \label{frm:tmp16}
+    \end{align}
 \end{proof}
  
 \begin{comment} 

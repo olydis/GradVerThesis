@@ -6,10 +6,25 @@ We use arrow notation as we believe it is more readable for inductive rules.
 \begin{displaymath}
 \sssem(\pi) = \pi' \defiff \sstep{\pi}{\pi'}
 \end{displaymath}
-Using inductive rules to define a partial function, we have to make sure that only one result is deducible for every input.
+Using inductive rules to define a partial function, we have to make sure that at most one result is deducible for every input.
 \begin{lemma}[$\sssem$ Well-Defined]
     The small-step semantics of \svlidf is well-defined.
 \end{lemma}
+\begin{proof}
+    For $\sssem$ to be well-defined, at most one result can be deducible per input.
+    The rules in figure \ref{fig:svl-sem-dyn-sstep} are syntax directed, so we can focus on individual rules when checking for determinism.
+    This can be done by looking at the source of all variables used to construct return values (i.e. the variables used on the right hand side of $\sstep{}{}$ in the conclusion).
+    All those variables must either be drawn directly from the input or be uniquely specified using premises.
+    
+    \tset{\gradT SsSkip}
+    $H, \rho, A, s, S$ are directly drawn from the input.
+    
+    \tset{\gradT SsFieldAssign}
+    $\rho, A, s, S$ are directly drawn from the input, $H'$ is defined using premises and depends on the uniqueness of $H, o, f, v_y$.
+    These are drawn from input or are result of expression evaluation which is deterministic.
+    
+    The same approach can be used for all remaining rules.
+\end{proof}
 
 \begin{figure}
     \boxed{\sstep{\pi}{\pi}}

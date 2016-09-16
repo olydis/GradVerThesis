@@ -8,6 +8,31 @@
     \end{displaymath}
     is a sound deterministic lifting of $P_3(\phi_1, \phi_3) = \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)$.
 \end{lemma}
+\begin{proof}
+    Introduction
+    \begin{align*}
+    P_3(\phi_1, \phi_3)
+    & \overset{}{~\quad\quad\implies\quad\quad~} 
+    \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)\\
+    & \overset{Introduction}{~\quad\quad\implies\quad\quad~} 
+    \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+    \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2})\\
+    & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
+    \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+    \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+           (\exists \phi_2' \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_2'}{\phi_2}))\\
+    & \overset{Mono~P_2}{~\quad\quad\implies\quad\quad~} 
+           \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+           \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+           (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ \phiImplies{\phi_2'}{\phi_2} \wedge P_2(\phi_2', \phi_3')))\\
+    & \overset{}{~\quad\quad\implies\quad\quad~} 
+           \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+           (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ P_2(\phi_2', \phi_3'))\\
+    & \overset{Introduction}{~\quad\quad\implies\quad\quad~} 
+           \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+           (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ P_2(\phi_2', \phi_3'))\\
+    \end{align*}
+\end{proof}
 In other words, deterministic liftings of composite predicates can be obtained by composing piecewise deterministic liftings.
 Optimality of the piecewise liftings does not guarantee optimality of the overall lifting.
 
