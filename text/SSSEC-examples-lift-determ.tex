@@ -117,6 +117,21 @@ We start by lifting implication, which is used in \tset{HSeq}.
     Let $\id : \setGFormula \rightarrow \setGFormula$ be the identity function.
     Then $\id$ is an optimal deterministic lifting of $\phiImplies{\cdot}{\cdot} \subseteq \setFormula \times \setFormula$.
 \end{lemma}
+\begin{proof}
+    Soundness
+        Introduction
+        Identity function is total.
+        
+        Strength
+        Known:
+        $$\id(\grad{\phi_1}) = \grad{\phi_2} \wedge \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phiImplies{\phi_1}{\phi}$$
+        Goal:
+        $$\exists \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2} \wedge \phiImplies{\phi_2}{\phi}$$
+        The goal is satisfied when choosing $\phi_2 = \phi_1$
+
+        Monotonicity
+        Trivially 
+\end{proof}
 
 Using lemma ??? and lemma ???, the deterministic lifting of \tset{HSeq} reduces to
 \begin{mathpar}
