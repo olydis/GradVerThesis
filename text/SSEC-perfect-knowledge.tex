@@ -33,98 +33,98 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
 \begin{proof}
     To prove \tset{GDPreservation} we may assume:
     \begin{align}
-    \dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}\\
     \label{frm:tmp0}
-    \gsssem^{\grad{s}}(\grad{\pi_1}, \grad{\pi_2})\\
+    \dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}\\
     \label{frm:tmp1}
-    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
+    \gsssem^{\grad{s}}(\grad{\pi_1}, \grad{\pi_2})\\
     \label{frm:tmp2}
+    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
     \end{align}
     Goal: 
-    \begin{align*}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \begin{align}
     \label{frm:tmp3}
-    \end{align*}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \end{align}
     
     Reversing formula \ref{frm:perf-ex} we can deduce that $\gamma(\grad{\pi_1}) \cap \dom{\sssem'} \neq \emptyset$, i.e.
     \begin{align}
+    \label{frm:tmp4}
     \exists \pi \in \setProgramState.~ \sssem'(\pi_1) = \pi 
     \quad\quad\text{for some } \pi_1 \in \gamma(\grad{\pi_1})
-    \label{frm:tmp4}
     \end{align}
     Recall that formula evaluation is immune to concretization, so from \ref{frm:tmp2} follows
     \begin{align}
+    \label{frm:tmp5}
     \evalgphiGen{\pi_1}{\grad{\phi_1}}
     \text{\quad\quad or equivalently \quad\quad}
     \evalphiGen{\pi_1}{\phi_{1a}}
     \quad\quad\text{for some } \phi_{1a} \in \gamma(\grad{\phi_1}) 
-    \label{frm:tmp5}
     \end{align}
     Iterating the reasoning that lead to \ref{frm:tmp4} we end up with
     \begin{displaymath}
+    \label{frm:tmp6}
     \sssem'^s(\pi_1, \pi)
     \quad\quad\text{for some } \pi \in \setProgramState,\, s \in \gamma(\grad{s}) 
-    \label{frm:tmp6}
     \end{displaymath}
     Using the monotonicity of $\gsssem$ we can deduce from \ref{frm:tmp1} and \ref{frm:tmp6} that
     \begin{displaymath}
-    \pi \in \gamma(\grad{\pi_2})
     \label{frm:tmp6x}
+    \pi \in \gamma(\grad{\pi_2})
     \end{displaymath}
     Using \ref{frm:perf-def} it follows that
     \begin{align}
+    \label{frm:tmp7}
     \thoare{}{\phi_{1b}}{s}{\phi} ~\wedge~ \evalphiGen{\pi_1}{\phi_{1b}} ~\wedge~ \evalphiGen{\pi}{\phi}
     \quad\quad\text{for some } \phi_{1b}, \phi \in \setFormula
-    \label{frm:tmp7}
     \end{align}
     Due to $\envs{\pi_1}$ being an ideal we can derive from $\evalphiGen{\pi_1}{\phi_{1a}}$ (\ref{frm:tmp5}) and $\evalphiGen{\pi_1}{\phi_{1b}}$ (\ref{frm:tmp7}) that
     \begin{align}
+    \label{frm:tmp8}
     \evalphiGen{\pi_1}{\phi_1} ~\wedge~ \phiImplies{\phi_1}{\phi_{1a}} ~\wedge~ \phiImplies{\phi_1}{\phi_{1b}}
     \quad\quad\text{for some } \phi_1 \in \setFormula
-    \label{frm:tmp8}
     \end{align}
     From monotonicity of $\thoare{}{\cdot}{\cdot}{\cdot}$ in its first argument (% REF %) we can deduce
     \begin{align}
+    \label{frm:tmp9}
     \thoare{}{\phi_1}{s}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}
     \quad\quad\text{for some } \phi_2 \in \setFormula
-    \label{frm:tmp9}
     \end{align}
     Applying the introduction rule for deterministic liftings we can deduce
     \begin{align}
+    \label{frm:tmp10}
     \dgthoare{}{\phi_1}{s}{\grad{\phi}}
     \quad\quad\text{for some } \grad{\phi} \in \setGFormula
-    \label{frm:tmp10}
     \end{align}
     Applying the strength rule for deterministic liftings we can derive from \ref{frm:tmp9} and \ref{frm:tmp10} that
     \begin{align}
+    \label{frm:tmp11}
     \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ \phiImplies{\phi_2}{\phi'}
     \quad\quad\text{for some } \phi_2 \in \gamma(\grad{\phi})
-    \label{frm:tmp11}
     \end{align}
     From soundness of the static system we can deduce (using \ref{frm:tmp10}, \ref{frm:tmp6}, \ref{frm:tmp8}) that
     \begin{align}
-    \evalphiGen{\pi}{\phi_2}
     \label{frm:tmp12}
+    \evalphiGen{\pi}{\phi_2}
     \end{align}
     and therefore (using \ref{frm:tmp11})
     \begin{align}
-    \evalgphiGen{\pi}{\grad{\phi}}
     \label{frm:tmp13}
+    \evalgphiGen{\pi}{\grad{\phi}}
     \end{align}
     and therefore (using \ref{frm:tmp6x})
     \begin{align}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
     \label{frm:tmp14}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
     \end{align}
     Now, apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can use $\envs{\phi_1} \subseteq \envs{\grad{\phi_1}}$ to derive
     \begin{align}
-    \envs{\grad{\phi}} \subseteq \envs{\grad{\phi_2}}
     \label{frm:tmp15}
+    \envs{\grad{\phi}} \subseteq \envs{\grad{\phi_2}}
     \end{align}
     and therefore
     \begin{align}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
     \label{frm:tmp16}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
     \end{align}
 \end{proof}
  
