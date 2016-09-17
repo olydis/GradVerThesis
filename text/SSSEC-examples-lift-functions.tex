@@ -1,17 +1,226 @@
 % intro!? NOT the same gradual formula syntax as for predicate examples
 
 %% lAND
-Assuming that the formula syntax of \svl contains a logic and operator $\phiAnd{\:}{\:}$, we can view it as a binary function on formulas.
 \begin{lemma}[Optimal Lifting of And]~\\
-    Let $\gphiAnd{\:}{\:} : \setGFormula \times \setGFormula \rightarrow \setGFormula$ be defined as
+    Let $\setGFormula$ be extended as “wildcard with upper bound” (see section \ref{ssec:wildcard-with-upper}).
+    We assume that $\vee$ is part of the formula syntax such that $\envs{\phi_1 \vee \phi_2} = \envs{\phi_1} \cup \envs{\phi_2}$.
+    $phiOr{\:}{\:}$ can be viewed as a binary function on formulas.
+    Let $\gphiOr{\:}{\:} : \setGFormula \times \setGFormula \rightarrow \setGFormula$ be defined as
     \begin{flalign*}
-    \gphiAnd{$\phi_1$}{$\phi_2$} & \defeq \phiAnd{$\phi_1$}{$\phi_2$} \\
-    \gphiAnd{$\phi$}{$\qm$} & \defeq \withqmGen{\phi} \\
-    \gphiAnd{$\qm$}{$\phi$} & \defeq \withqmGen{\phi} \\
-    \gphiAnd{$\qm$}{$\qm$} & \defeq \qm
+    \gphiOr{$\phi_1$}{$\phi_2$} & \defeq \phiOr{$\phi_1$}{$\phi_2$} \\
+    \gphiOr{$\phi_1$}{$(\withqmGen{\phi_2})$} & \defeq \\
+    \gphiOr{$(\withqmGen{\phi_1})$}{$\phi_2$} & \defeq \\
+    \gphiOr{$(\withqmGen{\phi_1})$}{$(\withqmGen{\phi_2})$} & \defeq \withqmGen{(\phiOr{$\phi_1$}{$\phi_2$})}
     \end{flalign*}
-    Then $\gphiAnd{\:}{\:}$ is an optimal lifting of $\phiAnd{\:}{\:}$.
+    Then $\gphiOr{\:}{\:}$ is an optimal lifting of $\phiOr{\:}{\:}$.
 \end{lemma}
+\begin{proof}
+    Soundness
+        Introduction
+        \begin{align*}
+        &\phiAnd{$\phi_1$}{$\phi_2$}\\
+        =
+        &\gphiOr{$\phi_1$}{$\phi_2$}
+        \end{align*}
+        
+        Monotonicity
+        Known: $\grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}$
+        Case $\grad{\phi_1} = \phi_1 ~\wedge~ \grad{\phi_2} = \phi_2$
+            Case $\grad{\phi_1'} = \phi_1 ~\wedge~ \grad{\phi_2'} = \phi_2$
+                \begin{align*}
+                &\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} \\
+                =
+                &\gphiOr{$\phi_1$}{$\phi_2$} \\
+                =
+                &\gphiOr{$\grad{\phi_1'}$}{$\grad{\phi_2'}$} \\
+                \end{align*}
+            Case $\grad{\phi_1'} = \withqm{\phi_1'} ~\wedge~ \grad{\phi_2'} = \phi_2$
+                \begin{align*}
+                &\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} \\
+                =
+                &\gphiOr{$\phi_1$}{$\phi_2$} \\
+                =
+                &\phiOr{$\phi_1$}{$\phi_2$} \\
+                \overset{!}{\mpt}
+                &\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2$})} \\
+                =
+                &\gphiOr{$(\withqmGen{\phi_1'})$}{$\phi_2$} \\
+                =
+                &\gphiOr{$\grad{\phi_1'}$}{$\grad{\phi_2'}$} \\
+                \end{align*}
+                \begin{align*}
+                &\gamma(\phiOr{$\phi_1$}{$\phi_2$}) \\
+                =
+                &\{~ \phiOr{$\phi_1$}{$\phi_2$} ~\} \\
+                \overset{!}{\subseteq}
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2$}} ~\} \\
+                =
+                &\gamma(\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2$})})
+                \end{align*}
+                Note that $\phi_1$ (and thus $\phiOr{$\phi_1$}{$\phi_2$}$) is satisfiable due to $\grad{\phi_1} \mpt \grad{\phi_1'}$.
+                
+                \begin{align*}
+                &\phi_1 \mpt \withqmGen{\phi_1'} \\
+                \iff
+                &\gamma(\phi_1) \subseteq \gamma(\withqmGen{\phi_1'}) \\
+                \iff
+                &\phi_1 \in \gamma(\withqmGen{\phi_1'}) \\
+                \iff
+                &\phi_1 \in \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1'} ~\} \\
+                \implies
+                &\phiImplies{\phi_1}{\phi_1'} \\
+                \iff
+                &\envs{\phi_1} \subseteq \envs{\phi_1'} \\
+                \implies
+                &\envs{\phi_1} \cup \envs{\phi_2} \subseteq \envs{\phi_1'} \cup \envs{\phi_2} \\
+                \iff
+                &\envs{\phiOr{$\phi_1$}{$\phi_2$})} \subseteq \envs{(\phiOr{$\phi_1'$}{$\phi_2$})} \\
+                \iff
+                &\phiImplies{(\phiOr{$\phi_1$}{$\phi_2$})}{(\phiOr{$\phi_1'$}{$\phi_2$})} \\
+                \iff
+                &(\phiOr{$\phi_1$}{$\phi_2$}) \in \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2$}} ~\} \\
+                \iff
+                &\{~ \phiOr{$\phi_1$}{$\phi_2$} ~\} \subseteq \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2$}} ~\}
+                \end{align*}
+            Case $\grad{\phi_1'} = \phi_1 ~\wedge~ \grad{\phi_2'} = \withqm{\phi_2'}$
+                Analogous.
+            Case $\grad{\phi_1'} = \withqm{\phi_1'} ~\wedge~ \grad{\phi_2'} = \withqm{\phi_2'}$
+                Analogous.
+        Case $\grad{\phi_1} = \withqmGen{\phi_1} ~\wedge~ \grad{\phi_2} = \phi_2$
+            It follows that $\grad{\phi_1'} = \withqmGen{\phi_1'}$ for some $\phi_1'$.
+            Case $\grad{\phi_2'} = \phi_2$
+                \begin{align*}
+                &\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} \\
+                =
+                &\gphiOr{$(\withqmGen{\phi_1})$}{$\phi_2$} \\
+                =
+                &\withqmGen{(\phiOr{$\phi_1$}{$\phi_2$})} \\
+                \overset{!}{\mpt}
+                &\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2$})} \\
+                =
+                &\gphiOr{$(\withqmGen{\phi_1'})$}{$\phi_2$} \\
+                =
+                &\gphiOr{$\grad{\phi_1'}$}{$\grad{\phi_2'}$} \\
+                \end{align*}
+                \begin{align*}
+                &\gamma(\withqmGen{(\phiOr{$\phi_1$}{$\phi_2$})}) \\
+                =
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1$}{$\phi_2$}} ~\} \\
+                \overset{!}{\subseteq}
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2$}} ~\} \\
+                =
+                &\gamma(\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2$})})
+                \end{align*}
+                \begin{align*}
+                &\withqmGen{\phi_1} \mpt \withqmGen{\phi_1'} \\
+                \iff
+                &\gamma(\withqmGen{\phi_1}) \subseteq \gamma(\withqmGen{\phi_1'}) \\
+                \iff
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1} ~\}
+                \subseteq 
+                \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1'} ~\}\\
+                \iff
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1} ~\vee~ \phiImplies{\phi}{\phi_2} ~\}
+                \subseteq 
+                \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1'} ~\vee~ \phiImplies{\phi}{\phi_2} ~\}\\
+                \iff
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1$}{$\phi_2$}} ~\}
+                \subseteq 
+                \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2$}} ~\}
+                \end{align*}
+            Case $\grad{\phi_2'} = \withqmGen{\phi_2'}$ for some $\phi_2'$.
+                \begin{align*}
+                &\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} \\
+                =
+                &\gphiOr{$(\withqmGen{\phi_1})$}{$\phi_2$} \\
+                =
+                &\withqmGen{(\phiOr{$\phi_1$}{$\phi_2$})} \\
+                \overset{!}{\mpt}
+                &\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2'$})} \\
+                =
+                &\gphiOr{$(\withqmGen{\phi_1'})$}{$(\withqmGen{\phi_2'})$} \\
+                =
+                &\gphiOr{$\grad{\phi_1'}$}{$\grad{\phi_2'}$} \\
+                \end{align*}
+                \begin{align*}
+                &\gamma(\withqmGen{(\phiOr{$\phi_1$}{$\phi_2$})}) \\
+                =
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1$}{$\phi_2$}} ~\} \\
+                \overset{!}{\subseteq}
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2'$}} ~\} \\
+                =
+                &\gamma(\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2'$})})
+                \end{align*}
+                \begin{align*}
+                &(\withqmGen{\phi_1} \mpt \withqmGen{\phi_1'}) ~\wedge~ (\withqmGen{\phi_2} \mpt \withqmGen{\phi_2'}) \\
+                \iff
+                &\gamma(\withqmGen{\phi_1}) \subseteq \gamma(\withqmGen{\phi_1'}) ~\wedge~ \gamma(\withqmGen{\phi_2}) \subseteq \gamma(\withqmGen{\phi_2'}) \\
+                \iff
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1} ~\} \subseteq \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1'} ~\} ~\wedge~ \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_2} ~\} \subseteq \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_2'} ~\} \\
+                \implies
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1} ~\} \cup \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_2} ~\}
+                \subseteq 
+                \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1'} ~\} \cup \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_2'} ~\}\\
+                \iff
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1} ~\vee~ \phiImplies{\phi}{\phi_2} ~\}
+                \subseteq 
+                \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phi_1'} ~\vee~ \phiImplies{\phi}{\phi_2'} ~\}\\
+                \iff
+                &\{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1$}{$\phi_2$}} ~\}
+                \subseteq 
+                \{~ \phi \in \setFormulaA ~|~ \phiImplies{\phi}{\phiOr{$\phi_1'$}{$\phi_2'$}} ~\}
+                \end{align*}
+        Case $\grad{\phi_1} = \phi_1 ~\wedge~ \grad{\phi_2} = \withqmGen{\phi_2}$
+            Analogous.
+        Case $\grad{\phi_1} = \withqmGen{\phi_1} ~\wedge~ \grad{\phi_2} = \withqmGen{\phi_2}$
+            It follows that $\grad{\phi_1'} = \withqmGen{\phi_1'}$ for some $\phi_1'$ 
+                   and that $\grad{\phi_2'} = \withqmGen{\phi_2'}$ for some $\phi_2'$.
+                   \begin{align*}
+                   &\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} \\
+                   =
+                   &\gphiOr{$(\withqmGen{\phi_1})$}{$\withqmGen{\phi_2}$} \\
+                   =
+                   &\withqmGen{(\phiOr{$\phi_1$}{$\phi_2$})} \\
+                   \overset{!}{\mpt}
+                   &\withqmGen{(\phiOr{$\phi_1'$}{$\phi_2'$})} \\
+                   =
+                   &\gphiOr{$(\withqmGen{\phi_1'})$}{$(\withqmGen{\phi_2'})$} \\
+                   =
+                   &\gphiOr{$\grad{\phi_1'}$}{$\grad{\phi_2'}$} \\
+                   \end{align*}
+            
+    
+    \begin{comment} does not work due to non-existence of galois connection - not even partial for TOTAL and function (partial would work)
+    Goal:
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ \gphiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$} = \alpha(\{~ \phiAnd{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\grad{\phi_1}),\, \phi_2 \in \gamma(\grad{\phi_2}) ~\})
+    \end{displaymath}
+    
+    Case $\grad{\phi_1} = \phi_1' \wedge \grad{\phi_2} = \phi_2'$:
+    \begin{align*}
+    &\alpha(\{~ \phiAnd{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\phi_1'),\, \phi_2 \in \gamma(\phi_2') ~\})\\
+    =
+    &\alpha(\{~ \phiAnd{$\phi_1'$}{$\phi_2'$} ~\})\\
+    =
+    &\phiAnd{$\phi_1'$}{$\phi_2'$}\\
+    =
+    &\gphiAnd{$\phi_1'$}{$\phi_2'$}\\
+    \end{align*}
+    
+    Case $\grad{\phi_1} = \withqm{\phi_1'} \wedge \grad{\phi_2} = \phi_2'$:
+    \begin{align*}
+    &\alpha(\{~ \phiAnd{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\withqm{\phi_1'}),\, \phi_2 \in \gamma(\phi_2') ~\})\\
+    =
+    &\alpha(\{~ \phiAnd{$\phi_1$}{$\phi_2'$} ~|~ \phi_1 \in \setFormulaA ~\wedge~ \phiImplies{\phi_1}{\phi_1'} ~\})\\
+    =
+    &\alpha(\{~ \phiAnd{$\phi_1'$}{$\phi_2'$} ~\})\\
+    =
+    &\phiAnd{$\phi_1'$}{$\phi_2'$}\\
+    =
+    &\gphiAnd{$\phi_1'$}{$\phi_2'$}\\
+    \end{align*}
+    \end{comment}
+\end{proof}
 
 %% composite
 \begin{lemma}[Sound Lifting of Composed Function]~\\
@@ -26,6 +235,33 @@ Assuming that the formula syntax of \svl contains a logic and operator $\phiAnd{
     Then $\grad{(g \circ f)}$ is a sound lifting of $(g \circ f)$, i.e. “piecewise” lifting of composed functions is allowed.
     Optimality of $\grad{g}$ and $\grad{f}$ does not imply optimality of $\grad{(g \circ f)}$.
 \end{lemma}
+\begin{proof}
+    Introduction
+    \begin{align*}
+    &g(f(\phi))\\
+    \overset{Introduction~\grad{g}}{\mpt}
+    &\grad{g}(f(\phi))\\
+    \overset{\substack{Introduction~\grad{f}\\\&\\Monotonicity~\grad{g}}}{\mpt}
+    &\grad{g}(\grad{f}(\phi))\\
+    =
+    &\grad{g}(\grad{f}(\phi))\\
+    =
+    &(\grad{g} \circ \grad{f})(\phi)\\
+    =
+    &\grad{(g \circ f)}(\phi)
+    \end{align*}
+    
+    Monotonicity
+    \begin{align*}
+    &\grad{\phi_1} \mpt \grad{\phi_2}\\
+    \overset{Monotonicity~\grad{f}}{\implies}
+    &\grad{f}(\grad{\phi_1}) \mpt \grad{f}(\grad{\phi_2})\\
+    \overset{Monotonicity~\grad{g}}{\implies}
+    &\grad{g}(\grad{f}(\grad{\phi_1})) \mpt \grad{g}(\grad{f}(\grad{\phi_2}))\\
+    \overset{Definition}{\implies}
+    &\grad{(g \circ f)}(\grad{\phi_1}) \mpt \grad{(g \circ f)}(\grad{\phi_2})
+    \end{align*}
+\end{proof}
 
 \begin{comment}
 \begin{align*}

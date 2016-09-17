@@ -66,6 +66,8 @@ paper=a4
 \newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
 \newunicodechar{∧}
 {\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}} \endgroup}}
+\newunicodechar{∨}
+{\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{\textbackslash}\shifttext{-0.4ex}{/}} \endgroup}}
 % {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}}
 % $\withqmGen{x = 3}$
 % CODE LISTINGS
@@ -178,6 +180,8 @@ paper=a4
 \newcommand{\eresult}{\ex{result}}
 \newcommand{\enull}{\ttt{null}}
 % formulas
+\newcommand{\phiOr}[2]{\ttt{#1\:∨\:#2}}
+\newcommand{\gphiOr}[2]{\ttt{{#1}\:$\grad{\ttt{∨}}$\:{#2}}}
 \newcommand{\phiAnd}[2]{\ttt{#1\:∧\:#2}}
 \newcommand{\gphiAnd}[2]{\ttt{{#1}\:$\grad{\ttt{∧}}$\:{#2}}}
 \newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}

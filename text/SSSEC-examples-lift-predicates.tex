@@ -1,17 +1,6 @@
-For the following examples we assume that gradual formulas were defined as in section \ref{ssec:dedicated-wildcard-formula}:
-\begin{align*}
-&\grad{\phi} ::= \phi ~|~ \qm \\
-~\\
-&\gamma(\phi) = 
-\begin{cases}
-\{~ \phi ~\}  & \phi \in \setFormulaA\\
-\emptyset     & \textit{otherwise}
-\end{cases}\\
-&\gamma(\qm) = \setFormulaA
-\end{align*}
-
 %% phiImplies
 \begin{lemma}[Optimal Lifting of Implication]~\\
+    Let $\setGFormula$ be extended as “dedicated wildcard” (see section \ref{ssec:dedicated-wildcard-formula}).
     Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined inductively as
     \begin{mathpar}
         \inferrule* [Right=GImplStatic]
@@ -97,6 +86,7 @@ For the following examples we assume that gradual formulas were defined as in se
 
 %% evalphi
 \begin{lemma}[Optimal Lifting of Evaluation]~\\
+    Let $\setGFormula$ be extended as “dedicated wildcard” (see section \ref{ssec:dedicated-wildcard-formula}).
     Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
     \begin{mathpar}
         \inferrule* [Right=GEvalStatic]
