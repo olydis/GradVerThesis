@@ -34,13 +34,9 @@ For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\
 (This intuition is formalized in section \ref{ssec:lifting-predicates}.)
 
 \begin{definition}[Concretization]~\\
-    Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as
+    Let $\gamma : \setGFormula \rightarrow \PP(\setFormula)$ be defined as
     \begin{align*}
-    &\gamma(\phi) = 
-        \begin{cases}
-        \{~ \phi ~\}  & \phi \in \setFormulaA\\
-        \emptyset     & \textit{otherwise}
-        \end{cases}\\
+    &\gamma(\phi) = \{~ \phi ~\} \\
     &\gamma(\qm) = \setFormulaA
     \end{align*}
 \end{definition}

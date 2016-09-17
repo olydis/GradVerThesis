@@ -42,6 +42,58 @@ For the following examples we assume that gradual formulas were defined as in se
     \end{mathpar}
     Then $~\gphiImplies{\cdot}{\cdot}~$ is an optimal lifting of $~\phiImplies{\cdot}{\cdot}~$.
 \end{lemma}
+\begin{proof}
+    Goal:
+    $$\gphiImplies{\grad{\phi_1}}{\grad{\phi_2}} \iff \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2}$$
+    
+    $\implies$:
+        Case \tset{GImplStatic}:
+        \begin{align*}
+        &\gphiImplies{\phi_1}{\phi_2}\\
+        \implies
+        &\phiImplies{\phi_1}{\phi_2}\\
+        \implies
+        &(\exists \phi_1' \in \gamma(\phi_1), \phi_2' \in \gamma(\phi_2).~ \phiImplies{\phi_1'}{\phi_2'})
+        \end{align*}
+        
+        Case \tset{GImplGrad1}:
+        \begin{align*}
+        &\gphiImplies{\qm}{\phi}\\
+        \implies
+        &\phi \in \setFormulaA\\
+        \implies
+        &(\exists \phi_1 \in \setFormulaA.~ \phiImplies{\phi_1}{\phi})\\
+        \implies
+        &(\exists \phi_1 \in \gamma(\qm), \phi_2 \in \gamma(\phi).~ \phiImplies{\phi_1}{\phi_2})
+        \end{align*}
+        
+        Case \tset{GImplGrad2}:
+        \begin{align*}
+        &\gamma(\grad{\phi}) \neq \emptyset ~\wedge~ \phiTrue \in \gamma(\qm)\\
+        \implies
+        &(\exists \phi_1 \in \gamma(\grad{\phi}).~ \phiImplies{\phi_1}{\phiTrue}) ~\wedge~ \phiTrue \in \gamma(\qm)\\
+        \implies
+        &(\exists \phi_1 \in \gamma(\grad{\phi}), \phi_2 \in \gamma(\qm).~ \phiImplies{\phi_1}{\phi_2})
+        \end{align*}
+        
+    $\impliedby$:
+        \begin{align*}
+        \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) \wedge \phiImplies{\phi_1}{\phi_2}
+        \end{align*}
+        Case $\grad{\phi_2} = \qm$:
+            Apply $\tset{GImplGrad2}$.
+        Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \qm$:
+            \begin{align*}
+            &\phi_1 \in \gamma(\qm) \wedge \phiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &\phi_1 \in \setFormulaA \wedge \phiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &\phi_2 \in \setFormulaA
+            \end{align*}
+            Apply $\tset{GImplGrad1}$.
+        Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \phi_1$:
+            Apply $\tset{GImplStatic}$.
+\end{proof}
 
 %% evalphi
 \begin{lemma}[Optimal Lifting of Evaluation]~\\
@@ -67,6 +119,36 @@ For the following examples we assume that gradual formulas were defined as in se
     
     Then $~\evalgphiGen{\cdot}{\cdot}~$ is a consistent lifting of $~\evalphiGen{\cdot}{\cdot}~$.
 \end{lemma}
+\begin{proof}
+    Goal:
+    $$\evalgphiGen{\pi}{\grad{\phi}} \iff \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen{\pi}{\phi}$$
+    
+    $\implies$:
+        Case \tset{GEvalStatic}:
+        \begin{align*}
+        &\evalgphiGen{\pi}{\phi}\\
+        \implies
+        &\evalphiGen{\pi}{\phi}\\
+        \implies
+        &(\exists \phi' \in \gamma(\phi).~ \evalphiGen{\pi}{\phi'})
+        \end{align*}
+        
+        Case \tset{GEvalGrad}:
+        \begin{align*}
+        &\evalphiGen{\pi}{\phiTrue} ~\wedge~ \phiTrue \in \gamma(\qm)\\
+        \implies
+        &(\exists \phi \in \gamma(\qm).~ \evalphiGen{\pi}{\phi})
+        \end{align*}
+    
+    $\impliedby$:
+        \begin{align*}
+        \phi \in \gamma(\grad{\phi}) \wedge \evalphiGen{\pi}{\phi}$$
+        \end{align*}
+        Case $\grad{\phi} = \qm$:
+            Apply $\tset{GEvalGrad}$.
+        Case $\grad{\phi} = \phi$:
+            Apply $\tset{GEvalStatic}$.
+\end{proof}
 
 Note that the definition of lifted evaluation was lifted only w.r.t. the second parameter.
 There is no point in lifting evaluation w.r.t. the program state since gradual program state has no impact on evaluation (see \ref{sec:gradual-program-state}).
@@ -96,6 +178,35 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     Then $\grad{(P \circ Q)}$ is a sound lifting of $(P \circ Q)$, i.e. “piecewise” lifting of composite predicates is allowed.
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \circ Q)}$.
 \end{lemma}
+\begin{proof}
+    Introduction
+        \begin{align*}
+        &(P \circ Q)(\phi_1, \phi_3)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\exists \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \wedge Q(\phi_2, \phi_3))\\
+        \overset{Introduction}{~\quad\quad\implies\quad\quad~}
+        &(\exists \phi_2 \in \setFormula.~ \grad{P}(\phi_1, \phi_2) \wedge \grad{Q}(\phi_2, \phi_3))\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \circ \grad{Q})(\phi_1, \phi_3)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \circ Q)}(\phi_1, \phi_3)\\
+        \end{align*}
+        
+    Monotonicity
+        \begin{align*}
+        &\grad{(P \circ Q)}(\grad{\phi_1}, \grad{\phi_3}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \circ \grad{Q})(\grad{\phi_1}, \grad{\phi_3}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\exists \grad{\phi_2} \in \setGFormula.~ \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \wedge \grad{Q}(\grad{\phi_2}, \grad{\phi_3})) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
+        \overset{Monotonicity}{~\quad\quad\implies\quad\quad~}
+        &(\exists \grad{\phi_2} \in \setGFormula.~ \grad{P}(\grad{\phi_1'}, \grad{\phi_2}) \wedge \grad{Q}(\grad{\phi_2}, \grad{\phi_3'}))\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \circ \grad{Q})(\grad{\phi_1'}, \grad{\phi_3'})\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \circ Q)}(\grad{\phi_1'}, \grad{\phi_3'})\\
+        \end{align*}
+\end{proof}
 
 %% conjunction
 \begin{lemma}[Sound Lifting of Conjunctive Predicate]~\\
@@ -114,6 +225,33 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     Then $\grad{(P \wedge Q)}$ is a sound lifting of $(P \vee Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \wedge Q)}$.
 \end{lemma}
+\begin{proof}
+    Introduction
+        \begin{align*}
+        &(P \wedge Q)(\phi)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &P(\phi) ~\wedge~ Q(\phi)\\
+        \overset{Introduction}{~\quad\quad\implies\quad\quad~}
+        &\grad{P}(\phi) ~\wedge~ \grad{Q}(\phi)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} ~\wedge~ \grad{Q})(\phi)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \wedge Q)}(\phi)\\
+        \end{align*}
+    
+    Monotonicity
+        \begin{align*}
+        &(\grad{P} \wedge \grad{Q})(\grad{\phi}) ~\wedge~ \grad{\phi} \mpt \grad{\phi'}\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{P}(\grad{\phi}) ~\wedge~ \grad{Q}(\grad{\phi}) ~\wedge~ \grad{\phi} \mpt \grad{\phi'}\\
+        \overset{Monotonicity}{~\quad\quad\implies\quad\quad~}
+        &\grad{P}(\grad{\phi'}) ~\wedge~ \grad{Q}(\grad{\phi'})\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \wedge \grad{Q})(\grad{\phi'})\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \wedge Q)}(\grad{\phi'})\\
+        \end{align*}
+\end{proof}
 
 %% disjunction
 \begin{lemma}[Optimal Lifting of Disjunctive Predicate]~\\
@@ -132,6 +270,21 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     Then $\grad{(P \vee Q)}$ is a sound lifting of $(P \vee Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
     Optimality of $\grad{P}$ and $\grad{Q}$ does imply optimality of $\grad{(P \vee Q)}$.
 \end{lemma}
+\begin{proof}
+    \begin{align*}
+    &\grad{(P \vee Q)}(\grad{\phi})\\
+    \overset{Definition}{~\quad\quad\iff\quad\quad~}
+    &(\grad{P} \vee \grad{Q})(\grad{\phi})\\
+    \overset{Definition}{~\quad\quad\iff\quad\quad~}
+    &\grad{P}(\grad{\phi}) \vee \grad{Q}(\grad{\phi})\\
+    \overset{AGT Def.}{~\quad\quad\iff\quad\quad~}
+    &(\exists \phi \in \gamma(\grad{\phi}).~ P(\phi)) \vee (\exists \phi \in \gamma(\grad{\phi}).~ Q(\phi))\\
+    \overset{}{~\quad\quad\iff\quad\quad~}
+    &(\exists \phi \in \gamma(\grad{\phi}).~ P(\phi) ~\vee~ Q(\phi))\\
+    \overset{Definition}{~\quad\quad\iff\quad\quad~}
+    &(\exists \phi \in \gamma(\grad{\phi}).~ (P \vee Q)(\phi))
+    \end{align*}
+\end{proof}
 
 \begin{comment}
 We define $\setGFormulaA = \{~ \grad{\phi} \in \setGFormula ~|~ \exists \pi.~ \evalgphiGen {\pi} {\grad{\phi}} ~\}$ as the set of satisfiable gradual formulas.

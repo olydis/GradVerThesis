@@ -9,11 +9,7 @@ We expect $\withqmGen{\phi}$ to be a placeholder for a formula that implies $\ph
 \begin{definition}[Concretization]~\\
     Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as
     \begin{align*}
-    &\gamma(\phi) = 
-    \begin{cases}
-    \{~ \phi ~\}  & \phi \in \setFormulaA\\
-    \emptyset     & \textit{otherwise}
-    \end{cases}\\
+    &\gamma(\phi) = \{~ \phi ~\} \\
     &\gamma(\withqmGen{\phi}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phi} ~\}
     \end{align*}
 \end{definition}
