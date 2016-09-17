@@ -1,0 +1,20 @@
+Motivation
+	Examples
+	Pros&Cons => COMBINE
+	Pictures => independent concepts (say that research only tried to find good tests and stuff)
+
+Approach
+	? and such
+	intuition VS
+	abstract interpretation (AGT) -> concretization
+
+
+
+
+void withdrawCoins(int amount)
+	requires this.balance >= amount;
+	ensures  this.balance = old(this.balance) - amount;
+{
+	// business logic
+	this.balance -= amount;
+}
