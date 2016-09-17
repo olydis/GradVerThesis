@@ -11,5 +11,15 @@ It uses a number of helper functions that we define in section \ref{ssec:lifted-
     The inductive definition we give induces a well-defined partial function.
     This function is a sound deterministic lifting (see \ref{ssec:the-deterministic-approach}) of the Hoare logic of \svlidf defined in section \ref{sec:static-semantics}.
 \end{lemma}
+\begin{proof}
+    Well-definedness: The rules are syntax directed and only can deduce at most one result per input.
+    
+    Deterministic lifting: rule-wise
+    \tset{HSkip}:
+        See lemma \ref{lemma:opt-lift-impl}.
+        
+    \tset{HAlloc}, \tset{HFieldAssign}, \tset{HReturn}, \tset{HAssert}:
+        Composition of lifted components as defined in \ref{ssec:lifted-helper-functions}.
+\end{proof}
 
 A sound predicate lifting $\gtHoare{\cdot}{\cdot}{\cdot}{\cdot}$ can be derived using lemma \ref{lem:det2grad}.

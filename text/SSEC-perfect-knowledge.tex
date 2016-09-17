@@ -18,7 +18,7 @@ Intuitively, $\sssem'$ is the same as $\sssem$, but is artificially made undefin
 \begin{proof}
     \svl only ever executes a statement $s$ if it was successfully verified.
     This means that there exists some Hoare derivation $\thoare{}{\phi_1}{s}{\phi_2}$ and a guarantee (due to the soundness of the verification logic) that $s$ will only ever be executed starting with program states satisfying $\phi_1$.
-    Thus, every for execution $\sssem^s(\pi_1, \pi_2)$, $\sssem'^s(\pi_1, \pi_2)$ must hold as well.
+    Thus, for every execution $\sssem^s(\pi_1, \pi_2)$, $\sssem'^s(\pi_1, \pi_2)$ must hold as well.
 \end{proof}
 
 Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total gradual lifting of $\sssem'$ that throws exceptions whenever all static derivations would be stuck:
@@ -61,23 +61,23 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
     \quad\quad\text{for some } \phi_{1a} \in \gamma(\grad{\phi_1}) 
     \end{align}
     Iterating the reasoning that lead to \ref{frm:tmp4} we end up with
-    \begin{displaymath}
+    \begin{align}
     \label{frm:tmp6}
     \sssem'^s(\pi_1, \pi)
     \quad\quad\text{for some } \pi \in \setProgramState,\, s \in \gamma(\grad{s}) 
-    \end{displaymath}
+    \end{align}
     Using the monotonicity of $\gsssem$ we can deduce from \ref{frm:tmp1} and \ref{frm:tmp6} that
-    \begin{displaymath}
+    \begin{align}
     \label{frm:tmp6x}
     \pi \in \gamma(\grad{\pi_2})
-    \end{displaymath}
+    \end{align}
     Using \ref{frm:perf-def} it follows that
     \begin{align}
     \label{frm:tmp7}
     \thoare{}{\phi_{1b}}{s}{\phi} ~\wedge~ \evalphiGen{\pi_1}{\phi_{1b}} ~\wedge~ \evalphiGen{\pi}{\phi}
     \quad\quad\text{for some } \phi_{1b}, \phi \in \setFormula
     \end{align}
-    Due to $\envs{\pi_1}$ being an ideal we can derive from $\evalphiGen{\pi_1}{\phi_{1a}}$ (\ref{frm:tmp5}) and $\evalphiGen{\pi_1}{\phi_{1b}}$ (\ref{frm:tmp7}) that
+    Due to $\envs{\pi_1}$ being a filter we can derive from $\evalphiGen{\pi_1}{\phi_{1a}}$ (\ref{frm:tmp5}) and $\evalphiGen{\pi_1}{\phi_{1b}}$ (\ref{frm:tmp7}) that
     \begin{align}
     \label{frm:tmp8}
     \evalphiGen{\pi_1}{\phi_1} ~\wedge~ \phiImplies{\phi_1}{\phi_{1a}} ~\wedge~ \phiImplies{\phi_1}{\phi_{1b}}
@@ -116,10 +116,10 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
     \label{frm:tmp14}
     \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
     \end{align}
-    Now, apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can use $\envs{\phi_1} \subseteq \envs{\grad{\phi_1}}$ to derive
+    Now, apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can derive
     \begin{align}
     \label{frm:tmp15}
-    \envs{\grad{\phi}} \subseteq \envs{\grad{\phi_2}}
+    \grad{\phi} \mpt \envs{\grad{\phi_2}
     \end{align}
     and therefore
     \begin{align}

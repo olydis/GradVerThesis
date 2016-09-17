@@ -2,10 +2,10 @@
 \begin{mathpar}
 \inferrule* [right=HSkip]
 {
-    ~
+    \phiImplies {\phi} {\phi'}
 }
 {
-    \thoare {\Gamma} {\phi} {{\sSkip}} {\phi}
+    \thoare {\Gamma} {\phi} {{\sSkip}} {\phi'}
 }
 
 \inferrule* [right=HAlloc]
