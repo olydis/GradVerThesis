@@ -183,24 +183,25 @@ This gradual partial function has desirable properties:
     \end{mathpar}
     Note however, that this rule is not automatically satisfied, this also depends on the gradual dynamic semantics of \gvl.
     
-    Example:
-    Assume that \svl contains an assertion statement with corresponding Hoare rule.
-    \begin{mathpar}
-        \inferrule* [Right=HAssert]
-        {
-            \phiImplies{\phi}{\phi_a}
-        }
-        {
-            \thoare{~}{\phi}{\sAssert{$\phi_a$}}{\phi}
-        }
-    \end{mathpar}
-    Soundness of the Hoare logic implies that assertions are guaranteed to hold at runtime.
-    It is therefore reasonable for \svl to implement assertions as no-operations.
-    
-    A valid deterministic lifting of \tset{HAssert} is able to verify
-    \begin{displaymath}
-    \dgthoare{~}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}
-    \end{displaymath}
-    However, if the gradual dynamic semantics of \gvl still implement assertions as a no-operation, then $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold.
-    On the other hand, adding a runtime check that throws an exception on failure would restore preservation.
+    \begin{example}[\tset{GDPreservation} Counterexample]
+        Assume that \svl contains an assertion statement with corresponding Hoare rule.
+        \begin{mathpar}
+            \inferrule* [Right=HAssert]
+            {
+                \phiImplies{\phi}{\phi_a}
+            }
+            {
+                \thoare{~}{\phi}{\sAssert{$\phi_a$}}{\phi}
+            }
+        \end{mathpar}
+        Soundness of the Hoare logic implies that assertions are guaranteed to hold at runtime.
+        It is therefore reasonable for \svl to implement assertions as no-operations.
+        
+        A valid deterministic lifting of \tset{HAssert} is able to verify
+        \begin{displaymath}
+        \dgthoare{~}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}
+        \end{displaymath}
+        However, if the gradual dynamic semantics of \gvl still implement assertions as a no-operation, then $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold.
+        On the other hand, adding a runtime check that throws an exception on failure would restore preservation.
+    \end{example}
 \end{description}
