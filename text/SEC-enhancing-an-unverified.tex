@@ -1,0 +1,30 @@
+%% intro
+The approach we presented constructs a gradually verified language in terms of a statically verified one.
+However, as the example in section \ref{ssec:argument-validation} motivates, gradual verification can also be seen as an extension of the dynamically verified setting.
+The main drawbacks of dynamic verification (runtime overhead and potentially late error detection) would be counteracted by using static verification techniques where possible.
+A gradual verifier will attempt to prove compliance with annotations (making runtime checks unnecessary) or may detect an inevitable violation of an annotation (detecting an error before the program is executed).
+In this section, we will briefly describe how to turn a dynamically verified language into a gradually verified one.
+
+%% dyn ver
+To understand how to approach dynamically verified languages, we have to examine how they fit into the spectrum of a gradually verified one.
+The static end is (by construction) the one where all formulas are static and the unknown formula “\ttt{\qm}” is never used.
+Accordingly, using 
+
+Key to our approach is the observation, that dynamic
+
+
+
+Dynamic verification does not rely on special language or compiler support.
+The basic idea is to interrupt the regular program flow as soon as a violation of the specification is detected.
+This can be achieved primitively, using conditional statements (“if-then-else” and similar) in combination with raising an exception or terminating the program in some way or another.
+Most programming languages have library support or even dedicated syntax to express runtime assertions (e.g. \ttt{assert} in Java).
+
+
+%% approach
+The first step is to create 
+
+
+
+While dynamic verification exclusively relies on runtime checks to ensure program properties, a gradual verifier could 
+Resorting to methods of static verification can 
+Many general purpose programming languages do not have built-in static verification techniques to guarantee, say, that 

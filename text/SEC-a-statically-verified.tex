@@ -1,3 +1,20 @@
+\begin{comment}
+    \begin{alignat*}{3}
+    	 & \rlap{\textbf{Syntax}}                        &  &                      &  \\
+    	 & s                                             &  & \in \setStmt         & ~ \\
+    	 & \phi                                          &  & \in \setFormula      &  \\
+    	 &  \\
+    	 & \rlap{\textbf{Program State}}                 &  &                      &  \\
+    	 & \pi                                           &  & \in \setProgramState &  \\
+    	 &  \\
+    	 & \rlap{\textbf{Semantics}}                     &  &                      &  \\
+    	 & \rlap{Static  ~~~~$\thoare{}{\phi}{s}{\phi}$} &  &                      &  \\
+    	 & \rlap{Dynamic ~$\sstep{\pi}{\pi}$}            &  &                      &  \\
+    	 & \rlap{Formula ~~$\evalphiGen{\pi}{\phi}$}     &  &                      &
+    \end{alignat*}
+\end{comment}
+
+
 %% generic language introduction
 While aiming to give a general procedure for deriving gradually verified languages, we have to make certain assumptions about \svl in order to concisely describe our approach and reason about its correctness.
 We believe that most statically verified programming languages satisfy the following assumptions and thus qualify as starting point for our procedure.
@@ -11,7 +28,7 @@ Assumptions about \svl:
     	\phi & \in \setFormula
     \end{align*}
     
-    We assume that there is a sequence operator \ttt{;} such that: $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
+    % We assume that there is a sequence operator \ttt{;} such that: $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
     % or munch that into syntax figure above?
     
     \begin{comment}
@@ -81,9 +98,9 @@ Assumptions about \svl:
         &\sssem^s(\pi_s, \pi) ~\defiff~ \exists n \in \setNat.~ \sssem^n(\pi_s) = \pi ~\wedge~ \pi \text{ is the first state after $s$ is fully consumed}
     \end{flalign*}
     
-    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular or exceptional termination of the program.
+    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
     W.l.o.g. we assume $\dom{\sssem} \cap \setProgramStateFin = \emptyset$, i.e. final states are stuck.
-    We say a statement “throws an exception” if its small-step semantics transitions into an exceptional state.
+    % We say a statement “throws an exception” if its small-step semantics transitions into an exceptional state.
     \begin{comment}
     Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
     To simplify reasoning about exceptional states, we assume $$\forall \pi_X \in \setProgramStateEx, \phi \in \setFormula.~ \evalphiGen{\pi_X}{\phi}$$ and something with special statement set?
