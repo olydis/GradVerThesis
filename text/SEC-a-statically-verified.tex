@@ -1,7 +1,7 @@
-\begin{comment}
+\begin{figure}
     \begin{alignat*}{3}
-    	 & \rlap{\textbf{Syntax}}                        &  &                      &  \\
-    	 & s                                             &  & \in \setStmt         & ~ \\
+    	 & \rlap{\textbf{Syntax}}                        &  &                      & ~ \\
+    	 & s                                             &  & \in \setStmt         &  \\
     	 & \phi                                          &  & \in \setFormula      &  \\
     	 &  \\
     	 & \rlap{\textbf{Program State}}                 &  &                      &  \\
@@ -10,9 +10,28 @@
     	 & \rlap{\textbf{Semantics}}                     &  &                      &  \\
     	 & \rlap{Static  ~~~~$\thoare{}{\phi}{s}{\phi}$} &  &                      &  \\
     	 & \rlap{Dynamic ~$\sstep{\pi}{\pi}$}            &  &                      &  \\
-    	 & \rlap{Formula ~~$\evalphiGen{\pi}{\phi}$}     &  &                      &
+    	 & \rlap{Formula ~~$\evalphiGen{\pi}{\phi}$}     &  &                      &  \\
+         & ~ \\
+         & \rlap{\textbf{Soundness}}                     &  &                      &  \\
     \end{alignat*}
-\end{comment}
+
+    \begin{alignat*}{3}
+    	 & \rlap{\textbf{Syntax}}                                              &  &                       & ~ \\
+    	 & \grad{s}                                                            &  & \in \setGStmt         &  \\
+    	 & \grad{\phi}                                                         &  & \in \setGFormula      &  \\
+    	 &  \\
+    	 & \rlap{\textbf{Program State}}                                       &  &                       &  \\
+    	 & \grad{\pi}                                                          &  & \in \setGProgramState &  \\
+    	 &  \\
+    	 & \rlap{\textbf{Semantics}}                                           &  &                       &  \\
+    	 & \rlap{Static  ~~~~$\gthoare{}{\grad{\phi}}{\grad{s}}{\grad{\phi}}$} &  &                       &  \\
+    	 & \rlap{Dynamic ~$\gsstep{\grad{\pi}}{\grad{\pi}}$}                   &  &                       &  \\
+    	 & \rlap{Formula ~~$\evalgphiGen{\grad{\pi}}{\grad{\phi}}$}            &  &                       &  \\
+    	 & ~ \\
+    	 & \rlap{\textbf{Soundness}}                                           &  &                       &
+    \end{alignat*}
+\end{figure}
+
 
 
 %% generic language introduction
