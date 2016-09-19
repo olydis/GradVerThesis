@@ -158,6 +158,42 @@ This gradual partial function has desirable properties:
     This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
     Optimality of the deterministic lifting does not imply optimality of the obtained gradual lifting.
     
+    \begin{example}{Counterexample of Optimality Induced by Deterministic Lifting}
+        \label{cex:opt-det2grad}
+        Assume that, one can verify
+        \begin{displaymath}
+        \thoare{}{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiAnd{\phiEq{y}{4}}{\phiEq{x}{3}}}
+        \end{displaymath}
+        and
+        \begin{displaymath}
+        \thoare{}{\phiEq{y}{5}}{\sVarAssign{x}{3}}{\phiAnd{\phiEq{y}{5}}{\phiEq{x}{3}}}
+        \end{displaymath}
+        using Hoare logic.
+        
+        Now, let $\setGFormula$ be extended suing the “dedicated wildcard” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+        The deterministic lifting of the Hoare logic will verify
+        \begin{displaymath}
+        \dgthoare{}{\qm}{\sVarAssign{x}{3}}{\qm}
+        \end{displaymath}
+        The unknown formula as postcondition is necessary, as anything else (e.g. $\phiEq{x}{3}$) would break the strength condition (take the above static judgments, both of their postconditions cannot be implied by any static formula).
+        Note that the “wildcard with upper bound” approach (see \ref{ssec:wildcard-with-upper}) would allow specifying $\withqmGen{\phiEq{x}{3}}$ as postcondition.
+        
+        Since $\gphiImplies{\qm}{\phiEq{x}{1}}$ holds, we can deduce
+        \begin{displaymath}
+        \gthoare{}{\qm}{\sVarAssign{x}{3}}{\phiEq{x}{1}}
+        \end{displaymath}
+        An optimal gradual lifting would not be able to deduce this judgment, as it requires the existing of some $\phi \in \gamma(\qm) = \setFormulaA$ such that
+        \begin{displaymath}
+        \thoare{}{\phi}{\sVarAssign{x}{3}}{\phiEq{x}{1}}
+        \end{displaymath}
+        holds.
+        However, the only working instantiation according to Hoare logic is $\phi = \phiEq{3}{1}$ which is not satisfiable.
+        It follows that the obtained lifting is not optimal, even though the deterministic lifting is.
+        
+        Note that with $\withqmGen{\phiEq{x}{3}}$ as a postcondition, one cannot deduce above above gradual judgment (since $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{1}}$) does not hold.
+        This example motivates the use of more powerful gradual syntax extensions, as apparently they result in more optimal gradual liftings.
+    \end{example}
+    
     \item[(b) Determinism of Verifier]~\\
     As the name suggests, deterministic liftings leave no room for choice.
     For the gradual verifier this means that there is no need to infer intermediate formulas, averting the risk of choosing the wrong formulas (as illustrated in section \ref{ssec:the-problem-with}).

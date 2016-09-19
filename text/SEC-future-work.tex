@@ -1,10 +1,43 @@
+After realizing that optimality of gradual liftings  (or “consistent lifting”, as called in AGT \cite{garcia2016abstracting}) is likely impossible to achieve in the verification setting, we focused mainly on soundness of liftings.
+Furthermore, we showed that our approach of obtaining a gradual Hoare logic using deterministic liftings does not result in an optimal lifted Hoare logic, even if the deterministic lifting was optimal (see example \ref{cex:opt-det2grad}).
+We have also shown that a stronger gradual syntax can improve that problem, yet we have not formalized that relationship or determined what is necessary to preserve optimality.
 
-% does it work with wlp semantics?
-% wlp not an option since not well-defined for some rules:
-\begin{displaymath}
-\predicate{wlp}(\text{“\sVarAssign{x}{a.f}”}, \phiAcc{b}{f}) =
-\begin{cases}
-\phiCons {\phiAcc{b}{f}} {\phiAcc{a}{f}}\\
-\phiCons {\phiAcc{b}{f}} {\phiEq{a}{b}}
-\end{cases}
-\end{displaymath}
+Furthermore, it is unclear whether optimality/consistency as defined by AGT is even desirable under all circumstances:
+\begin{example}{Optimality and Decidability}
+    Consider a statement $s$ which is very hard to reason about (for instance, think of 300 Collatz sequence iterations).
+    With the static Hoare logic, we assume that
+    \begin{displaymath}
+    \thoare{}{\phiEq{x}{10000}}{s}{\phiAnd{\ttt{1 <= x}}{\ttt{x <= 4}}}
+    \end{displaymath}
+    can be verified and that no stronger postcondition could be verified (due to limitations of the verifier).
+    However, we know that \ttt{x} will have value 4 afterwards, i.e. the following Hoare triple holds:
+    \begin{displaymath}
+    \hoare{\phiEq{x}{10000}}{s}{\phiEq{x}{4}}
+    \end{displaymath}
+    
+    Using gradual verification, we want to overcome the limitations imposed by decidability and be able to deduce 
+    \begin{displaymath}
+    \gthoare{}{\withqmGen{\phiEq{x}{10000}}}{s}{\withqmGen{\phiEq{x}{4}}}
+    \end{displaymath}
+    or similar.
+    However, an optimal gradual lifting is not able to deduce this fact, since there exists no instantiation of the postcondition for which a corresponding static judgment holds (note that $\phiAnd{\ttt{1 <= x}}{\ttt{x <= 4}} \not \in \gamma(\withqmGen{\phiEq{x}{4}})$).
+   
+    Note that our approach using a deterministic would work in this case:
+    \begin{displaymath}
+    \dgthoare{}{\withqmGen{\phiEq{x}{10000}}}{s}{\withqmGen{\ttt{1 <= x}}{\ttt{x <= 4}}}}
+    \end{displaymath}
+    or a more imprecise postcondition must be deducible due to introduction, strength and monotonicity rules.
+    Furthermore $\gphiImplies{\withqmGen{\phiAnd{\ttt{1 <= x}}{\ttt{x <= 4}}}}{\phiEq{x}{4}}$ holds (emitting a runtime check), such that 
+    \begin{displaymath}
+    \gthoare{}{\withqmGen{\phiEq{x}{10000}}}{s}{\phiEq{x}{4}}
+    \end{displaymath}
+    is deducible.
+\end{example}
+We conjecture that a notion of consistency that relies on valid Hoare triples instead of deducible Hoare triples would solve this problem, yet it is unclear what the implications of this definition would be.
+Most importantly, it would severely complicate optimality proofs, as they suddenly rely on dynamic semantics (from which validity of Hoare triples arises) instead of static semantics (Hoare logic).
+
+In the case study, we have not made full use of the capabilities of implicit dynamic frames, yet.
+Tracking exclusive access to memory locations also allows race-free reasoning about concurrent programs (see \cite{summers2013formal} gives a Hoare logic).
+It would be interesting to see gradual verification applied to such a setting, as it reflects more closely the reality of modern programming languages.
+Further potential extensions include the introduction of shared access or the addition of non-separating conjunction to the formula syntax.
+
