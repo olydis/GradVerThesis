@@ -279,8 +279,8 @@ paper=a4
 \newcommand{\gthoare}[4]{{#1} \,\,\grad{\vdash}\,\, \hoare {#2} {#3} {#4}}
 \newcommand{\dgthoare}[4]{{#1} \,\,\dgrad{\vdash}\,\, \hoare {#2} {#3} {#4}}
 \newcommand{\PP}{\mathcal{P}}
-\newcommand{\sssem}{\mathcal{S}}
-\newcommand{\gsssem}{\grad{\sssem}}
+%\newcommand{\sssem}{\mathcal{S}}
+%\newcommand{\gsssem}{\grad{\sssem}}
 \newcommand{\funHoare}{\mathcal{H}}
 \newcommand{\funHoareA}{\mathcal{F}}
 \newcommand{\funHoareApred}{\mathcal{P}}
@@ -291,11 +291,15 @@ paper=a4
 \newcommand{\prefix}[2]{\predicate{prefix}(#1, #2)}
 \newcommand{\progress}{\predicate{progress}_{\sssem}}
 \newcommand{\sstepGeneric}[3]{{#1} \,\,{\longrightarrow^{#2}}\,\, {#3}}
+\newcommand{\sstepStuck}[1]{{#1} \,\,{\longrightarrow\llap{\shifttext{-4ex}{/}}}\,\, {\,}}
 \newcommand{\sstep}[2]{\sstepGeneric {#1} {} {#2}}
 \newcommand{\ssteps}[2]{\sstepGeneric {#1} * {#2}}
+\newcommand{\sstepConsume}[3]{{#2} \,\,{\overset{#1}{\longrightarrow}}\,\, {#3}}
 \newcommand{\gsstepGeneric}[3]{{#1} \,\,{\grad{\longrightarrow}^{#2}}\,\, {#3}}
+\newcommand{\gsstepStuck}[1]{{#1} \,\,{\grad{\longrightarrow}\llap{\shifttext{-2.5ex}{/}}}\,\, {\,}}
 \newcommand{\gsstep}[2]{\gsstepGeneric {#1} {} {#2}}
 \newcommand{\gssteps}[2]{\gsstepGeneric {#1} * {#2}}
+\newcommand{\gsstepConsume}[3]{{#2} \,\,{\overset{#1}{\grad{\longrightarrow}}}\,\, {#3}}
 
 \newcommand{\envs}[1]{\llbracket {#1} \rrbracket}
 \newcommand{\norm}[1]{\ensuremath{||#1||}}

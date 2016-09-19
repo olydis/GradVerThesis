@@ -1,4 +1,4 @@
-\begin{figure}
+\begin{comment}
     \begin{alignat*}{3}
     	 & \rlap{\textbf{Syntax}}                        &  &                      & ~ \\
     	 & s                                             &  & \in \setStmt         &  \\
@@ -30,7 +30,7 @@
     	 & ~ \\
     	 & \rlap{\textbf{Soundness}}                                           &  &                       &
     \end{alignat*}
-\end{figure}
+\end{comment}
 
 
 
@@ -65,11 +65,13 @@ Assumptions about \svl:
     We assume that $\setProgramState$ is the set of all possible program states in \svl.
     
     \begin{example}{Program State: Primitive language with integer variables}
+        \label{ex:ps-primitive}
         \begin{displaymath}
         \setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{variable memory}} ~\times~ \setStmt 
         \end{displaymath}
     \end{example}
     \begin{example}{Program State: Language with stack}
+        \label{ex:ps-stacked}
         \begin{displaymath}
         \setProgramState ~=~ \bigcup_{i \in \mathbb{N}_+}{\underbrace{\Big((\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt \Big)}_{\textit{stack frame}}}^i                                                      
         \end{displaymath}
@@ -106,19 +108,42 @@ Assumptions about \svl:
     
 \item[Dynamic Semantics]~\\
     We assume that \svl has a structural operational semantics or small-step semantics.
-    This semantics is formalized as $~\sssem : \setProgramState \rightharpoonup \setProgramState$, describing precisely how program state can be updated. % TODO: reconsider non-deterministic
+    This semantics is formalized as $~\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$, describing precisely how program state can be updated. % TODO: reconsider non-deterministic
     %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
     %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
     %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
-    Taking $n$ steps at once can be abbreviated as $\sssem^n$ (undefinedness is propagated).
+    As usual, taking $n$ steps is abbreviated as $\sstepGeneric{\cdot}{n}{\cdot}$ (undefinedness is propagated), taking any finite amount of steps is abbreviated as $\ssteps{\cdot}{\cdot}$.
+    Also, we write $\sstepStuck{\pi}$ to state that $\pi$ is a “stuck” state, i.e. that $\pi$ is not in the domain of partial small-step function.
     
-    \begin{flalign*}
-        &\sssem^s \subseteq \setProgramState_s \times \setProgramState & \\
-        &\sssem^s(\pi_s, \pi) ~\defiff~ \exists n \in \setNat.~ \sssem^n(\pi_s) = \pi ~\wedge~ \pi \text{ is the first state after $s$ is fully consumed}
-    \end{flalign*}
+    Furthermore we define $\sstepConsume{s}{\cdot}{\cdot} \subseteq \setProgramState \times \setProgramState$ as a predicate indicating whether a program state is reachable from another program state by executing statement $s$.
     
-    We further assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
-    W.l.o.g. we assume $\dom{\sssem} \cap \setProgramStateFin = \emptyset$, i.e. final states are stuck.
+    \begin{example}{Execution of Given Statement}
+        Assume that program state is defined as in example \ref{ex:ps-primitive}.
+        If $\pi_1 \in \setProgramState$ is defined as
+        \begin{displaymath}
+        \pi_1 = \langle [x \mapsto 4, y \mapsto 2],\,\, \sSeq{\sVarAssign{x}{8}}{\sVarAssign{y}{x}} \rangle
+        \end{displaymath}
+        then $\sstepConsume{\sVarAssign{x}{8}}{\pi_1}{\pi_2}$ is supposed to hold for
+        \begin{displaymath}
+        \pi_2 = \langle [x \mapsto 8, y \mapsto 2],\,\, \sVarAssign{y}{x} \rangle
+        \end{displaymath}
+        
+        This notation is useful as it abstracts from the implementation details of the small-step semantics.
+        We want to be able to reason about small-step derivations that correspond to executing certain statements without worrying about the exact number of steps taken.
+        
+        Note that the judgment $\ssteps{\pi_1}{\pi_2}$ is also independent from the number of steps taken, yet it does not encode what is supposed to happen during those steps:
+        \begin{displaymath}
+        \pi_2 = \langle [x \mapsto 8, y \mapsto 8],\,\, \sSkip \rangle
+        \end{displaymath}
+        or
+        \begin{displaymath}
+        \pi_2 = \pi_1
+        \end{displaymath}
+        would be a valid instantiations.
+    \end{example}
+    
+    We assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
+    W.l.o.g. we assume $\forall \pi \in \setProgramStateFin.~ \sstepStuck{\pi}$, i.e. final states are stuck.
     % We say a statement “throws an exception” if its small-step semantics transitions into an exceptional state.
     \begin{comment}
     Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
@@ -131,8 +156,10 @@ Assumptions about \svl:
     \end{comment}
     
 \item[Formula Semantics]~\\
-    Formulas are used for annotations like method contracts or invariants.
-    Formally they constrain program states. % more verbose? can be viewed as types?
+    While types restrict which values are valid for a certain variable,
+    formulas restrict which program states are valid for a certain point during execution. 
+
+    They are used for annotations like method contracts or invariants.
     For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the program state at the call site.
     
     We assume that we are given a computable predicate
@@ -190,7 +217,7 @@ Assumptions about \svl:
     \begin{flalign*}
     & \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
     & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
-    \forall \langle \pi_{pre}, \pi_{post} \rangle \in \sssem^s.~ \evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}}
+    \forall \pi_{pre}, \pi_{post} \in \setProgramState.~ \sstepConsume{s}{\pi_{pre}}{\pi_{post}} \implies (\evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}})
     \end{flalign*}
     
 \item[Static Semantics]~\\

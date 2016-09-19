@@ -1,6 +1,6 @@
 With the notion of sound gradual lifting we have the tools to gradualize the semantics of \svl, resulting in gradual semantics of \gvl.
 More specifically, predicate lifting is applied to the Hoare logic of \svl, resulting in a gradual Hoare logic $\gthoare{~}{\cdot}{\cdot}{\cdot} ~\subseteq~ \setGFormula \times \setGStmt \times \setGFormula$ (see section \ref{sec:abstracting-static-semantics}).
-Furthermore, function lifting is applied to the small-step semantics of \svl, resulting in gradual small-step semantics $\gsssem : \setGProgramState \rightarrow \setGProgramState$ (see section \ref{sec:abstracting-dynamic-semantics}).
+Furthermore, function lifting is applied to the small-step semantics of \svl, resulting in gradual small-step semantics $\gsstep{\cdot}{\cdot} : \setGProgramState \rightarrow \setGProgramState$ (see section \ref{sec:abstracting-dynamic-semantics}).
 These semantics will by construction be compatible with the semantics of \svl and comply with the gradual guarantee.
 
 Note however that there is an additional requirement concerning the correct interplay between Hoare logic and small-step semantics, namely soundness.
@@ -29,8 +29,9 @@ Valid Hoare triples for the gradual system are defined as
 \begin{flalign*}
 & \gtHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula                                                                                                                                                                          \\
 & \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ 
-\forall \langle \grad{\pi_{pre}}, \grad{\pi_{post}} \rangle \in \gsssem^{\grad{s}}.~ \evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}}
+\forall \grad{\pi_{pre}}, \grad{\pi_{post}} \in \setGProgramState.~ \gsstepConsume{\grad{s}}{\grad{\pi_{pre}}}{\grad{\pi_{post}}} \implies (\evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}})
 \end{flalign*}
+
 %% ...have nothing to do with gradual lifting
 Note that $\gtHoare {~} {\cdot} {\cdot} {\cdot}$ is not a sound gradual lifting of $\tHoare{~}{\cdot}{\cdot}{\cdot}$.
 A gradual lifting would declare the Hoare triple $\hoare{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$ valid ()due to the existence of a valid instantiation, e.g. $\hoare{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$).

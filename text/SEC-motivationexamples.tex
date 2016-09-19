@@ -3,6 +3,7 @@
 \label{ssec:argument-validation}
 The following Java example motivates the use of verification for argument validation.
 \begin{lstlisting}
+// spec: no resource leaks
 boolean hasLegalDriver(Car c)
 {
     // business logic:
@@ -13,7 +14,7 @@ boolean hasLegalDriver(Car c)
 }
 \end{lstlisting}
 A call to \ttt{hasLegalDriver} fails if \ttt{c} or \ttt{c.driver} evaluate to \ttt{null}.
-Note that, although the Java runtime has defined behavior in to those cases (throwing an exception), we might still have created a resource leak.
+Note that, although the Java runtime has defined behavior in those cases (throwing an exception), we have created a resource leak.
 To prevent this from happening, arguments have to be validated before entering the business logic.
 \begin{lstlisting}
 boolean hasLegalDriver(Car c)
@@ -27,10 +28,11 @@ boolean hasLegalDriver(Car c)
 }
 \end{lstlisting}
 
-Note that these runtime checks dynamically verifies a method contract, having \ttt{c != null \&\& c.driver != null} as precondition.
+Note that these runtime checks dynamically verify a method contract, having \ttt{c != null \&\& c.driver != null} as precondition.
 Naturally, the drawbacks of dynamic verification apply:
 Violations of the method contract are only detected at runtime, possibly go unnoticed for a long time and impose a runtime overhead which might not be acceptable in all scenarios.
-Java even has dedicated assertion syntax simplifying dynamic verification:
+
+Java even has a dedicated assertion syntax, simplifying dynamic verification:
 \begin{lstlisting}
 boolean hasLegalDriver(Car c)
 {
@@ -40,9 +42,8 @@ boolean hasLegalDriver(Car c)
     // business logic (requires 'c.driver.age' to evaluate)
 }
 \end{lstlisting}
-Note however that such assertions are dropped from regular builds, meaning that the method contract is no longer verified!
 
-With support of additional tools, a more declarative approach is possible using JML syntax:
+Using additional tools, a more declarative approach is possible using JML syntax:
 \begin{lstlisting}
 //@ requires c != null && c.driver != null;
 boolean hasLegalDriver(Car c)
@@ -51,33 +52,17 @@ boolean hasLegalDriver(Car c)
 }
 \end{lstlisting}
 
-There are two basic ways to turn this annotation into a guarantee:
-\begin{description}
-    \item[Static Verification (e.g. ESC/Java, see \cite{leino2000esc})]~\\
-    Verification will only succeed if the precondition is provable at all call sites.
-    This is achievable in two ways:
-    \begin{itemize}
-        \item
-        Rigorously annotate the call sites, guiding the verifier towards a proof.
-        \item 
-        Add parameter validation to the call sites, effectively duplicating the original runtime check across the program.
-        Note that this approach combines static and dynamic validation in order to get a performance benefit (no more runtime checks required where precondition was provable) and circumvent rigorous annotation.
-        The drawback is of course code duplication.
-    \end{itemize}
-    % benefits, drawbacks
-    
-    %There are obvious limitations to this approach, static verification tends to be invasive.
-    %At least there is a performance benefit: 
-    %Runtime checks (originally part of every call) are now only necessary in places where verification would not succeed otherwise.
-    
-    \item[Dynamic Verification (e.g. run JML4c, see \cite{sarcar2010new}]~\\
-    This approach basically converts the annotation back into a runtime check equivalent to our original argument validation.
-    % benefits, drawbacks
-\end{description}
+Using JML4c (see \cite{sarcar2010new}) or similar tools, this annotations is compiled back into equivalent runtime assertions.
+However, the declarative approach also enables the use of static verification tools like ESC/Java (see \cite{leino2000esc}) to ensure at compile time that every call to \ttt{hasLegalDriver} adheres to the method contract.
+Static verification will only succeed if the precondition is provable at all call sites.
 
-Gradual verification would pursue the combined approach without (visible) code duplication:
+Gradual verification would pursue a combined approach without drawbacks:
 Static verification is used where possible, dynamic verification where needed.
-Note that for the programmer this means that adding the method contract comes with no further obligations.
+Where static verification proves a violation of the method contract, an error is found at compile time (which would have required tests with full code coverage to detect otherwise).
+Where static verification proves compliance with the method contract, no runtime checks are emitted in order to enforce the contract.
+Only call sites which are provable neither to violate nor to adhere with the contract will be enhanced with runtime assertions.
+
+
 
 \subsection{Limitations of Static Verification}
 \label{ssec:limitations-of-static}

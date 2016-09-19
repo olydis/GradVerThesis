@@ -1,65 +1,49 @@
 %% program verification
-Program verification aims to check a compute program against its specification.
+Program verification aims to check a computer program against its specification.
 Automated methods require this specification to be formalized, e.g. using annotations in the source code.
 Common examples are method contracts, loop invariants and assertions.
-% Successfully verified programs are guaranteed to comply with  
 
 %% static vs dynamic
-Approaches to check whether program behavior complies with given annotations can be divided into two categories:\\~\\
-\begin{tabular}{l | c | c}
-     & Static verification & Dynamic verification \\ \hline
-    Approach &
-    \begin{minipage}{170pt}
-        \vspace{3pt}
+Approaches to check whether program behavior complies with given annotations can be divided into two categories:
+\begin{description}
+    \item[Static verification]~\\
         The program is not executed. 
         Instead \textbf{formal methods} (like Hoare logic or separation logic) are used, trying to derive a proof for given assertions.
-        \vspace{5pt}
-    \end{minipage}
-    &
-    \begin{minipage}{170pt}
-        \vspace{3pt}
-        The specification is turned into \textbf{runtime checks}, making sure that the program adheres to its specification during execution.
-        Violations cause a runtime exception to be thrown, effectively preventing the program from entering a state that contradicts its specification.
-        Note that in practice this approach is often combined with control flow based testing techniques to detect misbehavior as early as possible.
-        \vspace{5pt}
-    \end{minipage}\\\hline
-    Drawbacks &
-    \begin{minipage}{170pt}
-        \vspace{3pt}
+        
+        \textbf{Drawbacks}\\
         The syntax available for static verification is naturally limited by the underlying formal logic.
         Complex properties might thus not be expressible, resulting in inability to prove subsequent goals.
-        Furthermore, the logic itself might be unable to prove certain goals due to code complexity and undecidability in general.
+        Furthermore, the logic itself might fail proving certain goals due to code complexity and undecidability in general.
         Using static verification usually requires rigorous annotation of the entire source code, as otherwise there might be too little information to find a proof.
         While fully annotating own code can be tedious (there are supporting tools), using unannotated libraries can become a problem:
         Even if it is possible annotate the API afterwards, lacking the source code the verifier is unable to prove those annotations.
         In case the annotation are wrong this results in inconsistent proves.
-        \vspace{5pt}
-    \end{minipage}
-    &
-    \begin{minipage}{170pt}
-        \vspace{3pt}
+        
+    \item[Dynamic verification]~\\
+        The specification is turned into \textbf{runtime checks}, making sure that the program adheres to its specification during execution.
+        Violations cause a runtime exception to be thrown, effectively preventing the program from entering a state that contradicts its specification.
+        Note that in practice this approach is often combined with control flow based testing techniques to detect misbehavior as early as possible.
+        
+        \textbf{Drawbacks}\\
         Violations are only detected at runtime, with the risk of going unnoticed before software is released.
         To minimize this risk, testing methods are required, i.e. more time has to be spent after compilation.
         The usage of runtime checks naturally imposes a runtime overhead which is not always acceptable.
-        % To get rid of 
-        \vspace{5pt}
-    \end{minipage}\\\hline
-\end{tabular}
+\end{description}
 
 The goal of this work is to formalize “gradual verification”, an approach that seamlessly combines static and dynamic verification in order to weaken or even avoid above drawbacks.
 The resulting system provides a continuum between traditional static and dynamic verification, meaning that both extremes are compatible with, but only special cases of the gradual verification system.
-Section \ref{sec:motivationexamples} gives example scenarios of both static and dynamic verification suffering from their drawbacks, but illustrating how gradual verification could avoid them.
+Section \ref{sec:motivationexamples} gives example scenarios of both static and dynamic verification suffering from their drawbacks, illustrating how gradual verification could avoid them.
 % Programmers
 
 Our approach is based on recent formalizations regarding gradual typing, using the concept of abstract interpretation to define a gradual system in terms of a static one (this process is called “gradualization”).
-Gradual typing arose from drawbacks of static and dynamic type systems which are very similar to the drawbacks identified above.
-From a theoretical perspective, type systems are even a special case of program verification. 
+Gradual typing emerged from very similar drawbacks of static and dynamic type systems.
+This is no surprise from a theoretical perspective as type systems are a special case of program verification. 
 These similarities motivated our idea of reinterpreting and adapting the gradual typing approach to the verification setting.
 
-Chapter \ref{sec:categorization-of-existing} provides the background of our approach, introducing the concepts motivating and driving our approach.
+Chapter \ref{sec:categorization-of-existing} introducing the concepts motivating and driving our approach.
 Furthermore it categorizes existing work that goes in a similar direction, pointing out how it differs from our work.
 In chapter \ref{ch:gradualization-of-a} we describe our approach of gradualization in a generic way, meant to be used as a manual or template for designing gradual verification systems.
-We do just that in form of case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic in order to enable safe static reasoning about mutable state.
+We follow that manual in form of case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic in order to enable safe static reasoning about shared mutable state.
 
 % TODO: remaining chapters
 

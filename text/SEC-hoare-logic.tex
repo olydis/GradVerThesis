@@ -1,16 +1,19 @@
 We use Hoare logic \cite{hoare1969axiomatic} as the formal logic used for static verification.
 We assume that source code annotations can be translated into Hoare logic.
-Example:
-\begin{lstlisting}
+
+\begin{example}{Hoare Logic for Contract Verification}~\\
+    Consider a programming language with built-in syntax for method contracts.
+    \begin{lstlisting}
 int getArea(int w, int h)
     requires 0 <= w && 0 <= h;
     ensures  result == w * h;
 {
     return w * h;
 }
-\end{lstlisting}
-The method contract can directly be translated into a Hoare triple:
-\begin{displaymath}
-\hoare{\ttt{0 <= w \&\& 0 <= h}}{\sReturn{w * h;}}{\ttt{result == w * h}}
-\end{displaymath}
-The validity of this triple can then be verified using a sound Hoare logic for given programming language.
+    \end{lstlisting}
+    This method contract can be translated into a Hoare triple.
+    \begin{displaymath}
+    \hoare{\ttt{0 <= w \&\& 0 <= h}}{\sReturn{w * h;}}{\ttt{result == w * h}}
+    \end{displaymath}
+    The validity of this triple can then be verified using a sound Hoare logic for given programming language.
+\end{example}

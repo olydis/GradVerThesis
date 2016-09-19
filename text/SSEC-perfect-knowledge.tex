@@ -1,7 +1,14 @@
-\begin{definition}[Perfect Small-Step Semantics]~\\
-    A small-step semantics $\sssem$ is \textbf{perfect} (w.r.t. a Hoare logic) if every execution can be supported with a matching derivation in Hoare logic:
+\begin{definition}[Perfect Small-Step Semantics for Statement]~\\
+    A small-step semantics $\sstep{\cdot}{\cdot}$ is \textbf{perfect for statement $s$} (w.r.t. a Hoare logic) if every execution of $s$ can be supported with a matching derivation in Hoare logic:
     \begin{flalign*}
-    & \forall s \in \setStmt,\, \pi_1, \pi_2 \in \setProgramState.~ \sssem^s(\pi_1, \pi_2) \implies \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
+    & \forall \pi_1, \pi_2 \in \setProgramState.~ \sstepConsume{s}{\pi_1}{\pi_2} \implies \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
+    \end{flalign*}
+\end{definition}
+
+\begin{definition}[Perfect Small-Step Semantics]~\\
+    A small-step semantics $\sstep{\cdot}{\cdot}$ is \textbf{perfect} (w.r.t. a Hoare logic) if it is perfect for arbitrary statements.
+    \begin{flalign*}
+    & \forall s \in \setStmt.~ \sstep{\cdot}{\cdot} \textup{ is perfect for } s
     \end{flalign*}
 \end{definition}
 

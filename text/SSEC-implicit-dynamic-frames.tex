@@ -1,44 +1,57 @@
 %% intro, aliasing problem
-Reasoning about programs using shared mutable data structures (the default in object orientation) is not possible using traditional Hoare logic.
-The following Hoare triple should not be verifiable using a sound Hoare logic due to potential aliasing.
-\begin{displaymath}
-\hoare
-{\phiAnd{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}
-{\ttt{p1.age++}}
-{\phiAnd{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}
-\end{displaymath}
-The problem is that \ttt{p1} and \ttt{p2} might be aliases, meaning that they reference the same memory.
-The increment operation would thus also affect \ttt{p2.age}, rendering the postcondition invalid.
-As we will demonstrate gradual verification on a Java-like language in chapter \ref{ch:case-study--implicit}, we need a logic that is capable of dealing with mutable data structures.
+Reasoning about programs using shared mutable data structures (the default in object oriented programming languages) is not possible using traditional Hoare logic.
+
+\begin{example}{Limitations of Hoare Logic}~\\
+    The following Hoare triple is not verifiable using a sound Hoare logic due to potential aliasing.
+    \begin{displaymath}
+    \hoare
+    {\phiAnd{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}
+    {\ttt{p1.age++}}
+    {\phiAnd{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}
+    \end{displaymath}
+    The problem is that \ttt{p1} and \ttt{p2} might be aliases, meaning that they reference the same memory.
+    The increment operation would thus also affect \ttt{p2.age}, rendering the postcondition invalid.
+\end{example}
+
+We want to demonstrate gradual verification on a Java-like language in chapter \ref{ch:case-study--implicit}, so we need a logic that is capable of dealing with mutable data structures.
 
 %% SL
 Separation logic \cite{reynolds2002separation} is an extension of Hoare logic that explicitly tracks mutable data structures (i.e. heap references) and adds a “separating conjunction” to the formula syntax.
 In contrast to ordinary conjunction (\ttt{∧}),
 separating conjunction (\ttt{*}) ensures that both sides of the conjunction reference disjoint areas of the heap.
-The following Hoare triple would thus be verifiable:
-\begin{displaymath}
-\hoare
-{\phiCons{\phiMapsTo{p1.age}{19}}{\phiMapsTo{p2.age}{19}}}
-{\ttt{p1.age++}}
-{\phiCons{\phiMapsTo{p1.age}{20}}{\phiMapsTo{p2.age}{19}}}
-\end{displaymath}
-Note also the changed syntax explicitly tracking the values of certain heap locations.
+\begin{example}{Power of Separation Logic}~\\
+    The following Hoare triple is verifiable using separation logic.
+    \begin{displaymath}
+    \hoare
+    {\phiCons{\phiMapsTo{p1.age}{19}}{\phiMapsTo{p2.age}{19}}}
+    {\ttt{p1.age++}}
+    {\phiCons{\phiMapsTo{p1.age}{20}}{\phiMapsTo{p2.age}{19}}}
+    \end{displaymath}
+    The use of separating conjunction in the precondition guarantees that \ttt{p1.age} and \ttt{p2.age} reference disjoint memory locations.
+    The operation is therefore guaranteed to leave \ttt{p2.age} untouched.
+\end{example}
 
 %% IDF
-A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age > 19}$) as they are not directly expressible using the explicit syntax for heap references.
-Implicit dynamic frames (IDF) \cite{smans2009implicit} addresses this issue by decoupling the concept of access to a certain heap location from assertions about its value.
-It introduces an “accessibility predicate” \ttt{acc(\textit{loc})} that represents the permission to access \textit{loc}.
+A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age > 19}$) as they are not directly expressible using the explicit syntax (see above: values of memory locations are explicitly tracked).
+The concept of implicit dynamic frames (IDF) \cite{smans2009implicit} addresses this issue by decoupling the permissions to access a certain heap location from assertions about its value.
+It introduces an “accessibility predicate” \ttt{acc(\textit{loc})} that represents the permission to access heap location \textit{loc}.
 Parkinson and Summers \cite{parkinson2011relationship} worked out the formal relationship between separation logic and IDF.
-Above example can be rewritten in terms of IDF:
-\begin{mathpar}
-\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\phiEq{p2.age}{19}}}\}\\
-{\ttt{p1.age++}}\\
-\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}\}
-\end{mathpar}
-The separating conjunction makes sure that the accessibility predicates mention disjoint memory locations, whereas it has no further meaning for non-access predicates like equality.
-As formulas can mention heap locations in arbitrary predicates, it has to be ensured that the same formula contains accessibility predicates to all heap locations mentioned.
+
+\begin{example}{Power of Implicit Dynamic Frames}~\\
+    \label{ex:pow-idf}
+    The following Hoare triple is verifiable using implicit dynamic frames.
+    \begin{alignat*}{1}
+    &\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\ttt{(p2.age > 19)}}}\}\\
+    &{\ttt{p1.age++}}\\
+    &\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\ttt{(p2.age > 19)}}}\}
+    \end{alignat*}
+    The separating conjunction makes sure that the accessibility predicates $\phiAcc{p1}{age}$ and $\phiAcc{p2}{age}$ mention disjoint memory locations, whereas it has no further meaning for “traditional” predicates.
+    Note how more complex predicates like $\ttt{>}$ are now expressible.
+\end{example}
+
+As formulas can mention heap locations in arbitrary predicates, it has to be ensured that a formula contains accessibility predicates to all heap locations mentioned.
 This property of formulas is called “self-framing”.
-Above pre- and postconditions are self-framing whereas the sub-formula $\phiEq{p1.age}{20}$ would not be.
+The pre- and postcondition of example \ref{ex:pow-idf} are self-framing whereas the sub-formula $\phiEq{p1.age}{20}$ would not be.
 It is essential that access cannot be duplicated and thus also not be shared between threads, allowing race-free reasoning about concurrent programs.
 
 %% Chalice
@@ -47,6 +60,6 @@ Chalice is also the name of the underlying simple imperative programming languag
 Chalice was also implemented as a front-end of the Viper toolset. % developed at ETH Zürich.
 
 %% formal semantics
-The static semantics of our example language in chapter \ref{ch:case-study--implicit} are based on the Hoare logic for Chalice given by Summers and Drossopoulou \cite{summers2013formal}.
+The static semantics of our example language in chapter \ref{ch:case-study--implicit} is based on the Hoare logic for Chalice given by Summers and Drossopoulou \cite{summers2013formal}.
 
 
