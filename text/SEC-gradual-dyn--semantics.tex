@@ -9,22 +9,16 @@ Figure \ref{fig:gvl-sem-dyn-sstep} shows those rules.
 \end{figure}
 For all other statements $\gsstep{\cdot}{\cdot}$ is identical to $\sstep{\cdot}{\cdot}$ (see figure \ref{fig:svl-sem-dyn-sstep}).
 
-Again, we define $\gsssem$ as an alias of $\gsstep{\cdot}{\cdot}$, but additionally mapping otherwise stuck states to an exceptional state $\pi_{EX}$, in order to make $\gsssem$ total.
-\begin{displaymath}
-\gsssem(\pi) = 
-\begin{cases}
-	\pi_{EX} & \text {if } \neg \exists \pi' \in \setGFormula.~ \gsstep{\pi}{\pi'} \\
-	\pi'     & \text {otherwise ($\pi'$ drawn from above)}
-\end{cases}
-\end{displaymath}
+Furthermore, we design $\gsstep{\cdot}{\cdot}$ to be total.
+We extend the set of final states $\setGProgramStateFin$ with a designated exceptional state $\pi_{EX}$, representing dynamic verification failure.
+If no other derivation exists, we map to this state.
 
-
-\begin{lemma}[$\gsssem$ Well-Defined]
+\begin{lemma}[$\gsstep{\cdot}{\cdot}$ Well-Defined]
     The small-step semantics of \gvlidf is well-defined.
 \end{lemma}
 \begin{proof}
-    For $\gsssem$ to be well-defined, the inductive rules for $\gsstep{\cdot}{\cdot}$ may allow deducing at most one return value for every input.
-    For the most part, this is the case due to $\sssem$ being well-defined (see ???).
+    For $\gsstep{\cdot}{\cdot}$ to be well-defined, the inductive rules may allow deducing at most one return value for every input.
+    For the most part, this is the case due to $\sstep{\cdot}{\cdot}$ being well-defined (see ???).
     We show that the same is true for adjustments made in figure \ref{fig:gvl-sem-dyn-sstep}.
     Note the adjustments do not change the fact that the inductive rules are syntax-directed.
     

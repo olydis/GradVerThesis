@@ -43,7 +43,7 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
     \label{frm:tmp0}
     \dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}\\
     \label{frm:tmp1}
-    \gsssem^{\grad{s}}(\grad{\pi_1}, \grad{\pi_2})\\
+    \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}\\
     \label{frm:tmp2}
     \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
     \end{align}
@@ -70,7 +70,7 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
     Iterating the reasoning that lead to \ref{frm:tmp4} we end up with
     \begin{align}
     \label{frm:tmp6}
-    \sssem'^s(\pi_1, \pi)
+    \sstepConsume{s}{\pi_1}{\pi}
     \quad\quad\text{for some } \pi \in \setProgramState,\, s \in \gamma(\grad{s}) 
     \end{align}
     Using the monotonicity of $\gsssem$ we can deduce from \ref{frm:tmp1} and \ref{frm:tmp6} that

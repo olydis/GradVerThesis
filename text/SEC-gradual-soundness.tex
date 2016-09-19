@@ -2,9 +2,9 @@ Proposed gradual Hoare logic is sound w.r.t. the small-step semantics.
 % BY construction, what about progress? \gsssem exceptional? THEOREM?
 
 However, \gvlidf also complies with the stronger notion of soundness \tset{GDPreservation}.
-We will show how the small-step semantics $\sssem$ and $\gsssem$ already realize the approach introduced in section \ref{ssec:atomic--knowledge}.
+We will show how the small-step semantics $\sstep{\cdot}{\cdot}$ and $\gsstep{\cdot}{\cdot}$ realize the approach introduced in section \ref{ssec:atomic--knowledge}.
 
-Specifically, we show that for some statements, $\sssem$ successfully executes the statement precisely iff Hoare logic is able to deduce information about the execution.
+Specifically, we show that for some statements, $\sstep{\cdot}{\cdot}$ successfully executes the statement precisely iff Hoare logic is able to deduce information about the execution.
 For all composite statements (sequence, calls and hold), we prove by induction that \tset{GDPreservation} holds for them as well.
 
 
