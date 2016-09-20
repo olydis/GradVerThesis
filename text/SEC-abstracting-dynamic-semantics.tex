@@ -31,14 +31,12 @@ In case the deterministic lifting approach is used to derive a gradual Hoare log
         \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
     }
 \end{mathpar}
-This stronger notion is allows considering return values of the deterministic lifting as static knowledge.
+This stronger notion allows considering return values of the deterministic lifting as static knowledge.
 As illustrated in section \ref{sssec:gradual-verification-illustrated}, such static knowledge can be used for optimizations.
 
 To summarize, \tset{GPreservation'} is sufficient for soundness of the gradual system whereas \tset{GDPreservation} is valuable for optimizations.
+In the remainder of this section we will thus determine sufficient criteria for \tset{GDPreservation}.
 
-When first introducing \tset{GDPreservation} in section \ref{ssec:the-deterministic-approach}, we also gave an example (\ref{ex:cex-gdpres}) illustrating that whether it holds or not can depend on the small-step semantics of \gvl.
-The example demonstrates that it can be a problem if $\sstep{\cdot}{\cdot}$ is defined even for program states for which Hoare logic cannot derive further progress.
-The solution is to artificially reduce the definedness of $\sstep{\cdot}{\cdot}$ without changing the semantics of \svl, as described in the following sections.
 
 \begin{comment}
 

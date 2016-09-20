@@ -1,41 +1,74 @@
-\begin{definition}[Perfect Small-Step Semantics for Statement]~\\
-    A small-step semantics $\sstep{\cdot}{\cdot}$ is \textbf{perfect for statement $s$} (w.r.t. a Hoare logic) if every execution of $s$ can be supported with a matching derivation in Hoare logic:
-    \begin{flalign*}
-    & \forall \pi_1, \pi_2 \in \setProgramState.~ \sstepConsume{s}{\pi_1}{\pi_2} \implies \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
-    \end{flalign*}
-\end{definition}
+%% intro
+When first introducing \tset{GDPreservation} in section \ref{ssec:the-deterministic-approach}, we also gave an example (\ref{ex:cex-gdpres}) of a language violating \tset{GDPreservation}.
+The root of the problem seemed to be the existence of small-step derivations that are not verifiable using static Hoare logic.
+A Hoare logic that can prove all small-step derivations correct is called “complete”.
+However, as illustrated in example \ref{ex:cex-gdpres}, incompleteness of the Hoare logic may not necessarily indicate weakness of the Hoare logic, but may also be due to optimized small-step semantics.
 
-\begin{definition}[Perfect Small-Step Semantics]~\\
-    A small-step semantics $\sstep{\cdot}{\cdot}$ is \textbf{perfect} (w.r.t. a Hoare logic) if it is perfect for arbitrary statements.
+% EXAMPLES
+
+%% completeness
+As completeness seems to be a property of the entire semantics instead of just the Hoare logic, we will define it as such.
+\begin{definition}[Completeness for Statement]~\\
+    A semantics is \textbf{complete for statement $s$} if every execution of $s$ can be supported with a matching Hoare logic derivation:
+    \begin{flalign*}
+    & \forall \pi_1, \pi_2 \in \setProgramState.~ \sstepConsume{s}{\pi_1}{\pi_2} \implies \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
+    \end{flalign*}
+    Note that from soundness of the Hoare logic it immediately follows that $\evalphiGen{\pi_2}{\phi_2}$ holds.
+\end{definition}
+\begin{definition}[Completeness]~\\
+    \label{def:completeness}
+    A semantics is \textbf{complete} if it is complete for every statement.
     \begin{flalign*}
     & \forall s \in \setStmt.~ \sstep{\cdot}{\cdot} \textup{ is perfect for } s
     \end{flalign*}
 \end{definition}
 
-Let ~$\sssem' : \setProgramState \rightharpoonup \setProgramState$~ be defined such that
-\begin{flalign}
-\sssem'^s(\pi_1, \pi_2) ~\defiff~ \sssem^s(\pi_1, \pi_2) ~\wedge~ \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1} \wedge \evalphiGen{\pi_2}{\phi_2}
-\label{frm:perf-def}
-\end{flalign}
-Intuitively, $\sssem'$ is the same as $\sssem$, but is artificially made undefined whenever there exists no Hoare rule that would be able to deduce static information about the execution.
-
-\begin{lemma}[Restricted Domain of Small-Step Semantics]
-    Replacing the small-step semantics $\sssem$ of \svl with $\sssem'$ as defined above would have no observable effects.
+As indicated before, complete semantics may be derived by enhancing the existing Hoare logic but also by restricting the domain of the existing small-step semantics.
+As long as soundness is not broken, those changes do not have observable effects on \svl programs, i.e. valid programs will behave identically before and after respective adjustments.
+\begin{lemma}[Completion of Semantics]
+    Deriving sound, complete semantics by restricting the domain of the small-step semantics or extending the Hoare logic of \svl does not have observable effects.
 \end{lemma}
 \begin{proof}
     \svl only ever executes a statement $s$ if it was successfully verified.
-    This means that there exists some Hoare derivation $\thoare{}{\phi_1}{s}{\phi_2}$ and a guarantee (due to the soundness of the verification logic) that $s$ will only ever be executed starting with program states satisfying $\phi_1$.
-    Thus, for every execution $\sssem^s(\pi_1, \pi_2)$, $\sssem'^s(\pi_1, \pi_2)$ must hold as well.
+    After extending the Hoare logic, derivable Hoare triples are still derivable.
+    Successful verification implies that there exists some Hoare derivation $\thoare{}{\phi_1}{s}{\phi_2}$ for every statement $s$ executed by the program.
+    Soundness of the Hoare logic implies that the small-step semantics do not get stuck while executing $s$.
+    Thus, the restricted domain of $\sstep{\cdot}{\cdot}$ can never affect reachable executions.
 \end{proof}
 
-Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total gradual lifting of $\sssem'$ that throws exceptions whenever all static derivations would be stuck:
-\begin{align}
-\forall \grad{\pi} \in \setGProgramState.~ (\gamma(\grad{\pi}) \cap \dom{\sssem'} = \emptyset) \implies \gsssem(\grad{\pi}) \in \setProgramStateEx
-\label{frm:perf-ex}
-\end{align}
+%% further stuff
+Based on a complete semantics of \svl, the following requirements for \gvl are sufficient to satisfy \tset{GDPreservation}.
+\begin{definition}[Perfect Gradual Hoare Logic]
+    \label{def:perf-stat}
+    We call a deterministically lifted Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot}$ perfect iff
+    \begin{displaymath}
+    \forall \phi_1 \in \setFormula,\, \grad{s} \in \setGStmt,\, \grad{\phi_2} \in \setGFormula.~ \dgthoare{}{\phi_1}{\grad{s}}{\grad{\phi_2}} \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2}
+    \end{displaymath}
+    Intuitively, the deterministic lifting is only supposed to be defined for static preconditions if there exists some corresponding derivation of the static Hoare logic.
+    Note that optimal deterministic liftings are perfect.
+    Perfection can be viewed as a very weak optimality measure.
+\end{definition}
+\begin{definition}[Perfect Gradual Small-Step Semantics]
+    \label{def:perf-dyn}
+    We call a total, lifted small-step semantics $\gsstep{\cdot}{\cdot}$ perfect iff
+    \begin{comment}
+    %\label{frm:perf-ex}
+    \forall \grad{\pi} \in \setGProgramState.~ (\forall \pi \in \gamma(\grad{\pi}).~ \sstepStuck{\pi}) \implies \gsstep{\grad{\pi}}{\pi_{EX}}
+    \end{comment}
+    \begin{displaymath}
+    %\label{frm:perf-ex}
+    \forall \grad{\pi_1}, \grad{\pi_2} \in \setGProgramState,\, \grad{s} \in \setGStmt.~ \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}} \implies \exists \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}), \pi_2 \in \setFormula.~ \sstepConsume{s}{\pi_1}{\pi_2}
+    \end{displaymath}
+    Intuitively, the gradual small-step semantics is not supposed to define derivations if all concretizations would be stuck in the original small-step semantics.
+    Note that the rules of gradual lifting (of partial functions) allow arbitrary behavior in case the small-step semantics are stuck (i.e. the function is undefined).
+    Optimal deterministic liftings are perfect.
+    Perfection can be viewed as a very weak optimality measure.
+\end{definition}
+
+We call the semantics of \gvl perfect if both Hoare logic and small-step semantics are perfect as defined above.
 
 \begin{theorem}[]
-    If the gradual small-step semantics $\gsssem$ of \gvl is defined as above, then \gvl satisfies \tset{GDPreservation}.
+    If the semantics of \svl are complete and the semantics of \gvl are perfect, then \tset{GDPreservation} is satisfied.
 \end{theorem}
 \begin{proof}
     To prove \tset{GDPreservation} we may assume:
@@ -53,86 +86,138 @@ Let ~$\gsssem : \setGProgramState \rightarrow \setGProgramState$ be a total grad
     \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
     \end{align}
     
-    Reversing formula \ref{frm:perf-ex} we can deduce that $\gamma(\grad{\pi_1}) \cap \dom{\sssem'} \neq \emptyset$, i.e.
-    \begin{align}
-    \label{frm:tmp4}
-    \exists \pi \in \setProgramState.~ \sssem'(\pi_1) = \pi 
-    \quad\quad\text{for some } \pi_1 \in \gamma(\grad{\pi_1})
-    \end{align}
-    Recall that formula evaluation is immune to concretization, so from \ref{frm:tmp2} follows
-    \begin{align}
-    \label{frm:tmp5}
-    \evalgphiGen{\pi_1}{\grad{\phi_1}}
-    \text{\quad\quad or equivalently \quad\quad}
-    \evalphiGen{\pi_1}{\phi_{1a}}
-    \quad\quad\text{for some } \phi_{1a} \in \gamma(\grad{\phi_1}) 
-    \end{align}
-    Iterating the reasoning that lead to \ref{frm:tmp4} we end up with
-    \begin{align}
-    \label{frm:tmp6}
-    \sstepConsume{s}{\pi_1}{\pi}
-    \quad\quad\text{for some } \pi \in \setProgramState,\, s \in \gamma(\grad{s}) 
-    \end{align}
-    Using the monotonicity of $\gsssem$ we can deduce from \ref{frm:tmp1} and \ref{frm:tmp6} that
-    \begin{align}
-    \label{frm:tmp6x}
-    \pi \in \gamma(\grad{\pi_2})
-    \end{align}
-    Using \ref{frm:perf-def} it follows that
-    \begin{align}
-    \label{frm:tmp7}
-    \thoare{}{\phi_{1b}}{s}{\phi} ~\wedge~ \evalphiGen{\pi_1}{\phi_{1b}} ~\wedge~ \evalphiGen{\pi}{\phi}
-    \quad\quad\text{for some } \phi_{1b}, \phi \in \setFormula
-    \end{align}
-    Due to $\envs{\pi_1}$ being a filter we can derive from $\evalphiGen{\pi_1}{\phi_{1a}}$ (\ref{frm:tmp5}) and $\evalphiGen{\pi_1}{\phi_{1b}}$ (\ref{frm:tmp7}) that
-    \begin{align}
-    \label{frm:tmp8}
-    \evalphiGen{\pi_1}{\phi_1} ~\wedge~ \phiImplies{\phi_1}{\phi_{1a}} ~\wedge~ \phiImplies{\phi_1}{\phi_{1b}}
-    \quad\quad\text{for some } \phi_1 \in \setFormula
-    \end{align}
-    From monotonicity of $\thoare{}{\cdot}{\cdot}{\cdot}$ in its first argument (% REF %) we can deduce
-    \begin{align}
-    \label{frm:tmp9}
-    \thoare{}{\phi_1}{s}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}
-    \quad\quad\text{for some } \phi_2 \in \setFormula
-    \end{align}
-    Applying the introduction rule for deterministic liftings we can deduce
-    \begin{align}
-    \label{frm:tmp10}
-    \dgthoare{}{\phi_1}{s}{\grad{\phi}}
-    \quad\quad\text{for some } \grad{\phi} \in \setGFormula
-    \end{align}
-    Applying the strength rule for deterministic liftings we can derive from \ref{frm:tmp9} and \ref{frm:tmp10} that
-    \begin{align}
-    \label{frm:tmp11}
-    \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ \phiImplies{\phi_2}{\phi'}
-    \quad\quad\text{for some } \phi_2 \in \gamma(\grad{\phi})
-    \end{align}
-    From soundness of the static system we can deduce (using \ref{frm:tmp10}, \ref{frm:tmp6}, \ref{frm:tmp8}) that
-    \begin{align}
-    \label{frm:tmp12}
-    \evalphiGen{\pi}{\phi_2}
-    \end{align}
-    and therefore (using \ref{frm:tmp11})
-    \begin{align}
-    \label{frm:tmp13}
-    \evalgphiGen{\pi}{\grad{\phi}}
-    \end{align}
-    and therefore (using \ref{frm:tmp6x})
-    \begin{align}
-    \label{frm:tmp14}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
-    \end{align}
-    Now, apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can derive
-    \begin{align}
-    \label{frm:tmp15}
-    \grad{\phi} \mpt \grad{\phi_2}
-    \end{align}
-    and therefore
-    \begin{align}
-    \label{frm:tmp16}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
-    \end{align}
+    Case $\grad{\phi_1} = \phi_1$ for some $\phi_1 \in \setFormula$:
+        We can simplify \ref{frm:tmp2} as
+        \begin{align}
+        \label{frm:tmpx0}
+        \evalphiGen{\grad{\pi_1}}{\phi_1}
+        \end{align}
+        From perfection of \ref{frm:tmp0} (see definition \ref{def:perf-dyn}) we can derive
+        \begin{align}
+        \label{frm:tmpx1}
+        \thoare{}{\phi_1}{s}{\phi}
+        \quad\quad\text{for some } s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula
+        \end{align}
+        Applying the strength rule for deterministic liftings we can derive from \ref{frm:tmpx1} and \ref{frm:tmp0} that
+        \begin{align}
+        \label{frm:tmpx2}
+        \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ \phiImplies{\phi_2}{\phi}
+        \quad\quad\text{for some } \phi_2 \in \gamma(\grad{\phi_2})
+        \end{align}
+        From soundness (progress) of the static Hoare logic we can deduce that executing $s$ from a program state satisfying $\phi_1$ (like $\grad{\pi_1}$) does not end up in a stuck state.
+        Combining this knowledge with $\ref{frm:tmp1}$ we can conclude that executing $s$ must terminate (otherwise, $\gsstep{\cdot}{\cdot}$, being the gradual lifting, could not terminate for $\grad{s} \sqsupseteq s$).
+        \begin{align}
+        \label{frm:tmpx3}
+        \sstepConsume{s}{\pi_1}{\pi_2}
+        \quad\quad\text{for some } \pi_1 \in \gamma(\grad{\pi_1}),\, \pi_2 \in \setProgramState
+        \end{align}
+        From soundness (preservation) of the static Hoare logic we can deduce
+        \begin{align}
+        \label{frm:tmpx4}
+        \evalphiGen{\pi_2}{\phi_2}
+        \end{align}
+        Applying the introduction rule of gradually lifted functions to \ref{frm:tmpx3} we can derive
+        \begin{align}
+        \label{frm:tmpx5}
+        \gsstepConsume{s}{\pi_1}{\grad{\pi}} ~\wedge~ \pi_2 \sqsubseteq \grad{\pi}
+        \quad\quad\text{for some } \grad{\pi} \in \setGProgramState
+        \end{align}
+        It follows that
+        \begin{align}
+        \label{frm:tmpx6}
+        \evalphiGen{\grad{\pi}}{\phi_2}
+        \end{align}
+        Applying the monotonicity rule of gradually lifted functions to \ref{frm:tmpx5} and \ref{frm:tmp1} we can derive that
+        \begin{align}
+        \label{frm:tmpx7}
+        \grad{\pi} \mpt \grad{\pi_2}
+        \end{align}
+        and thus
+        \begin{align}
+        \label{frm:tmpx8}
+        \evalphiGen{\grad{\pi_2}}{\phi_2}
+        \end{align}
+        We can generalize this using $\phi_2 \in \gamma(\grad{\phi_2})$ (see \ref{frm:tmpx2})
+        \begin{align}
+        \label{frm:tmpx9}
+        \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+        \end{align}
+    
+    Case $\grad{\phi_1}$ partially unknown, i.e. $\gamma(\grad{\phi_1})$ closed over implication:
+        From perfection of \ref{frm:tmp1} (see definition \ref{def:perf-dyn}) we can derive
+        \begin{align}
+        \label{frm:tmp6}
+        \sstepConsume{s}{\pi_1}{\pi_2}
+        \quad\quad\text{for some } \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}),\, \pi_2 \in \setProgramState
+        \end{align}
+        Recall that formula evaluation is immune to concretization (REF), so from \ref{frm:tmp2} follows
+        \begin{align}
+        \label{frm:tmp5}
+        \evalgphiGen{\pi_1}{\grad{\phi_1}}
+        \text{\quad\quad or equivalently \quad\quad}
+        \evalphiGen{\pi_1}{\phi_{1a}}
+        \quad\quad\text{for some } \phi_{1a} \in \gamma(\grad{\phi_1}) 
+        \end{align}
+        Using the monotonicity of $\gsstep{\cdot}{\cdot}$ we can deduce from \ref{frm:tmp1} and \ref{frm:tmp6} that
+        \begin{align}
+        \label{frm:tmp6x}
+        \pi_2 \in \gamma(\grad{\pi_2})
+        \end{align}
+        From completeness of the static system (see definition \ref{def:completeness}) it follows from \ref{frm:tmp6} that
+        \begin{align}
+        \label{frm:tmp7}
+        \thoare{}{\phi_{1b}}{s}{\phi} ~\wedge~ \evalphiGen{\pi_1}{\phi_{1b}}
+        \quad\quad\text{for some } \phi_{1b}, \phi \in \setFormula
+        \end{align}
+        Due to $\envs{\pi_1}$ being a filter we can derive from $\evalphiGen{\pi_1}{\phi_{1a}}$ (\ref{frm:tmp5}) and $\evalphiGen{\pi_1}{\phi_{1b}}$ (\ref{frm:tmp7}) that
+        \begin{align}
+        \label{frm:tmp8}
+        \evalphiGen{\pi_1}{\phi_1} ~\wedge~ \phiImplies{\phi_1}{\phi_{1a}} ~\wedge~ \phiImplies{\phi_1}{\phi_{1b}}
+        \quad\quad\text{for some } \phi_1 \in \setFormula
+        \end{align}
+        From monotonicity of $\thoare{}{\cdot}{\cdot}{\cdot}$ in its first argument (% REF %) we can deduce
+        \begin{align}
+        \label{frm:tmp9}
+        \thoare{}{\phi_1}{s}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}
+        \quad\quad\text{for some } \phi_2 \in \setFormula
+        \end{align}
+        Applying the introduction rule for deterministic liftings we can deduce
+        \begin{align}
+        \label{frm:tmp10}
+        \dgthoare{}{\phi_1}{s}{\grad{\phi}}
+        \quad\quad\text{for some } \grad{\phi} \in \setGFormula
+        \end{align}
+        Applying the strength rule for deterministic liftings we can derive from \ref{frm:tmp9} and \ref{frm:tmp10} that
+        \begin{align}
+        \label{frm:tmp11}
+        \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ \phiImplies{\phi_2}{\phi'}
+        \quad\quad\text{for some } \phi_2 \in \gamma(\grad{\phi})
+        \end{align}
+        From soundness of the static system we can deduce (using \ref{frm:tmp10}, \ref{frm:tmp6}, \ref{frm:tmp8}) that
+        \begin{align}
+        \label{frm:tmp12}
+        \evalphiGen{\pi_2}{\phi_2}
+        \end{align}
+        and therefore (using \ref{frm:tmp6x})
+        \begin{align}
+        \label{frm:tmp14}
+        \evalgphiGen{\grad{\pi_2}}{\phi_2}
+        \end{align}
+        and therefore (using \ref{frm:tmp11})
+        \begin{align}
+        \label{frm:tmp13}
+        \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
+        \end{align}
+        Now, using $\phi_1 \in \gamma(\grad{\phi_1})$ (implied from the fact that $\phi_{1a} \in \gamma(\grad{\phi_1})$, $\phiImplies{\phi_1}{\phi_{1a}}$) we can apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can derive
+        \begin{align}
+        \label{frm:tmp15}
+        \grad{\phi} \mpt \grad{\phi_2}
+        \end{align}
+        and therefore
+        \begin{align}
+        \label{frm:tmp16}
+        \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+        \end{align}
 \end{proof}
  
 \begin{comment} 
