@@ -42,7 +42,7 @@ This observation motivates an additional notion of optimality.
 %% AGT
 Again, definition of optimal function lifting coincides with the definition of “consistent function lifting” given by AGT.
 \begin{lemma}[Equivalence with Consistent Function Lifting (AGT)]\label{lemma:consistent-func-lifting-direct}~\\
-    Let $\alpha : \PP(\setFormulaA) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ f \}$-partial Galois connection.\\ 
+    Let $\alpha : \PP(\setFormula) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ \overline{f} \}$-partial Galois connection.\\ 
     Let $\grad{f} : \setGFormula \rightarrow \setGFormula$ be defined as
     \begin{displaymath}
     \grad{f}(\grad{\phi}) \defeq \alpha(\overline{f}(\gamma(\grad{\phi})))
@@ -50,6 +50,91 @@ Again, definition of optimal function lifting coincides with the definition of �
     where $\overline{f}$ means that $f$ is applied to every element of the set.
     Then $\grad{f}$ is an optimal lifting of $f$.
 \end{lemma} %PROOF (hard part by contradiction! :-)
+\begin{proof}
+    Helping
+        \begin{align*}
+        \alpha(\overline{f}(\gamma(\phi))) = f(\phi)
+        \end{align*}
+    Proof
+        $\alpha(\overline{f}(\gamma(\phi)))$ defined, since $\{ \overline{f} \}$-partial Galois connection, i.e.
+        \begin{align*}
+        \alpha(\overline{f}(\gamma(\phi))) = \alpha(\{ f(\phi) \}) = \grad{\phi}
+        \end{align*}
+        Then
+        Rule 1
+        \begin{align*}
+        &\{~ f(\phi) ~\} \subseteq \gamma(\grad{\phi})\\
+        \end{align*}
+        Rule 2
+        \begin{align*}
+        &\{~ f(\phi) ~\} \subseteq \gamma(f(\phi))\\
+        \implies
+        & \grad{\phi} \sqsubseteq f(\phi)
+        \end{align*}
+        
+        Combining:
+        \begin{align*}
+        &\{~ f(\phi) ~\} \subseteq \gamma(\grad{\phi}) \subseteq \gamma(f(\phi))\\
+        \implies
+        & \gamma(\grad{\phi}) = \{~ f(\phi) ~\}\\
+        \implies
+        & \grad{\phi} = f(\phi)
+        \end{align*}
+        
+    Soundness
+        Introduction
+        \begin{align*}
+        &\grad{f}(\phi)\\
+        = 
+        &\alpha(\overline{f}(\gamma(\phi)))\\
+        = 
+        &f(\phi)
+        \end{align*}
+        
+        Monotonicity
+        We assume $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ with $\grad{\phi_1} \mpt \grad{\phi_2}$
+        \begin{align*}
+        &\grad{\phi_1} \mpt \grad{\phi_2}\\
+        \implies
+        &\gamma(\grad{\phi_1}) \subseteq \gamma(\grad{\phi_2})\\
+        \implies
+        &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \overline{f}(\gamma(\grad{\phi_2}))\\
+        \implies % closure
+        &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \gamma(\alpha(\overline{f}(\gamma(\grad{\phi_2}))))\\
+        \implies % rule 2
+        &\alpha(\overline{f}(\gamma(\grad{\phi_1}))) \mpt \alpha(\overline{f}(\gamma(\grad{\phi_2})))\\
+        \end{align*}
+    
+    Optimality
+        Proof by contradiction.
+        Assume there exists a sound lifting $\grad{f'}$ such that $\grad{f'}(\grad{\phi}) \sqsubset \grad{f}(\grad{\phi})$ for some $\grad{\phi} \in \setGFormula$.
+        Using the introduction rule:
+        \begin{align*}
+        &\forall \phi \in \setFormula.~ f(\phi) \mpt \grad{f'}(\phi)
+        \end{align*}
+        Using the monotonicity rule:
+        \begin{align*}
+        &\forall \phi \in \gamma(\grad{\phi}).~ \grad{f'}(\phi) \mpt \grad{f'}(\grad{\phi})
+        \end{align*}
+        Transitivity:
+        \begin{align*}
+        &\forall \phi \in \gamma(\grad{\phi}).~ f(\phi) \mpt \grad{f'}(\grad{\phi})\\
+        \implies
+        &\forall \phi \in \gamma(\grad{\phi}).~ f(\phi) \in \gamma(\grad{f'}(\grad{\phi}))\\
+        \implies
+        &\overline{f}(\gamma(\grad{\phi})) \subseteq \gamma(\grad{f'}(\grad{\phi}))\\
+        \end{align*}
+        Using rule 2
+        \begin{align*}
+        &\overline{f}(\gamma(\grad{\phi})) \subseteq \gamma(\grad{f'}(\grad{\phi}))\\
+        \implies
+        &\alpha(\overline{f}(\gamma(\grad{\phi}))) \mpt \grad{f'}(\grad{\phi})\\
+        \implies
+        &\grad{f}(\grad{\phi}) \mpt \grad{f'}(\grad{\phi})\\
+        \end{align*}
+        Contradiction.
+\end{proof}
+
 
 %\begin{displaymath}
 %\alpha(\overline{\phi}) = \min_{\sqsubseteq} {\{~ \grad{\phi} ~|~ \overline{\phi} \subseteq \gamma(\grad{\phi}) ~\}}
