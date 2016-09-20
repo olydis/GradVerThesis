@@ -1,30 +1,50 @@
-$\sssem'$ as defined previously requires a priori knowledge about whether Hoare logic can derive a proof for arbitrarily complex statements.
-In \svl the sequence operator is key to defining more complex statements.
+%% intro
+Completeness as defined before tightly couples Hoare logic and small-step semantics.
+In practice this can be impossible to implement due to decidability, i.e. not all valid small-step derivations can be modeled using Hoare logic.
+As a result, completeness is impossible to achieve.
+Similarly, perfection of the gradual semantics might be hard to ensure.
+Perfection of the gradual Hoare logic requires deciding the existence of a Hoare logic derivation which involves first order logic for composite statements like sequences (which was a problem we originally wanted to avoid with deterministic liftings).
+In this section we motivate that a weaker notion of completion and perfection may be sufficient to prove \tset{GDPreservation}.
 
-Assume $\sssem'$ is artificially made undefined, but not for sequences.
-Example: If $\sssem^{\sSeq{$s_1$}{$s_2$}}(\pi_1, \pi_2)$ holds, then $\sssem'^{\sSeq{$s_1$}{$s_2$}}(\pi_1, \pi_2)$ may hold even if there exists no proof.
-
-\tset{GDPreservation} still holds for sequences:
-\begin{mathpar}
-    \inferrule* [Right=seq]
-    {
-        \inferrule* [Right=GDPreservation]
+%% 
+The sequence operator \ttt{;} is key to defining composite statements in most programming languages.
+Fortunately, \tset{GDPreservation} can be proved for sequences inductively.
+\begin{lemma}[\tset{GDPreservation} for Sequences]
+    \label{lemma:gdpres-seq}
+    If \tset{GDPreservation} holds for statements $s_1$ and $s_2$ then it holds for $s_1;s_2$
+\end{lemma}
+\begin{proof}
+    \begin{mathpar}
+        \inferrule* [Right=seq]
         {
-            \inferrule* [Right=inversion]
+            \inferrule* [Right=GDPreservation]
             {
-                \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
+                \inferrule* [Right=inversion]
+                {
+                    \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
+                }
+                {
+                    \dgthoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
+                    \dgthoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+                }
             }
             {
-                 \dgthoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
-                 \dgthoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+                \gtHoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
+                \gtHoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
             }
         }
         {
-            \gtHoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
-            \gtHoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+            \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}
         }
-    }
-    {
-        \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}
-    }
-\end{mathpar}
+    \end{mathpar}
+\end{proof}
+
+As we will show in the case study (section \ref{sec:gradual-soundness}) this inductive approach can be applied to other composite statements like method calls.
+As a result, it is sufficient to prove \tset{GDPreservation} for “primitive” statements, e.g. by using the approach introduced in the previous section:
+Note that the definitions of completeness and perfection are universally quantified over the set of all (gradual) statements.
+Instead, they can be weakened to quantify only over a limited set of primitive statements.
+The resulting proof of \tset{GDPreservation} will apply only to this set of statements.
+
+Again, we want to point out that we only give examples of sufficient criteria to prove \tset{GDPreservation}.
+It is possible that the approaches do not work for a certain programming language, or even that it is entirely impossible to satisfy \tset{GFPreservation}.
+However, recall that \tset{GDPreservation} is not necessary for \gvl to be sound.
