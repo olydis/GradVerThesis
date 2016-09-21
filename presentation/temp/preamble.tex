@@ -1,58 +1,9 @@
-\documentclass[%
-paper=a4
-,fontsize=11pt % common are 10, 11 or 12
-%,headings=big
-,parskip
-%,numbers=noendperiod % 2.3.1 vs 2.3.1. (no dot after the last chapter number)
-,twoside=true
-,toc=bibliography % Bibliography appears in Table of Contents (without a number)
-%,toc=listof % List of Figures and List of Tables appear in Table of Contents
-,version=last % Use latest version of the KOMA-Script
-,openany
-]{scrbook}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage{verbatim}
-\usepackage{lmodern}
-\usepackage{tikz}
-\usepackage[margin=1.2in]{geometry}
 \usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{hyperref}
-\usepackage{mathpartir}
 \usepackage{amssymb}
-\usepackage{latexsym}
-\usepackage{syntax}
-\usepackage{lscape}
-\usepackage{stmaryrd}
-\usepackage{listings}
+\usepackage{mathpartir}
+\usepackage[utf8]{inputenc}
 \usepackage{newunicodechar}
-\usepackage{xspace}
-\usepackage{framed}
-\usepackage{appendix}
-\usepackage[section]{placeins}
-\usepackage[labelsep=period, labelfont=bf]{caption}
-% \usepackage{MnSymbol} % FOR BETTER? UNDERBRACES
-
-\setcounter{secnumdepth}{4}
-
-%%LEFTBAR
-\newlength{\leftbarwidth}
-\setlength{\leftbarwidth}{0.5pt}
-\newlength{\leftbarsep}
-\setlength{\leftbarsep}{20pt}
-
-\newcommand*{\leftbarcolorcmd}{\color{leftbarcolor}}% as a command to be more flexible
-\colorlet{leftbarcolor}{gray}
-
-\renewenvironment{leftbar}{%
-    \def\FrameCommand{{\leftbarcolorcmd{\vrule width \leftbarwidth\relax\hspace {\leftbarsep}}}}%
-    \MakeFramed {\advance \hsize -\width \FrameRestore }%
-}{%
-\endMakeFramed
-}
-%%LEFTBAR
+\pagestyle{empty}
 
 \makeatletter
 \newcommand*{\shifttext}[2]{%
@@ -67,44 +18,7 @@ paper=a4
 {\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}} \endgroup}}
 \newunicodechar{∨}
 {\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{\textbackslash}\shifttext{-0.4ex}{/}} \endgroup}}
-% {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}}
-% $\withqmGen{x = 3}$
-% CODE LISTINGS
 
-\definecolor{cogreen}{RGB}{0,80,0}
-\lstset{
-    language=Java,
-    basicstyle=\ttfamily\small,
-    commentstyle=\ttfamily,
-    frame=single,
-    framesep=5pt,
-    mathescape=true,
-    showstringspaces=false,
-    %escapeinside={(*}{*)},
-    keywordstyle=\color{blue}\ttfamily,
-    stringstyle=\color{darkgray}\ttfamily,
-    commentstyle=\color{cogreen}\ttfamily,
-    morekeywords={requires, ensures}
-}
-
-% THEOREMS
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{corollary}[definition]{Corollary}
-\theoremstyle{definition}
-\newtheorem{exmp}[definition]{Example}
-
-\newenvironment{example}[1]{\begin{leftbar}\begin{exmp}[#1]~}{\end{exmp}\end{leftbar}}
-
-% BIB
-\bibliographystyle{plain}
-
-% COMMANDS
-% \DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
-% \DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
-\DeclareMathOperator*{\argmin}{\arg\!\min}
-\DeclareMathOperator*{\argmax}{\arg\!\max}
 
 %% decoration
 \newcommand{\pa}[1]{\ensuremath{{#1}^{\checkmark}}}
@@ -123,51 +37,51 @@ paper=a4
 \newcommand{\tset}[1]{\textup{\textsc{#1}}}
 \newcommand{\predicate}[1]{\textup{\textmd{\textsf{#1}}}}
 % names
-\newcommand{\svlidf}{\ensuremath{\std{\textbf{SVL}}_{\std{\textbf{IDF}}}}\xspace}
-\newcommand{\gvlidf}{\ensuremath{\std{\textbf{GVL}}_{\std{\textbf{IDF}}}}\xspace}
-\newcommand{\svl}{\std{\textbf{SVL}}\xspace}
-\newcommand{\gvl}{\std{\textbf{GVL}}\xspace}
+\newcommand{\svlidf}{\ensuremath{\std{\textbf{SVL}}_{\std{\textbf{IDF}}}}}
+\newcommand{\gvlidf}{\ensuremath{\std{\textbf{GVL}}_{\std{\textbf{IDF}}}}}
+\newcommand{\svl}{\std{\textbf{SVL}}}
+\newcommand{\gvl}{\std{\textbf{GVL}}}
 
 % sets
-\newcommand{\setProgramState}{\tset{ProgramState}\xspace}
-\newcommand{\setProgramStateFin}{\tset{ProgramStateFin}\xspace}
-\newcommand{\setProgramStateEx}{\tset{ProgramStateEx}\xspace}
-\newcommand{\setGProgramState}{\tset{\gradT ProgramState}\xspace}
-\newcommand{\setGProgramStateFin}{\tset{\gradT ProgramStateFin}\xspace}
-\newcommand{\setGProgramStateEx}{\tset{\gradT ProgramStateEx}\xspace}
-\newcommand{\setProgram}{\tset{Program}\xspace}
-\newcommand{\setGProgram}{\tset{\gradT Program}\xspace}
-\newcommand{\setClass}{\tset{Class}\xspace}
-\newcommand{\setGClass}{\tset{\gradT Class}\xspace}
-\newcommand{\setField}{\tset{Field}\xspace}
-\newcommand{\setMethod}{\tset{Method}\xspace}
-\newcommand{\setGMethod}{\tset{\gradT Method}\xspace}
-\newcommand{\setContract}{\tset{Contract}\xspace}
-\newcommand{\setGContract}{\tset{\gradT Contract}\xspace}
-\newcommand{\setType}{\tset{Type}\xspace}
-\newcommand{\setStmt}{\tset{Stmt}\xspace}
-\newcommand{\setGStmt}{\tset{\gradT Stmt}\xspace}
-\newcommand{\setFormula}{\tset{Formula}\xspace}
-\newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
-\newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
-\newcommand{\setGFormula}{\tset{\gradT Formula}\xspace}
-\newcommand{\setGFormulaA}{\tset{\gradT SatFormula}\xspace}
-\newcommand{\setGFormulaB}{\tset{\gradT SfrmFormula}\xspace}
-\newcommand{\setExpr}{\tset{Expr}\xspace}
-\newcommand{\setVal}{\tset{Val}\xspace}
-\newcommand{\setLoc}{\tset{Loc}\xspace}
-\newcommand{\setVar}{\tset{Var}\xspace}
+\newcommand{\setProgramState}{\tset{ProgramState}}
+\newcommand{\setProgramStateFin}{\tset{ProgramStateFin}}
+\newcommand{\setProgramStateEx}{\tset{ProgramStateEx}}
+\newcommand{\setGProgramState}{\tset{\gradT ProgramState}}
+\newcommand{\setGProgramStateFin}{\tset{\gradT ProgramStateFin}}
+\newcommand{\setGProgramStateEx}{\tset{\gradT ProgramStateEx}}
+\newcommand{\setProgram}{\tset{Program}}
+\newcommand{\setGProgram}{\tset{\gradT Program}}
+\newcommand{\setClass}{\tset{Class}}
+\newcommand{\setGClass}{\tset{\gradT Class}}
+\newcommand{\setField}{\tset{Field}}
+\newcommand{\setMethod}{\tset{Method}}
+\newcommand{\setGMethod}{\tset{\gradT Method}}
+\newcommand{\setContract}{\tset{Contract}}
+\newcommand{\setGContract}{\tset{\gradT Contract}}
+\newcommand{\setType}{\tset{Type}}
+\newcommand{\setStmt}{\tset{Stmt}}
+\newcommand{\setGStmt}{\tset{\gradT Stmt}}
+\newcommand{\setFormula}{\tset{Formula}}
+\newcommand{\setFormulaA}{\tset{SatFormula}}
+\newcommand{\setFormulaB}{\tset{SfrmFormula}}
+\newcommand{\setGFormula}{\tset{\gradT Formula}}
+\newcommand{\setGFormulaA}{\tset{\gradT SatFormula}}
+\newcommand{\setGFormulaB}{\tset{\gradT SfrmFormula}}
+\newcommand{\setExpr}{\tset{Expr}}
+\newcommand{\setVal}{\tset{Val}}
+\newcommand{\setLoc}{\tset{Loc}}
+\newcommand{\setVar}{\tset{Var}}
 
-\newcommand{\setHeap}{\tset{Heap}\xspace}
-\newcommand{\setStack}{\tset{Stack}\xspace}
-\newcommand{\setStackEntry}{\tset{StackEntry}\xspace}
-\newcommand{\setVarEnv}{\tset{VarEnv}\xspace}
-\newcommand{\setTypeEnv}{\tset{TypeEnv}\xspace}
-\newcommand{\setClassName}{\tset{ClassName}\xspace}
-\newcommand{\setFieldName}{\tset{FieldName}\xspace}
-\newcommand{\setMethodName}{\tset{MethodName}\xspace}
-\newcommand{\setSFootprint}{\tset{StaticFootprint}\xspace}
-\newcommand{\setDFootprint}{\tset{DynamicFootprint}\xspace}
+\newcommand{\setHeap}{\tset{Heap}}
+\newcommand{\setStack}{\tset{Stack}}
+\newcommand{\setStackEntry}{\tset{StackEntry}}
+\newcommand{\setVarEnv}{\tset{VarEnv}}
+\newcommand{\setTypeEnv}{\tset{TypeEnv}}
+\newcommand{\setClassName}{\tset{ClassName}}
+\newcommand{\setFieldName}{\tset{FieldName}}
+\newcommand{\setMethodName}{\tset{MethodName}}
+\newcommand{\setSFootprint}{\tset{StaticFootprint}}
+\newcommand{\setDFootprint}{\tset{DynamicFootprint}}
 
 \newcommand{\setNat}{\ensuremath{\mathbb{N}_+}}
 \newcommand{\setNatZ}{\ensuremath{\mathbb{N}_0}}
@@ -256,7 +170,7 @@ paper=a4
 \newcommand{\topmost}{\predicate{topmost}}
 % other
 \newcommand{\id}{\predicate{id}}
-\newcommand{\nil}{\predicate{nil}\xspace}
+\newcommand{\nil}{\predicate{nil}}
 \newcommand{\static}[1]{\predicate{static(#1)}}
 \newcommand{\dom}[1]{\predicate{dom($#1$)}}
 \newcommand{\writesTo}{\predicate{writesTo}}
@@ -304,30 +218,3 @@ paper=a4
 \newcommand{\norm}[1]{\ensuremath{||#1||}}
 \newcommand{\norms}[1]{\ensuremath{|#1|}}% DEP
 \newcommand{\snorm}[1]{\ensuremath{|#1|}}
-
-\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
-        \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
-        #1 % the function
-        \vphantom{\big|} % pretend it's a little taller at normal size
-        \right|_{#2} % this is the delimiter
-    }}
-
-
-
-\begin{document}
-
-% 1. Front pages
-\pagenumbering{gobble}
-%\input{front}
-
-% 2. TOC
-\tableofcontents
-
-% 3. Content
-\pagenumbering{arabic}
-\input{content}
-
-% 4. Bibliography
-\bibliography{references}
-
-\end{document}

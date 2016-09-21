@@ -1,0 +1,5104 @@
+<?xml version="1.0"?>
+<!DOCTYPE ipe SYSTEM "ipe.dtd">
+<ipe version="70107" creator="Ipe 7.1.9">
+<info created="D:20090429144355" modified="D:20160921094514" title="Template for Ipe Presentations" author="Johannes Bader"/>
+<preamble>\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\renewcommand{\vec}[1]{\mathaccent&quot;017E {#1}}
+
+% settings %%%%%%%%%%%%%%%
+\newcommand{\itemcolor}{KITblue}
+\newcommand{\name}{Johannes Bader}
+\newcommand{\prestitle}{Shortest Path to a Segment and Quickest Visibility Queries}
+  </preamble>
+<ipestyle name="basic">
+<symbol name="arrow/arc(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/farc(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/ptarc(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/fptarc(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="mark/circle(sx)" transformations="translations">
+<path fill="sym-stroke">
+0.6 0 0 0.6 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</symbol>
+<symbol name="mark/disk(sx)" transformations="translations">
+<path fill="sym-stroke">
+0.6 0 0 0.6 0 0 e
+</path>
+</symbol>
+<symbol name="mark/fdisk(sfx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+0.5 0 0 0.5 0 0 e
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+0.6 0 0 0.6 0 0 e
+0.4 0 0 0.4 0 0 e
+</path>
+</group>
+</symbol>
+<symbol name="mark/box(sx)" transformations="translations">
+<path fill="sym-stroke" fillrule="eofill">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+-0.4 -0.4 m
+0.4 -0.4 l
+0.4 0.4 l
+-0.4 0.4 l
+h
+</path>
+</symbol>
+<symbol name="mark/square(sx)" transformations="translations">
+<path fill="sym-stroke">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+</path>
+</symbol>
+<symbol name="mark/fsquare(sfx)" transformations="translations">
+<group>
+<path fill="sym-fill">
+-0.5 -0.5 m
+0.5 -0.5 l
+0.5 0.5 l
+-0.5 0.5 l
+h
+</path>
+<path fill="sym-stroke" fillrule="eofill">
+-0.6 -0.6 m
+0.6 -0.6 l
+0.6 0.6 l
+-0.6 0.6 l
+h
+-0.4 -0.4 m
+0.4 -0.4 l
+0.4 0.4 l
+-0.4 0.4 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="mark/cross(sx)" transformations="translations">
+<group>
+<path fill="sym-stroke">
+-0.43 -0.57 m
+0.57 0.43 l
+0.43 0.57 l
+-0.57 -0.43 l
+h
+</path>
+<path fill="sym-stroke">
+-0.43 0.57 m
+0.57 -0.43 l
+0.43 -0.57 l
+-0.57 0.43 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="arrow/fnormal(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/pointed(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/fpointed(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-0.8 0 l
+-1 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/linear(spx)">
+<path stroke="sym-stroke" pen="sym-pen">
+-1 0.333 m
+0 0 l
+-1 -0.333 l
+</path>
+</symbol>
+<symbol name="arrow/fdouble(spx)">
+<path stroke="sym-stroke" fill="white" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+-1 0 m
+-2 0.333 l
+-2 -0.333 l
+h
+</path>
+</symbol>
+<symbol name="arrow/double(spx)">
+<path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
+0 0 m
+-1 0.333 l
+-1 -0.333 l
+h
+-1 0 m
+-2 0.333 l
+-2 -0.333 l
+h
+</path>
+</symbol>
+<pen name="heavier" value="0.8"/>
+<pen name="fat" value="1.2"/>
+<pen name="ultrafat" value="2"/>
+<symbolsize name="large" value="5"/>
+<symbolsize name="small" value="2"/>
+<symbolsize name="tiny" value="1.1"/>
+<arrowsize name="large" value="10"/>
+<arrowsize name="small" value="5"/>
+<arrowsize name="tiny" value="3"/>
+<color name="red" value="1 0 0"/>
+<color name="green" value="0 1 0"/>
+<color name="blue" value="0 0 1"/>
+<color name="yellow" value="1 1 0"/>
+<color name="orange" value="1 0.647 0"/>
+<color name="gold" value="1 0.843 0"/>
+<color name="purple" value="0.627 0.125 0.941"/>
+<color name="gray" value="0.745"/>
+<color name="brown" value="0.647 0.165 0.165"/>
+<color name="navy" value="0 0 0.502"/>
+<color name="pink" value="1 0.753 0.796"/>
+<color name="seagreen" value="0.18 0.545 0.341"/>
+<color name="turquoise" value="0.251 0.878 0.816"/>
+<color name="violet" value="0.933 0.51 0.933"/>
+<color name="darkblue" value="0 0 0.545"/>
+<color name="darkcyan" value="0 0.545 0.545"/>
+<color name="darkgray" value="0.663"/>
+<color name="darkgreen" value="0 0.392 0"/>
+<color name="darkmagenta" value="0.545 0 0.545"/>
+<color name="darkorange" value="1 0.549 0"/>
+<color name="darkred" value="0.545 0 0"/>
+<color name="lightblue" value="0.678 0.847 0.902"/>
+<color name="lightcyan" value="0.878 1 1"/>
+<color name="lightgray" value="0.827"/>
+<color name="lightgreen" value="0.565 0.933 0.565"/>
+<color name="lightyellow" value="1 1 0.878"/>
+<dashstyle name="dashed" value="[4] 0"/>
+<dashstyle name="dotted" value="[1 3] 0"/>
+<dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
+<dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
+<textsize name="large" value="\large"/>
+<textsize name="Large" value="\Large"/>
+<textsize name="LARGE" value="\LARGE"/>
+<textsize name="huge" value="\huge"/>
+<textsize name="Huge" value="\Huge"/>
+<textsize name="small" value="\small"/>
+<textsize name="footnote" value="\footnotesize"/>
+<textsize name="tiny" value="\tiny"/>
+<textstyle name="center" begin="\begin{center}" end="\end{center}"/>
+<textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
+<textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
+<gridsize name="4 pts" value="4"/>
+<gridsize name="8 pts (~3 mm)" value="8"/>
+<gridsize name="16 pts (~6 mm)" value="16"/>
+<gridsize name="32 pts (~12 mm)" value="32"/>
+<gridsize name="10 pts (~3.5 mm)" value="10"/>
+<gridsize name="20 pts (~7 mm)" value="20"/>
+<gridsize name="14 pts (~5 mm)" value="14"/>
+<gridsize name="28 pts (~10 mm)" value="28"/>
+<gridsize name="56 pts (~20 mm)" value="56"/>
+<anglesize name="90 deg" value="90"/>
+<anglesize name="60 deg" value="60"/>
+<anglesize name="45 deg" value="45"/>
+<anglesize name="30 deg" value="30"/>
+<anglesize name="22.5 deg" value="22.5"/>
+<tiling name="falling" angle="-60" step="4" width="1"/>
+<tiling name="rising" angle="30" step="4" width="1"/>
+</ipestyle>
+<ipestyle name="KIT-colors">
+<color name="KITgreen" value="0 0.588 0.509"/>
+<color name="KITgreen70" value="0.3 0.711 0.656"/>
+<color name="KITgreen50" value="0.5 0.794 0.754"/>
+<color name="KITgreen30" value="0.7 0.876 0.852"/>
+<color name="KITgreen15" value="0.85 0.938 0.926"/>
+<color name="tab_header" value="0.274 0.392 0.666"/>
+<color name="KITblue" value="0.274 0.392 0.666"/>
+<color name="KITblue70" value="0.492 0.574 0.766"/>
+<color name="KITblue50" value="0.637 0.696 0.833"/>
+<color name="KITblue30" value="0.782 0.817 0.9"/>
+<color name="tab_body" value="0.891 0.908 0.95"/>
+<color name="KITblue15" value="0.891 0.908 0.95"/>
+<color name="KITblack" value="0"/>
+<color name="KITblack70" value="0.3"/>
+<color name="KITblack50" value="0.5"/>
+<color name="KITblack30" value="0.7"/>
+<color name="KITblack15" value="0.85"/>
+<color name="KITpalegreen" value="0.509 0.745 0.235"/>
+<color name="KITpalegreen70" value="0.656 0.821 0.464"/>
+<color name="KITpalegreen50" value="0.754 0.872 0.617"/>
+<color name="KITpalegreen30" value="0.852 0.923 0.77"/>
+<color name="KITpalegreen15" value="0.926 0.961 0.885"/>
+<color name="KITyellow" value="0.98 0.901 0.078"/>
+<color name="KITyellow70" value="0.986 0.931 0.354"/>
+<color name="KITyellow50" value="0.99 0.95 0.539"/>
+<color name="KITyellow30" value="0.994 0.97 0.723"/>
+<color name="KITyellow15" value="0.997 0.985 0.861"/>
+<color name="KITorange" value="0.862 0.627 0.117"/>
+<color name="KITorange70" value="0.903 0.739 0.382"/>
+<color name="KITorange50" value="0.931 0.813 0.558"/>
+<color name="KITorange30" value="0.958 0.888 0.735"/>
+<color name="KITorange15" value="0.979 0.944 0.867"/>
+<color name="KITbrown" value="0.627 0.509 0.196"/>
+<color name="KITbrown70" value="0.739 0.656 0.437"/>
+<color name="KITbrown50" value="0.813 0.754 0.598"/>
+<color name="KITbrown30" value="0.888 0.852 0.758"/>
+<color name="KITbrown15" value="0.944 0.926 0.879"/>
+<color name="KITred" value="0.627 0.117 0.156"/>
+<color name="KITred70" value="0.739 0.382 0.409"/>
+<color name="KITred50" value="0.813 0.558 0.578"/>
+<color name="KITred30" value="0.888 0.735 0.747"/>
+<color name="KITred15" value="0.944 0.867 0.873"/>
+<color name="KITlilac" value="0.627 0 0.47"/>
+<color name="KITlilac70" value="0.739 0.3 0.629"/>
+<color name="KITlilac50" value="0.813 0.5 0.735"/>
+<color name="KITlilac30" value="0.888 0.7 0.841"/>
+<color name="KITlilac15" value="0.944 0.85 0.92"/>
+<color name="KITcyanblue" value="0.313 0.666 0.901"/>
+<color name="KITcyanblue70" value="0.519 0.766 0.931"/>
+<color name="KITcyanblue50" value="0.656 0.833 0.95"/>
+<color name="KITcyanblue30" value="0.794 0.9 0.97"/>
+<color name="KITcyanblue15" value="0.897 0.95 0.985"/>
+<color name="KITseablue" value="0.196 0.313 0.549"/>
+<color name="KITseablue70" value="0.437 0.519 0.684"/>
+<color name="KITseablue50" value="0.598 0.656 0.774"/>
+<color name="KITseablue30" value="0.758 0.794 0.864"/>
+<color name="KITseablue15" value="0.879 0.897 0.932"/>
+</ipestyle>
+<ipestyle name="presentation">
+<symbol name="Background">
+<group matrix="1 0 0 1 2 0">
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue15"/>
+<path fill="KITblack15">
+-13 -22 m
+12 0 0 -12 -13 -10 -25 -10 a
+-25 522 l
+745 522 l
+12 0 0 -12 745 510 757 510 a
+757 -22 l
+h
+-34 -69 m
+766 -69 l
+766 531 l
+-34 531 l
+h
+</path>
+<text matrix="1 0 0 1 -98 -201.642" pos="106 168" stroke="black" type="minipage" width="497" valign="top" size="verytiny">\name \ -- \prestitle</text>
+<group matrix="1 0 0 1 129 -9.5">
+<group matrix="0.5 0 0 0.5 265.5 -52.5">
+<path matrix="1 0 0 1 -145 -25" fill="KITblue">
+420 40 m
+16 0 0 16 436 40 436 24 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -143 -25" fill="KITblue">
+436 24 m
+16 0 0 16 436 40 452 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -145 -23" fill="KITblue">
+436 56 m
+16 0 0 16 436 40 420 40 a
+436 40 l
+h
+</path>
+</group>
+<group matrix="0.5 0 0 0.5 262.5 -52.5">
+<path matrix="1 0 0 1 -105 -25" fill="KITblue">
+420 40 m
+16 0 0 16 436 40 436 24 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -103 -25" fill="KITblue">
+436 24 m
+16 0 0 16 436 40 452 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -105 -23" fill="KITblue">
+436 56 m
+16 0 0 16 436 40 420 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -103 -23" fill="KITblue">
+452 40 m
+16 0 0 16 436 40 436 56 a
+436 40 l
+h
+</path>
+</group>
+<group matrix="0.5 0 0 0.5 262.5 -55.5">
+<path matrix="1 0 0 1 25 -33" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+<path matrix="1 0 0 1 7 -15" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+<path matrix="1 0 0 1 -105 15" fill="KITblue">
+420 40 m
+16 0 0 16 436 40 436 24 a
+436 40 l
+h
+</path>
+</group>
+<group matrix="0.5 0 0 0.5 265.5 -55.5">
+<path matrix="1 0 0 1 -145 17" fill="KITblue">
+436 56 m
+16 0 0 16 436 40 420 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -143 17" fill="KITblue">
+452 40 m
+16 0 0 16 436 40 436 56 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -15 -33" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+<path matrix="1 0 0 1 -33 -33" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+</group>
+</group>
+</group>
+</symbol>
+<symbol name="KITItem(f)">
+<path fill="sym-fill">
+-0.2 -0.4 m
+0.2 0 0 -0.2 -0.2 -0.2 -0.4 -0.2 a
+-0.4 0.4 l
+0.2 0.4 l
+0.2 0 0 -0.2 0.2 0.2 0.4 0.2 a
+0.4 -0.4 l
+h
+</path>
+</symbol>
+<symbol name="KIT-Box">
+<group>
+<path matrix="1 0 0 1 0 215.315" fill="KITblue">
+736 248 m
+-8 248 l
+-8 216 l
+744 216 l
+744 240 l
+8 0 0 8 736 240 736 248 a
+h
+</path>
+<path matrix="1 0 0 1 0 210.496" fill="KITblack15">
+-8 152 m
+-8 220.819 l
+744 220.819 l
+744 144 l
+0 144 l
+8 0 0 -8 0 152 -8 152 a
+h
+</path>
+<text matrix="1 0 0 1 0 457" pin="h" transformations="translations" pos="0 0" stroke="white" type="minipage" width="736" valign="top">Titel</text>
+<text matrix="1 0 0 1 0 424.315" transformations="translations" pos="0 0" stroke="black" type="minipage" width="736" valign="top">Zweizeiliger Text -- Zweizeiliger Text -- Zweizeiliger Text -- Zweizeiliger Text -- Zweizeiliger Text</text>
+</group>
+</symbol>
+<symbol name="deco/KIT box [blue]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITblue15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [red]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITred15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [palegreen]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITpalegreen15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [yellow]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITyellow15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [green]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITgreen15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<pen name="normal" value="1.2"/>
+<pen name="heavier" value="2.4"/>
+<pen name="fat" value="3.6"/>
+<pen name="ultrafat" value="6"/>
+<symbolsize name="normal" value="9"/>
+<symbolsize name="large" value="12"/>
+<symbolsize name="small" value="6"/>
+<symbolsize name="tiny" value="4"/>
+<arrowsize name="normal" value="15"/>
+<arrowsize name="large" value="20"/>
+<arrowsize name="small" value="10"/>
+<arrowsize name="tiny" value="6"/>
+<color name="KITgreen" value="0 0.588 0.509"/>
+<color name="KITgreen70" value="0.3 0.711 0.656"/>
+<color name="KITgreen50" value="0.5 0.794 0.754"/>
+<color name="KITgreen30" value="0.7 0.876 0.852"/>
+<color name="KITgreen15" value="0.85 0.938 0.926"/>
+<color name="KITblue" value="0.274 0.392 0.666"/>
+<color name="KITblue70" value="0.492 0.574 0.766"/>
+<color name="KITblue50" value="0.637 0.696 0.833"/>
+<color name="KITblue30" value="0.782 0.817 0.9"/>
+<color name="KITblue15" value="0.891 0.908 0.95"/>
+<color name="KITblack" value="0"/>
+<color name="KITblack70" value="0.3"/>
+<color name="KITblack50" value="0.5"/>
+<color name="KITblack30" value="0.7"/>
+<color name="KITblack15" value="0.85"/>
+<color name="KITpalegreen" value="0.509 0.745 0.235"/>
+<color name="KITpalegreen70" value="0.656 0.821 0.464"/>
+<color name="KITpalegreen50" value="0.754 0.872 0.617"/>
+<color name="KITpalegreen30" value="0.852 0.923 0.77"/>
+<color name="KITpalegreen15" value="0.926 0.961 0.885"/>
+<color name="KITyellow" value="0.98 0.901 0.078"/>
+<color name="KITyellow70" value="0.986 0.931 0.354"/>
+<color name="KITyellow50" value="0.99 0.95 0.539"/>
+<color name="KITyellow30" value="0.994 0.97 0.723"/>
+<color name="KITyellow15" value="0.997 0.985 0.861"/>
+<color name="KITorange" value="0.862 0.627 0.117"/>
+<color name="KITorange70" value="0.903 0.739 0.382"/>
+<color name="KITorange50" value="0.931 0.813 0.558"/>
+<color name="KITorange30" value="0.958 0.888 0.735"/>
+<color name="KITorange15" value="0.979 0.944 0.867"/>
+<color name="KITbrown" value="0.627 0.509 0.196"/>
+<color name="KITbrown70" value="0.739 0.656 0.437"/>
+<color name="KITbrown50" value="0.813 0.754 0.598"/>
+<color name="KITbrown30" value="0.888 0.852 0.758"/>
+<color name="KITbrown15" value="0.944 0.926 0.879"/>
+<color name="KITred" value="0.627 0.117 0.156"/>
+<color name="KITred70" value="0.739 0.382 0.409"/>
+<color name="KITred50" value="0.813 0.558 0.578"/>
+<color name="KITred30" value="0.888 0.735 0.747"/>
+<color name="KITred15" value="0.944 0.867 0.873"/>
+<color name="KITlilac" value="0.627 0 0.47"/>
+<color name="KITlilac70" value="0.739 0.3 0.629"/>
+<color name="KITlilac50" value="0.813 0.5 0.735"/>
+<color name="KITlilac30" value="0.888 0.7 0.841"/>
+<color name="KITlilac15" value="0.944 0.85 0.92"/>
+<color name="KITcyanblue" value="0.313 0.666 0.901"/>
+<color name="KITcyanblue70" value="0.519 0.766 0.931"/>
+<color name="KITcyanblue50" value="0.656 0.833 0.95"/>
+<color name="KITcyanblue30" value="0.794 0.9 0.97"/>
+<color name="KITcyanblue15" value="0.897 0.95 0.985"/>
+<color name="KITseablue" value="0.196 0.313 0.549"/>
+<color name="KITseablue70" value="0.437 0.519 0.684"/>
+<color name="KITseablue50" value="0.598 0.656 0.774"/>
+<color name="KITseablue30" value="0.758 0.794 0.864"/>
+<color name="KITseablue15" value="0.879 0.897 0.932"/>
+<dashstyle name="long dashed" value="[12] 0"/>
+<dashstyle name="long dash dotted" value="[12 6 1 6] 0"/>
+<dashstyle name="dense dotted" value="[0.5 0.5] 0"/>
+<dashstyle name="medium dotted" value="[1 1.5] 0"/>
+<dashstyle name="dense dashed" value="[8 3] 0"/>
+<textsize name="verytiny" value="\tiny"/>
+<textsize name="largebf" value="\bf\large"/>
+<textstretch name="normal" value="2.45"/>
+<textstretch name="large" value="2.45"/>
+<textstretch name="Large" value="2.2"/>
+<textstretch name="LARGE" value="2.2"/>
+<textstretch name="huge" value="2.2"/>
+<textstretch name="Huge" value="2.2"/>
+<textstretch name="small" value="2.2"/>
+<textstretch name="footnote" value="2"/>
+<textstretch name="tiny" value="2.8"/>
+<textstretch name="verytiny" value="2.3"/>
+<textstretch name="largebf" value="2.45"/>
+<textstyle name="center" begin="\begin{center}" end="\end{center}"/>
+<textstyle name="itemize" begin="\begin{flushleft}\begin{itemize}" end="\end{itemize}\end{flushleft}"/>
+<textstyle name="item" begin="\begin{flushleft}\begin{itemize}\item{}" end="\end{itemize}\end{flushleft}"/>
+<textstyle name="default" begin="\begin{flushleft}" end="\end{flushleft}"/>
+<gridsize name="1 pts" value="1"/>
+<gridsize name="2 pts" value="2"/>
+<gridsize name="3 pts" value="3"/>
+<preamble>
+    \usepackage{color}
+    \usepackage{pgf}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage{verbatim}
+    %\usepackage{lmodern}
+    \usepackage{amsmath}
+    \usepackage{amsthm}
+    \usepackage{mathpartir}
+    \usepackage{amssymb}
+    %\usepackage{latexsym}
+    \usepackage{syntax}
+    %\usepackage{lscape}
+    %\usepackage{stmaryrd}
+    \usepackage{listings}
+    \usepackage{newunicodechar}
+    %\usepackage{xspace}
+
+    % language settings
+    %\newif\ifgerman%
+    %\newcommand{\german}{\germantrue}%
+
+    \renewcommand{\familydefault}{\sfdefault}
+    \usepackage[scaled=.92]{helvet}
+    %\usepackage[EULERGREEK,eulergreek]{sansmath}
+    %\sansmath
+    % \usepackage[scaled=.92]{helvet}
+
+    % \renewcommand{\familydefault}{\sfdefault}
+    % \def\rmdefault{phv}
+    % \DeclareSymbolFont{operators}{OT1}{phv}{m}{n}
+    % \DeclareSymbolFont{letters}{OT1}{phv}{m}{it}
+    % \DeclareSymbolFont{bold}{OT1}{phv}{bx}{n}
+    % \DeclareSymbolFont{italic}{OT1}{phv}{m}{it}
+
+    \makeatletter
+    \def\@listI{
+    \leftmargin 1.5em
+    \itemsep 0.2em
+    \parsep 0.2em
+    \topsep 0.2em
+    \partopsep 0.2em}
+    \def\@listii{
+    \leftmargin 1em
+    \itemsep 0.1em
+    \parsep 0.1em
+    \topsep 0.1em
+    \partopsep 0.1em}
+    \makeatother
+
+    \def\labelitemi{\raisebox{0.5ex}{\hbox to 0.6em{\scalebox{1.3}{\ipesymbol{KITItem(f)}{}{\itemcolor}{}}}}}
+
+    \def\labelitemii{\raisebox{0.5ex}{\hbox to 0.4em{\scalebox{1.1}{\ipesymbol{KITItem(f)}{}{\itemcolor}{}}}}}
+  
+  
+    
+\makeatletter
+\newcommand*{\shifttext}[2]{%
+    \settowidth{\@tempdima}{#2}%
+    \makebox[\@tempdima]{\hspace*{#1}#2}%
+}
+\makeatother
+
+\newunicodechar{≠}{=\llap{/}}
+\newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
+\newunicodechar{∧}
+{\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}} \endgroup}}
+\newunicodechar{∨}
+{\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{\textbackslash}\shifttext{-0.4ex}{/}} \endgroup}}
+% {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}}
+% $\withqmGen{x = 3}$
+% CODE LISTINGS
+
+\definecolor{cogreen}{RGB}{0,80,0}
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily\small,
+    commentstyle=\ttfamily,
+    frame=single,
+    framesep=5pt,
+    mathescape=true,
+    showstringspaces=false,
+    %escapeinside={(*}{*)},
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{darkgray}\ttfamily,
+    commentstyle=\color{cogreen}\ttfamily,
+    morekeywords={requires, ensures}
+}
+
+% THEOREMS
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{definition}
+\newtheorem{exmp}[definition]{Example}
+
+\newenvironment{example}[1]{\begin{leftbar}\begin{exmp}[#1]~}{\end{exmp}\end{leftbar}}
+
+%% decoration
+\newcommand{\pa}[1]{\ensuremath{{#1}^{\checkmark}}}
+\newcommand{\pb}[1]{\ensuremath{{#1}^{\circ}}}
+
+\newcommand{\grad}[1]{\widetilde{#1}}
+\newcommand{\dgrad}[1]{\vec{#1}}
+\newcommand{\gradT}[1]{\ensuremath{\grad{\text{#1}}}}
+\newcommand{\dgradT}[1]{\ensuremath{\dgrad{\text{#1}}}}
+\newcommand{\usc}{\rule{1ex}{0.4pt}}
+
+%% ALIASES
+% fonts
+\newcommand{\std}{\textrm}
+\newcommand{\ttt}[1]{\textup{\texttt{#1}}}
+\newcommand{\tset}[1]{\textup{\textsc{#1}}}
+\newcommand{\predicate}[1]{\textup{\textmd{\textsf{#1}}}}
+% names
+\newcommand{\svlidf}{\ensuremath{\std{\textbf{SVL}}_{\std{\textbf{IDF}}}}\xspace}
+\newcommand{\gvlidf}{\ensuremath{\std{\textbf{GVL}}_{\std{\textbf{IDF}}}}\xspace}
+\newcommand{\svl}{\std{\textbf{SVL}}\xspace}
+\newcommand{\gvl}{\std{\textbf{GVL}}\xspace}
+
+% sets
+\newcommand{\setProgramState}{\tset{ProgramState}\xspace}
+\newcommand{\setProgramStateFin}{\tset{ProgramStateFin}\xspace}
+\newcommand{\setProgramStateEx}{\tset{ProgramStateEx}\xspace}
+\newcommand{\setGProgramState}{\tset{\gradT ProgramState}\xspace}
+\newcommand{\setGProgramStateFin}{\tset{\gradT ProgramStateFin}\xspace}
+\newcommand{\setGProgramStateEx}{\tset{\gradT ProgramStateEx}\xspace}
+\newcommand{\setProgram}{\tset{Program}\xspace}
+\newcommand{\setGProgram}{\tset{\gradT Program}\xspace}
+\newcommand{\setClass}{\tset{Class}\xspace}
+\newcommand{\setGClass}{\tset{\gradT Class}\xspace}
+\newcommand{\setField}{\tset{Field}\xspace}
+\newcommand{\setMethod}{\tset{Method}\xspace}
+\newcommand{\setGMethod}{\tset{\gradT Method}\xspace}
+\newcommand{\setContract}{\tset{Contract}\xspace}
+\newcommand{\setGContract}{\tset{\gradT Contract}\xspace}
+\newcommand{\setType}{\tset{Type}\xspace}
+\newcommand{\setStmt}{\tset{Stmt}\xspace}
+\newcommand{\setGStmt}{\tset{\gradT Stmt}\xspace}
+\newcommand{\setFormula}{\tset{Formula}\xspace}
+\newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
+\newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
+\newcommand{\setGFormula}{\tset{\gradT Formula}\xspace}
+\newcommand{\setGFormulaA}{\tset{\gradT SatFormula}\xspace}
+\newcommand{\setGFormulaB}{\tset{\gradT SfrmFormula}\xspace}
+\newcommand{\setExpr}{\tset{Expr}\xspace}
+\newcommand{\setVal}{\tset{Val}\xspace}
+\newcommand{\setLoc}{\tset{Loc}\xspace}
+\newcommand{\setVar}{\tset{Var}\xspace}
+
+\newcommand{\setHeap}{\tset{Heap}\xspace}
+\newcommand{\setStack}{\tset{Stack}\xspace}
+\newcommand{\setStackEntry}{\tset{StackEntry}\xspace}
+\newcommand{\setVarEnv}{\tset{VarEnv}\xspace}
+\newcommand{\setTypeEnv}{\tset{TypeEnv}\xspace}
+\newcommand{\setClassName}{\tset{ClassName}\xspace}
+\newcommand{\setFieldName}{\tset{FieldName}\xspace}
+\newcommand{\setMethodName}{\tset{MethodName}\xspace}
+\newcommand{\setSFootprint}{\tset{StaticFootprint}\xspace}
+\newcommand{\setDFootprint}{\tset{DynamicFootprint}\xspace}
+
+\newcommand{\setNat}{\ensuremath{\mathbb{N}_+}}
+\newcommand{\setNatZ}{\ensuremath{\mathbb{N}_0}}
+% expressions
+\newcommand{\ev}[1]{\ttt{#1}}
+\newcommand{\ex}[1]{\ttt{#1}}
+\newcommand{\edot}[2]{\ttt{#1.#2}}
+\newcommand{\ethis}{\ex{this}}
+\newcommand{\eresult}{\ex{result}}
+\newcommand{\enull}{\ttt{null}}
+% formulas
+\newcommand{\phiOr}[2]{\ttt{#1\:∨\:#2}}
+\newcommand{\gphiOr}[2]{\ttt{{#1}\:$\grad{\ttt{∨}}$\:{#2}}}
+\newcommand{\phiAnd}[2]{\ttt{#1\:∧\:#2}}
+\newcommand{\gphiAnd}[2]{\ttt{{#1}\:$\grad{\ttt{∧}}$\:{#2}}}
+\newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}
+\newcommand{\gphiCons}[2]{\ttt{#1\:$\grad{\ttt{*}}$\:#2}}
+\newcommand{\phiFalse}[0]{\ttt{false}}
+\newcommand{\phiTrue}[0]{\ttt{true}}
+\newcommand{\phiMapsTo}[2]{\ttt{(#1\:\:$\mapsto$\:\:#2)}}
+\newcommand{\phiEq}[2]{\ttt{(#1 = #2)}}
+\newcommand{\phiNeq}[2]{\ttt{(#1 ≠ #2)}}
+\newcommand{\phiAcc}[2]{\ttt{\textbf{acc}(#1.#2)}}
+\newcommand{\qm}{\ttt{?}}
+\newcommand{\withqm}[1]{\phiCons{\qm}{\ensuremath{#1}}}
+\newcommand{\withqmGen}[1]{\phiAnd{\ensuremath{#1}}{\qm}}
+% statements
+\newcommand{\sSkip}{\ttt{skip}}
+\newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3}}
+\newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2}}
+\newcommand{\sAlloc}[2]{\ttt{#1 ≔ new #2}}
+\newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4)}}
+\newcommand{\sReturn}[1]{\ttt{return #1}}
+\newcommand{\sAssert}[1]{\ttt{assert #1}}
+\newcommand{\sRelease}[1]{\ttt{release #1}}
+\newcommand{\sDeclare}[2]{\ttt{#1~#2}}
+\newcommand{\sHold}[2]{\ttt{hold #1~\{ #2 \}}}
+\newcommand{\sSeq}[2]{\ttt{{#1};~{#2}}}
+% type
+\newcommand{\type}[1]{\ttt{#1}}
+\newcommand{\Tint}{\type{int}}
+% composite syntax
+\newcommand{\class}[3]{\ttt{class {#1}~\{ {#2} {#3} \}}}
+\newcommand{\method}[6]{\ttt{{#1}~{#2}({#3}~{#4})~{#5}~\{ {#6} \}}}
+\newcommand{\contract}[2]{\ttt{requires {#1}; ensures {#2};}}
+\newcommand{\field}[2]{\ttt{{#1}~{#2};}}
+%% predicates
+% precision
+\newcommand{\mpt}{\sqsubseteq}
+\newcommand{\mpts}{\sqsubseteq_s}
+\newcommand{\mptpi}{\sqsubseteq_{\pi}}
+% well-formed
+\newcommand{\wsp}{\predicate{wsp}}
+\newcommand{\verify}{\predicate{verify}}
+\newcommand{\OK}{~\predicate{OK}}
+\newcommand{\OKinC}{~\predicate{OK in}~C}
+\newcommand{\gOK}{~\predicate{\gradT {OK}}}
+\newcommand{\gOKinC}{~\predicate{\gradT {OK} in}~C}
+% framing
+\newcommand{\sfrme}{\ensuremath{\vdash_\texttt{frm}}\,}
+\newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+\newcommand{\sfrmgphi}{\ensuremath{\grad{\vdash}_\texttt{sfrm}}\,}
+\newcommand{\gwo}[2]{#1\grad{\div}#2}
+\newcommand{\wo}[2]{#1\div#2}
+% evaluation
+\newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
+\newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
+\newcommand{\evalphiXGen}[2]{#1 \vDash_{X} #2}
+\newcommand{\evalgphiXGen}[2]{#1 \,\,\grad{\vDash_{X}}\,\, #2}
+\newcommand{\evalphiGen}[2]{#1 \,\,{\vDash}\,\, #2}
+\newcommand{\evalgphiGen}[2]{#1 \,\,\grad{\vDash}\,\, #2}
+\newcommand{\evalphi}[1]{\evalphiGen {H,\rho,A} {#1}}
+\newcommand{\evalgphi}[1]{\evalgphiGen {H,\rho,A} {#1}}
+\newcommand{\phiImplies}[2]{{#1} \,\,{\Rightarrow}\,\, {#2}}
+\newcommand{\phiImpliesEv}[3]{#3 \vdash \phiImplies{#1}{#2}}
+\newcommand{\gphiImplies}[2]{{#1} \,\,{\grad{\Rightarrow}}\,\, {#2}}
+\newcommand{\gphiImpliesEv}[3]{#3 \vdash \gphiImplies{#1}{#2}}
+\newcommand{\evalphix}[4]{\evalphiGen {#1,#2,#3} {#4}}
+% extraction
+\newcommand{\FV}{\predicate{FV}}
+\newcommand{\fieldType}{\predicate{fieldType$_p$}}
+\newcommand{\fields}[1]{\predicate{fields$_p$($#1$)}}
+\newcommand{\mpre}[1]{\predicate{mpre$_p$($#1$)}}
+\newcommand{\mpost}[1]{\predicate{mpost$_p$($#1$)}}
+\newcommand{\mmethod}[1]{\predicate{method$_p$($#1$)}}
+\newcommand{\topmost}{\predicate{topmost}}
+% other
+\newcommand{\id}{\predicate{id}}
+\newcommand{\nil}{\predicate{nil}\xspace}
+\newcommand{\static}[1]{\predicate{static(#1)}}
+\newcommand{\dom}[1]{\predicate{dom($#1$)}}
+\newcommand{\writesTo}{\predicate{writesTo}}
+\newcommand{\sType}[3]{{#1} \vdash {#2} : {#3}}
+\newcommand{\defaultValue}[1]{\predicate{defaultValue(#1)}}
+\newcommand{\defeq}{\overset{\predicate{def}}{=}}
+\newcommand{\defiff}{\overset{\predicate{def}}{\iff}}
+\newcommand{\accFor}[1]{\predicate{acc($#1$)}}
+% footprint
+\newcommand\floor[1]{\lfloor#1\rfloor}
+\newcommand\ceil[1]{\lceil#1\rceil}
+\newcommand{\staticFP}[1]{\ensuremath{\floor{#1}}}
+\newcommand{\dynamicFP}[3]{\ensuremath{\floor{#3}_{#1,#2}}}
+% static sem
+\newcommand{\hoare}[3]{\{{#1}\} ~{#2}~ \{{#3}\}}
+\newcommand{\tHoare}[4]{{#1} \,\,{\vDash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\gtHoare}[4]{{#1} \,\,\grad{\vDash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\thoare}[4]{{#1} \,\,{\vdash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\gthoare}[4]{{#1} \,\,\grad{\vdash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\dgthoare}[4]{{#1} \,\,\dgrad{\vdash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\PP}{\mathcal{P}}
+%\newcommand{\sssem}{\mathcal{S}}
+%\newcommand{\gsssem}{\grad{\sssem}}
+\newcommand{\funHoare}{\mathcal{H}}
+\newcommand{\funHoareA}{\mathcal{F}}
+\newcommand{\funHoareApred}{\mathcal{P}}
+\newcommand{\funHoareB}{\mathcal{I}}
+\newcommand{\funHoareBimp}{\mathcal{J}}
+\newcommand{\funHoareC}{\mathcal{M}}
+% dyn sem
+\newcommand{\prefix}[2]{\predicate{prefix}(#1, #2)}
+\newcommand{\progress}{\predicate{progress}_{\sssem}}
+\newcommand{\sstepGeneric}[3]{{#1} \,\,{\longrightarrow^{#2}}\,\, {#3}}
+\newcommand{\sstepStuck}[1]{{#1} \,\,{\longrightarrow\llap{\shifttext{-4ex}{/}}}\,\, {\,}}
+\newcommand{\sstep}[2]{\sstepGeneric {#1} {} {#2}}
+\newcommand{\ssteps}[2]{\sstepGeneric {#1} * {#2}}
+\newcommand{\sstepConsume}[3]{{#2} \,\,{\overset{#1}{\longrightarrow}}\,\, {#3}}
+\newcommand{\gsstepGeneric}[3]{{#1} \,\,{\grad{\longrightarrow}^{#2}}\,\, {#3}}
+\newcommand{\gsstepStuck}[1]{{#1} \,\,{\grad{\longrightarrow}\llap{\shifttext{-2.5ex}{/}}}\,\, {\,}}
+\newcommand{\gsstep}[2]{\gsstepGeneric {#1} {} {#2}}
+\newcommand{\gssteps}[2]{\gsstepGeneric {#1} * {#2}}
+\newcommand{\gsstepConsume}[3]{{#2} \,\,{\overset{#1}{\grad{\longrightarrow}}}\,\, {#3}}
+
+\newcommand{\envs}[1]{\llbracket {#1} \rrbracket}
+\newcommand{\norm}[1]{\ensuremath{||#1||}}
+\newcommand{\snorm}[1]{\ensuremath{|#1|}}
+
+  </preamble>
+<layout paper="800 600" origin="32 69" frame="736 440" crop="no"/>
+<titlestyle pos="0 475" size="largebf" color="black"  valign="baseline"/>
+</ipestyle>
+<page>
+<layer name="title"/>
+<layer name="BACKGROUND"/>
+<layer name="pagenumbers_format"/>
+<layer name="pagenumbers_dont_count"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="title BACKGROUND" active="title"/>
+<text layer="title" matrix="1 0 0 1 -213 -46" pos="213 427" stroke="black" type="label" valign="baseline" size="Large">\bf Gradual Program Verification</text>
+<text matrix="1 0 0 1 -213 -136.065" pos="213 427" stroke="black" type="label" valign="bottom" size="small">Master Thesis</text>
+<text matrix="1 0 0 1 -213 -157.065" pos="213 427" stroke="black" type="label" valign="baseline" size="small">\name, Sept 23, 2016</text>
+<group layer="BACKGROUND" matrix="1 0 0 1 2 0">
+<path fill="KITblack50">
+-28 212 m
+760 212 l
+760 250 l
+-28 250 l
+h
+</path>
+<path fill="KITblack15">
+-13 -22 m
+12 0 0 -12 -13 -10 -25 -10 a
+-25 522 l
+745 522 l
+12 0 0 -12 745 510 757 510 a
+757 -22 l
+h
+-34 -69 m
+766 -69 l
+766 531 l
+-34 531 l
+h
+</path>
+<text matrix="1 0 0 1 149 -29.5" transformations="translations" pos="608 -16" stroke="white" type="label" halign="right" valign="center" size="small">\bf www.isri.cs.cmu.edu</text>
+</group>
+<text matrix="1 0 0 1 -213 -70" pos="213 427" stroke="black" type="label" valign="baseline" size="small">\bf with Implicit Dynamic Frames</text>
+<text layer="pagenumbers_format" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf [page]}</text>
+<text layer="title" transformations="translations" pos="512 352" stroke="black" type="label" valign="baseline">$\grad{\phi}$</text>
+<text transformations="translations" pos="-16 208" stroke="black" type="minipage" width="736" valign="top">\begin{lstlisting}
+int getFour(int i)
+    requires ?; // too lazy to figure that one out, yet
+    ensures  result = 4;
+{
+    i := i + 1;
+    return i;
+}
+\end{lstlisting}</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 0}</text>
+</page>
+<page title="Gliederung" section="">
+<layer name="bg"/>
+<layer name="block1"/>
+<layer name="block2"/>
+<layer name="block3"/>
+<layer name="zusatz"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="bg block1 block2 block3 pagenumbers_page" active="block1" marked="yes"/>
+<view layers="bg block2 block3 pagenumbers_page" active="block2"/>
+<view layers="bg block3 pagenumbers_page" active="block3"/>
+<view layers="bg pagenumbers_page" active="bg"/>
+<view layers="bg zusatz pagenumbers_page" active="zusatz"/>
+<text layer="bg" matrix="1 0 0 1 19 -176" transformations="translations" pos="16 400" stroke="black" type="minipage" width="704" valign="top">\textbf{Quickest Visibility Queries (QVQ)}
+\begin{itemize}
+\item Definition
+\item Ergebnisse \&amp; Einordnung
+\item Ausgewählte Algorithmen
+\end{itemize}</text>
+<text matrix="1 0 0 1 19 0" transformations="translations" pos="16 400" stroke="black" type="minipage" width="704" valign="top">\textbf{Shortest Path to a Segment Queries (SPSQ)}
+\begin{itemize}
+\item Definition
+\item Ergebnisse \&amp; Einordnung
+\item Ausgewählte Algorithmen
+\end{itemize}</text>
+<text layer="zusatz" matrix="1 0 0 1 19 -344" transformations="translations" pos="16 400" stroke="black" type="minipage" width="704" valign="top">\textbf{...und} gelegentliche Einschübe (z.B. Notation)</text>
+<path layer="block1" matrix="1 0 0 1 0 2" fill="white">
+16 368 m
+16 336 l
+432 336 l
+432 368 l
+h
+</path>
+<path matrix="1 0 0 1 0 -174" fill="white">
+16 368 m
+16 336 l
+432 336 l
+432 368 l
+h
+</path>
+<path layer="block2" matrix="1 0 0 1 0 -32" fill="white">
+16 368 m
+16 336 l
+432 336 l
+432 368 l
+h
+</path>
+<path matrix="1 0 0 1 0 -208" fill="white">
+16 368 m
+16 336 l
+432 336 l
+432 368 l
+h
+</path>
+<path layer="block3" matrix="1 0 0 1 0 -70" fill="white">
+16 368 m
+16 336 l
+432 336 l
+432 368 l
+h
+</path>
+<path matrix="1 0 0 1 0 -246" fill="white">
+16 368 m
+16 336 l
+432 336 l
+432 368 l
+h
+</path>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 1}</text>
+</page>
+<page title="SPSQ \quad \textit{Definition}" section="">
+<layer name="bg"/>
+<layer name="q1"/>
+<layer name="q1q"/>
+<layer name="box1"/>
+<layer name="box2"/>
+<layer name="hide2"/>
+<layer name="q1x"/>
+<layer name="q2"/>
+<layer name="q2q"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="bg q1 pagenumbers_page" active="bg" marked="yes"/>
+<view layers="bg q1 box1 pagenumbers_page" active="box1"/>
+<view layers="bg q1 box1 box2 hide2 pagenumbers_page" active="hide2"/>
+<view layers="bg q1 q1q box1 box2 hide2 pagenumbers_page" active="q1q"/>
+<view layers="bg q1 q1q box1 box2 pagenumbers_page" active="box2"/>
+<view layers="bg box1 box2 q2 q2q pagenumbers_page" active="q2"/>
+<path layer="bg" matrix="1 0 0 1 0 224" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path fill="KITblue30">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text layer="q1" matrix="1 0 0 1 524 51" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$\bar{q}$</text>
+<group layer="box1">
+<path fill="tab_header">
+0 147.08 m
+0 176 l
+343.28 176 l
+348.28 176
+353.28 171
+353.28 166 c
+353.28 147.08 l
+h
+</path>
+<path fill="tab_body">
+353.28 147.08 m
+353.28 68.9027 l
+10 68.9027 l
+5 68.9027
+0 73.9027
+0 78.9027 c
+0 147.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 170" stroke="white" type="minipage" width="341.28" valign="top">Probleminstanz</text>
+<text transformations="translations" pos="6.00005 141.08" stroke="KITblack" type="minipage" width="341.28" valign="top">\begin{itemize}
+\item Polygonfläche $D \subset \mathbb{R}^2$
+\item Startpunkt $s \in D$
+\end{itemize}</text>
+</group>
+<path layer="q1x" matrix="1 0 0 1 45.7832 11.4457" stroke="KITblack70">
+517.904 341.476 m
+22.5594 0 0 22.5594 539.789 346.947 544.683 324.925 a
+</path>
+<use matrix="1 0 0 1 47.4858 14.2005" name="mark/disk(sx)" pos="531.293 333.201" size="tiny" stroke="KITblack70"/>
+<path layer="q1" stroke="KITblue">
+80 336 m
+176 304 l
+256 336 l
+368 304 l
+585.263 358.315 l
+</path>
+<path matrix="1 0 0 1 48 0" stroke="KITgreen" pen="fat">
+528 400 m
+560 256 l
+</path>
+<path layer="q2" stroke="KITgreen" pen="fat">
+596.676 306.959 m
+608 256 l
+</path>
+<path stroke="KITblue">
+80 336 m
+176 304 l
+256 336 l
+368 304 l
+596.676 306.959 l
+</path>
+<text matrix="1 0 0 1 530.425 20.6795" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$\bar{q}$</text>
+<text layer="q1q" matrix="1 0 0 1 332 80.1905" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$\pi(s,q^*)$</text>
+<text matrix="1 0 0 1 508 110.502" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$q^*$</text>
+<use name="mark/cross(sx)" pos="585.263 358.315" size="small" stroke="KITblack"/>
+<text layer="q2q" matrix="1 0 0 1 358 57.1905" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$\pi(s,q^*)$</text>
+<text matrix="1 0 0 1 519.413 59.146" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$q^*$</text>
+<use matrix="1 0 0 1 11.413 -51.356" name="mark/cross(sx)" pos="585.263 358.315" size="small" stroke="KITblack"/>
+<group layer="box2">
+<path fill="KITgreen">
+382.72 147.08 m
+382.72 176 l
+726 176 l
+731 176
+736 171
+736 166 c
+736 147.08 l
+h
+</path>
+<path fill="KITgreen15">
+736 147.08 m
+736 51.4366 l
+392.72 51.4366 l
+387.72 51.4366
+382.72 56.4366
+382.72 61.4366 c
+382.72 147.08 l
+h
+</path>
+<text transformations="translations" pos="388.72 170" stroke="white" type="minipage" width="341.28" valign="top">Anfrage</text>
+<text transformations="translations" pos="388.72 141.08" stroke="black" type="minipage" width="341.28" valign="top">\begin{itemize}
+\item Zielstrecke $\bar{q} \subset D$
+\item $\text{Gesucht: } q^* = \underset{q \in \bar{q}}{\operatorname{argmin}}\,|\pi(s, q)|$
+\end{itemize}</text>
+</group>
+<path layer="hide2" matrix="1 0 0 1 5 -8" fill="KITgreen15">
+384 112 m
+384 64 l
+720 64 l
+720 112 l
+h
+</path>
+<text layer="box2" matrix="1 0 0 1 -272 -10.5992" transformations="translations" pos="384 32" stroke="black" type="minipage" width="528" valign="top">$\pi(a \in D,b \in D) := $ kürzester Weg von $a$ nach $b$ in $D$</text>
+<path layer="hide2" matrix="1.16667 0 0 1.2834 -114.667 4.53435" fill="white">
+112 32 m
+112 -16 l
+688 -16 l
+688 32 l
+h
+</path>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 2}</text>
+</page>
+<page title="Einschub \quad \textit{Laufzeitbetrachtung}" section="">
+<layer name="bg"/>
+<layer name="def"/>
+<layer name="hide1"/>
+<layer name="hide2"/>
+<layer name="vertices"/>
+<layer name="edges"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="bg def hide1 pagenumbers_page" active="def" marked="yes"/>
+<view layers="bg def vertices pagenumbers_page" active="vertices"/>
+<path layer="bg" matrix="1 0 0 1 0 224" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+<group layer="def">
+<path fill="tab_header">
+106 150.08 m
+106 179 l
+618.56 179 l
+623.56 179
+628.56 174
+628.56 169 c
+628.56 150.08 l
+h
+</path>
+<path fill="tab_body">
+628.56 150.08 m
+628.56 22.1187 l
+116 22.1187 l
+111 22.1187
+106 27.1187
+106 32.1187 c
+106 150.08 l
+h
+</path>
+<text transformations="translations" pos="112 173" stroke="white" type="minipage" width="510.56" valign="top">Definition</text>
+<text transformations="translations" pos="112 144.08" stroke="black" type="minipage" width="510.56" valign="top">\begin{tabular}{lll} 
+$T_v$ &amp; Laufzeit der Vorberechnungen &amp; \\
+$T_a$ &amp; Laufzeit der Anfragen &amp; \\
+$\mathit{n}$ &amp; $\#$Knoten des Polygons &amp; hier: $15$ \\
+$\mathit{h}$ &amp; $\#$Löcher im Polygon &amp; hier: $1$ \\
+\end{tabular}</text>
+</group>
+<path layer="hide1" matrix="1.07507 0 0 0.866473 -23.1695 -0.4294" fill="KITblue15">
+128 96 m
+128 35.1187 l
+599.707 35.1187 l
+599.707 96 l
+h
+</path>
+<path layer="hide2" matrix="1.07507 0 0 0.509187 -23.1695 -5.88197" fill="KITblue15">
+128 96 m
+128 35.1187 l
+599.707 35.1187 l
+599.707 96 l
+h
+</path>
+<use layer="vertices" name="mark/disk(sx)" pos="16 416" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="32 224" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="96 368" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="192 384" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="176 304" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="256 336" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="288 416" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="368 304" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="208 224" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="336 224" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="496 304" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="512 224" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="416 416" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="720 416" size="small" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="704 240" size="small" stroke="KITgreen"/>
+<path layer="edges" stroke="KITgreen">
+16 416 m
+96 368 l
+</path>
+<path stroke="KITgreen">
+32 224 m
+96 368 l
+</path>
+<path stroke="KITgreen">
+32 224 m
+176 304 l
+</path>
+<path stroke="KITgreen">
+32 224 m
+16 416 l
+288 416 l
+368 304 l
+416 416 l
+720 416 l
+704 240 l
+512 224 l
+496 304 l
+336 224 l
+256 336 l
+208 224 l
+32 224 l
+</path>
+<path stroke="KITgreen">
+96 368 m
+176 304 l
+192 384 l
+96 368 l
+</path>
+<path stroke="KITgreen">
+32 224 m
+256 336 l
+</path>
+<path stroke="KITgreen">
+16 416 m
+192 384 l
+</path>
+<path stroke="KITgreen">
+208 224 m
+96 368 l
+</path>
+<path stroke="KITgreen">
+208 224 m
+176 304 l
+</path>
+<path stroke="KITgreen">
+208 224 m
+16 416 l
+</path>
+<path stroke="KITgreen">
+288 416 m
+256 336 l
+</path>
+<path stroke="KITgreen">
+256 336 m
+176 304 l
+</path>
+<path stroke="KITgreen">
+192 384 m
+256 336 l
+</path>
+<path stroke="KITgreen">
+176 304 m
+288 416 l
+</path>
+<path stroke="KITgreen">
+176 304 m
+16 416 l
+</path>
+<path stroke="KITgreen">
+192 384 m
+288 416 l
+</path>
+<path stroke="KITgreen">
+192 384 m
+368 304 l
+</path>
+<path stroke="KITgreen">
+192 384 m
+208 224 l
+</path>
+<path stroke="KITgreen">
+336 224 m
+368 304 l
+</path>
+<path stroke="KITgreen">
+336 224 m
+288 416 l
+</path>
+<path stroke="KITgreen">
+256 336 m
+368 304 l
+</path>
+<path stroke="KITgreen">
+368 304 m
+496 304 l
+</path>
+<path stroke="KITgreen">
+496 304 m
+720 416 l
+</path>
+<path stroke="KITgreen">
+496 304 m
+416 416 l
+</path>
+<path stroke="KITgreen">
+496 304 m
+704 240 l
+</path>
+<path stroke="KITgreen">
+704 240 m
+416 416 l
+</path>
+<path stroke="KITgreen">
+368 304 m
+720 416 l
+512 224 l
+</path>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 3}</text>
+</page>
+<page title="SPSQ \quad \textit{Ergebnisse \&amp; Einordnung}" section="">
+<layer name="bg"/>
+<layer name="focus"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="bg pagenumbers_page" active="bg" marked="yes"/>
+<view layers="bg focus pagenumbers_page" active="focus"/>
+<text layer="bg" matrix="1 0 0 1 84 14" transformations="translations" pos="16 400" stroke="KITblack" type="minipage" width="560" valign="top">\def\arraystretch{1.5}
+\setlength\tabcolsep{10pt}
+\begin{tabular}{l | ll}
+ &amp; $T_v$ &amp; $T_a$ \\ \hline
+bekannt &amp; &amp; $O(\mathit{n} \log \mathit{n})$ \\
+
+&amp; $O(\mathit{n}^2 \log^2 \mathit{n})$ &amp; $O(\log^2 \mathit{n})$\\
+
+&amp; $O(\mathit{n}^3 \log \mathit{n})$ &amp; $O(\log \mathit{n})$\\
+$\bar{q}$ horizontal
+&amp; $O(\mathit{n} \log \mathit{n})$ &amp; $O(\log \mathit{n})$\\
+$D$ lochfrei
+&amp; $O(\mathit{n})$ &amp; $O(\log \mathit{n})$
+\end{tabular}
+</text>
+<path layer="focus" matrix="0.856288 0 0 1 49.497 -85" stroke="KITblue" pen="heavier">
+80 272 m
+80 240 l
+240 240 l
+240 272 l
+h
+</path>
+<group>
+<path fill="KITblue">
+146.6 92.0802 m
+146.6 121 l
+578.2 121 l
+583.2 121
+588.2 116
+588.2 111 c
+588.2 92.0802 l
+h
+</path>
+<path fill="KITblue15">
+588.2 92.0802 m
+588.2 54.8422 l
+156.6 54.8422 l
+151.6 54.8422
+146.6 59.8422
+146.6 64.8422 c
+146.6 92.0802 l
+h
+</path>
+<text transformations="translations" pos="152.6 115" stroke="white" type="minipage" width="429.6" valign="top">Ausgewählter Algorithmus</text>
+<text transformations="translations" pos="152.6 86.0801" stroke="black" type="minipage" width="429.6" valign="top">\begin{itemize}
+\item Spezialfall: lochfreies Polygon ($\mathit{h} = 0$)
+\end{itemize}</text>
+</group>
+<path layer="bg" matrix="2 0 0 1.25 -52 -123" stroke="black">
+80 352 m
+64 352
+80 288
+64 288 c
+</path>
+<path matrix="2 0 0 -1.25 -52 597" stroke="black">
+80 352 m
+64 352
+80 288
+64 288 c
+</path>
+<text matrix="1 0 0 1 30 -8" transformations="translations" pos="0 240" stroke="black" type="label" valign="baseline">neu</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 4}</text>
+</page>
+<page title="Einschub \quad \textit{Notation}" section="">
+<layer name="bg"/>
+<layer name="defs"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="gra1"/>
+<layer name="gra2"/>
+<layer name="gra3"/>
+<layer name="gra4"/>
+<view layers="bg defs pagenumbers_page gra1" active="gra1" marked="yes"/>
+<view layers="bg defs pagenumbers_page gra2" active="gra2"/>
+<view layers="bg defs pagenumbers_page gra3" active="gra3"/>
+<view layers="bg defs pagenumbers_page gra4" active="gra4"/>
+<text layer="defs" matrix="1 0 0 1 0 19" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="720" valign="top" style="itemize">\item $\vec{D}$ := Knoten von $D$ im Uhrzeigersinn
+\item $[a \in \vec{D}, b \in \vec{D}]$ := Intervall der Knoten $a$ bis $b$ in $\vec{D}$
+\item $\text{line}(ab)$ := Verlängerung der Strecke $ab$ in $D$
+\item $\text{pred}(v \in D)$ := letzter Knoten von $D$ auf $\pi(s,v)$ 
+\item $\text{lca}(v \in D, w \in D)$ := letzter Knoten von $D$ auf $\pi(s,v) \cap \pi(s,w)$ </text>
+<path layer="gra1" fill="white">
+-5.59483 356.616 m
+-5.59483 242.065 l
+739.642 242.065 l
+739.642 356.616 l
+h
+</path>
+<path matrix="1 0 0 1 0.207 17.5392" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path matrix="1 0 0 1 0.207 -206.461" fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="16 416" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="32 224" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="256 336" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="288 416" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="368 304" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="208 224" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="336 224" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="496 304" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="512 224" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="416 416" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="720 416" size="small" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0.207 -206.461" name="mark/disk(sx)" pos="704 240" size="small" stroke="KITgreen"/>
+<text matrix="1 0 0 1 -1 -58" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_1$</text>
+<text matrix="1 0 0 1 87 -172" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_2$</text>
+<text matrix="1 0 0 1 145 -58" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_3$</text>
+<text matrix="1 0 0 1 422 -58" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_4$</text>
+<text matrix="1 0 0 1 407.19 -206.013" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_5$</text>
+<text matrix="1 0 0 1 245.129 -218.759" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_6$</text>
+<text matrix="1 0 0 1 228.478 -142.108" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_7$</text>
+<text matrix="1 0 0 1 59.6681 -217.25" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_8$</text>
+<text matrix="1 0 0 1 -42.7629 -114.569" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_9$</text>
+<text matrix="1 0 0 1 -95.556 -220.664" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_{10}$</text>
+<text matrix="1 0 0 1 -234.22 -220.711" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_{11}$</text>
+<text matrix="1 0 0 1 -248 -58" transformations="translations" pos="270.371 246.621" stroke="KITgreen" type="label" valign="baseline">$d_{12}$</text>
+<path layer="gra2" matrix="1 0 0 1 -0.650862 -37.0991" fill="white">
+-5.59483 356.616 m
+-5.59483 242.065 l
+739.642 242.065 l
+739.642 356.616 l
+h
+</path>
+<path matrix="1 0 0 1 0.207 17.5392" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path matrix="1 0 0 1 0.207 -206.461" fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<use matrix="1 0 0 1 -40.2068 5.25315" name="mark/disk(sx)" pos="90.7828 160.657" size="normal" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="220.304 143.734" size="normal" stroke="KITgreen"/>
+<path stroke="KITgreen">
+19.5045 169.97 m
+347.038 127.176 l
+</path>
+<text matrix="1 0 0 1 2.75013 20.9859" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$a$</text>
+<text matrix="1 0 0 1 172.922 -0.431034" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$b$</text>
+<path layer="gra3" matrix="1 0 0 1 0.207 17.5392" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path matrix="1 0 0 1 0.207 -206.461" fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<use matrix="1 0 0 1 -8.2068 -19.7469" name="mark/disk(sx)" pos="90.7828 160.657" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 388.565 3.25431" name="mark/disk(sx)" pos="220.304 143.734" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 34.7501 -4.0141" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 561.487 2.82328" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$v$</text>
+<path stroke="KITgreen">
+82.576 140.91 m
+256.207 129.539 l
+368.207 97.5392 l
+608.869 146.988 l
+</path>
+<use name="mark/disk(sx)" pos="368.207 97.539" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 301.042 -74.2329" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline" size="small">$\text{pred}(v)$</text>
+<path layer="gra4" matrix="1 0 0 1 0.207 17.5392" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path matrix="1 0 0 1 0.207 -206.461" fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<use matrix="1 0 0 1 -8.2068 -19.7469" name="mark/disk(sx)" pos="90.7828 160.657" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 388.565 3.25431" name="mark/disk(sx)" pos="220.304 143.734" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 34.7501 -4.0141" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 561.487 2.82328" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$v$</text>
+<path stroke="KITgreen">
+82.576 140.91 m
+256.207 129.539 l
+368.207 97.5392 l
+608.869 146.988 l
+</path>
+<use matrix="1 0 0 1 -112 32.0002" name="mark/disk(sx)" pos="368.207 97.539" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 180.396 -12.9872" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline" size="small">$\text{lca}(v,w)$</text>
+<path layer="gra3" matrix="1.02015 0 0 0.373218 -3.97315 151.722" fill="white">
+-5.59483 356.616 m
+-5.59483 242.065 l
+739.642 242.065 l
+739.642 356.616 l
+h
+</path>
+<use layer="gra4" matrix="1 0 0 1 122.362 -87.8664" name="mark/disk(sx)" pos="220.304 143.734" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 308.301 -108.474" transformations="translations" pos="41.9682 153.497" stroke="KITblack" type="label" valign="baseline">$w$</text>
+<path stroke="KITgreen">
+256.207 129.539 m
+342.666 55.8676 l
+</path>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 5}</text>
+</page>
+<page title="SPSQ \quad \textit{Algorithmus (lochfreies Polygon)}" section="">
+<layer name="bg"/>
+<layer name="fig1"/>
+<layer name="SPM1"/>
+<layer name="SPM2"/>
+<layer name="SPM3"/>
+<layer name="SPT1"/>
+<layer name="SPT2"/>
+<layer name="SPT3"/>
+<layer name="LCA"/>
+<layer name="a4a"/>
+<layer name="a4aBAD"/>
+<layer name="a4aBAD2"/>
+<layer name="a4aCORR"/>
+<layer name="a5"/>
+<layer name="a6"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="h2"/>
+<layer name="h3"/>
+<layer name="h4"/>
+<layer name="h5"/>
+<layer name="h6"/>
+<layer name="h7"/>
+<layer name="h8"/>
+<layer name="h9"/>
+<layer name="h10"/>
+<view layers="bg fig1 pagenumbers_page h9" active="fig1" marked="yes"/>
+<view layers="bg fig1 SPT1 pagenumbers_page h8" active="SPT1"/>
+<view layers="bg fig1 SPT2 pagenumbers_page h8" active="SPT2"/>
+<view layers="bg fig1 SPT3 pagenumbers_page h8" active="SPT3"/>
+<view layers="bg fig1 SPT3 LCA pagenumbers_page h7" active="LCA"/>
+<view layers="bg fig1 SPT3 pagenumbers_page h5" active="SPT3"/>
+<view layers="bg fig1 pagenumbers_page h4" active="h4"/>
+<view layers="bg fig1 SPM1 pagenumbers_page h3" active="SPM1"/>
+<view layers="bg fig1 SPM1 pagenumbers_page h2" active="SPM1"/>
+<view layers="bg fig1 SPM2 pagenumbers_page h2" active="SPM2"/>
+<view layers="bg SPM3 pagenumbers_page h2" active="SPM3"/>
+<view layers="bg SPM3 pagenumbers_page" active="bg"/>
+<text layer="bg" matrix="1 0 0 1 15.6252 -16.9615" pin="h" transformations="translations" pos="671.24 409" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\mathit{n})$</text>
+<text matrix="1 0 0 1 15.6252 -75.3264" pin="h" transformations="translations" pos="671.24 409" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\mathit{n})$</text>
+<text matrix="1 0 0 1 15.6252 -208.244" pin="h" transformations="translations" pos="671.24 409" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\mathit{n})$</text>
+<path layer="fig1" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+0 384 m
+0 32 l
+192 32 l
+192 384 l
+h
+</path>
+<path matrix="1.15102 0 0 1.15102 0 -18.9906" fill="black">
+192 384 m
+0 384 l
+0 32 l
+192 32 l
+192 384 l
+160 352 l
+176 320 l
+160 272 l
+121.323 287.625 l
+114.848 247.716 l
+80 240 l
+144 192 l
+80 160 l
+112 112 l
+176 112 l
+160 64 l
+96 48 l
+64 64 l
+16 48 l
+32 128 l
+16 240 l
+62.0948 296.737 l
+16 336 l
+21.7414 368.983 l
+160 352 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 79.6651 -212.419" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$s$</text>
+<text layer="bg" matrix="1 0 0 1 225 -7" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="430.24" valign="top" size="small" style="itemize">\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{6pt}
+\item Shortest Path Tree
+  \begin{itemize}
+  \item kennt kürzeste Wege von $s$ zu allen $d \in \vec{D}$
+  \item berechne LCA Unterstützung
+  \item liefert in $O(1)$
+\begin{alignat*}{2}
+\text{pred} &amp;: \vec{D} &amp;&amp;\rightarrow \vec{D} \cup \{s\}\\
+\text{lca} &amp;: \vec{D} \times \vec{D} &amp;&amp;\rightarrow \vec{D} \cup \{s\}
+\end{alignat*}
+  \end{itemize}
+\item Shortest Path Map
+  \begin{itemize}
+  \item kennt kürzeste Wege von $s$ zu allen $d \in D$
+  \item teilt $D$ in Zellen mit ``ähnlicher&apos;&apos; Lösung\\
+ (genauer: gleich bis auf letzte Kante)
+  \item liefert in $O(\log \mathit{n})$
+\begin{alignat*}{2}
+\text{pred} &amp;: D &amp;&amp;\rightarrow \vec{D} \cup \{s\}\\
+\text{lca} &amp;: D \times D &amp;&amp;\rightarrow \vec{D} \cup \{s\}
+\end{alignat*}
+  \end{itemize}</text>
+<path layer="a4a" matrix="1 0 0 1 0 23" stroke="black">
+169.193 312.993 m
+15.8062 0 0 15.8062 184.163 307.919 169.608 301.757 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+147.431 320.371 m
+15.8062 0 0 15.8062 162.4 315.297 152.042 303.358 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+107.051 334.061 m
+15.8062 0 0 -15.8062 92.0816 339.135 92.0817 323.329 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+80.0619 343.209 m
+15.8062 0 0 -15.8062 65.0922 348.283 67.1446 332.611 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+62.4691 349.173 m
+15.8055 0 0 -15.8055 47.4999 354.247 53.845 339.771 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITred" dash="dashed">
+139.645 289.072 m
+162.4 315.297 l
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITorange" dash="dashed">
+92.0816 234.254 m
+92.0818 339.135 l
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITorange" dash="dashed">
+71.4726 299.56 m
+65.0922 348.284 l
+</path>
+<text layer="a5" matrix="1.15102 0 0 1.15102 -6.4399 -25.9089" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$p$</text>
+<text layer="bg" matrix="1 0 0 1 0 -13" transformations="translations" pos="240 432" stroke="KITblack" type="label" valign="baseline">\bf Vorberechnungen</text>
+<path layer="h10" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h9" matrix="1.03197 0 0 0.971208 -7.16031 -17.1836" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h8" matrix="1.00184 0 0 0.880482 -0.412816 -14.2803" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h7" matrix="0.999898 0 0 0.846373 3.71477 -27.0839" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h6" matrix="1 0 0 0.625 0 7" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h5" matrix="0.944597 0 0 0.557565 34.7767 -3.94701" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h4" matrix="1.01756 0 0 0.5 -3.93315 -16" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h3" matrix="1 0 0 0.381613 0 -1.75107" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h2" matrix="0.993201 0 0 0.253984 5.00438 5.76757" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="a4aCORR" matrix="18.3398 0 0 1.34023 -4660.3 -60.3979" fill="white">
+271.473 189.072 m
+271.473 156.999 l
+295 156.999 l
+295 189.072 l
+h
+</path>
+<text matrix="1 0 0 1 4.3 -27.7" transformations="translations" pos="318.473 193.001" stroke="KITblack" type="label" valign="baseline">verbleibender Kantenzug</text>
+<path layer="a4aBAD" fill="white">
+25.0248 405.716 m
+25.0248 112 l
+224 112 l
+224 405.716 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 92.0814 40.7113" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$a$</text>
+<text matrix="1.15102 0 0 1.15102 -43.8875 87.7812" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$b$</text>
+<path fill="KITblue15">
+47.4994 377.248 m
+184.163 330.92 l
+105.541 297.633 l
+92.0816 257.254 l
+92.0816 165.173 l
+71.4724 322.56 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 -16.1142 -132.941" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$r$</text>
+<text matrix="1.15102 0 0 1.15102 31.3077 63.9693" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$q^*$</text>
+<path stroke="KITblue" dash="dashed">
+105.541 297.633 m
+123.389 351.177 l
+</path>
+<path layer="a4aBAD2" fill="KITblue15">
+47.4994 377.248 m
+184.163 330.92 l
+105.541 297.633 l
+92.0816 257.254 l
+92.0816 165.173 l
+71.4724 322.56 l
+h
+</path>
+<path layer="a4aBAD" stroke="KITblue" pen="fat">
+116.814 302.405 m
+105.541 297.633 l
+92.082 257.255 l
+92.0814 253.045 l
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="KITorange" pen="fat">
+47.4993 354.247 m
+71.4722 299.559 l
+92.0814 142.172 l
+92.0814 142.172 m
+92.0814 234.254 l
+</path>
+<path stroke="KITblack">
+138.358 346.103 m
+15.8056 0 0 -15.8056 123.389 351.177 118.391 336.182 a
+</path>
+<path fill="black">
+1.92725 0 0 1.92725 127.376 342.065 e
+</path>
+<path layer="a4aBAD2" stroke="KITorange" pen="fat">
+47.4993 377.247 m
+71.4722 322.559 l
+92.0814 165.172 l
+92.0814 165.172 m
+92.082 257.255 l
+105.541 297.633 l
+</path>
+<path stroke="KITorange" dash="dashed">
+105.541 297.633 m
+123.389 351.177 l
+</path>
+<path layer="a4aBAD" matrix="1 0 0 1 0 23.0001" stroke="black">
+169.193 312.993 m
+15.8062 0 0 15.8062 184.163 307.919 169.608 301.757 a
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="black">
+107.051 334.061 m
+15.8062 0 0 -15.8062 92.0816 339.135 92.0817 323.329 a
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="black">
+80.0619 343.209 m
+15.8062 0 0 -15.8062 65.0922 348.283 67.1446 332.611 a
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="black">
+62.4691 349.173 m
+15.8055 0 0 -15.8055 47.4999 354.247 53.845 339.771 a
+</path>
+<path matrix="1.15102 0 0 1.15102 0 -18.9905" stroke="KITgreen" pen="fat">
+41.2672 344.25 m
+160 304 l
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="KITorange" dash="dashed">
+92.0816 234.254 m
+92.0818 339.135 l
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="KITorange" dash="dashed">
+71.4726 299.56 m
+65.0922 348.284 l
+</path>
+<path stroke="KITred" pen="fat">
+105.541 297.633 m
+184.163 330.919 l
+</path>
+<use matrix="1 0 0 1 0 23.0001" name="mark/disk(sx)" pos="123.389 328.177" size="small" stroke="KITblack"/>
+<use layer="a5" matrix="1 0 0 1 0 23" name="mark/disk(sx)" pos="92.0814 234.254" size="small" stroke="KITblack"/>
+<use layer="fig1" matrix="1.15102 0 0 1.15102 73.6651 -239.986" name="mark/disk(sx)" pos="80 288" size="small" stroke="KITblue"/>
+<path layer="a6" stroke="KITblue">
+92.0816 257.254 m
+123.389 351.177 l
+</path>
+<path layer="SPM1" fill="KITgreen70">
+92.082 257.255 m
+92.0828 397.479 l
+184.163 386.168 l
+191.392 371.711 l
+139.646 312.071 l
+132.192 266.135 l
+h
+</path>
+<path stroke="KITblue" pen="heavier">
+165.747 91.5073 m
+128.914 109.924 l
+92.0814 165.175 l
+92.0824 257.256 l
+</path>
+<use matrix="1 0 0 1 -0.00056806 -0.00130419" name="mark/disk(sx)" pos="92.082 257.255" size="small" stroke="KITblue"/>
+<path layer="SPM2" fill="KITgreen70">
+92.082 257.255 m
+92.0828 397.479 l
+184.163 386.168 l
+191.392 371.711 l
+139.646 312.071 l
+132.192 266.135 l
+h
+</path>
+<path stroke="KITblue" pen="heavier">
+165.747 91.5073 m
+128.914 109.924 l
+92.0814 165.175 l
+</path>
+<path fill="KITpalegreen70">
+92.0824 165.173 m
+25.1589 265.554 l
+71.4722 322.559 l
+61.1635 401.277 l
+92.0828 397.479 l
+92.0828 257.256 l
+165.747 202.005 l
+h
+</path>
+<use name="mark/disk(sx)" pos="92.0814 165.178" size="small" stroke="KITblue"/>
+<path layer="SPM3" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+0 384 m
+0 32 l
+192 32 l
+192 384 l
+h
+</path>
+<path matrix="1.15102 0 0 1.15102 0 -18.9906" fill="black">
+192 384 m
+0 384 l
+0 32 l
+192 32 l
+192 384 l
+160 352 l
+176 320 l
+160 272 l
+121.323 287.625 l
+114.848 247.716 l
+80 240 l
+144 192 l
+80 160 l
+112 112 l
+176 112 l
+160 64 l
+96 48 l
+64 64 l
+16 48 l
+32 128 l
+16 240 l
+62.0948 296.737 l
+16 336 l
+21.7414 368.983 l
+160 352 l
+h
+</path>
+<path fill="KITgreen70">
+92.082 257.255 m
+92.0828 397.479 l
+184.163 386.168 l
+191.392 371.711 l
+139.646 312.071 l
+132.192 266.135 l
+h
+</path>
+<path fill="KITpalegreen70">
+92.0824 165.173 m
+25.1589 265.554 l
+71.4722 322.559 l
+61.1635 401.277 l
+92.0828 397.479 l
+92.0828 257.256 l
+165.747 202.005 l
+h
+</path>
+<path layer="SPM1" stroke="KITblue" dash="dashed" pen="heavier">
+114.465 324.405 m
+92.0828 257.258 l
+</path>
+<path layer="SPM2" matrix="1 0 0 1 -0.00001377 0.00021266" stroke="KITblue" dash="dashed" pen="heavier">
+114.465 324.405 m
+92.0828 257.258 l
+</path>
+<path stroke="KITblue" dash="dashed" pen="heavier">
+84.4834 223.198 m
+92.0814 165.178 l
+</path>
+<path layer="SPM3" matrix="1 0 0 1 -0.00001377 0.00029266" stroke="KITblue" dash="dashed" pen="heavier">
+114.465 324.405 m
+92.0828 257.258 l
+</path>
+<path matrix="1 0 0 1 0 0.00008" stroke="KITblue" dash="dashed" pen="heavier">
+84.4834 223.198 m
+92.0814 165.178 l
+</path>
+<path fill="KITgreen70">
+71.4726 322.562 m
+18.4163 367.752 l
+25.0248 405.716 l
+61.1635 401.277 l
+h
+</path>
+<path stroke="KITblue" dash="dashed" pen="heavier">
+53.845 362.771 m
+71.4726 322.561 l
+</path>
+<path fill="KITpalegreen70">
+139.646 312.072 m
+191.392 371.711 l
+202.58 349.336 l
+184.163 294.087 l
+h
+</path>
+<path stroke="KITblue" dash="dashed" pen="heavier">
+139.647 312.073 m
+178.565 328.549 l
+</path>
+<path fill="KITgreen70">
+32.5831 158.087 m
+18.4163 257.254 l
+25.1589 265.554 l
+128.914 109.923 l
+h
+</path>
+<path stroke="KITblue" dash="dashed" pen="heavier">
+66.3772 165.093 m
+128.914 109.924 l
+</path>
+<path fill="KITpalegreen70">
+184.163 54.6747 m
+110.498 36.2584 l
+73.6653 54.6747 l
+18.4163 36.2584 l
+36.8326 128.34 l
+32.5831 158.087 l
+128.914 109.923 l
+202.58 109.924 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 73.6651 -220.419" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$s$</text>
+<use matrix="1.15102 0 0 1.15102 73.6651 -239.986" name="mark/disk(sx)" pos="80 288" size="small" stroke="KITblue"/>
+<path stroke="KITblue" dash="dashed" pen="heavier">
+100.961 86.5817 m
+165.747 91.5078 l
+</path>
+<path layer="SPT1" stroke="KITblue" pen="heavier">
+18.4163 367.752 m
+71.4726 322.562 l
+92.0824 165.173 l
+128.915 109.923 l
+165.747 91.5073 l
+</path>
+<use name="mark/disk(sx)" pos="18.4163 367.752" size="small" stroke="KITblue"/>
+<path layer="SPT2" stroke="KITblue" pen="heavier">
+165.747 91.5078 m
+128.913 109.925 l
+92.0814 165.181 l
+92.0828 257.258 l
+139.647 312.073 l
+</path>
+<use name="mark/disk(sx)" pos="139.645 312.07" size="small" stroke="KITblue"/>
+<use layer="SPT3" name="mark/disk(sx)" pos="128.916 109.923" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="202.58 109.924" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="184.163 54.6747" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="110.498 36.2584" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="73.6653 54.6747" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="18.4163 36.2584" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="36.8326 128.34" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="165.747 202.005" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="92.0844 257.255" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="18.4163 257.254" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="132.192 266.135" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="139.647 312.073" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="184.163 294.087" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="184.163 386.168" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="25.0248 405.716" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="18.4163 367.752" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITblue"/>
+<path stroke="KITblue">
+202.58 109.924 m
+165.747 91.5078 l
+</path>
+<path stroke="KITblue">
+165.747 91.5073 m
+184.163 54.6747 l
+</path>
+<path stroke="KITblue">
+165.746 91.5077 m
+128.916 109.923 l
+92.0855 165.175 l
+165.747 202.005 l
+</path>
+<path stroke="KITblue">
+92.0814 165.197 m
+92.0814 257.254 l
+132.192 266.135 l
+</path>
+<path stroke="KITblue">
+165.747 91.5073 m
+110.498 36.2584 l
+</path>
+<path stroke="KITblue">
+165.746 91.5077 m
+73.6653 54.6747 l
+</path>
+<path stroke="KITblue">
+165.746 91.5077 m
+18.4163 36.2584 l
+</path>
+<path stroke="KITblue">
+165.746 91.5077 m
+36.8326 128.34 l
+</path>
+<path stroke="KITblue">
+128.916 109.923 m
+18.4163 257.254 l
+</path>
+<path stroke="KITblue">
+92.0814 165.212 m
+71.4722 322.559 l
+</path>
+<path stroke="KITblue">
+92.0832 257.259 m
+184.163 386.168 l
+</path>
+<path stroke="KITblue">
+92.0828 257.253 m
+139.645 312.07 l
+</path>
+<path stroke="KITblue">
+139.647 312.073 m
+184.163 294.087 l
+</path>
+<path stroke="KITblue">
+139.648 312.072 m
+202.58 349.336 l
+</path>
+<path stroke="KITblue">
+18.4163 367.752 m
+71.4716 322.564 l
+25.0248 405.716 l
+</path>
+<use layer="LCA" name="mark/disk(sx)" pos="71.4649 322.576" size="small" stroke="red"/>
+<use layer="SPT3" name="mark/disk(sx)" pos="202.58 349.336" size="small" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="92.0855 165.175" size="small" stroke="KITblue"/>
+<use layer="LCA" name="mark/disk(sx)" pos="92.0855 165.175" size="small" stroke="darkorange"/>
+<use name="mark/disk(sx)" pos="202.58 349.336" size="small" stroke="red"/>
+<text matrix="1 0 0 1 35.9241 -6.83061" transformations="translations" pos="42.1583 328.261" stroke="red" type="label" valign="baseline" size="small">$a$</text>
+<text matrix="1 0 0 1 161.286 28.0054" transformations="translations" pos="42.1583 328.261" stroke="red" type="label" valign="baseline" size="small">$b$</text>
+<text matrix="1 0 0 1 64.2429 -174.318" transformations="translations" pos="42.1583 328.261" stroke="darkorange" type="label" valign="baseline" size="small">$\text{lca}(a,b)$</text>
+<text layer="SPT1" matrix="1.15102 0 0 1.15102 -66.4342 72.7649" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$d$</text>
+<text layer="SPT2" matrix="1.15102 0 0 1.15102 34.21 24.3385" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$d$</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 6}</text>
+</page>
+<page title="SPSQ \quad \textit{Algorithmus (lochfreies Polygon)}" section="">
+<layer name="bg"/>
+<layer name="fig1"/>
+<layer name="r"/>
+<layer name="sol"/>
+<layer name="a1"/>
+<layer name="a2"/>
+<layer name="a3"/>
+<layer name="rot1"/>
+<layer name="rot1b"/>
+<layer name="rot2"/>
+<layer name="a4"/>
+<layer name="a4a"/>
+<layer name="a4aBAD"/>
+<layer name="a4aBAD2"/>
+<layer name="a4aCORR"/>
+<layer name="a5"/>
+<layer name="a6"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="h1"/>
+<layer name="h2"/>
+<layer name="h3"/>
+<layer name="h4"/>
+<layer name="h5"/>
+<layer name="h6"/>
+<layer name="h7"/>
+<layer name="h8"/>
+<layer name="h9"/>
+<layer name="h10"/>
+<layer name="q1"/>
+<layer name="q2"/>
+<view layers="bg fig1 sol pagenumbers_page h1 h10 q1" active="q1" marked="yes"/>
+<view layers="bg fig1 a1 pagenumbers_page h9 q2" active="q2"/>
+<view layers="bg fig1 a1 a2 pagenumbers_page h8 q2" active="a2"/>
+<view layers="bg r a3 pagenumbers_page h7 q2" active="a3"/>
+<view layers="bg r a3 pagenumbers_page h6 q2" active="a3"/>
+<view layers="bg r a3 rot1 pagenumbers_page h6 q2" active="rot1"/>
+<view layers="bg r a3 rot1 rot2 pagenumbers_page h6 q2" active="rot2"/>
+<view layers="bg r rot1b rot2 a4 pagenumbers_page h5 q2" active="rot1b"/>
+<view layers="bg r a4 a4a pagenumbers_page h3 q2" active="a4a"/>
+<view layers="bg a4 a4aBAD pagenumbers_page h3 q2" active="a4aBAD"/>
+<view layers="bg a4 a4aBAD a4aBAD2 a4aCORR pagenumbers_page h3 q2" active="a4aBAD2"/>
+<view layers="bg r a4 a4a a4aCORR pagenumbers_page h3 q2" active="a4aCORR"/>
+<view layers="bg r a4 a4aCORR a5 pagenumbers_page h2 q2" active="a5"/>
+<view layers="bg a4aCORR a5 a6 pagenumbers_page h1 q1" active="a6"/>
+<view layers="bg fig1 sol a4aCORR a5 pagenumbers_page q1" active="a5"/>
+<path layer="a1" matrix="0.42041 0 0 0.654075 332.132 161.332" fill="0.808 0.808 1">
+376.35 336 m
+376.35 376 l
+535.16 376 l
+535.16 336 l
+h
+</path>
+<path matrix="0.42041 0 0 0.654075 217.732 161.332" fill="1 0.749 0.749">
+376.35 336 m
+376.35 376 l
+535.16 376 l
+535.16 336 l
+h
+</path>
+<path layer="a2" matrix="0.99509 0 0 0.654075 -1.15228 123.231" fill="1 0.749 1">
+376.35 336 m
+376.35 376 l
+535.16 376 l
+535.16 336 l
+h
+</path>
+<path layer="a4" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+41.2672 344.25 m
+160 304 l
+121.323 287.625 l
+80 240 l
+80 160 l
+62.0948 296.737 l
+h
+</path>
+<path layer="a3" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+41.2672 344.25 m
+160 304 l
+121.323 287.625 l
+80 240 l
+80 160 l
+62.0948 296.737 l
+h
+</path>
+<path stroke="KITblue" pen="fat">
+47.4999 377.247 m
+71.4717 322.56 l
+92.0814 165.172 l
+92.0816 257.255 l
+139.645 312.072 l
+184.163 330.919 l
+</path>
+<path layer="a4" matrix="0.735223 0 0 1.00227 428.199 40.495" fill="KITorange30">
+272 224 m
+272 192 l
+304 192 l
+304 224 l
+h
+</path>
+<path matrix="0.735223 0 0 1.00227 362.199 40.495" fill="KITred30">
+272 224 m
+272 192 l
+304 192 l
+304 224 l
+h
+</path>
+<path matrix="0.735223 0 0 1.00227 71.4921 -35.4368" fill="KITorange30">
+272 224 m
+272 192 l
+304 192 l
+304 224 l
+h
+</path>
+<path matrix="0.735223 0 0 1.00227 71.4921 2.64966" fill="KITred30">
+272 224 m
+272 192 l
+304 192 l
+304 224 l
+h
+</path>
+<path layer="fig1" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+0 384 m
+0 32 l
+192 32 l
+192 384 l
+h
+</path>
+<path matrix="1.15102 0 0 1.15102 0 -18.9906" fill="black">
+192 384 m
+0 384 l
+0 32 l
+192 32 l
+192 384 l
+160 352 l
+176 320 l
+160 272 l
+121.323 287.625 l
+114.848 247.716 l
+80 240 l
+144 192 l
+80 160 l
+112 112 l
+176 112 l
+160 64 l
+96 48 l
+64 64 l
+16 48 l
+32 128 l
+16 240 l
+62.0948 296.737 l
+16 336 l
+21.7414 368.983 l
+160 352 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 73.6651 -220.419" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$s$</text>
+<text layer="bg" matrix="1 0 0 1 225 -7" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="496" valign="top" style="itemize">\item Berechne $\pi(s,a)$ und $\pi(s,b)$ 
+\item Berechne $r := \text{lca}(a,b)$ 
+\item Betrachte $\pi(r,a)$ und $\pi(r,b)$ genauer
+\begin{itemize}
+  \item ``monotone&apos;&apos; Rotation entlang der Kanten
+  \item zerteile Kantenzug in Teile $A$ und $B$
+\end{itemize}
+\item $A := $ schließen spitzen Winkel mit $ba$ ein
+\item $B := $ schließen spitzen Winkel mit $ab$ ein
+\item $p := $ gemeinsamer Knoten zwischen $A$ und $B$
+\item $q^* := \text{senkrechte Projektion von $p$ auf $ab$}$
+\item Lösung: $\pi(s,q^*)$</text>
+<text matrix="1.15102 0 0 1.15102 92.0814 40.7112" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$a$</text>
+<text matrix="1.15102 0 0 1.15102 -43.8875 87.7811" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$b$</text>
+<text layer="a2" matrix="1.15102 0 0 1.15102 -16.1142 -132.941" transformations="translations" pos="80 256" stroke="KITlilac" type="label" valign="baseline" size="small">$r$</text>
+<path layer="sol" matrix="1 0 0 1 0 23" stroke="KITblue">
+92.0816 142.173 m
+92.0816 234.254 l
+123.389 328.177 l
+</path>
+<path layer="a1" matrix="1 0 0 1 0 23" stroke="red">
+92.0816 142.173 m
+92.0816 234.254 l
+139.645 289.072 l
+184.163 307.919 l
+</path>
+<path matrix="1 0 0 1 0 23" stroke="blue">
+92.0816 142.173 m
+71.4724 299.56 l
+47.4994 354.248 l
+</path>
+<text layer="q1" matrix="1.15102 0 0 1.15102 31.3077 63.9692" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$q^*$</text>
+<path layer="fig1" matrix="1 0 0 1 0 23" stroke="KITblue">
+165.747 68.5073 m
+128.914 86.9236 l
+92.0816 142.173 l
+</path>
+<path layer="a4a" matrix="1 0 0 1 0 23" stroke="black">
+169.193 312.993 m
+15.8062 0 0 15.8062 184.163 307.919 169.608 301.757 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+147.431 320.371 m
+15.8062 0 0 15.8062 162.4 315.297 152.042 303.358 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+107.051 334.061 m
+15.8062 0 0 -15.8062 92.0816 339.135 92.0817 323.329 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+80.0619 343.209 m
+15.8062 0 0 -15.8062 65.0922 348.283 67.1446 332.611 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="black">
+62.4691 349.173 m
+15.8055 0 0 -15.8055 47.4999 354.247 53.845 339.771 a
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITred" dash="dashed">
+139.645 289.072 m
+162.4 315.297 l
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITorange" dash="dashed">
+92.0816 234.254 m
+92.0818 339.135 l
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITorange" dash="dashed">
+71.4726 299.56 m
+65.0922 348.284 l
+</path>
+<path layer="a4" matrix="1 0 0 1 0 23" stroke="KITred" pen="fat">
+92.0814 234.254 m
+139.645 289.071 l
+184.163 307.919 l
+</path>
+<text layer="a5" matrix="1.15102 0 0 1.15102 -6.4399 -25.9089" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$p$</text>
+<text layer="bg" matrix="1 0 0 1 0 -13" transformations="translations" pos="240 432" stroke="KITblack" type="label" valign="baseline">\bf Idee</text>
+<path layer="a1" matrix="1 0 0 1 0 23" stroke="1 0 1">
+165.747 68.5073 m
+128.914 86.9236 l
+92.0816 142.173 l
+</path>
+<path layer="h10" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h9" matrix="1 0 0 0.875 0 12" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h8" matrix="1 0 0 0.791667 0 6.66667" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h7" matrix="1 0 0 0.708333 0 9.33333" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h6" matrix="1 0 0 0.625 0 7" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h5" matrix="0.954545 0 0 0.5 27.4545 20" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h4" matrix="1 0 0 0.416667 0 18.6667" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h3" matrix="1 0 0 0.333333 0 18.3333" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h2" matrix="0.993201 0 0 0.206836 5.00438 25.3812" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="h1" matrix="1 0 0 0.125 0 28" fill="white">
+224 416 m
+224 32 l
+736 32 l
+736 416 l
+h
+</path>
+<path layer="a4aCORR" matrix="18.3398 0 0 1.34023 -4660.3 -60.3979" fill="white">
+271.473 189.072 m
+271.473 156.999 l
+295 156.999 l
+295 189.072 l
+h
+</path>
+<text matrix="1 0 0 1 4.6 -27.8" transformations="translations" pos="318.473 193.001" stroke="KITblack" type="label" valign="baseline">verbleibender Kantenzug</text>
+<path layer="a4aBAD" fill="white">
+25.0248 405.716 m
+25.0248 112 l
+224 112 l
+224 405.716 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 92.0814 40.7113" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$a$</text>
+<text matrix="1.15102 0 0 1.15102 -43.8875 87.7812" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$b$</text>
+<path fill="KITblue15">
+47.4994 377.248 m
+184.163 330.92 l
+105.541 297.633 l
+92.0816 257.254 l
+92.0816 165.173 l
+71.4724 322.56 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 -16.1142 -132.941" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$r$</text>
+<path stroke="KITblue" dash="dashed">
+105.541 297.633 m
+123.389 351.177 l
+</path>
+<path layer="a4aBAD2" fill="KITblue15">
+47.4994 377.248 m
+184.163 330.92 l
+105.541 297.633 l
+92.0816 257.254 l
+92.0816 165.173 l
+71.4724 322.56 l
+h
+</path>
+<path layer="a4aBAD" stroke="KITblue" pen="fat">
+116.814 302.405 m
+105.541 297.633 l
+92.082 257.255 l
+92.0814 253.045 l
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="KITorange" pen="fat">
+47.4993 354.247 m
+71.4722 299.559 l
+92.0814 142.172 l
+92.0814 142.172 m
+92.0814 234.254 l
+</path>
+<path stroke="KITblack">
+138.358 346.103 m
+15.8056 0 0 -15.8056 123.389 351.177 118.391 336.182 a
+</path>
+<path fill="black">
+1.92725 0 0 1.92725 127.376 342.065 e
+</path>
+<path layer="a4aBAD2" stroke="KITorange" pen="fat">
+47.4993 377.247 m
+71.4722 322.559 l
+92.0814 165.172 l
+92.0814 165.172 m
+92.082 257.255 l
+105.541 297.633 l
+</path>
+<path stroke="KITorange" dash="dashed">
+105.541 297.633 m
+123.389 351.177 l
+</path>
+<path layer="a4aBAD" matrix="1 0 0 1 0 23.0001" stroke="black">
+169.193 312.993 m
+15.8062 0 0 15.8062 184.163 307.919 169.608 301.757 a
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="black">
+107.051 334.061 m
+15.8062 0 0 -15.8062 92.0816 339.135 92.0817 323.329 a
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="black">
+80.0619 343.209 m
+15.8062 0 0 -15.8062 65.0922 348.283 67.1446 332.611 a
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="black">
+62.4691 349.173 m
+15.8055 0 0 -15.8055 47.4999 354.247 53.845 339.771 a
+</path>
+<path matrix="1.15102 0 0 1.15102 0 -18.9905" stroke="KITgreen" pen="fat">
+41.2672 344.25 m
+160 304 l
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="KITorange" dash="dashed">
+92.0816 234.254 m
+92.0818 339.135 l
+</path>
+<path matrix="1 0 0 1 0 23.0001" stroke="KITorange" dash="dashed">
+71.4726 299.56 m
+65.0922 348.284 l
+</path>
+<path layer="a4" matrix="1 0 0 1 0 23" stroke="KITorange" pen="fat">
+47.4993 354.247 m
+71.4722 299.559 l
+92.0814 142.172 l
+92.0814 142.172 m
+92.0814 234.254 l
+</path>
+<path layer="a4aBAD" stroke="KITred" pen="fat">
+105.541 297.633 m
+184.163 330.919 l
+</path>
+<path layer="bg" matrix="1.15102 0 0 1.15102 0 -18.9906" stroke="KITgreen" pen="fat">
+41.2672 344.25 m
+160 304 l
+</path>
+<use layer="q1" matrix="1 0 0 1 0 23" name="mark/disk(sx)" pos="123.389 328.177" size="small" stroke="KITblack"/>
+<use layer="a5" matrix="1 0 0 1 0 23" name="mark/disk(sx)" pos="92.0814 234.254" size="small" stroke="KITblack"/>
+<use layer="fig1" matrix="1.15102 0 0 1.15102 73.6651 -239.986" name="mark/disk(sx)" pos="80 288" size="small" stroke="KITblue"/>
+<use layer="a2" name="mark/disk(sx)" pos="92.0814 165.175" size="small" stroke="KITlilac"/>
+<text layer="r" matrix="1.15102 0 0 1.15102 -16.1142 -132.941" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$r$</text>
+<path layer="a6" stroke="KITblue">
+92.0816 257.254 m
+123.389 351.177 l
+</path>
+<path layer="rot1" matrix="1 0 0 1 154.543 -94.243" stroke="KITblue" pen="fat" rarrow="normal/normal">
+47.4999 233.247 m
+71.4717 178.56 l
+</path>
+<path matrix="1 0 0 1 14.8583 6.04134" stroke="KITblue" pen="fat" rarrow="normal/normal">
+256.934 191.347 m
+277.544 33.9587 l
+</path>
+<path matrix="1 0 0 1 -132.041 56.204" stroke="KITblue" pen="fat" arrow="normal/normal">
+471.306 15.796 m
+471.306 107.879 l
+</path>
+<path matrix="1 0 0 1 -222.902 -29.5709" stroke="KITblue" pen="fat" arrow="normal/normal">
+608.377 109.571 m
+655.941 164.388 l
+</path>
+<path matrix="1 0 0 1 -268.252 -65.3615" stroke="KITblue" pen="fat" arrow="normal/normal">
+725.323 162.696 m
+769.841 181.543 l
+</path>
+<path layer="rot2" matrix="1 0 0 1 21 23" stroke="KITblack" fill="KITblack" pen="heavier" arrow="normal/normal">
+168.868 0 m
+502.109 0 l
+</path>
+<group matrix="1 0 0 1 2 40">
+<path matrix="-0.57847 0.326655 -0.326655 -0.57847 926.914 -86.7133" stroke="KITblack" pen="heavier">
+568.497 111.425 m
+45.648 0 0 -45.648 567.195 65.7956 525.641 84.689 a
+</path>
+<path matrix="1 0 0 1 -3.15325 -2.62801" stroke="KITblack" pen="heavier" arrow="normal/normal">
+601.813 42.628 m
+595.183 36 l
+</path>
+</group>
+<path layer="rot1b" matrix="1 0 0 1 154.543 -94.243" stroke="KITorange" pen="fat" rarrow="normal/normal">
+47.4999 233.247 m
+71.4717 178.56 l
+</path>
+<path matrix="1 0 0 1 14.8583 6.04138" stroke="KITorange" pen="fat" rarrow="normal/normal">
+256.934 191.347 m
+277.544 33.9587 l
+</path>
+<path matrix="1 0 0 1 -132.041 56.204" stroke="KITorange" pen="fat" arrow="normal/normal">
+471.306 15.796 m
+471.306 107.879 l
+</path>
+<path matrix="1 0 0 1 -222.902 -29.5709" stroke="KITred" pen="fat" arrow="normal/normal">
+608.377 109.571 m
+655.941 164.388 l
+</path>
+<path matrix="1 0 0 1 -268.252 -65.3615" stroke="KITred" pen="fat" arrow="normal/normal">
+725.323 162.696 m
+769.841 181.543 l
+</path>
+<path matrix="0 1.15102 -1.15102 0 748.906 -1.74753" stroke="KITgreen" dash="dotted" pen="fat">
+41.2672 344.25 m
+160 304 l
+</path>
+<text layer="q2" matrix="1.15102 0 0 1.15102 31.3077 63.9692" transformations="translations" pos="80 256" stroke="KITblack50" type="label" valign="baseline" size="small">$q^*$</text>
+<use matrix="1 0 0 1 0 23" name="mark/disk(sx)" pos="123.389 328.177" size="small" stroke="KITblack50"/>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 7}</text>
+</page>
+<page title="SPSQ \quad \textit{Algorithmus (lochfreies Polygon)}" section="">
+<layer name="bg"/>
+<layer name="ideas"/>
+<layer name="exec"/>
+<layer name="fig1"/>
+<layer name="sol"/>
+<layer name="a1"/>
+<layer name="a2"/>
+<layer name="a3"/>
+<layer name="a4"/>
+<layer name="a5"/>
+<layer name="us"/>
+<layer name="uslca"/>
+<layer name="usx"/>
+<layer name="use"/>
+<layer name="usex"/>
+<layer name="Susex"/>
+<layer name="updated"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="blend1"/>
+<layer name="blend2"/>
+<layer name="blend3a"/>
+<layer name="blend3b"/>
+<layer name="blend4a"/>
+<layer name="blend4b"/>
+<layer name="blend5a"/>
+<layer name="blend5c"/>
+<layer name="blend6"/>
+<layer name="cursor1"/>
+<layer name="cursor2"/>
+<layer name="cursor3"/>
+<layer name="cursor3b"/>
+<layer name="cursor4"/>
+<layer name="cursor4b"/>
+<layer name="cursor5a"/>
+<layer name="cursor5b"/>
+<layer name="cursor6"/>
+<view layers="bg ideas fig1 pagenumbers_page" active="ideas"/>
+<view layers="bg ideas fig1 a1 pagenumbers_page cursor1" active="a1"/>
+<view layers="bg ideas fig1 a1 pagenumbers_page blend1 cursor1" active="blend1"/>
+<view layers="bg ideas fig1 a1 a2 pagenumbers_page blend1 cursor2" active="cursor2"/>
+<view layers="bg ideas fig1 a1 a2 pagenumbers_page blend1 blend2 cursor2" active="blend2"/>
+<view layers="bg ideas fig1 a2 a3 pagenumbers_page blend1 blend2 cursor3" active="cursor3"/>
+<view layers="bg ideas fig1 a2 a3 pagenumbers_page blend1 blend2 blend3a cursor3" active="blend3a"/>
+<view layers="bg ideas fig1 a2 a3 updated pagenumbers_page blend1 blend2 blend3b cursor3b" active="updated"/>
+<view layers="bg ideas fig1 a1 a2 updated pagenumbers_page blend1 blend2 blend3b cursor4" active="cursor4"/>
+<view layers="bg ideas fig1 a1 a2 updated pagenumbers_page blend1 blend2 blend3b blend4a cursor4" active="blend4a"/>
+<view layers="bg ideas fig1 a1 a2 us updated pagenumbers_page blend1 blend2 blend3b blend4b cursor4b" active="us"/>
+<view layers="bg ideas fig1 a1 a2 us uslca updated pagenumbers_page blend1 blend2 blend3b blend4b cursor4b" active="uslca"/>
+<view layers="bg ideas fig1 a1 a2 uslca usx updated pagenumbers_page blend1 blend2 blend3b blend4b cursor4b" active="usx"/>
+<view layers="bg ideas fig1 a1 a2 usx updated pagenumbers_page blend1 blend2 blend3b blend4b cursor4b" active="usx"/>
+<view layers="bg ideas fig1 a1 a2 usx use updated pagenumbers_page blend1 blend2 blend3b blend4b cursor4b" active="use"/>
+<view layers="bg ideas fig1 a1 a2 usex updated pagenumbers_page blend1 blend2 blend3b blend4b cursor4b" active="usex"/>
+<view layers="bg ideas fig1 a1 a2 usex updated pagenumbers_page blend1 blend2 blend3b blend4b cursor5a" active="cursor5a"/>
+<view layers="bg ideas fig1 a1 a2 usex updated pagenumbers_page blend1 blend2 blend3b blend4b blend5a cursor5a" active="Susex"/>
+<view layers="bg ideas fig1 a1 a2 a5 updated pagenumbers_page blend1 blend2 blend3b blend4b blend5c cursor5a cursor5b" active="blend5c"/>
+<view layers="bg ideas fig1 sol a2 a5 pagenumbers_page blend1 blend2 blend3b blend4b blend5c cursor6" active="blend5c"/>
+<path layer="cursor6" matrix="34.2911 0 0 0.835928 -8026.52 -265.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -231.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<group layer="cursor5a">
+<path matrix="34.2911 0 0 0.835928 -8026.52 -191.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -177.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -147.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -115.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+</group>
+<path layer="cursor4" matrix="34.2911 0 0 0.835928 -8026.52 -75.8944" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -42.8944" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path layer="cursor3" matrix="34.2911 0 0 0.835928 -8026.52 -6.89438" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path layer="cursor2" matrix="34.2911 0 0 0.835928 -8026.52 31.6056" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path layer="cursor1" matrix="34.2911 0 0 0.835928 -8026.52 70.1056" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path layer="exec" matrix="0.735223 0 0 1.00227 230.492 -34.3503" fill="KITred30">
+272 224 m
+272 192 l
+304 192 l
+304 224 l
+h
+</path>
+<path layer="fig1" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+0 384 m
+0 32 l
+192 32 l
+192 384 l
+h
+</path>
+<path matrix="1.15102 0 0 1.15102 0 -18.9906" fill="black">
+192 384 m
+0 384 l
+0 32 l
+192 32 l
+192 384 l
+160 352 l
+176 320 l
+160 272 l
+121.323 287.625 l
+114.848 247.716 l
+80 240 l
+144 192 l
+80 160 l
+112 112 l
+176 112 l
+160 64 l
+96 48 l
+64 64 l
+16 48 l
+32 128 l
+16 240 l
+62.0948 296.737 l
+16 336 l
+21.7414 368.983 l
+160 352 l
+h
+</path>
+<text matrix="1.15102 0 0 1.15102 73.6651 -220.419" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$s$</text>
+<text layer="bg" matrix="1.15102 0 0 1.15102 92.0814 40.7112" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$a$</text>
+<text matrix="1.15102 0 0 1.15102 -43.8875 87.7811" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$b$</text>
+<path layer="a3" matrix="1.15102 0 0 1.15102 0 -18.9906" fill="KITblue15">
+41.2672 344.25 m
+160 304 l
+121.323 287.625 l
+80 240 l
+80 160 l
+62.0948 296.737 l
+h
+</path>
+<text layer="a2" matrix="1.15102 0 0 1.15102 -16.1142 -132.941" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$r$</text>
+<path layer="sol" matrix="1 0 0 1 0 23" stroke="KITblue">
+92.0816 142.173 m
+92.0816 234.254 l
+123.389 328.177 l
+</path>
+<text layer="bg" matrix="1.15102 0 0 1.15102 31.3077 63.9692" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$q^*$</text>
+<path layer="a3" matrix="1 0 0 1 0 23" stroke="KITblue" pen="fat">
+47.4993 354.247 m
+71.4722 299.559 l
+92.0814 142.172 l
+92.0814 142.172 m
+92.0814 234.254 l
+139.645 289.071 l
+184.163 307.919 l
+</path>
+<path layer="a1" matrix="1 0 0 1 0 23" stroke="KITblue">
+165.747 68.5073 m
+128.914 86.9236 l
+92.0816 142.173 l
+</path>
+<path layer="a4" matrix="1 0 0 1 0 23" stroke="KITred" pen="fat">
+92.0814 234.254 m
+139.645 289.071 l
+184.163 307.919 l
+</path>
+<path matrix="1 0 0 1 0 23" stroke="KITorange" pen="fat">
+47.4993 354.247 m
+71.4722 299.559 l
+92.0814 142.172 l
+92.0814 142.172 m
+92.0814 234.254 l
+</path>
+<path layer="bg" matrix="1.15102 0 0 1.15102 0 -18.9906" stroke="KITgreen" pen="fat">
+41.2672 344.25 m
+160 304 l
+</path>
+<use matrix="1 0 0 1 0 23" name="mark/disk(sx)" pos="123.389 328.177" size="small" stroke="KITblack"/>
+<text layer="a5" matrix="1.15102 0 0 1.15102 -8.01318 -27.6373" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$p$</text>
+<text layer="ideas" matrix="1 0 0 1 0 -13" transformations="translations" pos="240 432" stroke="KITblack" type="label" valign="baseline">\bf Umsetzung</text>
+<text layer="exec" matrix="1 0 0 1 225 -83.4" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="527" valign="top" style="itemize">\item Speichere $U = [\text{pred}(a),\text{pred}(b)]$
+\begin{itemize}
+  \item $\forall u \in [\text{pred}(a),r]: \text{cpred}(u,a) \in \pi(s,a) \cap \dot{D}$
+  \item $\forall u \in [r,\text{pred}(b)]: \text{cpred}(u,b) \in \pi(s,b) \cap \dot{D}$
+\end{itemize}
+\item ``Sicht&apos;&apos; $S(u \in \dot{D}) := \langle u - \text{pred}(u), a-b \rangle$
+\item Kante über $u$ in $A$ $\Leftrightarrow$ $S(u) &gt; 0$
+\item $p := $ bin. Suche in $U$ nach Vorz.wechsel von S</text>
+<text layer="blend1" matrix="1 0 0 1 82 -11" transformations="translations" pos="576 400" stroke="KITgreen" type="label" valign="baseline" size="small">nicht nötig</text>
+<text layer="blend2" matrix="1 0 0 1 97 -49" transformations="translations" pos="576 400" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\log \mathit{n})$</text>
+<text layer="blend6" matrix="1 0 0 1 97 -348" transformations="translations" pos="576 400" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\log \mathit{n})$</text>
+<text layer="ideas" matrix="1 0 0 1 225 -7" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="496" valign="top" style="itemize">\item Berechne $\pi(s,a)$ und $\pi(s,b)$ 
+\item Berechne $r := \text{lca}(a,b)$ 
+\item Betrachte $\pi(r,a)$ und $\pi(r,b)$ genauer
+\begin{itemize}
+  \item ``monotone&apos;&apos; Rotation entlang der Kanten
+  \item zerteile Kantenzug in Teile $A$ und $B$
+\end{itemize}
+\item $A := $ schließen spitzen Winkel mit $ba$ ein
+\item $B := $ verbleibender Kantenzug
+\item $p := $ gemeinsamer Knoten zwischen $A$ und $B$
+\item $q^* := \text{senkrechte Projektion von $p$ auf $ab$}$
+\item Lösung: $\pi(s,q^*)$</text>
+<text layer="blend3a" matrix="1 0 0 1 115 -87" transformations="translations" pos="576 400" stroke="red" type="label" valign="baseline" size="small">$O(\mathit{n})$</text>
+<path layer="blend3b" matrix="34.2911 0 0 0.835928 -8026.52 -6.89438" fill="white">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path layer="cursor3b" matrix="34.2911 0 0 0.835928 -8026.52 -6.89438" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<text layer="blend3b" matrix="1 0 0 1 225 -83.4" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="496" valign="top" style="itemize">\item Speichere $U = [\text{pred}(a),\text{pred}(b)]$</text>
+<text matrix="1 0 0 1 97 -87" transformations="translations" pos="576 400" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\log \mathit{n})$</text>
+<text layer="blend4a" matrix="1 0 0 1 22.9095 -17.4871" transformations="translations" pos="688.875 264.727" stroke="red" type="label" valign="baseline" size="Huge">?</text>
+<group layer="blend4b">
+<path matrix="2.17706 0 0 0.877075 39.189 -53.913" fill="white">
+90.7328 440 m
+90.7328 319.517 l
+280.784 319.517 l
+280.784 440 l
+h
+</path>
+<path matrix="1.91121 0 0 0.584192 221.108 44.4676" fill="white">
+90.7328 440 m
+90.7328 319.517 l
+280.784 319.517 l
+280.784 440 l
+h
+</path>
+</group>
+<path layer="cursor4b" matrix="34.2911 0 0 0.835928 -8026.52 -42.8944" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -75.8944" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<text layer="blend4b" matrix="1 0 0 1 225 -83.4" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="527" valign="top" style="itemize">\item Speichere $U = [\text{pred}(a),\text{pred}(b)]$
+\begin{itemize}
+  \item $\forall u \in [\text{pred}(a),r]: \text{lca}(u,a) \in \pi(s,a)$
+  \item $\forall u \in [r,\text{pred}(b)]: \text{lca}(u,b) \in \pi(s,b)$
+\end{itemize}</text>
+<text matrix="1 0 0 1 115 -139" transformations="translations" pos="576 400" stroke="KITgreen" type="label" valign="baseline" size="small">$O(1)$</text>
+<group layer="blend5c" matrix="0.84375 0 0 1 117.5 0">
+<path matrix="34.2911 0 0 0.835928 -8026.52 -191.894" fill="white">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -177.894" fill="white">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -147.894" fill="white">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -115.894" fill="white">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+</group>
+<group layer="cursor5b" matrix="0.84375 0 0 1 117.5 0">
+<path matrix="34.2911 0 0 0.835928 -8026.52 -191.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -177.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -147.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -115.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+</group>
+<group layer="blend5a" matrix="0.84375 0 0 1 117.5 0">
+<path matrix="34.2911 0 0 0.835928 -8026.52 -147.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+<path matrix="34.2911 0 0 0.835928 -8026.52 -115.894" fill="KITgreen15">
+241 409 m
+241 368 l
+256 368 l
+256 409 l
+h
+</path>
+</group>
+<text matrix="1 0 0 1 280 -210.9" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="527" valign="top" style="itemize">Zugehörigkeit on-demand entscheidbar</text>
+<text layer="blend5c" matrix="1 0 0 1 225 -267.9" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="527" valign="top" style="itemize">\item $p := $ binäre Suche auf $U$</text>
+<text matrix="1 0 0 1 97 -270" transformations="translations" pos="576 400" stroke="KITgreen" type="label" valign="baseline" size="small">$O(\log \mathit{n})$</text>
+<path layer="a1" stroke="KITblue">
+92.0814 165.172 m
+71.4726 322.56 l
+47.4993 377.247 l
+</path>
+<path stroke="KITblue">
+92.0816 165.173 m
+92.0814 257.254 l
+139.645 312.072 l
+184.163 330.919 l
+</path>
+<path layer="a2" matrix="1 0 0 1 -0.0003 23.0005" stroke="KITblue">
+165.747 68.5073 m
+128.914 86.9236 l
+92.0816 142.173 l
+</path>
+<text layer="updated" matrix="1 0 0 1 -4.985 -19.186" transformations="translations" pos="144 176" stroke="KITorange" type="label" valign="baseline" size="LARGE">$U$</text>
+<path stroke="KITorange" pen="heavier">
+139.645 312.072 m
+132.192 266.135 l
+92.0816 257.254 l
+165.747 202.005 l
+92.0814 165.172 l
+128.914 109.924 l
+202.58 109.924 l
+184.163 54.6747 l
+110.498 36.2584 l
+73.6653 54.6747 l
+18.4163 36.2584 l
+36.8326 128.34 l
+18.4163 257.254 l
+71.4726 322.56 l
+</path>
+<use layer="usex" name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITorange"/>
+<use layer="updated" name="mark/disk(sx)" pos="139.645 312.071" size="small" stroke="KITorange"/>
+<use matrix="1 0 0 1 -68.1726 10.4885" name="mark/disk(sx)" pos="139.645 312.071" size="small" stroke="KITorange"/>
+<use layer="us" name="mark/disk(sx)" pos="132.192 266.135" size="small" stroke="red"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="red"/>
+<use name="mark/disk(sx)" pos="18.4163 257.254" size="small" stroke="red"/>
+<text matrix="1 0 0 1 3 -14" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$u_1$</text>
+<text matrix="1 0 0 1 -57.7197 42.4245" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$u_2$</text>
+<text matrix="1 0 0 1 -110.776 -22.8813" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$u_3$</text>
+<path layer="uslca" stroke="red" dash="dashed">
+71.4726 322.56 m
+80 384
+128 336
+71.4726 322.56 c
+</path>
+<path stroke="red" dash="dashed">
+92.0816 257.254 m
+108.306 277.862
+132.192 266.135 c
+</path>
+<path stroke="red" dash="dashed">
+18.4163 257.254 m
+45.8233 162.659
+128.914 109.924 c
+</path>
+<use layer="usx" matrix="1 0 0 1 110.497 -147.33" name="mark/disk(sx)" pos="18.4163 257.254" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -13.2786 -175.211" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_3$</text>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -57.7197 42.4245" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_2$</text>
+<use matrix="1 0 0 1 -40.1104 -8.881" name="mark/disk(sx)" pos="132.192 266.135" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -52.7793 -1.21783" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_1$</text>
+<use layer="usex" name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -57.7197 42.4245" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_2$</text>
+<use matrix="1 0 0 1 -40.1104 -8.881" name="mark/disk(sx)" pos="132.192 266.135" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -52.7793 -1.21783" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_1$</text>
+<path layer="use" stroke="red" pen="heavier">
+71.4722 322.559 m
+92.0813 165.173 l
+</path>
+<path stroke="red" pen="heavier">
+92.0814 257.254 m
+92.0813 165.173 l
+</path>
+<path stroke="red" pen="heavier">
+128.914 109.924 m
+165.747 91.5078 l
+</path>
+<use layer="fig1" matrix="1.15102 0 0 1.15102 73.6651 -239.986" name="mark/disk(sx)" pos="80 288" size="small" stroke="KITblue"/>
+<use layer="usex" name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="71.4722 322.559" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -57.7197 42.4245" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_2$</text>
+<use matrix="1 0 0 1 -40.1104 -8.881" name="mark/disk(sx)" pos="132.192 266.135" size="small" stroke="red"/>
+<text matrix="1 0 0 1 -52.7793 -1.21783" transformations="translations" pos="132.192 266.135" stroke="red" type="label" valign="baseline" size="small">$\bar{u}_1$</text>
+<path stroke="red" pen="heavier">
+71.4722 322.559 m
+92.0813 165.173 l
+</path>
+<path stroke="red" pen="heavier">
+92.0816 257.254 m
+92.0813 165.173 l
+</path>
+<text layer="Susex" matrix="1.15102 0 0 1.15102 -43.8874 87.7821" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$b$</text>
+<text matrix="1.15102 0 0 1.15102 92.0816 40.7117" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$a$</text>
+<text matrix="1 0 0 1 -31.9517 -16.1875" transformations="translations" pos="132.192 266.135" stroke="black" type="label" valign="baseline" size="small">$\bar{u}_1$</text>
+<text matrix="1 0 0 1 -117.168 -120.067" transformations="translations" pos="132.192 266.135" stroke="black" type="label" valign="baseline" size="small">$\text{pred}(\bar{u}_1)=\text{pred}(\bar{u}_2)$</text>
+<path matrix="1.15102 0 0 1.15102 0 -18.9906" stroke="KITgreen" pen="fat" arrow="normal/normal">
+41.2672 344.25 m
+160 304 l
+</path>
+<path stroke="red" pen="heavier" rarrow="normal/normal">
+92.0816 257.254 m
+92.0813 165.173 l
+</path>
+<path stroke="red" pen="heavier" rarrow="normal/normal">
+71.4722 322.559 m
+92.0813 165.173 l
+</path>
+<text matrix="1 0 0 1 -53.8157 49.9879" transformations="translations" pos="132.192 266.135" stroke="black" type="label" valign="baseline" size="small">$\bar{u}_2$</text>
+<use layer="a5" matrix="1 0 0 1 0 23" name="mark/disk(sx)" pos="92.0814 234.254" size="small" stroke="KITblack"/>
+<use layer="updated" name="mark/disk(sx)" pos="92.0816 165.173" size="small" stroke="KITorange"/>
+<text layer="blend5c" matrix="1 0 0 1 280 -210.9" transformations="translations" pos="16 416" stroke="KITblack" type="minipage" width="527" valign="top" style="itemize">Zugehörigkeit on-demand entscheidbar</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 8}</text>
+</page>
+<page title="QVQ \quad \textit{Definition}" section="">
+<layer name="bg"/>
+<layer name="box1"/>
+<layer name="box2"/>
+<layer name="box3"/>
+<layer name="vq"/>
+<layer name="gamma"/>
+<layer name="gamma2"/>
+<layer name="delta"/>
+<layer name="epsilon"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="hide"/>
+<view layers="bg pagenumbers_page" active="bg" marked="yes"/>
+<view layers="bg box1 pagenumbers_page" active="box1"/>
+<view layers="bg box1 box2 vq pagenumbers_page hide" active="hide"/>
+<view layers="bg box1 box2 box3 vq pagenumbers_page" active="box3"/>
+<group layer="box1">
+<path fill="tab_header">
+0 147.08 m
+0 176 l
+343.28 176 l
+348.28 176
+353.28 171
+353.28 166 c
+353.28 147.08 l
+h
+</path>
+<path fill="tab_body">
+353.28 147.08 m
+353.28 68.9027 l
+10 68.9027 l
+5 68.9027
+0 73.9027
+0 78.9027 c
+0 147.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 170" stroke="white" type="minipage" width="341.28" valign="top">Probleminstanz</text>
+<text transformations="translations" pos="6.00005 141.08" stroke="KITblack" type="minipage" width="341.28" valign="top">\begin{itemize}
+\item Polygonfläche $D \subset \mathbb{R}^2$
+\item Startpunkt $s \in D$
+\end{itemize}</text>
+</group>
+<group layer="bg">
+<path matrix="1 0 0 1 0 224" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+616.567 291.654 m
+592 320 l
+608 352 l
+h
+</path>
+</group>
+<path layer="vq" fill="KITgreen30">
+616.567 339.654 m
+550.999 287.199 l
+506.497 251.517 l
+512 224 l
+704 240 l
+720 416 l
+592.553 416 l
+608 400 l
+h
+</path>
+<path layer="bg" matrix="1 0 0 1 0 48" stroke="KITblue">
+80 288 m
+176 256 l
+256 288 l
+368 256 l
+496 256 l
+525.718 218.928 l
+</path>
+<path stroke="KITblue" dash="dense dashed">
+644.605 362.084 m
+525.718 266.928 l
+</path>
+<use matrix="1 0 0 1 -27.3951 58.0841" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 567 86" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<path layer="gamma" matrix="1 0 0 1 0 48" stroke="KITblack">
+510.143 238.357 m
+24.901 0 0 -24.901 525.718 218.928 545.157 234.49 a
+</path>
+<use matrix="1 0 0 1 -0.623811 47.3637" name="mark/disk(sx)" pos="527.806 232.839" size="tiny" stroke="KITblack"/>
+<text layer="vq" matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<text layer="gamma2" matrix="1 0 0 1 0 -18" transformations="translations" pos="0 64" stroke="black" type="minipage" width="736" valign="top" size="small" style="center">Gesucht: Kürzester Pfad von $s$ zu einem Punkt, von dem aus \textbf{$q$ sichtbar} ist</text>
+<group layer="delta" matrix="1 0 0 1 134.728 -15.2974">
+<path fill="tab_header">
+0 162.378 m
+0 191.297 l
+505.2 191.297 l
+510.2 191.297
+515.2 186.297
+515.2 181.297 c
+515.2 162.378 l
+h
+</path>
+<path fill="tab_body">
+515.2 162.378 m
+515.2 53.9475 l
+10 53.9475 l
+5 53.9475
+0 58.9475
+0 63.9475 c
+0 162.378 l
+h
+</path>
+<text transformations="translations" pos="6.00005 185.297" stroke="white" type="minipage" width="503.2" valign="top">Motivation / Anwendung</text>
+<text transformations="translations" pos="6.00005 156.378" stroke="KITblack" type="minipage" width="503.2" valign="top">\begin{itemize}
+\item Inspektion
+\item Kommunikation zwischen s und q
+\item Schusslinie
+\end{itemize}</text>
+</group>
+<group layer="epsilon">
+<path fill="tab_header">
+134.728 147.08 m
+134.728 176 l
+639.928 176 l
+644.928 176
+649.928 171
+649.928 166 c
+649.928 147.08 l
+h
+</path>
+<path fill="tab_body">
+649.928 147.08 m
+649.928 48.408 l
+144.728 48.408 l
+139.728 48.408
+134.728 53.408
+134.728 58.408 c
+134.728 147.08 l
+h
+</path>
+<text transformations="translations" pos="140.728 170" stroke="white" type="minipage" width="503.2" valign="top">Notation</text>
+<text transformations="translations" pos="140.728 141.08" stroke="KITblack" type="minipage" width="503.2" valign="top">\begin{tabular}{lll} 
+$\mathit{n}$ &amp; $\#$Ecken des Polygons &amp; hier: $18$ \\
+$\mathit{h}$ &amp; $\#$Löcher im Polygon &amp; hier: $2$ \\
+$\mathit{K}$ &amp; $\#$Seiten von $V(q)$ &amp; hier: $7$ \\
+\end{tabular}</text>
+</group>
+<use layer="box3" name="mark/disk(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text matrix="1 0 0 1 448.113 -11.156" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<path layer="box2" fill="KITgreen">
+382.72 147.08 m
+382.72 176 l
+726 176 l
+731 176
+736 171
+736 166 c
+736 147.08 l
+h
+</path>
+<path fill="KITgreen15">
+736 147.08 m
+736 51.0275 l
+392.72 51.0275 l
+387.72 51.0275
+382.72 56.0275
+382.72 61.0275 c
+382.72 147.08 l
+h
+</path>
+<text transformations="translations" pos="388.72 170" stroke="white" type="minipage" width="341.28" valign="top">Anfrage</text>
+<text transformations="translations" pos="388.72 141.08" stroke="KITblack" type="minipage" width="341.28" valign="top">\begin{itemize}
+\item Zielpunkt $q \in D$
+\item $\text{Gesucht: } t^* = \underset{t \in V(q)}{\operatorname{argmin}}\,|\pi(s, t)|$
+\end{itemize}</text>
+<path layer="hide" matrix="0.986577 0 0 0.891304 5.20169 12.0915" fill="KITgreen15">
+387.526 111.241 m
+387.526 51.0275 l
+736 51.0275 l
+736 111.241 l
+h
+</path>
+<text layer="box2" matrix="1 0 0 1 -201.164 42.0474" transformations="translations" pos="397.328 38.6501" stroke="KITblack" type="minipage" width="313.025" valign="top">\begin{alignat*}{2}
+V(q) &amp;:= \text{von} \,\,q\,\, \text{aus sichtbarer Bereich}\\
+\mathit{K} &amp;:= \text{\#Kanten von } V(q)
+\end{alignat*}</text>
+<text matrix="1 0 0 1 -1 -12" transformations="translations" pos="483.203 2.54741" stroke="KITblack50" type="label" valign="baseline" size="small">hier: $7$</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 9}</text>
+</page>
+<page title="QVQ \quad \textit{Ergebnisse \&amp; Einordnung}" section="">
+<layer name="bg"/>
+<layer name="focus"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="bg pagenumbers_page" active="bg" marked="yes"/>
+<view layers="bg focus pagenumbers_page" active="focus"/>
+<text layer="bg" matrix="1 0 0 1 68 14" transformations="translations" pos="16 400" stroke="KITblack" type="minipage" width="560" valign="top">\def\arraystretch{1.5}
+\setlength\tabcolsep{10pt}
+\begin{tabular}{l | ll}
+ &amp; $T_v$ &amp; $T_a$ \\ \hline
+bekannt &amp; &amp; $O(\mathit{n} \log \mathit{n})$ \\
+SPSQ-basiert
+&amp; \begin{tabular}{@{}l@{}}$O(\mathit{n}^2 \log^2 \mathit{n})$\\$O(\mathit{n}^3 \log \mathit{n})$\end{tabular} 
+&amp; \begin{tabular}{@{}l@{}}$O(\mathit{K} \log^2 \mathit{n})$\\$O(\mathit{K} \log \mathit{n})$\end{tabular} \\
+QVM
+&amp; $O(\mathit{n}^8 \log \mathit{n})$ &amp; $O(\log \mathit{n})$\\
+für $h = 0$
+&amp; $O(\mathit{n})$ &amp; $O(\log \mathit{n})$
+\end{tabular}
+</text>
+<path layer="focus" matrix="1 0 0 1 20 27" stroke="KITblue" pen="heavier">
+80 272 m
+80 240 l
+240 240 l
+240 272 l
+h
+</path>
+<path matrix="1 0 0 1 20 -41" stroke="KITblue" pen="heavier">
+80 272 m
+80 240 l
+240 240 l
+240 272 l
+h
+</path>
+<group matrix="1 0 0 1 112 0">
+<path fill="KITblue">
+73.6 92.0802 m
+73.6 121 l
+431.6 121 l
+436.6 121
+441.6 116
+441.6 111 c
+441.6 92.0802 l
+h
+</path>
+<path fill="KITblue15">
+441.6 92.0802 m
+441.6 17.1612 l
+83.6 17.1612 l
+78.6 17.1612
+73.6 22.1612
+73.6 27.1612 c
+73.6 92.0802 l
+h
+</path>
+<text transformations="translations" pos="79.6 115" stroke="white" type="minipage" width="356" valign="top">Ausgewählte Algorithmen</text>
+<text transformations="translations" pos="79.6 86.0801" stroke="KITblack" type="minipage" width="356" valign="top">\begin{itemize}
+\item SPSQ-basierter Ansatz
+\item Quickest Visibility Map
+\end{itemize}</text>
+</group>
+<path layer="bg" matrix="2 0 0 1.25 -60.4615 -121.698" stroke="black">
+80 352 m
+64 352
+80 288
+64 288 c
+</path>
+<path matrix="2 0 0 -1.25 -60.4615 598.302" stroke="black">
+80 352 m
+64 352
+80 288
+64 288 c
+</path>
+<text matrix="1 0 0 1 21.5385 -6.69841" transformations="translations" pos="0 240" stroke="black" type="label" valign="baseline">neu</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 10}</text>
+</page>
+<page title="QVQ \quad \textit{Algorithmus (SPSQ-basiert)}" section="">
+<layer name="bg"/>
+<layer name="noise"/>
+<layer name="box1"/>
+<layer name="box2a"/>
+<layer name="box2b"/>
+<layer name="box2c"/>
+<layer name="runtime"/>
+<layer name="delta"/>
+<layer name="epsilon"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="border"/>
+<layer name="hide"/>
+<layer name="hide2"/>
+<layer name="hide3"/>
+<layer name="case1"/>
+<layer name="case2"/>
+<view layers="bg box1 pagenumbers_page" active="bg" marked="yes"/>
+<view layers="box1 box2a pagenumbers_page case1" active="case1"/>
+<view layers="bg noise box1 box2a box2b pagenumbers_page case2" active="case2"/>
+<view layers="bg box1 box2a box2b pagenumbers_page border case2" active="box2b"/>
+<view layers="bg box1 box2a box2b box2c pagenumbers_page border case2" active="box2c"/>
+<view layers="runtime pagenumbers_page hide case1" active="hide"/>
+<view layers="bg runtime epsilon pagenumbers_page hide2" active="hide2"/>
+<view layers="bg runtime epsilon pagenumbers_page hide3" active="hide3"/>
+<view layers="bg runtime epsilon pagenumbers_page case2" active="runtime"/>
+<text layer="box1" matrix="1 0 0 1 0 133" transformations="translations" pos="0 64" stroke="black" type="minipage" width="736" valign="top" style="center">$\text{Gesucht: } t^* = \underset{t \in V(q)}{\operatorname{argmin}}\,|\pi(s, t)|$</text>
+<group layer="bg">
+<path matrix="1 0 0 1 0 224" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+616.567 291.654 m
+592 320 l
+608 352 l
+h
+</path>
+</group>
+<path layer="case2" fill="KITgreen30">
+616.567 339.654 m
+550.999 287.199 l
+506.497 251.517 l
+512 224 l
+704 240 l
+720 416 l
+592.553 416 l
+608 400 l
+h
+</path>
+<path matrix="1 0 0 1 0 48" stroke="KITblue">
+80 288 m
+176 256 l
+256 288 l
+368 256 l
+496 256 l
+525.718 218.928 l
+</path>
+<path layer="noise" stroke="KITblue" dash="dense dashed">
+644.605 362.084 m
+525.718 266.928 l
+</path>
+<use layer="case2" matrix="1 0 0 1 -27.3951 58.0841" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use layer="bg" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text layer="case2" matrix="1 0 0 1 567 86" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<group layer="delta" matrix="1 0 0 1 134.728 -15.2974">
+<path fill="tab_header">
+0 162.378 m
+0 191.297 l
+505.2 191.297 l
+510.2 191.297
+515.2 186.297
+515.2 181.297 c
+515.2 162.378 l
+h
+</path>
+<path fill="tab_body">
+515.2 162.378 m
+515.2 53.9475 l
+10 53.9475 l
+5 53.9475
+0 58.9475
+0 63.9475 c
+0 162.378 l
+h
+</path>
+<text transformations="translations" pos="6.00005 185.297" stroke="white" type="minipage" width="503.2" valign="top">Motivation / Anwendung</text>
+<text transformations="translations" pos="6.00005 156.378" stroke="KITblack" type="minipage" width="503.2" valign="top">\begin{itemize}
+\item Inspektion
+\item Kommunikation zwischen s und q
+\item Schusslinie
+\end{itemize}</text>
+</group>
+<text layer="case2" matrix="1 0 0 1 448.113 -11.156" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<text layer="box2a" matrix="1 0 0 1 0 19" transformations="translations" pos="0 128" stroke="black" type="minipage" width="496" valign="top">\begin{itemize}
+\item Fall $s \in V(q)$ \quad $\Rightarrow t^* = s$\\
+Also: stehen bleiben
+\end{itemize}</text>
+<text layer="box2b" matrix="1 0 0 1 0 -44.085" transformations="translations" pos="0 128" stroke="black" type="minipage" width="688" valign="top">\begin{itemize}
+\item Fall $s \notin V(q)$ \quad $\Rightarrow t^* \text{ auf Rand von } V(q)$\\
+Also: wähle kürzesten Pfad zum Rand von $V(q)$\\
+\end{itemize}</text>
+<path layer="border" stroke="KITgreen" pen="fat">
+608 400 m
+616.567 339.654 l
+506.497 251.517 l
+512 224 l
+704 240 l
+720 416 l
+592.553 416 l
+608 400 l
+616.567 339.654 l
+</path>
+<text layer="box2c" matrix="1 0 0 1 34 -108.085" transformations="translations" pos="0 128" stroke="black" type="minipage" width="688" valign="top">$\Rightarrow$ SPSQ zu jeder der $\mathit{K}$ Strecken am Rand von $V(q)$</text>
+<path stroke="KITblue" dash="dashed">
+368 304 m
+592.553 416 l
+</path>
+<path stroke="KITblue" dash="dashed">
+368 304 m
+616.567 339.654 l
+</path>
+<path stroke="KITblue" dash="dashed">
+496 304 m
+512 224 l
+</path>
+<path stroke="KITblue" dash="dashed">
+368 304 m
+496 304 l
+704 240 l
+</path>
+<text layer="runtime" transformations="translations" pos="0 192" stroke="KITblack" type="minipage" width="736" valign="top">\begin{tabular}{l | lll}
+
+\multicolumn{3}{l}{\textbf{Laufzeitanalyse}} \\
+ &amp; $T_v$ &amp; $T_a$  &amp; Hilfsmittel \\ \hline
+Falluntersch.:\quad$s \in V(q)$?
+&amp; $O(\mathit{n})$ &amp; $O(\log \mathit{n})$ &amp; SPM, $\text{pred}$ \\
+$V(q)$ berechnen
+&amp; $O(\mathit{n}^2 \log^2 \mathit{n})$ &amp; $O(\mathit{K} \log^2 \mathit{n})$ \\
+Pfade zum Rand von V(q)
+&amp; $O(\mathit{n}^2 \log^2 \mathit{n})$ &amp; $O(\mathit{K} \log^2 \mathit{n})$ &amp; $\mathit{K}*$ SPSQ \\
+kürzesten Pfad wählen
+&amp; &amp; $O(\mathit{K})$ \\
+
+\end{tabular}
+</text>
+<path layer="hide" matrix="1 0 0 1 0 -3" fill="white">
+0 107.336 m
+0 0 l
+736 0 l
+736 107.336 l
+h
+</path>
+<path layer="epsilon" fill="KITgreen30">
+616.567 339.654 m
+550.999 287.199 l
+506.497 251.517 l
+512 224 l
+704 240 l
+720 416 l
+592.553 416 l
+608 400 l
+h
+</path>
+<use matrix="1 0 0 1 -27.3951 58.0841" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 567 86" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<path stroke="KITgreen" pen="fat">
+608 400 m
+616.567 339.654 l
+506.497 251.517 l
+512 224 l
+704 240 l
+720 416 l
+592.553 416 l
+608 400 l
+616.567 339.654 l
+</path>
+<path layer="hide3" stroke="KITblue" dash="dashed">
+80 336 m
+176 304 l
+256 336 l
+368 304 l
+592.553 416 l
+</path>
+<path stroke="KITblue" dash="dashed">
+368 304 m
+616.567 339.654 l
+</path>
+<path stroke="KITblue" dash="dashed">
+496 304 m
+512 224 l
+</path>
+<path stroke="KITblue" dash="dashed">
+368 304 m
+496 304 l
+704 240 l
+</path>
+<group layer="case1">
+<path matrix="1 0 0 1 0 224" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path fill="KITblue15">
+208 224 m
+256 336 l
+336 224 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+576 416 l
+416 416 l
+368 304 l
+288 416 l
+16 416 l
+32 224 l
+208 224 l
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+616.567 291.654 m
+592 320 l
+608 352 l
+h
+</path>
+</group>
+<path fill="KITgreen30">
+96 368 m
+176 304 l
+217.032 416 l
+288 416 l
+289.429 414 l
+208 224 l
+32 224 l
+16 416 l
+65.8028 416 l
+h
+</path>
+<path stroke="KITblue" dash="dense dashed">
+80 336 m
+161.376 264.082 l
+</path>
+<use matrix="1 0 0 1 -510.624 -39.918" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 83.7708 -12.0021" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 -29.4095 -4.84483" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<path layer="hide2" matrix="1 0 0 1 0 10" fill="white">
+0 64 m
+0 -3 l
+736 -3 l
+736 64 l
+h
+</path>
+<path layer="hide3" matrix="1 0 0 0.561644 0 1.06849" fill="white">
+0 74 m
+0 7 l
+736 7 l
+736 74 l
+h
+</path>
+<path stroke="KITblue" dash="dashed">
+496 304 m
+525.708 266.9 l
+</path>
+<use layer="case2" name="mark/disk(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 11}</text>
+</page>
+<page title="QVQ \quad \textit{Algorithmus (mittels QVM)}" section="">
+<layer name="bg"/>
+<layer name="p1"/>
+<layer name="p2"/>
+<layer name="p3"/>
+<layer name="neg"/>
+<layer name="ps"/>
+<layer name="psx"/>
+<layer name="psSpread"/>
+<layer name="qw"/>
+<layer name="gw2"/>
+<layer name="box1"/>
+<layer name="box1x"/>
+<layer name="box2"/>
+<layer name="box3"/>
+<layer name="box4"/>
+<layer name="box5"/>
+<layer name="box6"/>
+<layer name="pagenumbers_page" edit="no"/>
+<layer name="hide0"/>
+<layer name="hide1"/>
+<layer name="hide2"/>
+<layer name="hide3"/>
+<layer name="recon1"/>
+<layer name="recon2"/>
+<layer name="recon3"/>
+<layer name="sampleQ"/>
+<layer name="hidex1"/>
+<layer name="hidex2"/>
+<layer name="stupidIdea1"/>
+<layer name="stupidIdea2"/>
+<layer name="stupidIdea3"/>
+<layer name="stupidIdeaC1"/>
+<layer name="stupidIdeaC2"/>
+<layer name="stupidIdeaC3"/>
+<layer name="stupidIdeaC4"/>
+<layer name="stupidIdeaC5"/>
+<layer name="stupidIdeaC6"/>
+<layer name="zprime"/>
+<layer name="zprime2"/>
+<layer name="chide1"/>
+<layer name="chide2"/>
+<layer name="chide3"/>
+<layer name="alpha"/>
+<layer name="beta"/>
+<layer name="gamma"/>
+<layer name="bound"/>
+<layer name="delta"/>
+<layer name="epsilon"/>
+<layer name="gwb"/>
+<layer name="zprimeconstr"/>
+<view layers="bg p1 box1 pagenumbers_page hide1" active="p1"/>
+<view layers="bg p2 box1 pagenumbers_page hide1" active="p2"/>
+<view layers="bg p3 box1 pagenumbers_page hide1" active="p3"/>
+<view layers="bg neg box1 pagenumbers_page hide1" active="neg"/>
+<view layers="bg p1 box1 pagenumbers_page hide1" active="hide1"/>
+<view layers="bg p1 qw box1 pagenumbers_page hide3" active="ps"/>
+<view layers="bg p2 qw box1 pagenumbers_page hide3" active="ps"/>
+<view layers="bg p3 qw box1 pagenumbers_page hide3" active="ps"/>
+<view layers="bg ps psSpread qw box1 pagenumbers_page" active="box1"/>
+<view layers="bg ps psx qw box1 pagenumbers_page" active="box1"/>
+<view layers="bg psx box1x pagenumbers_page hide0 sampleQ" active="box1x"/>
+<view layers="bg ps psx qw box1x pagenumbers_page hide1 sampleQ" active="hide1"/>
+<view layers="bg qw box1x pagenumbers_page hide1 sampleQ" active="hide1"/>
+<view layers="bg qw box1x pagenumbers_page hide2 recon1 sampleQ" active="recon1"/>
+<view layers="bg qw box1x pagenumbers_page hide3 recon1 recon2 sampleQ" active="recon2"/>
+<view layers="bg qw box1x pagenumbers_page recon1 recon2 recon3 sampleQ" active="recon3"/>
+<view layers="bg qw box3 pagenumbers_page chide1" active="chide1"/>
+<view layers="bg ps qw box3 pagenumbers_page stupidIdea1 stupidIdeaC1 chide1" active="stupidIdeaC1"/>
+<view layers="bg ps qw box3 pagenumbers_page stupidIdea1 stupidIdeaC1 stupidIdeaC2 chide1" active="stupidIdeaC2"/>
+<view layers="bg ps qw box3 pagenumbers_page stupidIdea1 stupidIdeaC1 stupidIdeaC3 chide1" active="stupidIdeaC3"/>
+<view layers="bg ps qw box3 pagenumbers_page stupidIdea1 stupidIdeaC1 stupidIdeaC4 chide1" active="stupidIdeaC4"/>
+<view layers="bg ps qw box3 pagenumbers_page stupidIdea1 stupidIdeaC1 stupidIdeaC4 stupidIdeaC5 chide1" active="stupidIdeaC5"/>
+<view layers="bg ps qw gw2 box3 pagenumbers_page stupidIdea1 stupidIdeaC1 stupidIdeaC4 stupidIdeaC5 stupidIdeaC6 chide1" active="gw2"/>
+<view layers="bg qw box3 pagenumbers_page zprime chide2 zprimeconstr" active="zprimeconstr"/>
+<view layers="bg box3 pagenumbers_page zprime2 chide3 gwb" active="gwb"/>
+<view layers="bg box3 pagenumbers_page zprime2 gwb" active="chide3"/>
+<view layers="bg box4 pagenumbers_page zprime2 alpha" active="alpha"/>
+<view layers="bg box4 pagenumbers_page zprime2 gamma" active="gamma"/>
+<view layers="bg box4 pagenumbers_page zprime2 bound" active="bound"/>
+<view layers="bg box5 pagenumbers_page zprime2 gamma bound" active="box5"/>
+<view layers="bg box5 pagenumbers_page zprime2 bound" active="box5"/>
+<view layers="bg box6 pagenumbers_page zprime2 bound epsilon" active="epsilon"/>
+<view layers="bg psx box6 pagenumbers_page bound" active="box6"/>
+<group layer="box1">
+<path fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path fill="tab_body">
+736 171.08 m
+736 -11.7956 l
+10 -11.7956 l
+5 -11.7956
+0 -6.79564
+0 -1.79564 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">Idee</text>
+<text transformations="translations" pos="6.00005 165.08" stroke="black" type="minipage" width="724" valign="top">\begin{itemize}
+\item Zielpunkte $q$ mancher Bereiche haben ``ähnliche&apos;&apos; Lösungen
+\item Genauer: 
+  \begin{itemize}
+  \item $g$ := vorletzter Knoten auf $\pi(s,t^*)$
+  \item $w$ := Knoten auf Strecke $t^*q$ (``wirft den Schatten&apos;&apos;)
+  \end{itemize}
+\item $\Rightarrow$ teile $D$ in Zellen $Z$ mit einheitlichem $g$ und $w$ ein
+\end{itemize}</text>
+</group>
+<group layer="bg" matrix="1 0 0 1 0 48">
+<path matrix="1 0 0 1 0 176" stroke="black" fill="KITblack">
+0 208 m
+0 -16 l
+736 -16 l
+736 208 l
+h
+</path>
+<path fill="KITblue15">
+16 368 m
+32 176 l
+144 224 l
+208 176 l
+256 288 l
+336 176 l
+496 256 l
+512 176 l
+704 192 l
+720 368 l
+592 368 l
+544 288 l
+416 368 l
+368 256 l
+288 368 l
+128 352 l
+h
+</path>
+<path fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+<path fill="KITblack">
+616.567 291.654 m
+592 320 l
+608 352 l
+h
+</path>
+</group>
+<path layer="psSpread" stroke="KITblue">
+80 336 m
+176 304 l
+255.795 335.521 l
+368 304 l
+496 304 l
+496 304 l
+</path>
+<use layer="ps" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<path layer="p1" matrix="1 0 0 1 0 48" fill="KITgreen30">
+616.567 291.654 m
+550.999 239.199 l
+506.497 203.517 l
+512 176 l
+704 192 l
+720 368 l
+592 368 l
+586 358 l
+608 352 l
+h
+</path>
+<path stroke="KITblue">
+80 336 m
+176 304 l
+255.795 335.521 l
+368 304 l
+496 304 l
+525.718 266.928 l
+</path>
+<path matrix="1 0 0 1 0 48" stroke="KITblue" dash="dense dashed">
+672 336 m
+611.5 287.6 l
+525.718 218.928 l
+</path>
+<use matrix="1 0 0 1 0 80" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 592 109" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<path layer="p2" fill="KITgreen30">
+616.567 339.654 m
+525.844 225.154 l
+704 240 l
+720 416 l
+592 416 l
+586.985 407.642 l
+608 400 l
+h
+</path>
+<path stroke="KITblue">
+80 336 m
+176 304 l
+255.795 335.521 l
+368 304 l
+496 304 l
+552.731 259.088 l
+</path>
+<path stroke="KITblue" dash="dense dashed">
+652 384 m
+552.731 259.088 l
+</path>
+<use matrix="1 0 0 1 -20 80" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 572 109" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<group layer="p1">
+<path matrix="1 0 0 1 0 48" stroke="KITblack">
+510.143 238.357 m
+24.901 0 0 -24.901 525.718 218.928 545.157 234.49 a
+</path>
+<use matrix="1 0 0 1 -0.623811 47.3637" name="mark/disk(sx)" pos="527.806 232.839" size="tiny" stroke="KITblack"/>
+</group>
+<group layer="p2" matrix="0.978358 0.206917 -0.206917 0.978358 93.1122 -110.758">
+<path matrix="1 0 0 1 0 48" stroke="KITblack">
+510.143 238.357 m
+24.901 0 0 -24.901 525.718 218.928 545.157 234.49 a
+</path>
+<use matrix="1 0 0 1 -0.623811 47.3637" name="mark/disk(sx)" pos="527.806 232.839" size="tiny" stroke="KITblack"/>
+</group>
+<path layer="p3" fill="KITgreen30">
+616.567 339.654 m
+525.844 225.154 l
+704 240 l
+720 416 l
+601.366 416 l
+608 400 l
+h
+</path>
+<path stroke="KITblue">
+80 336 m
+176 304 l
+255.795 335.521 l
+368 304 l
+496 304 l
+552.731 259.088 l
+</path>
+<path stroke="KITblue" dash="dense dashed">
+627.444 353.101 m
+552.731 259.088 l
+</path>
+<use matrix="1 0 0 1 -44.5557 49.1011" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 547.444 78.1011" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<group matrix="0.978358 0.206917 -0.206917 0.978358 93.1122 -110.758">
+<path matrix="1 0 0 1 0 48" stroke="KITblack">
+510.143 238.357 m
+24.901 0 0 -24.901 525.718 218.928 545.157 234.49 a
+</path>
+<use matrix="1 0 0 1 -0.623811 47.3637" name="mark/disk(sx)" pos="527.806 232.839" size="tiny" stroke="KITblack"/>
+</group>
+<path layer="neg" fill="KITgreen30">
+616.567 339.654 m
+563.758 368.929 l
+544 336 l
+387.029 348.401 l
+368 304 l
+284.764 296.381 l
+303.731 269.176 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+602.141 416 l
+608 400 l
+h
+</path>
+<path stroke="KITblue">
+80 336 m
+176 304 l
+256.584 335.833 l
+284.764 296.381 l
+</path>
+<use matrix="1 0 0 1 -38 25" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITgreen"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 532.935 13.3793" transformations="translations" pos="80 256" stroke="KITgreen" type="label" valign="baseline">$V(q)$</text>
+<text matrix="1 0 0 1 554 54" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<path stroke="KITblue" dash="dense dashed">
+634 329 m
+284.764 296.381 l
+</path>
+<path layer="ps" fill="KITorange50">
+616.846 402.171 m
+616.566 339.653 l
+715.732 369.049 l
+720 416 l
+643.087 416 l
+637.322 410.963 l
+628.128 406.427 l
+h
+</path>
+<path layer="psSpread" stroke="KITblue">
+495.999 304 m
+515.821 265.524 l
+</path>
+<path stroke="KITblue">
+495.999 304 m
+529.656 276.787 l
+</path>
+<path stroke="KITblue">
+495.999 304 m
+537.931 293.274 l
+</path>
+<path matrix="-0.410884 -0.911688 0.911688 -0.410884 543.211 916.758" stroke="KITblue" dash="dense dashed">
+495.999 304 m
+529.656 276.787 l
+</path>
+<path matrix="-0.410884 -0.911688 0.911688 -0.410884 543.211 916.758" stroke="KITblue" dash="dense dashed">
+495.999 304 m
+537.931 293.274 l
+</path>
+<path matrix="-0.410884 -0.911688 0.911688 -0.410884 543.211 916.758" stroke="KITblue" dash="dense dashed">
+495.999 304 m
+538.618 311.533 l
+</path>
+<path matrix="0.410884 0.911688 -0.911688 0.410884 689.921 -237.445" stroke="KITblue" dash="dense dashed">
+495.999 304 m
+529.656 276.787 l
+</path>
+<path matrix="0.410884 0.911688 -0.911688 0.410884 689.921 -237.445" stroke="KITblue" dash="dense dashed">
+495.999 304 m
+537.931 293.274 l
+</path>
+<path matrix="0.410884 0.911688 -0.911688 0.410884 689.921 -237.445" stroke="KITblue" dash="dense dashed">
+495.999 304 m
+538.618 311.533 l
+</path>
+<use layer="p1" name="mark/disk(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text matrix="1 0 0 1 448.113 -11.156" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<use layer="p2" matrix="1 0 0 1 26.5027 -7.75486" name="mark/disk(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text matrix="1 0 0 1 474.616 -18.9109" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<use layer="p3" matrix="1 0 0 1 26.5027 -7.75486" name="mark/disk(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text matrix="1 0 0 1 474.616 -18.9109" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<use layer="neg" matrix="1 0 0 1 -240.954 29.453" name="mark/disk(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<path layer="psx" stroke="KITgreen">
+714.291 353.196 m
+616.477 339.3 l
+</path>
+<path stroke="KITgreen">
+616.846 402.171 m
+616.477 339.3 l
+715.732 369.049 l
+</path>
+<text layer="neg" matrix="1 0 0 1 203.764 46.381" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<text layer="qw" matrix="1 0 0 1 538.872 61.2163" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$w$</text>
+<path layer="box2" fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path matrix="1 0 0 0.914475 0 14.6316" fill="tab_body">
+736 171.08 m
+736 -20.6034 l
+10 -20.6034 l
+5 -20.6034
+0 -15.6034
+0 -10.6034 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">QVM formal</text>
+<text matrix="1 0 0 1 -18 0" transformations="translations" pos="6.00005 165.08" stroke="black" type="minipage" width="724" valign="top" size="small">\begin{itemize}
+\item $t^*(q) := \text{argmin}_{t \in V(q)} |\pi(s, t)|$
+\item $g(q) := \text{pred}(t^*(q))$
+\item $w(q) := $ Eckpunkt von $D$ auf Strecke von $t^*(q)$ nach $q$
+\item $g$ und $w$ zerteilen $D$ in Äquivalenzklassen/``Zellen&apos;&apos; $Z$
+\item $\Rightarrow \forall z \in Z: \forall q_1, q_2 \in z: g(q_1)=g(q_2) \land w(q_1)=w(q_2)$
+\end{itemize}</text>
+<text layer="box1" matrix="1 0 0 1 -26.5 -97.3" transformations="translations" pos="608 112" stroke="KITblack" type="minipage" width="128" valign="top">=: \textbf{QVM}</text>
+<text layer="box2" matrix="1 0 0 1 -48.5 15.7" transformations="translations" pos="608 112" stroke="KITblack" type="minipage" width="128" valign="top" size="small">$g(q) \in \vec{D} \cup \{s\}$</text>
+<text matrix="1 0 0 1 -52.5 -15.3" transformations="translations" pos="608 112" stroke="KITblack" type="minipage" width="128" valign="top" size="small">$w(q) \in \vec{D} \cup \{s\}$</text>
+<text matrix="1 0 0 1 -64.5 -47.3" transformations="translations" pos="608 112" stroke="KITblack" type="minipage" width="160" valign="top" size="small">$\Rightarrow O(\mathit{n}^2)$ Klassen</text>
+<group layer="box3">
+<path fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path fill="tab_body">
+736 171.08 m
+736 -6.19494 l
+10 -6.19494 l
+5 -6.19494
+0 -1.19494
+0 3.80506 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">Konstruktion von $Z$</text>
+<text transformations="translations" pos="6.00005 165.08" stroke="black" type="minipage" width="724" valign="top">\begin{itemize}
+\item Idee: Betrachte alle $O(\mathit{n}^2)$ Paare $(g,w)$ einzeln
+  \begin{itemize}
+  \item ermittle zugehörige Zelle $z&apos; \supseteq z$\\
+wobei $z&apos; := \{\, \text{erreichbar mit Strategie }\,(g,w) \,|\, q \in D \,\}$
+  \item $Z&apos; := $ Menge der $z&apos;$
+  \end{itemize}
+\item die so ermittelten $z&apos; \in Z&apos;$ können also überlappen
+\end{itemize}</text>
+</group>
+<group layer="box4" pin="h">
+<path fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path fill="tab_body">
+736 171.08 m
+736 -12.1264 l
+10 -12.1264 l
+5 -12.1264
+0 -7.12639
+0 -2.12639 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">Konstruktion von $Z$</text>
+<text transformations="translations" pos="6.00005 165.08" stroke="black" type="minipage" width="724" valign="top">\begin{itemize}
+\item Bemerkung: $Z&apos;$ enthält $O(\mathit{n}^3)$ Kanten
+\item betrachte alle $O(\mathit{n}^4)$ Paare $(z&apos;_1, z&apos;_2) \in Z&apos; \times Z&apos;$
+  \begin{itemize}
+  \item tue nichts, falls $z&apos;_1=z&apos;_2$ oder $z&apos;_1 \cap z&apos;_2 = \varnothing$, sonst...
+  \item ermittle ``Trennlinie&apos;&apos; $\bar{z}$ zwischen $z&apos;_1$ und $z&apos;_2$
+  \item für $q \in \bar{z}$ sind die Strategien von $z&apos;_1$ und $z&apos;_2$ gleichwertig
+  \end{itemize}
+\end{itemize}</text>
+</group>
+<group layer="box1x">
+<path fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path fill="tab_body">
+736 171.08 m
+736 -7.61839 l
+10 -7.61839 l
+5 -7.61839
+0 -2.61839
+0 2.38161 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">Beantworten von Anfragen mittels QVM</text>
+<text transformations="translations" pos="6.00005 165.08" stroke="black" type="minipage" width="724" valign="top">\begin{itemize}
+\item ermittle $q$&apos;s QVM-Zelle $\Rightarrow$ erhalte $g$ und $w$
+\item Rekonstruktion des Lösungspfads
+  \begin{itemize}
+  \item setze $W := \text{line}(q,w)$
+  \item dann ist $t^* = \text{argmin}_{t \in W}\, \text{dist}(g,t)$ \quad\quad\quad ($\text{dist}$ := euklidische Distanz)
+  \item Lösungspfad: $\pi(s,t^*)$
+  \end{itemize}
+\end{itemize}</text>
+</group>
+<group layer="box5" pin="h">
+<path fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path fill="tab_body">
+736 171.08 m
+736 -11.7956 l
+10 -11.7956 l
+5 -11.7956
+0 -6.79564
+0 -1.79564 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">Konstruktion von $Z$</text>
+<text transformations="translations" pos="6.00005 165.08" stroke="black" type="minipage" width="724" valign="top">\begin{itemize}
+\item potentielle Knoten von $Z$ sind Schnittpunkte der 
+  \begin{itemize}
+  \item $O(\mathit{n}^3)$ Kanten von $Z&apos;$ und
+  \item $O(\mathit{n}^4)$ Trennlinien
+  \end{itemize}
+\item das ist der dominierende Faktor!
+\item $\Rightarrow$ $Z$ besitzt $O(\mathit{n}^7)$ Knoten
+\end{itemize}</text>
+</group>
+<path layer="hide1" matrix="1.0098 0 0 1.03185 6 -4.2683" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path layer="hide3" matrix="0.978978 0 0 0.215471 5.9446 -6.80446" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path layer="hide1" matrix="1.0098 0 0 1.03185 14 -4.2683" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path layer="hide0" matrix="1.0098 0 0 1.03185 6 -4.2683" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path matrix="0.999737 0 0 1.30209 21.1388 -3.42875" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path matrix="0.218092 0 0 0.56049 3.41823 89.9441" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path layer="hide2" matrix="0.983266 0 0 0.439859 33.5288 -4.10737" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<text layer="sampleQ" matrix="1 0 0 1 555.21 117.61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<path layer="recon1" stroke="KITblue" dash="dense dashed">
+643.087 416 m
+577.892 229.491 l
+</path>
+<text matrix="1 0 0 1 -1 -12" transformations="translations" pos="605.922 297.703" stroke="KITblue" type="label" valign="baseline">$W$</text>
+<text layer="recon2" matrix="1 0 0 1 517.363 1.174" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<path layer="recon3" stroke="KITblue">
+80 336 m
+176 304 l
+255.795 335.521 l
+368 304 l
+496 304 l
+592.183 270.377 l
+</path>
+<path layer="psx" stroke="KITgreen">
+495.518 303.952 m
+709.808 303.883 l
+</path>
+<use layer="box2" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<use layer="box3" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<use layer="box4" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<use layer="box5" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<use layer="box6" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<path layer="hidex1" matrix="1.0145 0 0 0.991358 10.6633 1.15823" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path layer="hidex2" matrix="0.96677 0 0 0.430942 11.5288 6.86492" fill="KITblue15">
+0 134.022 m
+0 -3.1066 l
+709.5 -3.1066 l
+709.5 134.022 l
+h
+</path>
+<path layer="psx" stroke="KITgreen">
+616.846 402.171 m
+628.128 406.427 l
+637.322 410.963 l
+643.087 416 l
+</path>
+<path stroke="KITgreen">
+608 400 m
+624 416 l
+</path>
+<path stroke="KITgreen">
+616.846 402.171 m
+608 400 l
+</path>
+<path stroke="KITgreen">
+544 336 m
+592 368 l
+</path>
+<path stroke="KITgreen">
+609.568 347.73 m
+544.41 335.883 l
+544.41 335.883 l
+</path>
+<path stroke="KITgreen">
+368.069 304.162 m
+435.328 273.664 l
+</path>
+<path stroke="KITgreen">
+256 336 m
+377.351 244.675 l
+</path>
+<path stroke="KITgreen">
+176 304 m
+198.583 382.489 l
+</path>
+<path stroke="KITgreen">
+176 304 m
+234 284.667 l
+</path>
+<path stroke="KITgreen">
+256.266 335.924 m
+325.435 363.591 l
+</path>
+<path stroke="KITgreen">
+192 384 m
+298.213 401.702 l
+</path>
+<path stroke="KITgreen">
+96 368 m
+112.938 402.152 l
+</path>
+<path matrix="1 0 0 1 79.062 -18.1517" stroke="KITgreen">
+112.938 402.152 m
+192 384 l
+</path>
+<path stroke="KITgreen">
+271.062 365.848 m
+303.139 359.694
+324.652 364.688 c
+</path>
+<path layer="chide1" matrix="1 0 0 1 -4 2" fill="KITblue15">
+10.6633 132.262 m
+10.6633 -7.47384 l
+656.983 -7.47384 l
+656.983 132.262 l
+h
+</path>
+<text layer="stupidIdea1" matrix="1 0 0 1 -15.2 -40" transformations="translations" pos="21.1388 165.062" stroke="KITblack" type="minipage" width="724.848" valign="top" style="itemize">  \begin{itemize}
+  \item ermittle zugehörige Zelle $z := \{\, \text{Strategie}\,\,(g, w)\,\, \text{optimal} \,|\, q \in D \,\}$
+  \end{itemize}</text>
+<text layer="stupidIdea2" matrix="1 0 0 1 -15.2 -39.8" transformations="translations" pos="21.1388 165.062" stroke="KITblack" type="minipage" width="676.848" valign="top" style="itemize">  \begin{itemize}
+  \item Ermittle Zelle $z := \{\,\, \text{pred}(t(q)) = g \land w(q) = w \,\,|\,\, q \in D \,\,\}$\\
+wobei $t(q) := \text{argmin}_{t \in V(q)} |pi(s,t)|$ 
+  \end{itemize}</text>
+<text layer="stupidIdea3" matrix="1 0 0 1 -15.2 -39.8" transformations="translations" pos="21.1388 165.062" stroke="KITblack" type="minipage" width="676.848" valign="top" style="itemize">  \begin{itemize}
+  \item Ermittle Zelle $z := \{\,\, \text{pred}(t(q)) = g \land w(q) = w \,\,|\,\, q \in D \,\,\}$\\
+wobei $t(q) := \text{argmin}_{t \in \text{line}(q,w)} |pi(s,t)|$ 
+  \end{itemize}</text>
+<text layer="stupidIdeaC1" matrix="1 0 0 1 -5 -13" transformations="translations" pos="685.621 400.875" stroke="KITbrown" type="label" valign="baseline" size="large">$z$</text>
+<path layer="stupidIdeaC2" stroke="KITblue">
+80 336 m
+176 304 l
+256 336 l
+367.585 304.117 l
+495.518 303.952 l
+</path>
+<path stroke="KITblue" dash="dense dashed">
+496.186 303.952 m
+715.732 369.049 l
+</path>
+<path layer="zprime2" fill="KITred50">
+608 400 m
+624 416 l
+720 416 l
+709.403 299.43 l
+h
+</path>
+<path layer="stupidIdeaC3" stroke="KITblue">
+80 336 m
+176 304 l
+256 336 l
+367.585 304.117 l
+496.186 303.952 l
+548.435 259.034 l
+</path>
+<path layer="zprime" fill="KITorange50">
+616.913 416 m
+616.566 339.653 l
+715.732 369.049 l
+720 416 l
+h
+</path>
+<path layer="stupidIdeaC3" stroke="KITblue" dash="dense dashed">
+548.435 259.034 m
+682.065 416 l
+</path>
+<path layer="stupidIdeaC4" stroke="KITblue">
+80 336 m
+176 304 l
+256 336 l
+367.585 304.117 l
+496.186 303.952 l
+616.352 303.879 l
+</path>
+<path layer="stupidIdeaC5" fill="red">
+616.908 416 m
+643.087 416 l
+637.322 410.963 l
+628.128 406.427 l
+616.846 402.171 l
+h
+</path>
+<path layer="stupidIdeaC4" stroke="KITblue" dash="dense dashed">
+616.352 303.879 m
+616.908 416 l
+</path>
+<text layer="stupidIdeaC2" matrix="1 0 0 1 421.566 34.4493" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<use matrix="1 0 0 1 -95.7973 33.2753" name="mark/disk(sx)" pos="592.183 270.377" size="small" stroke="KITblack"/>
+<text layer="stupidIdeaC3" matrix="1 0 0 1 473.615 -10.169" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<use matrix="1 0 0 1 -43.7478 -11.343" name="mark/disk(sx)" pos="592.183 270.377" size="small" stroke="KITblack"/>
+<text layer="stupidIdeaC4" matrix="1 0 0 1 541.532 34.6756" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t^*$</text>
+<use matrix="1 0 0 1 24.1692 33.5016" name="mark/disk(sx)" pos="592.183 270.377" size="small" stroke="KITblack"/>
+<text layer="stupidIdeaC6" matrix="1 0 0 1 -232.969 -364.344" transformations="translations" pos="619.966 440" stroke="red" type="label" valign="baseline">aufwendig!</text>
+<path stroke="red">
+368 304 m
+544 336 l
+579.817 395.695 l
+</path>
+<path stroke="red" dash="dense dashed">
+579.817 395.695 m
+695.929 416 l
+</path>
+<text layer="qw" matrix="1 0 0 1 410.498 63.1424" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$g$</text>
+<text layer="zprime" matrix="1 0 0 1 -5 -13" transformations="translations" pos="685.621 400.875" stroke="KITbrown" type="label" valign="baseline" size="large">$z&apos;$</text>
+<path layer="chide2" matrix="0.997655 0 0 0.526672 -4.45932 -0.273436" fill="KITblue15">
+10.6633 132.262 m
+10.6633 -7.47384 l
+656.983 -7.47384 l
+656.983 132.262 l
+h
+</path>
+<path layer="chide3" matrix="1.00582 0 0 0.188091 -3.82505 -0.803935" fill="KITblue15">
+10.6633 132.262 m
+10.6633 -7.47384 l
+656.983 -7.47384 l
+656.983 132.262 l
+h
+</path>
+<path layer="alpha" matrix="1 0 0 1 -4 -1" fill="KITblue15">
+10.6633 132.262 m
+10.6633 -7.47384 l
+656.983 -7.47384 l
+656.983 132.262 l
+h
+</path>
+<path layer="beta" matrix="0.453745 0 0 0.867856 380.359 50.0124" fill="KITblue15">
+10.6633 132.262 m
+10.6633 -7.47384 l
+656.983 -7.47384 l
+656.983 132.262 l
+h
+</path>
+<path layer="zprime2" fill="KITorange50">
+616.913 416 m
+616.566 339.653 l
+715.732 369.049 l
+720 416 l
+h
+</path>
+<text matrix="1 0 0 1 -5 -13" transformations="translations" pos="685.621 400.875" stroke="KITbrown" type="label" valign="baseline" size="large">$z_1&apos;$</text>
+<path stroke="KITred70" dash="dashed" pen="heavier">
+608 400 m
+624 416 l
+720 416 l
+709.403 299.43 l
+h
+</path>
+<text matrix="1 0 0 1 -1 -63.069" transformations="translations" pos="685.621 400.875" stroke="KITred" type="label" valign="baseline" size="large">$z_2&apos;$</text>
+<path layer="gamma" matrix="0.992876 0 0 0.444369 -4.31966 -5.1527" fill="KITblue15">
+10.6633 132.262 m
+10.6633 -7.47384 l
+656.983 -7.47384 l
+656.983 132.262 l
+h
+</path>
+<path layer="bound" stroke="red">
+616.85 402.172 m
+628.128 406.427 l
+637.322 410.963 l
+640.555 413.788 l
+643.087 416 l
+</path>
+<text matrix="1 0 0 1 3.128 -11.573" transformations="translations" pos="628.128 406.427" stroke="red" type="label" valign="baseline" size="small">$\bar{z}$</text>
+<use layer="box5" name="mark/fdisk(sfx)" pos="616.839 402.169" size="normal" stroke="KITblack"/>
+<use name="mark/fdisk(sfx)" pos="643.087 416" size="normal" stroke="KITblack" fill="white"/>
+<use layer="box6" name="mark/fdisk(sfx)" pos="616.839 402.169" size="normal" stroke="KITblack" fill="lightgreen"/>
+<use name="mark/fdisk(sfx)" pos="643.087 416" size="normal" stroke="KITblack" fill="lightgreen"/>
+<path layer="delta" stroke="KITblue" dash="dense dashed">
+635.21 392.61 m
+592.183 270.377 l
+</path>
+<use layer="recon2" name="mark/disk(sx)" pos="592.183 270.377" size="small" stroke="KITblack"/>
+<path layer="box6" fill="tab_header">
+0 171.08 m
+0 200 l
+726 200 l
+731 200
+736 195
+736 190 c
+736 171.08 l
+h
+</path>
+<path fill="tab_body">
+736 171.08 m
+736 26.4881 l
+10 26.4881 l
+5 26.4881
+0 31.4881
+0 36.4881 c
+0 171.08 l
+h
+</path>
+<text transformations="translations" pos="6.00005 194" stroke="white" type="minipage" width="724" valign="top">Konstruktion von $Z$</text>
+<text transformations="translations" pos="6.00005 165.08" stroke="KITblack" type="minipage" width="724" valign="top">\begin{itemize}
+\item $Z$ konkret berechnen
+  \begin{itemize}
+  \item überprüfe die $O(\mathit{n}^7)$ potentiellen Knoten mittels QVQs in $O(\mathit{n} \log \mathit{n})$
+  \item verbinde diese Knoten mit Trennlinien und Kanten aus $Z&apos;$
+  \end{itemize}
+\item $\Rightarrow$ Konstruktionszeit $O(\mathit{n}^8 \log \mathit{n})$
+\end{itemize}</text>
+<path layer="epsilon" matrix="0.997041 0 0 0.743599 -4.79956 10.7916" fill="KITblue15">
+11.5288 64.6206 m
+11.5288 26.4881 l
+405.75 26.4881 l
+405.75 64.6206 l
+h
+</path>
+<use layer="sampleQ" matrix="1 0 0 1 8 11" name="mark/disk(sx)" pos="627.21 381.61" size="normal" stroke="KITgreen"/>
+<use layer="box1x" matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblue"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<use layer="gw2" name="mark/disk(sx)" pos="608 400" size="normal" stroke="KITred"/>
+<use name="mark/disk(sx)" pos="544 336" size="normal" stroke="KITred"/>
+<use layer="gwb" name="mark/disk(sx)" pos="496.002 303.998" size="normal" stroke="KITorange"/>
+<text matrix="1 0 0 1 410.498 60.1424" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$g_1$</text>
+<text matrix="1 0 0 1 531.872 66.2163" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$w_1$</text>
+<use name="mark/disk(sx)" pos="616.477 339.3" size="normal" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="544 336" size="normal" stroke="KITred"/>
+<use name="mark/disk(sx)" pos="608 400" size="normal" stroke="KITred"/>
+<text matrix="1 0 0 1 455.498 62.1424" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$g_2$</text>
+<text matrix="1 0 0 1 502.872 135.216" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline" size="small">$w_2$</text>
+<path layer="zprimeconstr" stroke="KITblue" dash="dense dashed">
+496.186 303.952 m
+715.732 369.049 l
+</path>
+<path stroke="KITblue">
+80 336 m
+176 304 l
+256 336 l
+367.585 304.117 l
+496.186 303.952 l
+616.352 303.879 l
+</path>
+<path stroke="KITblue" dash="dense dashed">
+616.352 303.879 m
+616.908 416 l
+</path>
+<use matrix="1 0 0 1 24.1692 33.5016" name="mark/disk(sx)" pos="592.183 270.377" size="small" stroke="KITblack"/>
+<use layer="qw" name="mark/disk(sx)" pos="496.002 303.998" size="normal" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="616.477 339.3" size="normal" stroke="KITorange"/>
+<text layer="stupidIdeaC5" matrix="1 0 0 1 -3.6 -23" transformations="translations" pos="544 128" stroke="0.824 0 0" type="label" valign="baseline">optimal</text>
+<text layer="gw2" matrix="1 0 0 1 -3.6 -23" transformations="translations" pos="544 128" stroke="0.824 0 0" type="label" valign="baseline">optimal</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 12}</text>
+</page>
+<page section="">
+<layer name="bg"/>
+<layer name="w0"/>
+<layer name="w1"/>
+<layer name="w2"/>
+<layer name="p3"/>
+<layer name="neg"/>
+<layer name="ps"/>
+<layer name="qw"/>
+<layer name="fg"/>
+<layer name="pagenumbers_page" edit="no"/>
+<view layers="bg w0 pagenumbers_page" active="w0"/>
+<path layer="ps" stroke="KITgreen">
+80 336 m
+176 304 l
+256 336 l
+368 304 l
+496 304 l
+496 304 l
+</path>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<path layer="p3" fill="KITblue50">
+616.567 339.654 m
+525.844 225.154 l
+704 240 l
+720 416 l
+601.366 416 l
+608 400 l
+h
+</path>
+<path stroke="KITgreen">
+80 336 m
+176 304 l
+255.795 335.521 l
+368 304 l
+496 304 l
+552.731 259.088 l
+</path>
+<path stroke="KITgreen" dash="dense dashed">
+627.444 353.101 m
+552.731 259.088 l
+</path>
+<use matrix="1 0 0 1 -44.5557 49.1011" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITblue"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 547.444 78.1011" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<text matrix="1 0 0 1 544 29" transformations="translations" pos="80 256" stroke="KITblue" type="label" valign="baseline">$V(q)$</text>
+<group matrix="0.978358 0.206917 -0.206917 0.978358 93.1122 -110.758">
+<path matrix="1 0 0 1 0 48" stroke="KITblack">
+510.143 238.357 m
+24.901 0 0 -24.901 525.718 218.928 545.157 234.49 a
+</path>
+<use matrix="1 0 0 1 -0.623811 47.3637" name="mark/disk(sx)" pos="527.806 232.839" size="tiny" stroke="KITblack"/>
+</group>
+<path layer="neg" fill="KITblue50">
+616.567 339.654 m
+563.758 368.929 l
+544 336 l
+387.029 348.401 l
+368 304 l
+284.764 296.381 l
+303.731 269.176 l
+496 304 l
+512 224 l
+704 240 l
+720 416 l
+602.141 416 l
+608 400 l
+h
+</path>
+<path stroke="KITgreen">
+80 336 m
+176 304 l
+256.584 335.833 l
+284.764 296.381 l
+</path>
+<use matrix="1 0 0 1 -38 25" name="mark/disk(sx)" pos="672 304" size="normal" stroke="KITblue"/>
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITgreen"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<text matrix="1 0 0 1 532.935 13.3793" transformations="translations" pos="80 256" stroke="KITblue" type="label" valign="baseline">$V(q)$</text>
+<text matrix="1 0 0 1 554 54" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$q$</text>
+<path stroke="KITgreen" dash="dense dashed">
+634 329 m
+284.764 296.381 l
+</path>
+<path layer="ps" fill="KITpalegreen">
+616.846 402.171 m
+616.566 339.653 l
+715.732 369.049 l
+720 416 l
+653.501 416 l
+h
+</path>
+<path stroke="KITgreen">
+495.999 304 m
+515.821 265.524 l
+</path>
+<path stroke="KITgreen">
+495.999 304 m
+529.656 276.787 l
+</path>
+<path stroke="KITgreen">
+495.999 304 m
+537.931 293.274 l
+</path>
+<path matrix="-0.410884 -0.911688 0.911688 -0.410884 543.211 916.758" stroke="KITgreen" dash="dense dashed">
+495.999 304 m
+529.656 276.787 l
+</path>
+<path matrix="-0.410884 -0.911688 0.911688 -0.410884 543.211 916.758" stroke="KITgreen" dash="dense dashed">
+495.999 304 m
+537.931 293.274 l
+</path>
+<path matrix="-0.410884 -0.911688 0.911688 -0.410884 543.211 916.758" stroke="KITgreen" dash="dense dashed">
+495.999 304 m
+538.618 311.533 l
+</path>
+<path matrix="0.410884 0.911688 -0.911688 0.410884 689.921 -237.445" stroke="KITgreen" dash="dense dashed">
+495.999 304 m
+529.656 276.787 l
+</path>
+<path matrix="0.410884 0.911688 -0.911688 0.410884 689.921 -237.445" stroke="KITgreen" dash="dense dashed">
+495.999 304 m
+537.931 293.274 l
+</path>
+<path matrix="0.410884 0.911688 -0.911688 0.410884 689.921 -237.445" stroke="KITgreen" dash="dense dashed">
+495.999 304 m
+538.618 311.533 l
+</path>
+<use layer="p3" matrix="1 0 0 1 26.5027 -7.75486" name="mark/cross(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text matrix="1 0 0 1 474.616 -18.9109" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t$</text>
+<use layer="neg" matrix="1 0 0 1 -240.954 29.453" name="mark/cross(sx)" pos="525.718 266.928" size="small" stroke="black"/>
+<text matrix="1 0 0 1 203.764 46.381" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$t$</text>
+<use layer="qw" name="mark/disk(sx)" pos="496.002 303.998" size="normal" stroke="KITred"/>
+<use name="mark/disk(sx)" pos="616.477 339.3" size="normal" stroke="KITred"/>
+<text matrix="1 0 0 1 538.872 61.2163" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$w$</text>
+<text matrix="1 0 0 1 410.498 63.1424" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$g$</text>
+<path layer="w1" fill="KITgreen70">
+28.9342 0 0 28.9342 80 336 e
+</path>
+<path fill="KITred70">
+113.067 402.133 m
+96 368 l
+192 384 l
+298.213 401.702 l
+288 416 l
+128 400 l
+h
+</path>
+<path layer="w2" fill="KITgreen70">
+176 304 m
+101.193 0 0 -101.193 80 336 29.998 248.024 a
+</path>
+<path fill="KITgreen70">
+16.1261 414.486 m
+101.193 0 0 -101.193 80 336 17.7169 415.755 a
+</path>
+<path fill="KITgreen70">
+156.011 402.801 m
+69.3714 0 0 -69.3714 96 368 164.428 379.405 a
+</path>
+<path fill="KITgreen70">
+17.7169 415.755 m
+16.1261 414.486 l
+29.998 248.024 l
+115.927 259.969 l
+176 304 l
+164.428 379.405 l
+161.154 391.818 l
+156.011 402.801 l
+h
+</path>
+<group layer="fg">
+<use matrix="1 0 0 1 0 48" name="mark/disk(sx)" pos="80 288" size="normal" stroke="KITblack"/>
+<text matrix="1 0 0 1 -16 61" transformations="translations" pos="80 256" stroke="KITblack" type="label" valign="baseline">$s$</text>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+616.567 291.654 m
+592 320 l
+608 352 l
+h
+</path>
+<path fill="KITblack">
+720 416 m
+736 432 l
+736 208 l
+0 208 l
+0 432 l
+736 432 l
+720 416 l
+592 416 l
+544 336 l
+416 416 l
+367.585 304.117 l
+288 416 l
+128 400 l
+16 416 l
+32 224 l
+144 272 l
+208 224 l
+256 336 l
+336 224 l
+495.999 304 l
+512 224 l
+704 240 l
+h
+</path>
+<path matrix="1 0 0 1 0 48" fill="KITblack">
+176 256 m
+96 320 l
+192 336 l
+h
+</path>
+</group>
+<path layer="w2" fill="KITred70">
+256 336 m
+271.791 342.317 l
+192 384 l
+176 304 l
+234 284.667 l
+</path>
+<path layer="w1" fill="KITred70">
+176 304 m
+241.394 301.919 l
+234 284.667 l
+h
+</path>
+<text layer="w0" matrix="1 0 0 1 85.7757 -176.16" transformations="translations" pos="16 400" stroke="black" type="minipage" width="704" valign="top">\textbf{Quickest Visibility Queries (QVQ)}
+\begin{itemize}
+\item Definition
+\item Ergebnisse \&amp; Einordnung
+\item Algorithmus (SPQS-basiert)
+\item Algorithmus (QVM)
+\end{itemize}</text>
+<text matrix="1 0 0 1 85.7757 -0.159793" transformations="translations" pos="16 400" stroke="black" type="minipage" width="704" valign="top">\textbf{Shortest Path to a Segment Queries (SPSQ)}
+\begin{itemize}
+\item Definition
+\item Ergebnisse \&amp; Einordnung
+\item Algorithmus (Spezialfall: lochfreies Polygon)
+\end{itemize}</text>
+<text layer="pagenumbers_page" matrix="1 0 0 1 0.5 5.358" transformations="translations" pos="-13 -39" stroke="black" type="label" halign="center" valign="top" size="verytiny">{\bf 13}</text>
+</page>
+</ipe>

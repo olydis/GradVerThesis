@@ -1,0 +1,704 @@
+<?xml version="1.0"?>
+<!DOCTYPE ipestyle SYSTEM "ipe.dtd">
+<ipestyle name="presentation">
+<symbol name="Background">
+<group matrix="1 0 0 1 2 0">
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITgreen15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblue15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITblack15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITpalegreen15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITyellow15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITorange15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITbrown15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITred15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITlilac15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITcyanblue15"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue70"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue50"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue30"/>
+<use name="mark/disk(sx)" pos="128 -40" size="normal" stroke="KITseablue15"/>
+<path fill="KITblack15">
+-13 -22 m
+12 0 0 -12 -13 -10 -25 -10 a
+-25 522 l
+745 522 l
+12 0 0 -12 745 510 757 510 a
+757 -22 l
+h
+-34 -69 m
+766 -69 l
+766 531 l
+-34 531 l
+h
+</path>
+<text matrix="1 0 0 1 -98 -201.642" pos="106 168" stroke="black" type="minipage" width="497" height="10.7847" depth="0" valign="top" size="verytiny">\name \ -- \prestitle</text>
+<group matrix="1 0 0 1 129 -9.5">
+<group matrix="0.5 0 0 0.5 265.5 -52.5">
+<path matrix="1 0 0 1 -145 -25" fill="KITblue">
+420 40 m
+16 0 0 16 436 40 436 24 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -143 -25" fill="KITblue">
+436 24 m
+16 0 0 16 436 40 452 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -145 -23" fill="KITblue">
+436 56 m
+16 0 0 16 436 40 420 40 a
+436 40 l
+h
+</path>
+</group>
+<group matrix="0.5 0 0 0.5 262.5 -52.5">
+<path matrix="1 0 0 1 -105 -25" fill="KITblue">
+420 40 m
+16 0 0 16 436 40 436 24 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -103 -25" fill="KITblue">
+436 24 m
+16 0 0 16 436 40 452 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -105 -23" fill="KITblue">
+436 56 m
+16 0 0 16 436 40 420 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -103 -23" fill="KITblue">
+452 40 m
+16 0 0 16 436 40 436 56 a
+436 40 l
+h
+</path>
+</group>
+<group matrix="0.5 0 0 0.5 262.5 -55.5">
+<path matrix="1 0 0 1 25 -33" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+<path matrix="1 0 0 1 7 -15" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+<path matrix="1 0 0 1 -105 15" fill="KITblue">
+420 40 m
+16 0 0 16 436 40 436 24 a
+436 40 l
+h
+</path>
+</group>
+<group matrix="0.5 0 0 0.5 265.5 -55.5">
+<path matrix="1 0 0 1 -145 17" fill="KITblue">
+436 56 m
+16 0 0 16 436 40 420 40 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -143 17" fill="KITblue">
+452 40 m
+16 0 0 16 436 40 436 56 a
+436 40 l
+h
+</path>
+<path matrix="1 0 0 1 -15 -33" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+<path matrix="1 0 0 1 -33 -33" fill="KITblue">
+308 72 m
+324 72 l
+324 88 l
+308 88 l
+h
+</path>
+</group>
+</group>
+</group>
+</symbol>
+<symbol name="KITItem(f)">
+<path fill="sym-fill">
+-0.2 -0.4 m
+0.2 0 0 -0.2 -0.2 -0.2 -0.4 -0.2 a
+-0.4 0.4 l
+0.2 0.4 l
+0.2 0 0 -0.2 0.2 0.2 0.4 0.2 a
+0.4 -0.4 l
+h
+</path>
+</symbol>
+<symbol name="KIT-Box">
+<group>
+<path matrix="1 0 0 1 0 215.315" fill="KITblue">
+736 248 m
+-8 248 l
+-8 216 l
+744 216 l
+744 240 l
+8 0 0 8 736 240 736 248 a
+h
+</path>
+<path matrix="1 0 0 1 0 210.496" fill="KITblack15">
+-8 152 m
+-8 220.819 l
+744 220.819 l
+744 144 l
+0 144 l
+8 0 0 -8 0 152 -8 152 a
+h
+</path>
+<text matrix="1 0 0 1 0 457" pin="h" transformations="translations" pos="0 0" stroke="white" type="minipage" width="736" height="14.4133" depth="2.1805" valign="top">Titel</text>
+<text matrix="1 0 0 1 0 424.315" transformations="translations" pos="0 0" stroke="black" type="minipage" width="736" height="31.3527" depth="19.159" valign="top">Zweizeiliger Text -- Zweizeiliger Text -- Zweizeiliger Text -- Zweizeiliger Text -- Zweizeiliger Text</text>
+</group>
+</symbol>
+<symbol name="deco/KIT box [blue]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITblue15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [red]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITred15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [palegreen]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITpalegreen15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [yellow]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITyellow15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<symbol name="deco/KIT box [green]">
+<group matrix="1 0 0 1 776 -104">
+<path stroke="black" fill="KITgreen15">
+0 440 m
+728 440 l
+8 0 0 -8 728 432 736 432 a
+736 288 l
+8 288 l
+8 0 0 -8 8 296 0 296 a
+h
+</path>
+<path stroke="black">
+8 296 m
+8 432 l
+728 432 l
+728 296 l
+h
+</path>
+</group>
+</symbol>
+<pen name="normal" value="1.2"/>
+<pen name="heavier" value="2.4"/>
+<pen name="fat" value="3.6"/>
+<pen name="ultrafat" value="6"/>
+<symbolsize name="normal" value="9"/>
+<symbolsize name="large" value="12"/>
+<symbolsize name="small" value="6"/>
+<symbolsize name="tiny" value="4"/>
+<arrowsize name="normal" value="15"/>
+<arrowsize name="large" value="20"/>
+<arrowsize name="small" value="10"/>
+<arrowsize name="tiny" value="6"/>
+<color name="KITgreen" value="0 0.588 0.509"/>
+<color name="KITgreen70" value="0.3 0.711 0.656"/>
+<color name="KITgreen50" value="0.5 0.794 0.754"/>
+<color name="KITgreen30" value="0.7 0.876 0.852"/>
+<color name="KITgreen15" value="0.85 0.938 0.926"/>
+<color name="KITblue" value="0.274 0.392 0.666"/>
+<color name="KITblue70" value="0.492 0.574 0.766"/>
+<color name="KITblue50" value="0.637 0.696 0.833"/>
+<color name="KITblue30" value="0.782 0.817 0.9"/>
+<color name="KITblue15" value="0.891 0.908 0.95"/>
+<color name="KITblack" value="0"/>
+<color name="KITblack70" value="0.3"/>
+<color name="KITblack50" value="0.5"/>
+<color name="KITblack30" value="0.7"/>
+<color name="KITblack15" value="0.85"/>
+<color name="KITpalegreen" value="0.509 0.745 0.235"/>
+<color name="KITpalegreen70" value="0.656 0.821 0.464"/>
+<color name="KITpalegreen50" value="0.754 0.872 0.617"/>
+<color name="KITpalegreen30" value="0.852 0.923 0.77"/>
+<color name="KITpalegreen15" value="0.926 0.961 0.885"/>
+<color name="KITyellow" value="0.98 0.901 0.078"/>
+<color name="KITyellow70" value="0.986 0.931 0.354"/>
+<color name="KITyellow50" value="0.99 0.95 0.539"/>
+<color name="KITyellow30" value="0.994 0.97 0.723"/>
+<color name="KITyellow15" value="0.997 0.985 0.861"/>
+<color name="KITorange" value="0.862 0.627 0.117"/>
+<color name="KITorange70" value="0.903 0.739 0.382"/>
+<color name="KITorange50" value="0.931 0.813 0.558"/>
+<color name="KITorange30" value="0.958 0.888 0.735"/>
+<color name="KITorange15" value="0.979 0.944 0.867"/>
+<color name="KITbrown" value="0.627 0.509 0.196"/>
+<color name="KITbrown70" value="0.739 0.656 0.437"/>
+<color name="KITbrown50" value="0.813 0.754 0.598"/>
+<color name="KITbrown30" value="0.888 0.852 0.758"/>
+<color name="KITbrown15" value="0.944 0.926 0.879"/>
+<color name="KITred" value="0.627 0.117 0.156"/>
+<color name="KITred70" value="0.739 0.382 0.409"/>
+<color name="KITred50" value="0.813 0.558 0.578"/>
+<color name="KITred30" value="0.888 0.735 0.747"/>
+<color name="KITred15" value="0.944 0.867 0.873"/>
+<color name="KITlilac" value="0.627 0 0.47"/>
+<color name="KITlilac70" value="0.739 0.3 0.629"/>
+<color name="KITlilac50" value="0.813 0.5 0.735"/>
+<color name="KITlilac30" value="0.888 0.7 0.841"/>
+<color name="KITlilac15" value="0.944 0.85 0.92"/>
+<color name="KITcyanblue" value="0.313 0.666 0.901"/>
+<color name="KITcyanblue70" value="0.519 0.766 0.931"/>
+<color name="KITcyanblue50" value="0.656 0.833 0.95"/>
+<color name="KITcyanblue30" value="0.794 0.9 0.97"/>
+<color name="KITcyanblue15" value="0.897 0.95 0.985"/>
+<color name="KITseablue" value="0.196 0.313 0.549"/>
+<color name="KITseablue70" value="0.437 0.519 0.684"/>
+<color name="KITseablue50" value="0.598 0.656 0.774"/>
+<color name="KITseablue30" value="0.758 0.794 0.864"/>
+<color name="KITseablue15" value="0.879 0.897 0.932"/>
+<dashstyle name="long dashed" value="[12] 0"/>
+<dashstyle name="long dash dotted" value="[12 6 1 6] 0"/>
+<dashstyle name="dense dotted" value="[0.5 0.5] 0"/>
+<dashstyle name="medium dotted" value="[1 1.5] 0"/>
+<dashstyle name="dense dashed" value="[8 3] 0"/>
+<textsize name="verytiny" value="\tiny"/>
+<textsize name="largebf" value="\bf\large"/>
+<textstretch name="normal" value="2.45"/>
+<textstretch name="large" value="2.45"/>
+<textstretch name="Large" value="2.2"/>
+<textstretch name="LARGE" value="2.2"/>
+<textstretch name="huge" value="2.2"/>
+<textstretch name="Huge" value="2.2"/>
+<textstretch name="small" value="2.2"/>
+<textstretch name="footnote" value="2"/>
+<textstretch name="tiny" value="2.8"/>
+<textstretch name="verytiny" value="2.3"/>
+<textstretch name="largebf" value="2.45"/>
+<textstyle name="center" begin="\begin{center}" end="\end{center}"/>
+<textstyle name="itemize" begin="\begin{flushleft}\begin{itemize}" end="\end{itemize}\end{flushleft}"/>
+<textstyle name="item" begin="\begin{flushleft}\begin{itemize}\item{}" end="\end{itemize}\end{flushleft}"/>
+<textstyle name="default" begin="\begin{flushleft}" end="\end{flushleft}"/>
+<gridsize name="1 pts" value="1"/>
+<gridsize name="2 pts" value="2"/>
+<gridsize name="3 pts" value="3"/>
+<preamble>
+    \usepackage{color}
+    \usepackage{pgf}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    %\usepackage{verbatim}
+    %\usepackage{lmodern}
+    \usepackage{amsmath}
+    \usepackage{amsthm}
+    \usepackage{mathpartir}
+    \usepackage{amssymb}
+    %\usepackage{latexsym}
+    \usepackage{syntax}
+    %\usepackage{lscape}
+    %\usepackage{stmaryrd}
+    \usepackage{listings}
+    \usepackage{newunicodechar}
+    %\usepackage{xspace}
+
+    % language settings
+    %\newif\ifgerman%
+    %\newcommand{\german}{\germantrue}%
+
+    \renewcommand{\familydefault}{\sfdefault}
+    \usepackage[scaled=.92]{helvet}
+    %\usepackage[EULERGREEK,eulergreek]{sansmath}
+    %\sansmath
+    % \usepackage[scaled=.92]{helvet}
+
+    % \renewcommand{\familydefault}{\sfdefault}
+    % \def\rmdefault{phv}
+    % \DeclareSymbolFont{operators}{OT1}{phv}{m}{n}
+    % \DeclareSymbolFont{letters}{OT1}{phv}{m}{it}
+    % \DeclareSymbolFont{bold}{OT1}{phv}{bx}{n}
+    % \DeclareSymbolFont{italic}{OT1}{phv}{m}{it}
+
+    \makeatletter
+    \def\@listI{
+    \leftmargin 1.5em
+    \itemsep 0.2em
+    \parsep 0.2em
+    \topsep 0.2em
+    \partopsep 0.2em}
+    \def\@listii{
+    \leftmargin 1em
+    \itemsep 0.1em
+    \parsep 0.1em
+    \topsep 0.1em
+    \partopsep 0.1em}
+    \makeatother
+
+    \def\labelitemi{\raisebox{0.5ex}{\hbox to 0.6em{\scalebox{1.3}{\ipesymbol{KITItem(f)}{}{\itemcolor}{}}}}}
+
+    \def\labelitemii{\raisebox{0.5ex}{\hbox to 0.4em{\scalebox{1.1}{\ipesymbol{KITItem(f)}{}{\itemcolor}{}}}}}
+  
+  
+    
+\makeatletter
+\newcommand*{\shifttext}[2]{%
+    \settowidth{\@tempdima}{#2}%
+    \makebox[\@tempdima]{\hspace*{#1}#2}%
+}
+\makeatother
+
+\newunicodechar{≠}{=\llap{/}}
+\newunicodechar{≔}{:\raisebox{-0.18ex}[\height][\depth]{=}}
+\newunicodechar{∧}
+{\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}} \endgroup}}
+\newunicodechar{∨}
+{\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{\textbackslash}\shifttext{-0.4ex}{/}} \endgroup}}
+% {\shifttext{0.4ex}{/}\shifttext{-0.4ex}{\textbackslash}}
+% $\withqmGen{x = 3}$
+% CODE LISTINGS
+
+\definecolor{cogreen}{RGB}{0,80,0}
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily\small,
+    commentstyle=\ttfamily,
+    frame=single,
+    framesep=5pt,
+    mathescape=true,
+    showstringspaces=false,
+    %escapeinside={(*}{*)},
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{darkgray}\ttfamily,
+    commentstyle=\color{cogreen}\ttfamily,
+    morekeywords={requires, ensures}
+}
+
+% THEOREMS
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{definition}
+\newtheorem{exmp}[definition]{Example}
+
+\newenvironment{example}[1]{\begin{leftbar}\begin{exmp}[#1]~}{\end{exmp}\end{leftbar}}
+
+%% decoration
+\newcommand{\pa}[1]{\ensuremath{{#1}^{\checkmark}}}
+\newcommand{\pb}[1]{\ensuremath{{#1}^{\circ}}}
+
+\newcommand{\grad}[1]{\widetilde{#1}}
+\newcommand{\dgrad}[1]{\vec{#1}}
+\newcommand{\gradT}[1]{\ensuremath{\grad{\text{#1}}}}
+\newcommand{\dgradT}[1]{\ensuremath{\dgrad{\text{#1}}}}
+\newcommand{\usc}{\rule{1ex}{0.4pt}}
+
+%% ALIASES
+% fonts
+\newcommand{\std}{\textrm}
+\newcommand{\ttt}[1]{\textup{\texttt{#1}}}
+\newcommand{\tset}[1]{\textup{\textsc{#1}}}
+\newcommand{\predicate}[1]{\textup{\textmd{\textsf{#1}}}}
+% names
+\newcommand{\svlidf}{\ensuremath{\std{\textbf{SVL}}_{\std{\textbf{IDF}}}}\xspace}
+\newcommand{\gvlidf}{\ensuremath{\std{\textbf{GVL}}_{\std{\textbf{IDF}}}}\xspace}
+\newcommand{\svl}{\std{\textbf{SVL}}\xspace}
+\newcommand{\gvl}{\std{\textbf{GVL}}\xspace}
+
+% sets
+\newcommand{\setProgramState}{\tset{ProgramState}\xspace}
+\newcommand{\setProgramStateFin}{\tset{ProgramStateFin}\xspace}
+\newcommand{\setProgramStateEx}{\tset{ProgramStateEx}\xspace}
+\newcommand{\setGProgramState}{\tset{\gradT ProgramState}\xspace}
+\newcommand{\setGProgramStateFin}{\tset{\gradT ProgramStateFin}\xspace}
+\newcommand{\setGProgramStateEx}{\tset{\gradT ProgramStateEx}\xspace}
+\newcommand{\setProgram}{\tset{Program}\xspace}
+\newcommand{\setGProgram}{\tset{\gradT Program}\xspace}
+\newcommand{\setClass}{\tset{Class}\xspace}
+\newcommand{\setGClass}{\tset{\gradT Class}\xspace}
+\newcommand{\setField}{\tset{Field}\xspace}
+\newcommand{\setMethod}{\tset{Method}\xspace}
+\newcommand{\setGMethod}{\tset{\gradT Method}\xspace}
+\newcommand{\setContract}{\tset{Contract}\xspace}
+\newcommand{\setGContract}{\tset{\gradT Contract}\xspace}
+\newcommand{\setType}{\tset{Type}\xspace}
+\newcommand{\setStmt}{\tset{Stmt}\xspace}
+\newcommand{\setGStmt}{\tset{\gradT Stmt}\xspace}
+\newcommand{\setFormula}{\tset{Formula}\xspace}
+\newcommand{\setFormulaA}{\tset{SatFormula}\xspace}
+\newcommand{\setFormulaB}{\tset{SfrmFormula}\xspace}
+\newcommand{\setGFormula}{\tset{\gradT Formula}\xspace}
+\newcommand{\setGFormulaA}{\tset{\gradT SatFormula}\xspace}
+\newcommand{\setGFormulaB}{\tset{\gradT SfrmFormula}\xspace}
+\newcommand{\setExpr}{\tset{Expr}\xspace}
+\newcommand{\setVal}{\tset{Val}\xspace}
+\newcommand{\setLoc}{\tset{Loc}\xspace}
+\newcommand{\setVar}{\tset{Var}\xspace}
+
+\newcommand{\setHeap}{\tset{Heap}\xspace}
+\newcommand{\setStack}{\tset{Stack}\xspace}
+\newcommand{\setStackEntry}{\tset{StackEntry}\xspace}
+\newcommand{\setVarEnv}{\tset{VarEnv}\xspace}
+\newcommand{\setTypeEnv}{\tset{TypeEnv}\xspace}
+\newcommand{\setClassName}{\tset{ClassName}\xspace}
+\newcommand{\setFieldName}{\tset{FieldName}\xspace}
+\newcommand{\setMethodName}{\tset{MethodName}\xspace}
+\newcommand{\setSFootprint}{\tset{StaticFootprint}\xspace}
+\newcommand{\setDFootprint}{\tset{DynamicFootprint}\xspace}
+
+\newcommand{\setNat}{\ensuremath{\mathbb{N}_+}}
+\newcommand{\setNatZ}{\ensuremath{\mathbb{N}_0}}
+% expressions
+\newcommand{\ev}[1]{\ttt{#1}}
+\newcommand{\ex}[1]{\ttt{#1}}
+\newcommand{\edot}[2]{\ttt{#1.#2}}
+\newcommand{\ethis}{\ex{this}}
+\newcommand{\eresult}{\ex{result}}
+\newcommand{\enull}{\ttt{null}}
+% formulas
+\newcommand{\phiOr}[2]{\ttt{#1\:∨\:#2}}
+\newcommand{\gphiOr}[2]{\ttt{{#1}\:$\grad{\ttt{∨}}$\:{#2}}}
+\newcommand{\phiAnd}[2]{\ttt{#1\:∧\:#2}}
+\newcommand{\gphiAnd}[2]{\ttt{{#1}\:$\grad{\ttt{∧}}$\:{#2}}}
+\newcommand{\phiCons}[2]{\ttt{#1\:*\:#2}}
+\newcommand{\gphiCons}[2]{\ttt{#1\:$\grad{\ttt{*}}$\:#2}}
+\newcommand{\phiFalse}[0]{\ttt{false}}
+\newcommand{\phiTrue}[0]{\ttt{true}}
+\newcommand{\phiMapsTo}[2]{\ttt{(#1\:\:$\mapsto$\:\:#2)}}
+\newcommand{\phiEq}[2]{\ttt{(#1 = #2)}}
+\newcommand{\phiNeq}[2]{\ttt{(#1 ≠ #2)}}
+\newcommand{\phiAcc}[2]{\ttt{\textbf{acc}(#1.#2)}}
+\newcommand{\qm}{\ttt{?}}
+\newcommand{\withqm}[1]{\phiCons{\qm}{\ensuremath{#1}}}
+\newcommand{\withqmGen}[1]{\phiAnd{\ensuremath{#1}}{\qm}}
+% statements
+\newcommand{\sSkip}{\ttt{skip}}
+\newcommand{\sFieldAssign}[3]{\ttt{#1.#2 ≔ #3}}
+\newcommand{\sVarAssign}[2]{\ttt{#1 ≔ #2}}
+\newcommand{\sAlloc}[2]{\ttt{#1 ≔ new #2}}
+\newcommand{\sCall}[4]{\ttt{#1 ≔ #2.#3(#4)}}
+\newcommand{\sReturn}[1]{\ttt{return #1}}
+\newcommand{\sAssert}[1]{\ttt{assert #1}}
+\newcommand{\sRelease}[1]{\ttt{release #1}}
+\newcommand{\sDeclare}[2]{\ttt{#1~#2}}
+\newcommand{\sHold}[2]{\ttt{hold #1~\{ #2 \}}}
+\newcommand{\sSeq}[2]{\ttt{{#1};~{#2}}}
+% type
+\newcommand{\type}[1]{\ttt{#1}}
+\newcommand{\Tint}{\type{int}}
+% composite syntax
+\newcommand{\class}[3]{\ttt{class {#1}~\{ {#2} {#3} \}}}
+\newcommand{\method}[6]{\ttt{{#1}~{#2}({#3}~{#4})~{#5}~\{ {#6} \}}}
+\newcommand{\contract}[2]{\ttt{requires {#1}; ensures {#2};}}
+\newcommand{\field}[2]{\ttt{{#1}~{#2};}}
+%% predicates
+% precision
+\newcommand{\mpt}{\sqsubseteq}
+\newcommand{\mpts}{\sqsubseteq_s}
+\newcommand{\mptpi}{\sqsubseteq_{\pi}}
+% well-formed
+\newcommand{\wsp}{\predicate{wsp}}
+\newcommand{\verify}{\predicate{verify}}
+\newcommand{\OK}{~\predicate{OK}}
+\newcommand{\OKinC}{~\predicate{OK in}~C}
+\newcommand{\gOK}{~\predicate{\gradT {OK}}}
+\newcommand{\gOKinC}{~\predicate{\gradT {OK} in}~C}
+% framing
+\newcommand{\sfrme}{\ensuremath{\vdash_\texttt{frm}}\,}
+\newcommand{\sfrmphi}{\ensuremath{\vdash_\texttt{sfrm}}\,}
+\newcommand{\sfrmgphi}{\ensuremath{\grad{\vdash}_\texttt{sfrm}}\,}
+\newcommand{\gwo}[2]{#1\grad{\div}#2}
+\newcommand{\wo}[2]{#1\div#2}
+% evaluation
+\newcommand{\evalex}[4]{#1,#2 \vdash #3 \Downarrow #4}
+\newcommand{\evale}[2]{H,\rho \vdash #1 \Downarrow #2}
+\newcommand{\evalphiXGen}[2]{#1 \vDash_{X} #2}
+\newcommand{\evalgphiXGen}[2]{#1 \,\,\grad{\vDash_{X}}\,\, #2}
+\newcommand{\evalphiGen}[2]{#1 \,\,{\vDash}\,\, #2}
+\newcommand{\evalgphiGen}[2]{#1 \,\,\grad{\vDash}\,\, #2}
+\newcommand{\evalphi}[1]{\evalphiGen {H,\rho,A} {#1}}
+\newcommand{\evalgphi}[1]{\evalgphiGen {H,\rho,A} {#1}}
+\newcommand{\phiImplies}[2]{{#1} \,\,{\Rightarrow}\,\, {#2}}
+\newcommand{\phiImpliesEv}[3]{#3 \vdash \phiImplies{#1}{#2}}
+\newcommand{\gphiImplies}[2]{{#1} \,\,{\grad{\Rightarrow}}\,\, {#2}}
+\newcommand{\gphiImpliesEv}[3]{#3 \vdash \gphiImplies{#1}{#2}}
+\newcommand{\evalphix}[4]{\evalphiGen {#1,#2,#3} {#4}}
+% extraction
+\newcommand{\FV}{\predicate{FV}}
+\newcommand{\fieldType}{\predicate{fieldType$_p$}}
+\newcommand{\fields}[1]{\predicate{fields$_p$($#1$)}}
+\newcommand{\mpre}[1]{\predicate{mpre$_p$($#1$)}}
+\newcommand{\mpost}[1]{\predicate{mpost$_p$($#1$)}}
+\newcommand{\mmethod}[1]{\predicate{method$_p$($#1$)}}
+\newcommand{\topmost}{\predicate{topmost}}
+% other
+\newcommand{\id}{\predicate{id}}
+\newcommand{\nil}{\predicate{nil}\xspace}
+\newcommand{\static}[1]{\predicate{static(#1)}}
+\newcommand{\dom}[1]{\predicate{dom($#1$)}}
+\newcommand{\writesTo}{\predicate{writesTo}}
+\newcommand{\sType}[3]{{#1} \vdash {#2} : {#3}}
+\newcommand{\defaultValue}[1]{\predicate{defaultValue(#1)}}
+\newcommand{\defeq}{\overset{\predicate{def}}{=}}
+\newcommand{\defiff}{\overset{\predicate{def}}{\iff}}
+\newcommand{\accFor}[1]{\predicate{acc($#1$)}}
+% footprint
+\newcommand\floor[1]{\lfloor#1\rfloor}
+\newcommand\ceil[1]{\lceil#1\rceil}
+\newcommand{\staticFP}[1]{\ensuremath{\floor{#1}}}
+\newcommand{\dynamicFP}[3]{\ensuremath{\floor{#3}_{#1,#2}}}
+% static sem
+\newcommand{\hoare}[3]{\{{#1}\} ~{#2}~ \{{#3}\}}
+\newcommand{\tHoare}[4]{{#1} \,\,{\vDash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\gtHoare}[4]{{#1} \,\,\grad{\vDash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\thoare}[4]{{#1} \,\,{\vdash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\gthoare}[4]{{#1} \,\,\grad{\vdash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\dgthoare}[4]{{#1} \,\,\dgrad{\vdash}\,\, \hoare {#2} {#3} {#4}}
+\newcommand{\PP}{\mathcal{P}}
+%\newcommand{\sssem}{\mathcal{S}}
+%\newcommand{\gsssem}{\grad{\sssem}}
+\newcommand{\funHoare}{\mathcal{H}}
+\newcommand{\funHoareA}{\mathcal{F}}
+\newcommand{\funHoareApred}{\mathcal{P}}
+\newcommand{\funHoareB}{\mathcal{I}}
+\newcommand{\funHoareBimp}{\mathcal{J}}
+\newcommand{\funHoareC}{\mathcal{M}}
+% dyn sem
+\newcommand{\prefix}[2]{\predicate{prefix}(#1, #2)}
+\newcommand{\progress}{\predicate{progress}_{\sssem}}
+\newcommand{\sstepGeneric}[3]{{#1} \,\,{\longrightarrow^{#2}}\,\, {#3}}
+\newcommand{\sstepStuck}[1]{{#1} \,\,{\longrightarrow\llap{\shifttext{-4ex}{/}}}\,\, {\,}}
+\newcommand{\sstep}[2]{\sstepGeneric {#1} {} {#2}}
+\newcommand{\ssteps}[2]{\sstepGeneric {#1} * {#2}}
+\newcommand{\sstepConsume}[3]{{#2} \,\,{\overset{#1}{\longrightarrow}}\,\, {#3}}
+\newcommand{\gsstepGeneric}[3]{{#1} \,\,{\grad{\longrightarrow}^{#2}}\,\, {#3}}
+\newcommand{\gsstepStuck}[1]{{#1} \,\,{\grad{\longrightarrow}\llap{\shifttext{-2.5ex}{/}}}\,\, {\,}}
+\newcommand{\gsstep}[2]{\gsstepGeneric {#1} {} {#2}}
+\newcommand{\gssteps}[2]{\gsstepGeneric {#1} * {#2}}
+\newcommand{\gsstepConsume}[3]{{#2} \,\,{\overset{#1}{\grad{\longrightarrow}}}\,\, {#3}}
+
+\newcommand{\envs}[1]{\llbracket {#1} \rrbracket}
+\newcommand{\norm}[1]{\ensuremath{||#1||}}
+\newcommand{\snorm}[1]{\ensuremath{|#1|}}
+
+  </preamble>
+<layout paper="800 600" origin="32 69" frame="736 440" crop="no"/>
+<titlestyle pos="0 475" size="largebf" color="black"  valign="baseline"/>
+</ipestyle>
