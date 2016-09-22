@@ -112,7 +112,9 @@ Assumptions about \svl:
     %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
     %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
     %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
-    As usual, taking $n$ steps is abbreviated as $\sstepGeneric{\cdot}{n}{\cdot}$ (undefinedness is propagated), taking any finite amount of steps is abbreviated as $\ssteps{\cdot}{\cdot}$.
+    As usual, 
+    %taking $n$ steps is abbreviated as $\sstepGeneric{\cdot}{n}{\cdot}$ (undefinedness is propagated), 
+    taking a finite amount of steps is abbreviated as $\ssteps{\cdot}{\cdot}$.
     Also, we write $\sstepStuck{\pi}$ to state that $\pi$ is a “stuck” state, i.e. that $\pi$ is not in the domain of partial small-step function.
     
     Furthermore we define $\sstepConsume{s}{\cdot}{\cdot} \subseteq \setProgramState \times \setProgramState$ as a predicate indicating whether a program state is reachable from another program state by executing statement $s$.
@@ -206,19 +208,35 @@ Assumptions about \svl:
     \end{lemma}
     % PROOF
     
-    We assume that there is a largest element $\phiTrue \in \setFormula$.
+    We assume that there is a largest element $\phiTrue \in \setFormula$ that describes every program state.
     Note that the presence of an unsatisfiable formula (as invariant, pre-/postcondition, assertion, ...) in a sound verification system implies that the corresponding source code location is unreachable:
     Preservation guarantees that any reachable program state satisfies potentially annotated formulas, trivially ensuring that the formula is satisfiable.
     
     This property is true regardless of whether \svl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
     
-    With this semantics we can formalize the notion of valid Hoare triples:
-    \begin{flalign*}
-    & \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
-    & \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
-    \forall \pi_{pre}, \pi_{post} \in \setProgramState.~ \sstepConsume{s}{\pi_{pre}}{\pi_{post}} \implies (\evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}})
-    \end{flalign*}
+    With this semantics we can formalize the notion of valid Hoare triples.
+    \begin{definition}[Validity of Hoare Triples]~\\
+        A Hoare triple $\hoare{\phi_{pre}} {s} {\phi_{post}}$ is \textbf{valid}, written
+        $\tHoare{}{\phi_{pre}} {s} {\phi_{post}}$
+        iff
+        \begin{flalign*}
+        %& \tHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula                                                                                            \\
+        %& \tHoare {~} {\phi_{pre}} {s} {\phi_{post}} ~\defiff~ 
+        \forall \pi_{pre}, \pi_{post} \in \setProgramState.~ \sstepConsume{s}{\pi_{pre}}{\pi_{post}} \implies (\evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}})
+        \end{flalign*}
+    \end{definition}
+    
+    We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphi{\pi}{\phi} ~\}$ is a filter, i.e.
+    \begin{itemize}
+        \item It is non-empty. This ensures that every program state is describable by at least one formula.
+        This is true as we demanded a formula $\phiTrue$ that describes every program state.
+        \item If $\evalphiGen{\pi}{\phi_a}$ and $\evalphiGen{\pi}{\phi_b}$, then there exists $\phi \in \setFormula$ with  $~~\evalphiGen{\pi}{\phi} ~~\wedge~~ \phiImplies{\phi}{\phi_a} ~~\wedge~~ \phiImplies{\phi}{\phi_b}$.
+        Intuitively, this states that multiple formulas about the same program state can be combined.
+        In case the formula syntax contains a logical conjunction operator, this criterion is met.
+        \item If $\evalphiGen{\pi}{\phi_a}$ and $\phiImplies{\phi_a}{\phi_b}$ then $\evalphiGen{\pi}{\phi_b}$.
+        This is true by definition of $\phiImplies{\cdot}{\cdot}$.
+    \end{itemize}
     
 \item[Static Semantics]~\\
     We assume that there is a Hoare logic (HL)

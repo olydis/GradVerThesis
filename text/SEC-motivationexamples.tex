@@ -122,7 +122,8 @@ Furthermore, the solution is in an unintuitive location:
 The problem is not caused by \ttt{myRandom}, yet it is solved there.
 The actual problem is that the postcondition of \ttt{collatzIterations} is too weak, causing the verifier to fail deducing our knowledge.
 
-Gradual verification allows enhancing the postcondition with “unknown” knowledge that can be reinterpreted arbitrarily, adding appropriate runtime checks to guarantee that this reinterpretation was in fact valid:
+Gradual verification allows enhancing the postcondition with “unknown” knowledge that can be interpreted by the verifier as an arbitrary plausible static formula.
+At the same time appropriate runtime checks have to be injected to guarantee that this treatment was in fact valid:
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
     requires 1 <= start;
