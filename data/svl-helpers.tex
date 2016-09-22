@@ -58,73 +58,18 @@ We define the following helper methods:
     
     \item[Preventing Writes]
     Under rare circumstances, overwriting a certain variable is not allowed in \svlidf.
-    To reliably check whether a variable is written to by a statement, we define the following predicate.
+    To reliably check which variables are written to by a statement, we define the following function.
     
-    Let $\writesTo \subseteq \setStmt \times \setVar$ be defined inductively as
+    Let $\mods : \setStmt \rightarrow \PP^{\setVar}$ be defined as
+    \begin{alignat*}{3}
+    	 & \mods({\sVarAssign {${x}$} {${e}$}})            & ~ & = \{~ x ~\}                       & ~ \\
+    	 & \mods({\sAlloc {${x}$} {${C}$}})                & ~ & = \{~ x ~\}                       & ~ \\
+    	 & \mods({\sCall {${x}$} {${y}$} {${m}$} {${z}$}}) & ~ & = \{~ x ~\}                       & ~ \\
+    	 & \mods({\sReturn {${x}$}})                       & ~ & = \{~ \eresult ~\}                & ~ \\
+    	 & \mods({\sDeclare {${T}$} {${x}$}})              & ~ & = \{~ x ~\}                       & ~ \\
+    	 & \mods({\sHold {${p}$} {${s}$}})                 & ~ & = \mods(s)                        & ~ \\
+    	 & \mods({\sSeq{$s_1$}{$s_2$}})                    & ~ & = \mods(s_1) \cup \mods(s_2)      & ~ \\
+    	 & \mods(s)                                        & ~ & = \emptyset \textit{~~~otherwise} & ~
+    \end{alignat*}
     %\input{data/autogen/writesTo}
-    \begin{mathpar}
-        \inferrule* [right=wtVarAssign]
-        {
-            ~
-        }
-        {
-            \writesTo({x},\, {\sVarAssign {${x}$} {${e}$}})
-        }
-        
-        \inferrule* [right=wtAlloc]
-        {
-            ~
-        }
-        {
-            \writesTo({x},\, {\sAlloc {${x}$} {${C}$}})
-        }
-        
-        \inferrule* [right=wtCall]
-        {
-            ~
-        }
-        {
-            \writesTo({x},\, {\sCall {${x}$} {${y}$} {${m}$} {${z}$}})
-        }
-        
-        \inferrule* [right=wtReturn]
-        {
-            ~
-        }
-        {
-            \writesTo({\eresult},\, {\sReturn {${x}$}})
-        }
-        
-        \inferrule* [right=wtDeclare]
-        {
-            ~
-        }
-        {
-            \writesTo({x}, {\sDeclare {${T}$} {${x}$}})
-        }
-        
-        \inferrule* [right=wtHold]
-        {
-            \writesTo({x},\, {s})
-        }
-        {
-            \writesTo({x},\, {\sHold {${p}$} {${s}$}})
-        }
-        
-        \inferrule* [right=wtSeq1]
-        {
-            \writesTo({x},\, {s_1})
-        }
-        {
-            \writesTo({x},\, \sSeq{$s_1$}{$s_2$})
-        }
-        
-        \inferrule* [right=wtSeq2]
-        {
-            \writesTo({x},\, {s_2})
-        }
-        {
-            \writesTo({x},\, \sSeq{$s_1$}{$s_2$})
-        }
-    \end{mathpar}
 \end{description}

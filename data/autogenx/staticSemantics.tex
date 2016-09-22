@@ -107,7 +107,7 @@
     \phiImplies {\phi_f} {\phiCons{${\phi_r}$}{${\phi'}$}} \\
     \phiImplies {\phi'} {\phi} \\
     {\FV(\phi')} = {\FV(\phi)} \\
-    \neg {\writesTo({\FV(\phi)}, {s})} \\
+    \mods{s} \cap \FV(\phi) = \emptyset \\
     \thoare {\Gamma} {\phi_r} {s} {\phi_r'}
 }
 {
