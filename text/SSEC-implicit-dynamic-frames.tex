@@ -32,7 +32,7 @@ separating conjunction (\ttt{*}) ensures that both sides of the conjunction refe
 \end{example}
 
 %% IDF
-A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age > 19}$) as they are not directly expressible using the explicit syntax (see above: values of memory locations are explicitly tracked).
+A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age <= 19}$) as they are not directly expressible using the explicit syntax (see above: values of memory locations are explicitly tracked).
 The concept of implicit dynamic frames (IDF) \cite{smans2009implicit} addresses this issue by decoupling the permissions to access a certain heap location from assertions about its value.
 It introduces an “accessibility predicate” \ttt{acc(\textit{loc})} that represents the permission to access heap location \textit{loc}.
 Parkinson and Summers \cite{parkinson2011relationship} worked out the formal relationship between separation logic and IDF.
@@ -41,12 +41,12 @@ Parkinson and Summers \cite{parkinson2011relationship} worked out the formal rel
     \label{ex:pow-idf}
     The following Hoare triple is verifiable using implicit dynamic frames.
     \begin{alignat*}{1}
-    &\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\ttt{(p2.age > 19)}}}\}\\
+    &\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{19}}{\ttt{(p2.age <= 19)}}}\}\\
     &{\ttt{p1.age++}}\\
-    &\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\ttt{(p2.age > 19)}}}\}
+    &\{\phiCons {\phiCons{\phiAcc{p1}{age}}{\phiAcc{p2}{age}}} {\phiCons{\phiEq{p1.age}{20}}{\ttt{(p2.age <= 19)}}}\}
     \end{alignat*}
     The separating conjunction makes sure that the accessibility predicates $\phiAcc{p1}{age}$ and $\phiAcc{p2}{age}$ mention disjoint memory locations, whereas it has no further meaning for “traditional” predicates.
-    Note how more complex predicates like $\ttt{>}$ are now expressible.
+    Note how more complex predicates like $\ttt{<=}$ are now expressible.
 \end{example}
 
 As formulas can mention heap locations in arbitrary predicates, it has to be ensured that a formula contains accessibility predicates to all heap locations mentioned.
