@@ -20,6 +20,17 @@
 \newunicodechar{∨}
 {\shifttext{1ex}{\begingroup \fontsize{8pt}{8pt}\selectfont {\shifttext{0.4ex}{\textbackslash}\shifttext{-0.4ex}{/}} \endgroup}}
 
+%\newcommand{\irdotted}[1][]{\inferrule* [Right={#1}, fraction={\ {\cdots\hspace*{.85ex}}\cdot}]}
+\makeatletter
+\newcommand{\dotfrac}[2]{\hbox{ 
+    \ensuremath{\mathchoice
+    {\ooalign{$\genfrac{}{}{0pt}{0}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss \raisebox{0.2ex}{$\displaystyle\cdot$}\hss}\hfill\kern\z@\cr}}
+    {\ooalign{$\genfrac{}{}{0pt}{1}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\textstyle\cdot$\hss}\hfill\kern\z@\cr}}
+    {\ooalign{$\genfrac{}{}{0pt}{2}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\scriptstyle\cdot$\hss}\hfill\kern\z@\cr}}
+    {\ooalign{$\genfrac{}{}{0pt}{3}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\scriptscriptstyle\cdot$\hss}\hfill\kern\z@\cr}}
+}}}
+\makeatother
+\newcommand{\irdotted}[1][]{\inferrule* [Right={#1}, myfraction=\dotfrac]}
 
 %% decoration
 \newcommand{\pa}[1]{\ensuremath{{#1}^{\checkmark}}}
