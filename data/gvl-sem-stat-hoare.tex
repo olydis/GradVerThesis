@@ -80,7 +80,7 @@
         {\wo {\grad{\phi'}} {\phi_r}} = \grad{\phi''}
     }
     {
-        \dgthoare {\Gamma} {\grad{\phi}} {{\sRelease {${\phi_r}$}}} {\grad{\phi'}}
+        \dgthoare {\Gamma} {\grad{\phi}} {{\sRelease {${\phi_r}$}}} {\grad{\phi''}}
     }
     
     \inferrule* [Right=\dgradT HDeclare]
@@ -97,7 +97,7 @@
     {
         \sfrmphi {\phi} \\
         \gphiImpliesEv{\grad{\phi_f}}{\phi}{\grad{\phi_f'}}\\
-        \wo {\grad{\phi_f'}} {\staticFP{\phi}} = \grad{\phi_r}\\
+        \wo {\grad{\phi_f'}} {\phi} = \grad{\phi_r}\\
         \wo {\wo {\grad{\phi_f'}} {\static{$\grad{\phi_r}$}}}{(\FV(\grad{\phi_f'}) \backslash \FV(\phi))} = \grad{\phi'}\\
         \mods(s) \cap \FV(\phi) = \emptyset \\
         \dgthoare {\Gamma} {\grad{\phi_r}} {s} {\grad {\phi_r'}}

@@ -267,3 +267,24 @@ This gradual partial function has desirable properties:
         In general, small-step semantics that are rely on guarantees given by static semantics may turn out too weak after gradualization of the static semantics.
     \end{example}
 \end{description}
+
+
+\begin{lemma}[Reduced Runtime Checks]
+    \label{lemma:runtime-checks-reduced}
+    Assume that $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2'}}$ holds for some $\grad{\phi_1}, \grad{s}, \grad{\phi_2}$.
+    If \tset{GDPreservation} holds, the runtime check $\sAssert{\grad{\phi_2}}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{GPreservation'}) can be simplified or omitted.
+    
+    Specifically, it is sufficient to insert a runtime check (predicate) $P \subset \setProgramState$ if
+    \begin{gather*}
+    \envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}
+    \end{gather*}
+    holds.
+    \begin{example}{Reduced Runtime Check}~\\
+        Let $\grad{\phi_2'} = \withqmGen{\phiEq{x}{3}}$ and $\grad{\phi_2} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{5}}$.
+        
+        Then $P(\pi) \defeq \evalgphiGen{\pi}{\phiEq{y}{5}}$ is a sufficient runtime check.
+    \end{example}
+    
+    Note that $P(\pi) = \setProgramState$ is a sufficient runtime check if $\envs{\grad{\phi_2'}} \subseteq \envs{\grad{\phi_2}}$.
+    In other words, no runtime check is necessary in this case.
+\end{lemma}

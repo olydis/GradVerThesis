@@ -24,7 +24,7 @@ In this section we identify components the Hoare rules are made of (e.g. implica
     \begin{lemma}~\\
         Let $\dgrad{P}_{\phi_t} : \setGFormula \rightharpoonup \setGFormula$ be defined as
         \begin{alignat*}{2}
-        & \dgrad{P}_{\phi_t}(\phi_1)          & &= \underset{\phiImplies{}{}}{\max} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~\} \\
+        & \dgrad{P}_{\phi_t}(\phi_1)          & &= \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~\} \\
         & \dgrad{P}_{\phi_t}(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_{\phi_t}(\phi_1)}
         \end{alignat*}
         Then $\dgrad{P}_{\phi_t}$ is well-defined and an optimal deterministic lifting of $P_{\phi_t}$.
@@ -44,7 +44,7 @@ In this section we identify components the Hoare rules are made of (e.g. implica
     \begin{lemma}~\\
         Let $\dgrad{P}_x : \setGFormula \rightharpoonup \setGFormula$ be defined as
         \begin{alignat*}{2}
-        & \dgrad{P}_x(\phi_1)          & &= \underset{\phiImplies{}{}}{\max} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phi_2} \wedge x \not \in \FV(\phi_2) ~\} \\
+        & \dgrad{P}_x(\phi_1)          & &= \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phi_2} \wedge x \not \in \FV(\phi_2) ~\} \\
         & \dgrad{P}_x(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_x(\phi_1)}
         \end{alignat*}
         Then $\dgrad{P}_x$ is well-defined and an optimal deterministic lifting of $P_x$.

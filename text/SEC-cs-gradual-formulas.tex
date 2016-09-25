@@ -33,6 +33,13 @@ In our design of gradual formulas we aim for “bounded unknown” formulas as i
         	\phiCons{\phiCons{\phiEq{a}{b}}{\phiAcc{b}{color}}}{\phiEq{b.color}{b.color}}      & \in \gamma(\withqm{\phiEq{a.color}{b.color}}) &
         \end{flalign*}
     \end{example}
+    
+    \item{Static Knowledge Extraction}
+    We define a helper function $\static{} : \setGFormula \rightarrow \setFormula$ that extracts the static part of a gradual formula as follows:
+    \begin{alignat*}{2}
+    	 & \static{$\phi$}          &~= \phi & ~ \\
+    	 & \static{$\withqm{\phi}$} &~= \phi &
+    \end{alignat*}
 \end{description}
 
 %% gradual syntax

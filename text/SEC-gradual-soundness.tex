@@ -11,7 +11,8 @@ The overall proof is a structural induction on statement $s$.
 \begin{lemma}[Partial Completeness of \svlidf]
     \label{lemma:pc-idf}
     The semantics of \svlidf is complete (see definition \ref{def:completeness}) w.r.t. 
-    \begin{itemize}
+    $\sSkip, \sFieldAssign {$x$} {$f$} {$y$}, \sVarAssign {$x$} {$e$}, \sAlloc {$x$} {$C$}, \sReturn {$x$}, \sAssert {$\phi$}, \sRelease {$\phi$}$
+    \begin{comment}
         \item $\sSkip$
         \item $\sFieldAssign {$x$} {$f$} {$y$} $
         \item $\sVarAssign {$x$} {$e$}$
@@ -19,7 +20,7 @@ The overall proof is a structural induction on statement $s$.
         \item $\sReturn {$x$}$
         \item $\sAssert {$\phi$}$
         \item $\sRelease {$\phi$}$
-    \end{itemize}
+    \end{comment}
 \end{lemma}
 \begin{proof}
     Goal:
@@ -27,7 +28,7 @@ The overall proof is a structural induction on statement $s$.
     \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
     \implies \exists \Gamma \in \setTypeEnv,\, \phi_1, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
     \end{flalign*}
-    for the statements $s$ mentioned in the lemma.
+    for statements $s$ mentioned in the lemma.
     
     \begin{description}
         \item[$\sSkip$]~\\
@@ -60,7 +61,7 @@ The overall proof is a structural induction on statement $s$.
         
         
         \item[$\sAlloc {$x$} {$C$}$]~\\
-        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
         Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
             
             
@@ -83,7 +84,8 @@ The overall proof is a structural induction on statement $s$.
 \begin{lemma}[Partial Semi-Optimality of \gvlidf]
     \label{lemma:pso-idf}
     The semantics of \gvlidf is semi-optimal (see definitions \ref{def:perf-stat} and \ref{def:perf-dyn}) w.r.t.
-    \begin{itemize}
+    $\sSkip, \sFieldAssign {$x$} {$f$} {$y$}, \sVarAssign {$x$} {$e$}, \sAlloc {$x$} {$C$}, \sReturn {$x$}, \sAssert {$\phi$}, \sRelease {$\phi$}$
+    \begin{comment}
         \item $\sSkip$
         \item $\sFieldAssign {$x$} {$f$} {$y$} $
         \item $\sVarAssign {$x$} {$e$}$
@@ -91,67 +93,85 @@ The overall proof is a structural induction on statement $s$.
         \item $\sReturn {$x$}$
         \item $\sAssert {$\phi$}$
         \item $\sRelease {$\phi$}$
-    \end{itemize}
+    \end{comment}
 \end{lemma}
 \begin{proof}
     Semi-optimality of the gradual small-step semantics is trivially the case due to being identical with the small-step semantics of \svlidf.
     
     Semi-optimality of the deterministic gradual Hoare logic:
     Goal:
-    \begin{flalign*}
-    \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
-    \implies \exists \Gamma \in \setTypeEnv,\, \phi_1, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
-    \end{flalign*}
-    for the statements $s$ mentioned in the lemma.
+    \begin{align*}
+    \forall \Gamma \in \setTypeEnv,\, \phi_1 \in \setFormula,\, \grad{\phi_2} \in \setGFormula.&~ \dgthoare{\Gamma}{\phi_1}{\grad{s}}{\grad{\phi_2}}\\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2}
+    \end{align*}
+    for statements $s$ mentioned in the lemma.
     
     \begin{description}
         \item[$\sSkip$]~\\
-        $$\thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$$
-        trivially holds for $\phi_1 = \phi_2 = \phiTrue$ and any $\Gamma$
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sSkip}{\grad{\phi_2}}$ for some $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
         
-        
-        \item[$\sFieldAssign {$x$} {$f$} {$y$} $]~\\
-        Known: $\sstepConsume{\sFieldAssign {$x$} {$f$} {$y$}}{\pi_1}{\pi_2}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\pi_1, \pi_2 \in \setProgramState$.
-        
-        We choose 
+        Then $\thoare{\Gamma}{\phi_1}{\sSkip}{\phi_1}$ holds (\tset{HSkip}).
+                
+        \item[$\sFieldAssign {$x$} {$f$} {$y$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\grad{\phi_2}}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HFieldAssign}) we can deduce:
         \begin{align*}
-        &\phi_1 = \phiAcc{$x$}{$f$}\\
-        &\phi_2 = \phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}
+        \wo{\phi_1}{\phiAcc{x}{f}} = \grad{\phi'}
         \end{align*}
-        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phi_2}$ can be deduced using \tset{HFieldAssign} (for some $\Gamma$).
-        Also $\evalphiGen{\pi_1}{\phi_1}$ holds by inversion of \tset{\dgradT SsFieldAssign}.
+        for some $\grad{\phi'} \in \setGFormula$.
+        Expanding the definition of $\wo{\cdot}{\cdot}$
+        \begin{align*}
+        \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{\phiAcc{x}{f}}{$\phi_2$}} ~\} = \grad{\phi'}
+        \end{align*}
+        It follows that $\phiImplies{\phi_1}{\phiAcc{x}{f}}$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}}$ holds (\tset{HFieldAssign}).
         
         
         \item[$\sVarAssign {$x$} {$e$}$]~\\
-        Known: $\sstepConsume{\sVarAssign {$x$} {$e$}}{\pi_1}{\pi_2}$ for some $x \in \setVar,\, e \in \setExpr$ and $\pi_1, \pi_2 \in \setProgramState$.
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\grad{\phi_2}}$ for some $x \in \setVar,\, e \in \setExpr$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HVarAssign}) we can deduce:
+        \begin{gather*}
+        \phiImplies{\phi_1}{\accFor{e}}\\
+        x \not \in \FV(e)
+        \end{gather*}
         
-        We choose 
-        \begin{align*}
-        &\phi_1 = \accFor{$e$}\\
-        &\phi_2 = \phiCons{\phiTrue}{\phiEq{$x$}{$e$}}
-        \end{align*}
-        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phi_2}$ can be deduced using \tset{HVarAssign} (for some $\Gamma$).
-        The remaining premises as well as $\evalphiGen{\pi_1}{\phi_1}$ hold by inversion of \tset{\dgradT SsVarAssign}. 
+        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phiCons{\phiTrue}{\phiEq{$x$}{$e$}}}$ holds (\tset{HVarAssign}).
         
         
         \item[$\sAlloc {$x$} {$C$}$]~\\
-        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
-        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sAlloc {$x$} {$C$}}{\grad{\phi_2}}$ for some $x \in \setVar,\, C \in \setClassName$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sAlloc {$x$} {$C$}}{\phiCons{\phiCons{\phiTrue}{\phiNeq{$x$}{\enull}}}{...}}$ holds (\tset{HAlloc}).
         
         
         \item[$\sReturn {$x$}$]~\\
-        $\thoare{\Gamma}{\phiTrue}{\sReturn {$x$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
-        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sReturn {$x$}}{\grad{\phi_2}}$ for some $x \in \setVar$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
         
+        Then $\thoare{\Gamma}{\phi_1}{\sReturn {$x$}}{\phiCons{\phiTrue}{\phiEq{\eresult}{$x$}}}$ holds (\tset{HReturn}).
+       
         
         \item[$\sAssert {$\phi$}$]~\\
-        $\thoare{\Gamma}{\phi}{\sAssert {$\phi$}}{\phi}$ can be deduced using \tset{HAlloc} (for some $\Gamma$).
-        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsAssert}.
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sAssert {$\phi$}}{\grad{\phi_2}}$ for some $\phi \in \setFormula$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HAssert}) we can deduce:
+        \begin{gather*}
+        \gphiImpliesEv{\phi_1}{\phi}{\grad{\phi'}}
+        \end{gather*}
+        for some $\grad{\phi'} \in \setGFormula$.
+        By definition of $\gphiImpliesEv{\cdot}{\cdot}{\cdot}$ it follows that $\phiImplies{\phi_1}{\phi}$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sAssert {$\phi$}}{\phi_1}$ holds (\tset{HAssert}).
         
         
         \item[$\sRelease {$\phi$}$]~\\
-        $\thoare{\Gamma}{\phi}{\sRelease {$\phi$}}{\phiTrue}$ can be deduced using \tset{HRelease} (for some $\Gamma$).
-        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsRelease}.
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\grad{\phi_2}}$ for some $\phi \in \setFormula$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HRelease}) we can deduce:
+        \begin{gather*}
+       \gphiImpliesEv{\phi_1}{\phi}{\grad{\phi'}}
+        \end{gather*}
+        for some $\grad{\phi'} \in \setGFormula$.
+        By definition of $\gphiImpliesEv{\cdot}{\cdot}{\cdot}$ it follows that $\phiImplies{\phi_1}{\phi}$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\phiTrue}$ holds (\tset{HRelease}).
     \end{description}
 \end{proof}
 
@@ -217,7 +237,7 @@ The overall proof is a structural induction on statement $s$.
 \begin{lemma}[\tset{GDPreservation} Induction Step for Calls]
     \label{lemma:is-call}
     Assume \tset{GDPreservation} holds for the method body of method $\edot{y}{m}$.
-    Then \tset{GDPreservation} holds for $\sCall {$x$} {$y$} {$m$} {$z$}}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
+    Then \tset{GDPreservation} holds for $\sCall {$x$} {$y$} {$m$} {$z$}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
 \end{lemma}
 \begin{proof}
     Assumption:
@@ -246,14 +266,14 @@ The overall proof is a structural induction on statement $s$.
     \label{frm:tmpp11a}
     z, \ethis \not \in \mods(s)
     \end{gather}
-    \begin{comment}
-    Using the induction hypothesis we may assume that
-    \begin{gather}
-    \label{frm:tmpp100a}
-    \gtHoare {} {\grad{\phi_{pre}}} {\textit{<method body>}} {\grad{\phi_{post}}}
-    \end{gather}
-    (note that the method body is $s$, combined with necessary measures to ensure the postcondition).
-    \end{comment}
+    %\begin{comment2}
+    %Using the induction hypothesis we may assume that
+    %\begin{gather}
+    %\label{frm:tmpp100a}
+    %\gtHoare {} {\grad{\phi_{pre}}} {\textit{<method body>}} {\grad{\phi_{post}}}
+    %\end{gather}
+    %(note that the method body is $s$, combined with necessary measures to ensure the postcondition).
+    %\end{comment2}
     As shown below, it follows that 
     \begin{align}
     \label{frm:tmpp101a}
