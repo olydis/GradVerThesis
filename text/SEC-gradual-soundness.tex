@@ -21,6 +21,37 @@ The overall proof is a structural induction on statement $s$.
         \item $\sRelease {$\phi$}$
     \end{itemize}
 \end{lemma}
+\begin{proof}
+    Goal:
+    \begin{flalign*}
+    \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
+    \implies \exists \Gamma \in \setTypeEnv,\, \phi_1, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
+    \end{flalign*}
+    for the statements $s$ mentioned in the lemma.
+    
+    \begin{description}
+        \item[$\sSkip$]~\\
+        $$\thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$$
+        trivially holds for $\phi_1 = \phi_2 = \phiTrue$ and any $\Gamma$
+        
+        \item[$\sFieldAssign {$x$} {$f$} {$y$} $]~\\
+        Known: $\sstepConsume{\sFieldAssign {$x$} {$f$} {$y$}}{\pi_1}{\pi_2}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\pi_1, \pi_2 \in \setProgramState$.
+        
+        We chose 
+        \begin{align*}
+        &\phi_1 = \phiAcc{$x$}{$f$}\\
+        &\phi_2 = \phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}
+        \end{align*}
+        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phi_2}$ can be deduced using \tset{HFieldAssign} (for some $\Gamma$).
+        Also $\evalphiGen{\pi_1}{\phi_1}$ holds by inversion of \tset{\dgradT SsFieldAssign}.
+        
+        \item[$\sVarAssign {$x$} {$e$}$]~\\
+        \item[$\sAlloc {$x$} {$C$}$]~\\
+        \item[$\sReturn {$x$}$]~\\
+        \item[$\sAssert {$\phi$}$]~\\
+        \item[$\sRelease {$\phi$}$]~\\
+    \end{description}
+\end{proof}
 
 \begin{lemma}[Partial Semi-Optimality of \gvlidf]
     \label{lemma:pso-idf}
