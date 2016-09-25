@@ -1,0 +1,32 @@
+
+\begin{mathpar}
+\inferrule* [Right=\gradT OkProgram]
+{
+\overline{cls_i \gOK} \\
+\gthoare {~} {\qm} {s} {\qm}
+}
+{(\overline{cls_i}~s) \gOK}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=\gradT OkClass]
+{
+\text{unique $field$-names} \\
+\text{unique $\grad{method}$-names} \\
+\overline{\grad{method}_i \gOKinC}
+}
+{(\class {$C$} {$\overline{field_i}$} {$\overline{\grad{method}_i}$}) \gOK}
+\end{mathpar}
+
+\begin{mathpar}
+\inferrule* [Right=\gradT OkMethod]
+{
+    \gthoare {x : T_x, \ethis : C, \eresult : T_m} {\grad{\phi_1}} {s} {\grad{\phi_2}} \\\\
+    \FV(\grad{\phi_1}) \subseteq \{ x, \ethis \} \\
+    \FV(\grad{\phi_2}) \subseteq \{ x, \ethis, \eresult \} \\\\
+    \sfrmgphi \grad{\phi_1} \\
+    \sfrmgphi \grad{\phi_2} \\
+    x, \ethis \not \in \mods(s)
+}
+{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\grad{\phi_1}$} {$\grad{\phi_2}$}} {$s$}) \gOKinC}
+\end{mathpar} 

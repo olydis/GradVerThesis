@@ -86,6 +86,7 @@
     \inferrule* [Right=\dgradT HDeclare]
     {
         {x} \not\in \dom{\Gamma} \\
+        {x} \not \in {\FV(\grad{\phi})} \\
         \dgthoare {{\Gamma}, {x} : {T}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
     }
     {

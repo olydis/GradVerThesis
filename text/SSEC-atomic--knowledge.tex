@@ -2,9 +2,9 @@
 Completeness as defined before tightly couples Hoare logic and small-step semantics.
 In practice this can be impossible to implement due to decidability, i.e. not all valid small-step derivations can be modeled using Hoare logic.
 As a result, completeness is impossible to achieve.
-Similarly, perfection of the gradual semantics might be hard to ensure.
+Similarly, semi-optimality of the gradual semantics might be hard to ensure.
 Perfection of the gradual Hoare logic requires deciding the existence of a Hoare logic derivation which involves first order logic for composite statements like sequences (which was a problem we originally wanted to avoid with deterministic liftings).
-In this section we motivate that a weaker notion of completion and perfection may be sufficient to prove \tset{GDPreservation}.
+In this section we motivate that a weaker notion of completion and semi-optimality may be sufficient to prove \tset{GDPreservation}.
 
 %% 
 The sequence operator \ttt{;} is key to defining composite statements in most programming languages.
@@ -41,7 +41,7 @@ Fortunately, \tset{GDPreservation} can be proved for sequences inductively.
 
 As we will show in the case study (section \ref{sec:gradual-soundness}) this inductive approach can be applied to other composite statements like method calls.
 As a result, it is sufficient to prove \tset{GDPreservation} for “primitive” statements, e.g. by using the approach introduced in the previous section:
-Note that the definitions of completeness and perfection are universally quantified over the set of all (gradual) statements.
+Note that the definitions of completeness and semi-optimality are universally quantified over the set of all (gradual) statements.
 Instead, they can be weakened to quantify only over a limited set of primitive statements.
 The resulting proof of \tset{GDPreservation} will apply only to this set of statements.
 

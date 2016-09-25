@@ -87,10 +87,10 @@
 %% evalphi
 \begin{lemma}[Optimal Lifting of Evaluation]~\\
     \label{ex:opt-lift-evalphi}
-    Let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+    Let $\setGFormula$ be extended using the “bounded unknown” approach (see section \ref{ssec:wildcard-with-upper}).
     Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
     \begin{mathpar}
-        \inferrule* [Right=GEvalStatic]
+        \inferrule* [Right=\gradT EvalStatic]
         {
             \evalphiGen{\pi}{\phi}
         }
@@ -99,23 +99,23 @@
         }
     \end{mathpar}
     \begin{mathpar}
-        \inferrule* [Right=GEvalGrad]
+        \inferrule* [Right=\gradT EvalGrad]
         {
-            ~
+            \evalphiGen{\pi}{\phi}
         }
         {
-            \evalgphiGen{\pi}{\qm}
+            \evalgphiGen{\pi}{\withqmGen{\phi}}
         }
     \end{mathpar}
     
-    Then $~\evalgphiGen{\cdot}{\cdot}~$ is a consistent lifting of $~\evalphiGen{\cdot}{\cdot}~$.
+    Then $~\evalgphiGen{\cdot}{\cdot}~$ is an optimal lifting of $~\evalphiGen{\cdot}{\cdot}~$.
 \end{lemma}
 \begin{proof}
     Goal:
     $$\evalgphiGen{\pi}{\grad{\phi}} \iff \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen{\pi}{\phi}$$
     
     $\implies$:
-        Case \tset{GEvalStatic}:
+        Case \tset{\gradT EvalStatic}:
         \begin{align*}
         &\evalgphiGen{\pi}{\phi}\\
         \implies
@@ -124,21 +124,26 @@
         &(\exists \phi' \in \gamma(\phi).~ \evalphiGen{\pi}{\phi'})
         \end{align*}
         
-        Case \tset{GEvalGrad}:
+        Case \tset{\gradT EvalGrad}:
         \begin{align*}
-        &\evalphiGen{\pi}{\phiTrue} ~\wedge~ \phiTrue \in \gamma(\qm)\\
+        &\evalgphiGen{\pi}{\withqmGen{\phi}}\\
         \implies
-        &(\exists \phi \in \gamma(\qm).~ \evalphiGen{\pi}{\phi})
+        &\evalphiGen{\pi}{\phi}\\
+        \implies
+        &(\exists \phi' \in \gamma(\withqmGen{\phi}).~ \evalphiGen{\pi}{\phi'})
         \end{align*}
     
     $\impliedby$:
         \begin{align*}
-        \phi \in \gamma(\grad{\phi}) \wedge \evalphiGen{\pi}{\phi}
+        \phi' \in \gamma(\grad{\phi}) \wedge \evalphiGen{\pi}{\phi'}
         \end{align*}
-        Case $\grad{\phi} = \qm$:
-            Apply $\tset{GEvalGrad}$.
+        Case $\grad{\phi} = \withqmGen{\phi}$:
+            It follows from definition \ref{def:gamma-bounded-unk} that $\phiImplies{\phi'}{\phi}$ and thus $\evalphiGen{\pi}{\phi}$.
+            Apply $\tset{\gradT EvalGrad}$.
+            
         Case $\grad{\phi} = \phi$:
-            Apply $\tset{GEvalStatic}$.
+            It follows that $\phi = \phi'$.
+            Apply $\tset{\gradT EvalStatic}$.
 \end{proof}
 
 Note that the definition of lifted evaluation was lifted only w.r.t. the second parameter.

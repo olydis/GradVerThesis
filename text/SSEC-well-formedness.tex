@@ -1,33 +1,10 @@
-The notion of well-formedness has to be adjusted...
+As well-formedness was a condition of soundness of \svlidf, we give an adjusted version that is required for soundness of \gvlidf (see figure \ref{fig:gidf-wf}).
+Note that the only changes are a more flexible contract for the main method, as well as the gradual method contract.
+We define $\FV(\withqm{\phi}) \defeq \FV(\phi)$.
 
-\begin{mathpar}
-\inferrule* [Right=\gradT OkProgram]
-{
-\overline{cls_i \gOK} \\
-\gthoare {~} {\qm} {s} {\qm}
-}
-{(\overline{cls_i}~s) \gOK}
-\end{mathpar}
+\begin{figure}[h]
+    \input{data/gvlidf-wf}
+    \caption{\gvlidf: Well-Formedness}
+    \label{fig:gidf-wf}
+\end{figure}
 
-\begin{mathpar}
-\inferrule* [Right=\gradT OkClass]
-{
-\text{unique $field$-names} \\
-\text{unique $\grad{method}$-names} \\
-\overline{\grad{method}_i \gOKinC}
-}
-{(\class {$C$} {$\overline{field_i}$} {$\overline{\grad{method}_i}$}) \gOK}
-\end{mathpar}
-
-\begin{mathpar}
-\inferrule* [Right=\gradT OkMethod]
-{
-    \gthoare {x : T_x, \ethis : C, \eresult : T_m} {\grad{\phi_1}} {s} {\grad{\phi_2}} \\\\
-    \FV(\grad{\phi_1}) \subseteq \{ x, \ethis \} \\
-    \FV(\grad{\phi_2}) \subseteq \{ x, \ethis, \eresult \} \\\\
-    \sfrmgphi \grad{\phi_1} \\
-    \sfrmgphi \grad{\phi_2} \\
-    \neg \writesTo(s, x)
-}
-{(\method {$T_m$} {$m$} {$T_x$} {$x$} {\contract {$\grad{\phi_1}$} {$\grad{\phi_2}$}} {$s$}) \gOKinC}
-\end{mathpar} 

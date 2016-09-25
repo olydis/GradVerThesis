@@ -1,12 +1,218 @@
-Proposed gradual Hoare logic is sound w.r.t. the small-step semantics.
+Proposed gradual Hoare logic is sound w.r.t. the small-step semantics if runtime checks are injected as proposed in section \ref{ssec:gradual-soundness} (see lemma \ref{lemma:tauto} for proof).
 % BY construction, what about progress? \gsssem exceptional? THEOREM?
 
-However, \gvlidf also complies with the stronger notion of soundness \tset{GDPreservation}.
+However, \gvlidf also complies with the stronger notion of soundness \tset{GDPreservation} introduced in section \ref{ssec:gradual-soundness}.
 We will show how the small-step semantics $\sstep{\cdot}{\cdot}$ and $\gsstep{\cdot}{\cdot}$ realize the approach introduced in section \ref{ssec:atomic--knowledge}.
 
-Specifically, we show that for some statements, $\sstep{\cdot}{\cdot}$ successfully executes the statement precisely iff Hoare logic is able to deduce information about the execution.
-For all composite statements (sequence, calls and hold), we prove by induction that \tset{GDPreservation} holds for them as well.
+Specifically, we show that the semantics are complete and perfect w.r.t. all statements except declarations, sequences, method calls and hold.
+For those remaining statements we prove by induction that \tset{GDPreservation} still holds.
+The overall proof is a structural induction on statement $s$.
 
+\begin{lemma}[Partial Completeness of \svlidf]
+    \label{lemma:pc-idf}
+    The semantics of \svlidf is complete (see definition \ref{def:completeness}) w.r.t. 
+    \begin{itemize}
+        \item $\sSkip$
+        \item $\sFieldAssign {$x$} {$f$} {$y$} $
+        \item $\sVarAssign {$x$} {$e$}$
+        \item $\sAlloc {$x$} {$C$}$
+        \item $\sReturn {$x$}$
+        \item $\sAssert {$\phi$}$
+        \item $\sRelease {$\phi$}$
+    \end{itemize}
+\end{lemma}
 
+\begin{lemma}[Partial Semi-Optimality of \gvlidf]
+    \label{lemma:pso-idf}
+    The semantics of \gvlidf is semi-optimal (see definitions \ref{def:perf-stat} and \ref{def:perf-dyn}) w.r.t.
+    \begin{itemize}
+        \item $\sSkip$
+        \item $\sFieldAssign {$x$} {$f$} {$y$} $
+        \item $\sVarAssign {$x$} {$e$}$
+        \item $\sAlloc {$x$} {$C$}$
+        \item $\sReturn {$x$}$
+        \item $\sAssert {$\phi$}$
+        \item $\sRelease {$\phi$}$
+    \end{itemize}
+\end{lemma}
 
-%TODO (use lemmas and theorems for that!?)
+\begin{lemma}[\tset{GDPreservation} Induction Step for Declaration]
+    \label{lemma:is-decl}
+    Assume \tset{GDPreservation} holds for $s \in \setGStmt$.
+    Then \tset{GDPreservation} holds for $\sSeq{\sDeclare{$T$}{$x$}}{$s$}$ (for all $T \in \setType,\, x \in \setVar$).
+\end{lemma}
+\begin{proof}
+    Assumption:
+    \begin{align}
+    \dgthoare{\Gamma}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
+    \end{align}
+    Using inversion of rule $\tset{\dgradT HDeclare}$ we know that
+    \begin{gather}
+    \label{frm:tmpp1}
+    {x} \not\in \dom{\Gamma} \\
+    \label{frm:tmpp2}
+    {x} \not \in {\FV(\grad{\phi})} \\
+    \dgthoare {{\Gamma}, {x} : {T}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
+    \end{gather}
+    Using the induction hypothesis we may apply \tset{GDPreservation} to $s$, deducing
+    \begin{gather}
+    \label{frm:tmpp4}
+    \gtHoare {} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
+    \end{gather}
+    Furthermore we can show that
+    \begin{gather}
+    \label{frm:tmpp5}
+    \gtHoare {} {\grad{\phi}} {\sDeclare {${T}$} {${x}$}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
+    \end{gather}
+    holds (using \ref{frm:tmpp2}, find proof below).
+    Using lemma ??? we can combine \ref{frm:tmpp4} and \ref{frm:tmpp5} to derive the goal:
+    \begin{align}
+    \gtHoare{}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
+    \end{align}
+    
+    Proof for \ref{frm:tmpp5}:
+    Assumptions:
+    \begin{gather}
+    \label{frm:tmpp7}
+    \gsstepConsume{\sDeclare {${T}$} {${x}$}}{\pi_1}{\pi_2}\\
+    \label{frm:tmpp8}
+    \evalgphiGen {\pi_1} {\grad{\phi}}
+    \end{gather}
+    for some $\pi_1, \pi_2 \in \setGProgramState$.
+    Goal:
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
+    \end{gather}
+    Applying rule inversion (\tset{SsDeclare}) to \ref{frm:tmpp7} we can see that $\pi_2$ is like $\pi_1$, but with $x$ set to $\defaultValue{${T}$}$ (and the assertion consumed).
+    It follows that
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}
+    \end{gather}
+    Since we know that $\grad{\phi}$ does not contain $x$ (see \ref{frm:tmpp2}), we can deduce that
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\grad{\phi}}
+    \end{gather}
+    The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
+\end{proof}
+
+\begin{lemma}[\tset{GDPreservation} Induction Step for Calls]
+    \label{lemma:is-call}
+    Assume \tset{GDPreservation} holds for the method body of method $\edot{y}{m}$.
+    Then \tset{GDPreservation} holds for $\sCall {$x$} {$y$} {$m$} {$z$}}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
+\end{lemma}
+\begin{proof}
+    Assumption:
+    \begin{align}
+    \dgthoare {\Gamma} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
+    \end{align}
+    Using inversion of rule $\tset{\dgradT HCall}$ we know that
+    \begin{gather}
+    \label{frm:tmpp1a}
+    \wo {\wo {\grad{\phi}} {x}} {\grad{\phi_p}} = \grad{\phi'}\\
+    {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {$\grad{\phi_{pre}}$} {$\grad{\phi_{post}}$}}$} {$s$}}} \\
+    \gphiImplies{\grad{\phi}}{\gphiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{$\grad{\phi_p}$}} \\
+    x \neq y \wedge x \neq z' \\
+    \grad{\phi_p} = {\grad{\phi_{pre}}[{y}, {z'} / {\ethis}, {{z}}]} \\
+    \label{frm:tmpp5a}
+    \grad{\phi_q} = {\grad{\phi_{post}}[{y}, {z'}, {x} / {\ethis}, {{z}}, {\eresult}]}
+    \end{gather}
+    From gradual well-formedness (section \ref{ssec:well-formedness}) it follows that
+    \begin{gather}
+    \gthoare {z : T_p, \ethis : C, \eresult : T_r} {\grad{\phi_{pre}}} {s} {\grad{\phi_{post}}} \\
+    \FV(\grad{\phi_{pre}}) \subseteq \{ z, \ethis \} \\
+    \label{frm:tmpp8a}
+    \FV(\grad{\phi_{post}}) \subseteq \{ z, \ethis, \eresult \} \\
+    \sfrmgphi \grad{\phi_{pre}} \\
+    \sfrmgphi \grad{\phi_{post}} \\
+    \label{frm:tmpp11a}
+    z, \ethis \not \in \mods(s)
+    \end{gather}
+    \begin{comment}
+    Using the induction hypothesis we may assume that
+    \begin{gather}
+    \label{frm:tmpp100a}
+    \gtHoare {} {\grad{\phi_{pre}}} {\textit{<method body>}} {\grad{\phi_{post}}}
+    \end{gather}
+    (note that the method body is $s$, combined with necessary measures to ensure the postcondition).
+    \end{comment}
+    As shown below, it follows that 
+    \begin{align}
+    \label{frm:tmpp101a}
+    \gtHoare {} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
+    \end{align}
+    
+    Proof for \ref{frm:tmpp101a}:
+    Assumptions:
+    \begin{gather}
+    \label{frm:tmpp1000a}
+    \gsstepConsume{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}{\pi_1}{\pi_2}\\
+    \label{frm:tmpp1001a}
+    \evalgphiGen {\pi_1} {\grad{\phi}}
+    \end{gather}
+    for some $\pi_1, \pi_2 \in \setGProgramState$.
+    Goal:
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
+    \end{gather}
+    Applying rule inversion to \ref{frm:tmpp1000a} we derive that there exists $\pi_{pre}, \pi_{post} \in \setGProgramState$ such that
+    \begin{gather}
+    \label{frm:tmpp1010a}
+    \gsstep{\pi_1}{\pi_{pre}}\\
+    \label{frm:tmpp1011a}
+    \gsstepConsume{s}{\pi_{pre}}{\pi_{post}}\\
+    \label{frm:tmpp1012a}
+    \gsstep{\pi_{post}}{\pi_2}
+    \end{gather}
+    where \ref{frm:tmpp1010a} is determined by \tset{\gradT SsCall} and \ref{frm:tmpp1012a} by \tset{\gradT SsCallFinish}.
+    Applying rule inversion to \ref{frm:tmpp1012a} it follows that
+    \begin{gather}
+    \evalgphiGen {\pi_{post}} {\grad{\phi_{post}}}
+    \end{gather}
+    Combining \ref{frm:tmpp5a} and \ref{frm:tmpp8a} we can show that $\grad{\phi_{q}}$ may only contain $y, z', x$.
+    \tset{\gradT SsCallFinish} assigns $\eresult$ to $x$, which reflects the substitution in \ref{frm:tmpp5a}.
+    Because of \ref{frm:tmpp11a} $\grad{\phi_{q}}$ does not contain false information about $y$ and $z'$ (as described in section \ref{sec:well-formedness}).
+    It follows that
+    \begin{gather}
+    \label{frm:tmpp2010a}
+    \evalgphiGen {\pi_2} {\grad{\phi_{q}}}
+    \end{gather}
+    Since the variables and fields mentioned in $\grad{\phi'}$ are guaranteed to be disjoint from those in $\grad{\phi_p}$ and due to \ref{frm:tmpp1a}, those memory locations cannot be changed by the call.
+    Furthermore $x$ is not in $\grad{\phi'}$ such that there cannot be a contradiction to the knowledge in $\grad{\phi_{q}}$ (which may contain information of $x$, provided by the call).
+    It follows that
+    \begin{gather}
+    \label{frm:tmpp2011a}
+    \evalgphiGen {\pi_2} {\grad{\phi'}}
+    \end{gather}
+    The goal follows from \ref{frm:tmpp2010a} and \ref{frm:tmpp2011a} using the fact that the formulas contain disjoint memory locations.
+\end{proof}
+
+\begin{lemma}[\tset{GDPreservation} Induction Step for Hold]
+    \label{lemma:is-hold}
+    Assume \tset{GDPreservation} holds for $s \in \setGStmt$.
+    Then \tset{GDPreservation} holds for $\sHold {$\phi$} {$s$}$ (for all $\phi \in \setFormula$).
+\end{lemma}
+\begin{proof}
+    Omitted.
+\end{proof}
+
+\begin{lemma}[\tset{GDPreservation} Induction Step for Sequences]
+    \label{lemma:is-seq}
+    Assume \tset{GDPreservation} holds for $s_1, s_2 \in \setGStmt$.
+    Then \tset{GDPreservation} holds for $\sSeq {$s_1$} {$s_2$}$.
+\end{lemma}
+\begin{proof}
+    Analogous to lemma \ref{lemma:gdpres-seq}.
+\end{proof}
+
+\begin{theorem}[\gvlidf Satisfies \tset{GDPreservation}]
+    The semantics of \gvlidf comply with \tset{GDPreservation}.
+\end{theorem}
+\begin{proof}
+    Structural induction over statement $s$.
+    Most cases are handled by theorem \ref{thm:compl-and-so-to-gdpres} and lemmas \ref{lemma:pc-idf} and \ref{lemma:pso-idf}.
+    The remaining cases are covered by lemmas 
+    \ref{lemma:is-decl},
+    \ref{lemma:is-call},
+    \ref{lemma:is-hold} and
+    \ref{lemma:is-seq}.
+\end{proof}

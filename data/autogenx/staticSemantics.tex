@@ -95,6 +95,7 @@
 \inferrule* [right=HDeclare]
 {
     {x} \not\in \dom{\Gamma} \\
+    {x} \not \in {\FV(\phi)} \\
     \thoare {{\Gamma}, {x} : {T}} {\phiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{${\phi}$}} {s} {\phi'}
 }
 {
