@@ -185,13 +185,13 @@ This gradual partial function has desirable properties:
         \end{displaymath}
         using Hoare logic.
         
-        Now, let $\setGFormula$ be extended using the “dedicated wildcard” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+        Now, let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
         The deterministic lifting of the Hoare logic will verify
         \begin{displaymath}
         \dgthoare{}{\qm}{\sVarAssign{x}{3}}{\qm}
         \end{displaymath}
         The unknown formula as postcondition is necessary, as anything else (e.g. $\phiEq{x}{3}$) would break the strength condition (take the above static judgments, both of their postconditions cannot be implied by any static formula).
-        Note that the “wildcard with upper bound” approach (see \ref{ssec:wildcard-with-upper}) would allow specifying $\withqmGen{\phiEq{x}{3}}$ as postcondition.
+        Note that the “bounded unknown” approach (see \ref{ssec:wildcard-with-upper}) would allow specifying $\withqmGen{\phiEq{x}{3}}$ as postcondition.
         
         Using \ref{lem:det2grad} we can deduce
         \begin{displaymath}

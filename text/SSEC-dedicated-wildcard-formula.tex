@@ -6,6 +6,8 @@ This is analogous to how some gradually typed languages are realized (e.g. \ttt{
 
 % STATIC We define a helper method extracting the amount of static
 
-The approach is limited since programmers cannot express any additional static knowledge they might have in the presence of $\qm$.
-For example, a programmer might resort to using the wildcard lacking some knowledge about variable \ex{x} (or being unable to express it), whereas he could give a static formula for \ex{y}, say \phiEq{y}{3}.
-Yet, there is no way to express this information as soon as the wildcard is used.
+We call this approach “total unknown” as programmers cannot express any additional static knowledge they might have in the presence of $\qm$.
+This poses a limitation that can be overcome using the “bounded unknown” approach shown in the following section.
+
+%For example, a programmer might resort to using the wildcard lacking some knowledge about variable \ex{x} (or being unable to express it), whereas he could give a static formula for \ex{y}, say \phiEq{y}{3}.
+%Yet, there is no way to express this information as soon as the wildcard is used.

@@ -11,6 +11,7 @@ For \svlidf we give the rules formalized in figure \ref{fig:idf-wf}.
 The premises of $\tset{OkMethod}$ make sure that reasoning about calls is sound.
 As expected, the method contract is checked, while also making sure that it contains self-framing formulas.
 Furthermore, the free variables are restricted to those occurring in the method signature.
+The following example illustrates why this is necessary.
 
 %% example
 \begin{example}{Leaking Postcondition}
@@ -27,9 +28,11 @@ int identity(int a)
 While the method passes static verification, it could lead to unsound proofs.
 Note how \tset{HCall} forwards the postcondition after replacing known variables with their counterparts.
 \phiEq{b}{3} is unaffected by this replacement, ending up in the postcondition of the call statement.
+
+Should the call site also know a variable \ttt{b}, then \phiEq{b}{3} will most likely not reflect the state of that variable.
 \end{example}
 
 For similar reasons, we prevent writes to the method's parameter.
-Changes to the parameter could legally be stated in the postcondition which is forwarded to the call site.
-Information about the parameter is then reflected back on the variable passed for the method call.
-However, since variables are passed by value, this information would be false.
+Changes to the parameter would otherwise end up in the postcondition which is forwarded to the call site.
+Information about the formal parameter is then reflected back on the variable passed as actual parameter for the method call.
+However, since parameters are passed by value, this information would be false -- the actual parameter will have the same value before and after the method call.

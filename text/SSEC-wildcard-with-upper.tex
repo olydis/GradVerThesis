@@ -5,7 +5,8 @@ To allow combining wildcards with static knowledge, we might view $\qm$ merely a
 
 We pose $\qm \defeq \withqmGen{\phiTrue}$.
 
-We expect $\withqmGen{\phi}$ to be a placeholder for a formula that implies $\phi$.
+Intuitively, we expect $\withqmGen{\phi}$ to be a placeholder for a formula that implies $\phi$.
+This intuition is formalized using concretization.
 \begin{definition}[Concretization]~\\
     Let $\gamma : \setGFormula \rightarrow \PP(\setFormulaA)$ be defined as
     \begin{align*}
@@ -15,7 +16,7 @@ We expect $\withqmGen{\phi}$ to be a placeholder for a formula that implies $\ph
 \end{definition}
 
 Note that $\gamma(\qm) = \gamma(\withqmGen{\phiTrue}) = \{~ \phi' \in \setFormulaA ~|~ \phiImplies{\phi'}{\phiTrue} ~\} = \setFormulaA$.
-The approach is thus compatible with the previous one.
+The approach is thus compatible with and strictly superior to the previous one.
 
 \begin{comment}
 There are two ways to express this containment, resulting in different concretizations.

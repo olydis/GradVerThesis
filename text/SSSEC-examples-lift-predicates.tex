@@ -1,6 +1,6 @@
 %% phiImplies
 \begin{lemma}[Optimal Lifting of Implication]~\\
-    Let $\setGFormula$ be extended using the “dedicated wildcard” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+    Let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
     Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined inductively as
     \begin{mathpar}
         \inferrule* [Right=GImplStatic]
@@ -87,7 +87,7 @@
 %% evalphi
 \begin{lemma}[Optimal Lifting of Evaluation]~\\
     \label{ex:opt-lift-evalphi}
-    Let $\setGFormula$ be extended using the “dedicated wildcard” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+    Let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
     Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
     \begin{mathpar}
         \inferrule* [Right=GEvalStatic]
