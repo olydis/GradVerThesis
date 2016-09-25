@@ -21,6 +21,8 @@
 
 \inferrule* [Right=SsVarAssign]
 {
+    x \not \in \FV(e)\\
+    \evalphi{\accFor{e}}\\
     \evalex {H} {\rho} {e} {v} \\
     {\rho'} = {{\rho}[{x} \mapsto {v}]}
 }

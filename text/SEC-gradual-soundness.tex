@@ -34,10 +34,11 @@ The overall proof is a structural induction on statement $s$.
         $$\thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$$
         trivially holds for $\phi_1 = \phi_2 = \phiTrue$ and any $\Gamma$
         
+        
         \item[$\sFieldAssign {$x$} {$f$} {$y$} $]~\\
         Known: $\sstepConsume{\sFieldAssign {$x$} {$f$} {$y$}}{\pi_1}{\pi_2}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\pi_1, \pi_2 \in \setProgramState$.
         
-        We chose 
+        We choose 
         \begin{align*}
         &\phi_1 = \phiAcc{$x$}{$f$}\\
         &\phi_2 = \phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}
@@ -45,11 +46,37 @@ The overall proof is a structural induction on statement $s$.
         Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phi_2}$ can be deduced using \tset{HFieldAssign} (for some $\Gamma$).
         Also $\evalphiGen{\pi_1}{\phi_1}$ holds by inversion of \tset{\dgradT SsFieldAssign}.
         
+        
         \item[$\sVarAssign {$x$} {$e$}$]~\\
+        Known: $\sstepConsume{\sVarAssign {$x$} {$e$}}{\pi_1}{\pi_2}$ for some $x \in \setVar,\, e \in \setExpr$ and $\pi_1, \pi_2 \in \setProgramState$.
+        
+        We choose 
+        \begin{align*}
+        &\phi_1 = \accFor{$e$}\\
+        &\phi_2 = \phiCons{\phiTrue}{\phiEq{$x$}{$e$}}
+        \end{align*}
+        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phi_2}$ can be deduced using \tset{HVarAssign} (for some $\Gamma$).
+        The remaining premises as well as $\evalphiGen{\pi_1}{\phi_1}$ hold by inversion of \tset{\dgradT SsVarAssign}. 
+        
+        
         \item[$\sAlloc {$x$} {$C$}$]~\\
+        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+            
+            
         \item[$\sReturn {$x$}$]~\\
+        $\thoare{\Gamma}{\phiTrue}{\sReturn {$x$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+            
+
         \item[$\sAssert {$\phi$}$]~\\
+        $\thoare{\Gamma}{\phi}{\sAssert {$\phi$}}{\phi}$ can be deduced using \tset{HAlloc} (for some $\Gamma$).
+        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsAssert}.
+        
+        
         \item[$\sRelease {$\phi$}$]~\\
+        $\thoare{\Gamma}{\phi}{\sRelease {$\phi$}}{\phiTrue}$ can be deduced using \tset{HRelease} (for some $\Gamma$).
+        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsRelease}.
     \end{description}
 \end{proof}
 
@@ -66,6 +93,67 @@ The overall proof is a structural induction on statement $s$.
         \item $\sRelease {$\phi$}$
     \end{itemize}
 \end{lemma}
+\begin{proof}
+    Semi-optimality of the gradual small-step semantics is trivially the case due to being identical with the small-step semantics of \svlidf.
+    
+    Semi-optimality of the deterministic gradual Hoare logic:
+    Goal:
+    \begin{flalign*}
+    \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
+    \implies \exists \Gamma \in \setTypeEnv,\, \phi_1, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
+    \end{flalign*}
+    for the statements $s$ mentioned in the lemma.
+    
+    \begin{description}
+        \item[$\sSkip$]~\\
+        $$\thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$$
+        trivially holds for $\phi_1 = \phi_2 = \phiTrue$ and any $\Gamma$
+        
+        
+        \item[$\sFieldAssign {$x$} {$f$} {$y$} $]~\\
+        Known: $\sstepConsume{\sFieldAssign {$x$} {$f$} {$y$}}{\pi_1}{\pi_2}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\pi_1, \pi_2 \in \setProgramState$.
+        
+        We choose 
+        \begin{align*}
+        &\phi_1 = \phiAcc{$x$}{$f$}\\
+        &\phi_2 = \phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}
+        \end{align*}
+        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phi_2}$ can be deduced using \tset{HFieldAssign} (for some $\Gamma$).
+        Also $\evalphiGen{\pi_1}{\phi_1}$ holds by inversion of \tset{\dgradT SsFieldAssign}.
+        
+        
+        \item[$\sVarAssign {$x$} {$e$}$]~\\
+        Known: $\sstepConsume{\sVarAssign {$x$} {$e$}}{\pi_1}{\pi_2}$ for some $x \in \setVar,\, e \in \setExpr$ and $\pi_1, \pi_2 \in \setProgramState$.
+        
+        We choose 
+        \begin{align*}
+        &\phi_1 = \accFor{$e$}\\
+        &\phi_2 = \phiCons{\phiTrue}{\phiEq{$x$}{$e$}}
+        \end{align*}
+        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phi_2}$ can be deduced using \tset{HVarAssign} (for some $\Gamma$).
+        The remaining premises as well as $\evalphiGen{\pi_1}{\phi_1}$ hold by inversion of \tset{\dgradT SsVarAssign}. 
+        
+        
+        \item[$\sAlloc {$x$} {$C$}$]~\\
+        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+        
+        
+        \item[$\sReturn {$x$}$]~\\
+        $\thoare{\Gamma}{\phiTrue}{\sReturn {$x$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+        
+        
+        \item[$\sAssert {$\phi$}$]~\\
+        $\thoare{\Gamma}{\phi}{\sAssert {$\phi$}}{\phi}$ can be deduced using \tset{HAlloc} (for some $\Gamma$).
+        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsAssert}.
+        
+        
+        \item[$\sRelease {$\phi$}$]~\\
+        $\thoare{\Gamma}{\phi}{\sRelease {$\phi$}}{\phiTrue}$ can be deduced using \tset{HRelease} (for some $\Gamma$).
+        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsRelease}.
+    \end{description}
+\end{proof}
 
 \begin{lemma}[\tset{GDPreservation} Induction Step for Declaration]
     \label{lemma:is-decl}
