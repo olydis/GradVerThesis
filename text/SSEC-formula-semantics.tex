@@ -1,5 +1,5 @@
 Formula semantics of \svlidf only depend on the heap and on the top most stack frame of a program state (more specifically: the local variable environment and the accessible fields, but not the continuation statement).
-To drastically simplify notation, we will therefore define $\vDash \subseteq \setProgramState \times \setFormula$ (as postulated in section \ref{sec:a-statically-verified}) indirectly:
+To drastically simplify notation, we will therefore define $\evalphiGen{\cdot}{\cdot} \subseteq \setProgramState \times \setFormula$ (as postulated in section \ref{sec:a-statically-verified}) indirectly:
 \begin{mathpar}
     \inferrule* [Right=EvalFrm]
     {
@@ -27,9 +27,9 @@ We assume that denotational semantics $\envs{\cdot}$, implication and satisfiabi
 A number of rules arise naturally from this semantical definition of implication.
 \begin{example}{\svlidf: Derivable Rules}
     \begin{description}
-        \item[Decomposition]
+        \item[Projection]
         \begin{mathpar}
-            \inferrule* [Right=FrmDecomp1]
+            \inferrule* [Right=FrmProjL]
             {
                 ~
             }
@@ -40,7 +40,7 @@ A number of rules arise naturally from this semantical definition of implication
             }
         \end{mathpar}
         \begin{mathpar}
-            \inferrule* [Right=FrmDecomp2]
+            \inferrule* [Right=FrmProjR]
             {
                 ~
             }

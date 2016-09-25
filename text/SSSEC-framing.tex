@@ -2,7 +2,7 @@
 The integral advantage of IDF is the ability to use heap-dependent predicates in formulas.
 Accessibility-predicates are explicitly tracked as part of formulas and represent exclusive access to a certain field.
 As illustrated in section \ref{ssec:implicit-dynamic-frames} sound reasoning is only possible if a formula contains access $\ttt{acc}$ for all the fields it mentions.
-This property is called self-framing and will be formalized in this section.
+This property is called self-framing and will be formalized in this section, drawing on the definitions given by Summers and Drossopoulou \cite{summers2013formal}.
 %An IDF assertion is self-framing if:
 %For any state in which the assertion is true,
 %it remains true if we replace the heap with any that agrees on the locations to which it requires permissions
@@ -17,8 +17,8 @@ The footprint of a formula is the set of fields it has access to, which can be i
     \setSFootprint \defeq \PP^{\setExpr \times \setFieldName} 
     \end{displaymath}
     
-    Static footprints are required for static reasoning, mainly for determining whether a formula is self-framing.
-    Later, they will become helpful for formalizing the gradual Hoare logic of \gvlidf.
+    Static footprints are required for static reasoning, mainly for determining whether or not a formula is self-framing.
+    Later, they will be helpful for formalizing the gradual Hoare logic of \gvlidf.
     
     \begin{example}{Static Footprints of Formulas}
         \begin{alignat*}{2}
@@ -29,16 +29,17 @@ The footprint of a formula is the set of fields it has access to, which can be i
     \end{example}
     
     \item[Dynamic Footprint]~\\
-    Figure \ref{fig:dfp} defines $\dynamicFP{\cdot}{\cdot}{\cdot} : \setHeap \times \setVarEnv \times \setFormula \rightharpoonup \setSFootprint$, a function for obtaining dynamic footprints where
+    Figure \ref{fig:dfp} defines $\dynamicFP{\cdot}{\cdot}{\cdot} : \setHeap \times \setVarEnv \times \setFormula \rightharpoonup \setDFootprint$, a function for obtaining dynamic footprints where
     \begin{displaymath}
     \setDFootprint \defeq \PP^{\setLoc \times \setFieldName} 
     \end{displaymath}
     
     Dynamic footprints are required for the small-step semantics of \svlidf.
     Note that the subtle difference of evaluating the expression (compared to static footprints) can have two effects:
-    First, evaluation might fail (e.g. due to accessing non-existing fields ir dereferencing null but also due to not returning a memory location $o$) which results in the partiality of the function.
-    Second, multiple syntactically distinct accessibility-predicates might result in one tuple for the dynamic footprint.
+    First, evaluation might fail (e.g. due to accessing non-existing fields or dereferencing null but also due to not returning a memory location $o$) which results in the partiality of the function.
+    Second, multiple syntactically distinct accessibility-predicates might result in one tuple in the dynamic footprint.
     \begin{example}{Aliasing Access}\\
+        \label{ex:aliasing-access}
         Let $H$ and $\rho$ be defined such that $a, b, c \in \setExpr$ all evaluate to the same memory location $o \in \setLoc$.
         Then:
         \begin{alignat*}{2}
@@ -47,9 +48,9 @@ The footprint of a formula is the set of fields it has access to, which can be i
         \end{alignat*}
     \end{example}
     
-    Note that this scenario violates the intuition behind the separating conjunction (introduced in section \ref{ssec:implicit-dynamic-frames}), which is supposed to guarantee that both “sides” of it have access to disjoint memory locations.
+    Note that the scenario in example \ref{ex:aliasing-access} violates the intuition behind the separating conjunction (introduced in section \ref{ssec:implicit-dynamic-frames}), which is supposed to guarantee that both “sides” of it have access to disjoint memory locations.
     This principle is violated by above formula because of $\phiAcc{a}{f}$ and $\phiAcc{b}{f}$.
-    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated.
+    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated, rendering above formulas unsatisfiable.
 \end{description}
 \begin{figure}[h]
     \boxed{\staticFP {\phi} = A_s}
@@ -84,7 +85,9 @@ Figure \ref{fig:svl-frmphi} formalizes the predicate.
     \label{fig:svl-frmphi}
 \end{figure}
 Note how \tset{SfrmSepOp} augments the footprint the right sub-formula is checked against using the footprint of the left sub-formula.
-This way, access predicates within a formula are able to frame expressions in the same formula, however only to the right.
+This way, access predicates within a formula are able to frame expressions in the same formula, if mentioned in the right order.
+
+MOTIVATION FOR THIS? extraction?
 
 \begin{example}{Framing Formulas}
     \begin{flalign*}
@@ -97,18 +100,23 @@ This way, access predicates within a formula are able to frame expressions in th
 
 %% self-framing
 We can now define self-framing as a special case of framing, namely framing without relying on an “external” footprint.
-\begin{definition}[Self-Framing Formula]
-    A formula $\phi$ is \textbf{self-framing} iff
+\begin{definition}[Self-Framed Formula]
+    A formula $\phi$ is \textbf{self-framed} iff
     \begin{displaymath}
     \emptyset \sfrmphi \phi
     \end{displaymath}
+    For the remainder of this work we omit empty footprints:
+    \begin{displaymath}
+    \sfrmphi \phi
+    \end{displaymath}
     Let $\setFormulaB \subseteq \setFormulaA$ be the set of \textbf{self-framing and satisfiable} formulas.
 \end{definition}
-For the remainder of this work we will only encounter $\sfrmphi$ in connection with self-framing and thus omit $\emptyset$ from the judgment.
 
+\begin{comment}
 %% \setFormulaB talk
 As we introduced \setFormulaA back in section \ref{sec:a-statically-verified}, we argued that a sound verification system should not be able to derive unsatisfiable formulas, as they correspond to unreachable code.
 Similarly, we argue that a sound verification system based on IDF should not be able to derive formulas that are not self-framing.
 Inconsistent information could be derived from such formulas, rendering the verification system unsound.
 For \svlidf will thus only consider method contracts with formulas drawn from \setFormulaB.
 We will actually enforce this condition as part of well-formedness conditions in section \ref{sec:well-formedness}.
+\end{comment}

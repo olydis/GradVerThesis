@@ -4,11 +4,11 @@ We define the following helper methods:
     \item[Extraction]
     To extract elements from a given program $p \in \setProgram$ we define the following functions:
     \begin{align*}
+         & \predicate{fields$_p$} : \setClassName \rightharpoonup \PP^{\setField}                  &  \\
+         & \fields{C} = \text{field declarations of class $C$ in $p$}                              &  \\
+         & ~                                                                                       &  \\
     	 & \fieldType : \setClassName \times \setFieldName \rightharpoonup \setType                & ~ \\
     	 & \fieldType(C, f) = \text{type of field $f$ in class $C$ in $p$}                         &  \\
-    	 & ~                                                                                       &  \\
-    	 & \predicate{fields$_p$} : \setClassName \rightharpoonup \PP^{\setField}                  &  \\
-    	 & \fields{C} = \text{field declarations of class $C$ in $p$}                              &  \\
     	 & ~                                                                                       &  \\
     	 & \predicate{method$_p$} : \setClassName \times \setMethodName \rightharpoonup \setMethod &  \\
     	 & \mmethod{C, m} = \text{declaration of method $m$ in class $C$ in $p$}                   &  \\
@@ -36,8 +36,8 @@ We define the following helper methods:
     	  & \FV(\phiCons{$\phi_1$}{$\phi_1$}) &  & = \FV(\phi_1) \cup \FV(\phi_2) &
     \end{alignat*}
     
-    \item[Default Value of Type]~\\
-    \svlidf assigns default values to declared variables.
+    \item[Default Value of Given Type]~\\
+    \svlidf assigns the following default values to variables when they are declared and to fields when classes are instantiated.
     
     Let $\predicate{defaultValue} : \setType \rightarrow \setVal$ be defined as
     \begin{alignat*}{3}
@@ -47,7 +47,7 @@ We define the following helper methods:
     
     \item[Required Access]~\\
     Expressions mentioning fields are heap-dependent and thus require access.
-    To enable treating expressions in a uniform fashion, we define a pseudo accessibility-predicate which is also defined for expressions that do not mention fields.
+    To enable treating all expressions (including bare variables and values) in a uniform fashion, we define a pseudo accessibility-predicate which is also defined for expressions that do not mention fields.
     
     Let $\predicate{acc} : \setExpr \rightarrow \setFormula$ be defined as
     \begin{alignat*}{3}
@@ -57,7 +57,7 @@ We define the following helper methods:
     \end{alignat*}
     
     \item[Preventing Writes]~\\
-    Under rare circumstances, overwriting a certain variable is not allowed in \svlidf.
+    Under some circumstances (\ttt{hold}-statements, method bodies), overwriting a certain variable is not allowed in \svlidf.
     To reliably check which variables are written to by a statement, we define the following function.
     
     Let $\mods : \setStmt \rightarrow \PP^{\setVar}$ be defined as

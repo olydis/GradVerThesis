@@ -1,9 +1,9 @@
 %% intro
 This section gives the rules for evaluating expressions in \svlidf.
-Evaluating expressions is not only a fundamental part of subsequent definitions (like formula semantics), but also gives an idea about how variable storage is abstracted in \svlidf.
+Evaluating expressions is not only a fundamental part of subsequent definitions (like formula semantics), but also gives an idea about how memory is abstracted in \svlidf.
 
 %% def
-In figure \ref{fig:eval-expr} we define a ternary evaluation function 
+In figure \ref{fig:eval-expr} we define a ternary partial evaluation function 
 $$\cdot, \cdot \vdash \cdot \Downarrow \cdot \,:\, \setHeap \times \setVarEnv \times \setExpr \rightharpoonup \setVal$$
 that uses the following definitions of heaps $H$ and local variable environments $\rho$:
 \begin{align*}

@@ -4,9 +4,9 @@ The set of program states is defined as $\setProgramState = \setHeap \times \set
 	E & \in \setStackEntry &  & =~~ \setVarEnv \times \setDFootprint \times \setStmt
 \end{align*}
 
-A program state of \svlidf consists of a single heap and a stack.
-Each stack frame has an environment $\setVarEnv$ for local variables, tracks a set of accessible fields $\setDFootprint$ and stores the remaining work $\setStmt$.
-Stack frames will be introduced by method calls, but also by special scopes as introduced by the $\ttt{hold}$ statement.
+% A program state of \svlidf consists of a single heap and a stack.
+Each stack frame has an environment $\setVarEnv$ for local variables, tracks a set of accessible fields $\setDFootprint$ and stores a continuation $\setStmt$.
+Stack frames will be introduced by method calls, but also by dedicated scopes as used by the $\ttt{hold}$ statement.
 
 \begin{comment}
 REQUIRED?

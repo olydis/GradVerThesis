@@ -8,7 +8,8 @@
     {~}
     {\evale {v} {v}}
     
-    \inferrule* [right=EEAcc]
-    {\evale {e} {o}}
-    {\evale {e.f} {H(o)(f)}}
+    \inferrule* [Right=EEAcc]
+    {\evale {e} {o}\\
+     H(o) = \langle C, l \rangle}
+    {\evale {e.f} {l(f)}}
 \end{mathpar}
