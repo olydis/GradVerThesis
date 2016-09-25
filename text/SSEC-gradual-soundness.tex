@@ -25,12 +25,17 @@ We define gradual soundness of \gvl as follows:
 \end{mathpar}
 
 %% valid gradual Hoare triples
-Valid Hoare triples for the gradual system are defined as
-\begin{flalign*}
-& \gtHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula                                                                                                                                                                          \\
-& \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ \forall \grad{\pi_{pre}}, \grad{\pi_{post}} \in \setGProgramState.~\\
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~ \gsstepConsume{\grad{s}}{\grad{\pi_{pre}}}{\grad{\pi_{post}}} \implies (\evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}})
-\end{flalign*}
+\begin{definition}[Validity of Gradual Hoare Triples]~\\
+    \label{def:valid-ghoare-triple}
+    A Hoare triple $\hoare{\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}}$ is \textbf{valid}, written
+    $\gtHoare{}{\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}}$
+    iff
+    \begin{flalign*}
+    \forall \grad{\pi_{pre}}, \grad{\pi_{post}} \in \setGProgramState.~ \gsstepConsume{\grad{s}}{\grad{\pi_{pre}}}{\grad{\pi_{post}}} \implies (\evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}})
+    \end{flalign*}
+    
+    This definition is analogous to definition \ref{def:valid-hoare-triple}.
+\end{definition}
 
 %% ...have nothing to do with gradual lifting
 Note that $\gtHoare {~} {\cdot} {\cdot} {\cdot}$ is not a sound gradual lifting of $\tHoare{~}{\cdot}{\cdot}{\cdot}$.
@@ -47,8 +52,32 @@ Gradual preservation is therefore unsatisfiable if formalized as above.
 
 %% moral: we need dynamic checks
 This conflict is nothing but a reminder that gradualization is not for free, but may require runtime checks in order to be sound.
-With this in mind we can reiterate our notion of preservation.
-We introduce an assertion statement $\sAssert{$\phi$}$ (if not already available) that throws an exception should the condition not hold.
+With this in mind we can reiterate our approach for preservation.
+
+We extend the set of final states $\setGProgramStateFin$ with a designated exceptional state $\pi_{EX}$, representing failure of a runtime check.
+Furthermore we introduce an assertion statement $\sAssert{$\phi$}$ (if not already available) that throws an exception, i.e. steps to $\pi_{EX}$ should the condition not hold.
+\begin{example}{Small-Step Semantics for Runtime Assertion}
+    \label{ex:ss-ra}
+    We assume that $\setProgramState = (\setVar \rightharpoonup \mathbb{Z}) \times \setStmt$ as introduced in example \ref{ex:ps-primitive}.
+    Furthermore we assume that there exists a no-operation statement $\sSkip$.
+    \begin{mathpar}
+        \inferrule* [right=SsAssert~~]
+        {
+            \evalphiGen{\langle \sigma, \sAssert{$\phi_a$} \rangle}{\phi_a}
+        }
+        {
+            \sstep{\langle \sigma, \sAssert{$\phi_a$} \rangle}{\langle \sigma, \sSkip \rangle}
+        }
+        \inferrule* [Right=SsAssertEx]
+        {
+            \neg~ \evalphiGen{\langle \sigma, \sAssert{$\phi_a$} \rangle}{\phi_a}
+        }
+        {
+            \sstep{\langle \sigma, \sAssert{$\phi_a$} \rangle}{\pi_{EX}}
+        }
+    \end{mathpar}
+\end{example}
+
 Preservation of \svl can then be rewritten as
 \begin{mathpar}
     \inferrule* [Right=Preservation']
@@ -61,7 +90,7 @@ Preservation of \svl can then be rewritten as
 \end{mathpar}
 Intuitively, this definition states that an assertion is inserted during compilation whenever Hoare logic is used to derive the premise.
 Note that \tset{Preservation'} is derivable from the original definition of \tset{Preservation} in section \ref{sec:a-statically-verified}.
-Updating gradual preservation accordingly:
+Updating gradual preservation accordingly results in:
 \begin{mathpar}
     \inferrule* [Right=GPreservation']
     {

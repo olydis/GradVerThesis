@@ -29,7 +29,8 @@ In the previous section we built an intuition about intermediate gradual formula
 While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
 In this section we define a deterministic gradual Hoare logic $\dgrad{\vdash} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has the following desirable properties (formalized later):
 A gradual lifting $\gthoare{}{\cdot}{\cdot}{\cdot}$ can be obtained from $\dgthoare{}{\cdot}{\cdot}{\cdot}$, which is required for the gradual verifier.
-This gradual lifting is not defined inductively and does rely on variables to be instantiated, hence making the verification process deterministic as well.
+This gradual lifting is not defined inductively and does rely on variables to be instantiated.
+Instead it is syntax-directed, making the verification process deterministic.
 Furthermore $\dgrad{\vdash}$ allows for a stronger notion of soundness that does not rely on runtime checks.
 
 We will use our familiar notation $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ as an alias for $~\dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}$
@@ -210,7 +211,7 @@ This gradual partial function has desirable properties:
     \end{example}
     
     \item[(b) Determinism of Verifier]~\\
-    As the name suggests, deterministic liftings leave no room for choice.
+    As the name suggests, deterministic liftings leave no room for choice, but are syntax-directed.
     For the gradual verifier this means that there is no need to infer intermediate formulas, averting the risk of choosing the wrong formulas (as illustrated in section \ref{ssec:the-problem-with}).
     
     \item[(c) Free Transitivity]~\\
@@ -254,13 +255,13 @@ This gradual partial function has desirable properties:
         \begin{displaymath}
         \dgthoare{~}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}
         \end{displaymath}
-        However $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold (if $\phi_a$ is not $\phiTrue$):
-        Choose $\grad{\pi}, \grad{\pi'} \in \setGProgramState$ such that $\gsstepConsume{\sAssert{$\phi_a$}}{\grad{\pi}}{\grad{\pi'}}$ holds.
-        Furthermore we demand $\neg \evalgphiGen{\grad{\pi}}{\withqmGen{\phi_a}}$ (such a program state exists since $\phi_a$ is not $\phiTrue$).
-        Since the assertion is a no-operation, it follows that $\neg \evalgphiGen{\grad{\pi'}}{\withqmGen{\phi_a}}$.
-        According to definition \ref{def:valid-hoare-triple}, we can deduce from $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ that $\evalgphiGen{\grad{\pi'}}{\withqmGen{\phi_a}}$.
-        This would be a contradiction.
+        However $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold for non-trivial $\phi_a$:
         
+        Choose $\phi_a = \phiEq{x}{2}$.
+        Let $\grad{\pi}, \grad{\pi'} \in \setGProgramState$ such that $\gsstepConsume{\sAssert{$\phi_a$}}{\grad{\pi}}{\grad{\pi'}}$ and $\evalgphiGen{\grad{\pi}}{\phiEq{x}{3}}$ holds (both assumptions are compatible since assertions are implemented as no-operations).
+        It follows that $\evalgphiGen{\grad{\pi'}}{\phiEq{x}{3}}$.
+        According to definition \ref{def:valid-hoare-triple}, we can deduce from $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ that $\evalgphiGen{\grad{\pi'}}{\withqmGen{\phiEq{x}{2}}}$.
+        No such $\grad{\pi'}$ exists.
         
         On the other hand, a small-step semantics that is stuck or throws an exception if the assertion is violated would restore preservation.
         In general, small-step semantics that are rely on guarantees given by static semantics may turn out too weak after gradualization of the static semantics.

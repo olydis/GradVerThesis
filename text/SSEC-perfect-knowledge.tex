@@ -12,7 +12,8 @@ As completeness seems to be a property of the entire semantics instead of just t
     \label{def:completeness}
     A semantics is \textbf{complete} if every execution of a statement $s$ can be supported with a matching Hoare logic derivation:
     \begin{flalign*}
-    & \forall s \in \setStmt,\, \pi_1, \pi_2 \in \setProgramState.~ \sstepConsume{s}{\pi_1}{\pi_2} \implies \exists \phi_1, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
+    \forall s \in \setStmt,\, \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
+    \implies \exists \phi_1, \phi_2 \in \setFormula.&~ \thoare{}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
     \end{flalign*}
 \end{definition}
 
@@ -34,9 +35,9 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
 \begin{definition}[Perfect Gradual Hoare Logic]
     \label{def:perf-stat}
     We call a deterministically lifted Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot}$ perfect iff
-    \begin{displaymath}
-    \forall \phi_1 \in \setFormula,\, \grad{s} \in \setGStmt,\, \grad{\phi_2} \in \setGFormula.~ \dgthoare{}{\phi_1}{\grad{s}}{\grad{\phi_2}} \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.~ \thoare{}{\phi_1}{s}{\phi_2}
-    \end{displaymath}
+    \begin{align*}
+    \forall \phi_1 \in \setFormula,\, \grad{s} \in \setGStmt,\, \grad{\phi_2} \in \setGFormula.&~ \dgthoare{}{\phi_1}{\grad{s}}{\grad{\phi_2}}\\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{}{\phi_1}{s}{\phi_2}
+    \end{align*}
     Intuitively, the deterministic lifting is only supposed to be defined for static preconditions if there exists some corresponding derivation of the static Hoare logic.
     Note that optimal deterministic liftings are perfect.
     Perfection can be viewed as a very weak optimality measure.
@@ -48,10 +49,10 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
     %\label{frm:perf-ex}
     \forall \grad{\pi} \in \setGProgramState.~ (\forall \pi \in \gamma(\grad{\pi}).~ \sstepStuck{\pi}) \implies \gsstep{\grad{\pi}}{\pi_{EX}}
     \end{comment}
-    \begin{displaymath}
+    \begin{align*}
     %\label{frm:perf-ex}
-    \forall \grad{\pi_1}, \grad{\pi_2} \in \setGProgramState,\, \grad{s} \in \setGStmt.~ \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}} \implies \exists \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}), \pi_2 \in \setFormula.~ \sstepConsume{s}{\pi_1}{\pi_2}
-    \end{displaymath}
+    \forall \grad{\pi_1}, \grad{\pi_2} \in \setGProgramState,\, \grad{s} \in \setGStmt.&~ \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}\\ \implies \exists \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}), \pi_2 \in \setFormula.&~ \sstepConsume{s}{\pi_1}{\pi_2}
+    \end{align*}
     Intuitively, the gradual small-step semantics is not supposed to define derivations if all concretizations would be stuck in the original small-step semantics.
     Note that the rules of gradual lifting (of partial functions) allow arbitrary behavior in case the small-step semantics are stuck (i.e. the function is undefined).
     Optimal deterministic liftings are perfect.

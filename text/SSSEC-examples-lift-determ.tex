@@ -134,7 +134,7 @@ We start by lifting implication, which is used in \tset{HSeq}.
         Trivial.
 \end{proof}
 
-Using lemma ??? and lemma ???, the deterministic lifting of \tset{HSeq} reduces to
+Using lemma \ref{lemma:det-lift-comp} and lemma \ref{lemma:opt-lift-impl}, the deterministic lifting of \tset{HSeq} reduces to
 \begin{mathpar}
     \inferrule* [right=DGHSeq]
     {
@@ -145,7 +145,7 @@ Using lemma ??? and lemma ???, the deterministic lifting of \tset{HSeq} reduces 
         \dgthoare {} {\grad{\phi_p}} {\sSeq{$\grad{s_1}$}{$\grad{s_2}$}} {\grad{\phi_r}}
     }
 \end{mathpar}
-Note that we used inductive notation to define a function -- there are no free variables.
+Note that we used inductive notation to define a function -- there are no free variables, i.e. the rule is syntax-directed.
 
 For the assignment rule we can derive
 \begin{mathpar}
@@ -167,4 +167,6 @@ For the assignment rule we can derive
     }
 \end{mathpar}
 as a sound deterministic lifting.
+Note that this lifting is far from optimal, but rather a heuristics.
+A stronger lifting requires more sophisticated reasoning.
 % MORE expl?
