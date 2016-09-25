@@ -24,7 +24,7 @@ Example Hoare logic:
         \thoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
     }
 \end{mathpar}
-Rule-wise lifting (assuming that \qm is introduced as single dedicated formula):
+Rule-wise lifting:
 \begin{mathpar}
     \inferrule* [right=GHSeq]
     {
@@ -86,6 +86,19 @@ There are a variety of valid instantiations for both variables:
     This instantiation aims to use static formulas as early as possible.
     The implication trivially holds.
         
+    \item[Too weak: $\grad{\phi_{q1}} = \qm,~ \grad{\phi_{q2}} = \qm$]~\\
+    Whenever there exists a valid instantiation at all, the wildcard is also a valid one.
+    Note however, that the knowledge about the first statement is lost which results in the necessity of dynamic checks to ensure $\phiEq{x}{3}$ after $\sVarAssign{y}{2}$.
+    Before, this check could have been optimized away.
+    In general, choosing $\qm$ as intermediate gradual formulas allows verifying arbitrary inconsistent judgments (a manifestation of the lack of optimality of $\gthoare {} {\cdot} {\cdot} {\cdot}$).
+    For example, 
+    \begin{displaymath}
+    \gthoare{}{\phiTrue}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiEq{y}{100}}
+    \end{displaymath}
+    is verifiable if the gradual verifier chooses $\qm$ as intermediate gradual formulas.
+    
+    Consequently, the verifier should try to be “as precise as possible” in order to detect inconsistencies at compile time.
+        
     \item[Too strict: $\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
     The instantiation is stricter than necessary -- but nevertheless valid according to the rules.
     The implication holds (the knowledge about \ttt{x} is dropped), and $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ holds since $\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ does.
@@ -93,34 +106,19 @@ There are a variety of valid instantiations for both variables:
     The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ right after the assignment.
     Unfortunately, this assertion alters runtime behavior:
     Code that would have never thrown an exception when evaluated with the runtime of \svl might now throw an exception.
-    This is a violation of the dynamic part of the gradual guarantee.
-    Note that it is actually the runtime semantics breaking the guarantee, yet it is the verifiers “bad decision” that leads up to it.
+    This is a violation of the dynamic gradual guarantee.
+    Note that it is actually the runtime semantics breaking the guarantee, yet it is the “bad decision” made by the verifier that leads up to it.
     
     Consequently, further rules are necessary to prevent the verifier from making decisions that are, as in this case, not general.
-    
-    \item[Too weak: $\grad{\phi_{q1}} = \qm,~ \grad{\phi_{q2}} = \qm$]~\\
-    Using the wildcard is a valid option which also circumvents the trouble illustrated above.
-    Note however, that the knowledge about the first statement is lost which results in the necessity of dynamic checks to ensure $\phiEq{x}{3}$ after $\sVarAssign{y}{2}$.
-    Before this check could have been optimized away.
-    In general, choosing \qm as intermediate gradual formulas allows verifying arbitrary inconsistent judgments (a manifestation of the lack of optimality of $\gthoare {} {\cdot} {\cdot} {\cdot}$).
-    For example, 
-    \begin{displaymath}
-    \gthoare{}{\phiTrue}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiEq{y}{100}}
-    \end{displaymath}
-    is verifiable if the gradual verifier chooses \qm as intermediate gradual formulas.
-    
-    Consequently, the verifier should somehow try to be “as static as possible” in order to detect inconsistencies at compile time.
 \end{description}
 
 %% comparison: static verifier
-Note that above observations do not apply to a static verifier:
-Its only goal is to find a proof for given Hoare triple.
-There is no wildcard, meaning that inconsistencies are guaranteed to be detected statically.
-There is also no notion of choosing an intermediate formula that is too strict since preservation does not rely on runtime checks which might fail if the formula is not general enough.
+Note that above observations do not apply to a static verifier as the former two cases above rely on the existence of the wildcard:
+The weak instantiation is syntactically impossible, the too strict instantiation relied on the fact that the precondition (of the overall judgment) is a wildcard.
 
 %% dilemma, consequence
 On the other side, decisions of the gradual verifier have the power to change the runtime behavior or let obvious inconsistencies go unnoticed.
-We propose a different approach, formalizing above intuition about being neither too weak nor too strong as part of a deterministic gradual Hoare logic which also obviates the need of injecting runtime assertions.
+We propose a different approach, resulting in a deterministic gradual Hoare logic which also obviates the need of injecting runtime assertions.
 
 
 

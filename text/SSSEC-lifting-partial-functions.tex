@@ -1,5 +1,5 @@
 Semantics can be defined in terms of partial functions, the small-step semantics of \svl even is a partial function itself.
-We derive rules for lifting partial functions by decomposing them into a total function and a predicate indicating the domain of the partial function.
+We derive rules for lifting partial functions by decomposing them into a total function (lifted as per \ref{ssec:lifting-functions}) and a predicate indicating the domain of the partial function (lifted as per \ref{ssec:lifting-predicates}).
 
 \begin{definition}[Partial Function Decomposition]
     Let $f : \setFormula \rightharpoonup \setFormula$ be a partial function.
@@ -26,6 +26,7 @@ This process is equivalent to the following rules.
     \begin{displaymath}
     \forall \phi \in \setFormula \cap \dom{f}.~ f(\phi) \sqsubseteq \grad{f}(\phi)
     \end{displaymath}
+    We write $\dom{f}$ to denote the domain of function $f$.
     
     \item[Monotonicity]~\\
     \begin{displaymath}
@@ -34,4 +35,4 @@ This process is equivalent to the following rules.
     \end{displaymath}
 \end{description}
 
-Soundness and optimality are defined as usual.
+Soundness and optimality are defined as in sections \ref{ssec:lifting-predicates} and \ref{ssec:lifting-functions}.

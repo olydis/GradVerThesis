@@ -115,17 +115,12 @@ We call the semantics of \gvl perfect if both Hoare logic and small-step semanti
         \gsstepConsume{s}{\pi_1}{\grad{\pi}} ~\wedge~ \pi_2 \sqsubseteq \grad{\pi}
         \quad\quad\text{for some } \grad{\pi} \in \setGProgramState
         \end{align}
-        It follows that
-        \begin{align}
-        \label{frm:tmpx6}
-        \evalphiGen{\grad{\pi}}{\phi_2}
-        \end{align}
         Applying the monotonicity rule of gradually lifted functions to \ref{frm:tmpx5} and \ref{frm:tmp1} we can derive that
         \begin{align}
         \label{frm:tmpx7}
         \grad{\pi} \mpt \grad{\pi_2}
         \end{align}
-        and thus
+        It follows from lemma \ref{lemma:gradPS-form-sem} that
         \begin{align}
         \label{frm:tmpx8}
         \evalphiGen{\grad{\pi_2}}{\phi_2}
@@ -191,7 +186,7 @@ We call the semantics of \gvl perfect if both Hoare logic and small-step semanti
         \label{frm:tmp12}
         \evalphiGen{\pi_2}{\phi_2}
         \end{align}
-        and therefore (using \ref{frm:tmp6x})
+        and therefore (using \ref{frm:tmp6x} and lemma \ref{lemma:gradPS-form-sem})
         \begin{align}
         \label{frm:tmp14}
         \evalgphiGen{\grad{\pi_2}}{\phi_2}

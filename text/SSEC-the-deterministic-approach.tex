@@ -25,9 +25,13 @@
 % { (x = 0) }
 
 %% intro
-In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) not too strict (making assumptions that are neither general nor required by the following judgment and thus alter runtime behavior).
+In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) nor too strict (making assumptions that are neither general nor required by the following judgment and thus alter runtime behavior).
 While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
-In this section we define a deterministic gradual Hoare logic $\dgrad{\vdash} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has very desirable properties and fits well into our existing model, as described later.
+In this section we define a deterministic gradual Hoare logic $\dgrad{\vdash} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has the following desirable properties (formalized later):
+A gradual lifting $\gthoare{}{\cdot}{\cdot}{\cdot}$ can be obtained from $\dgthoare{}{\cdot}{\cdot}{\cdot}$, which is required for the gradual verifier.
+This gradual lifting is not defined inductively and does rely on variables to be instantiated, hence making the verification process deterministic as well.
+Furthermore $\dgrad{\vdash}$ allows for a stronger notion of soundness that does not rely on runtime checks.
+
 We will use our familiar notation $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ as an alias for $~\dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}$
 
 ~\\
@@ -73,29 +77,39 @@ We indicate an adaptation to Hoare logic in light gray using function notation f
     For Hoare rules this means that the postcondition returned must be at least as strong as every postcondition returned by static Hoare logic (it might be less precise, though).
     The following example illustrates the effects of the rule:
     \begin{example}{Deterministic Lifting Strength}
-        Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\cdot}$.
+        Assume that the following list contains all instantiations of $\thoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\cdot}$.
         \begin{flalign*}
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
-        \thoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{2}{2}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{y}{2}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{2}{y}}\\
+        \thoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{y}{y}}
         \end{flalign*}
         Then valid return values for the deterministic lifting are
         \begin{flalign*}
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{2}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{x}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\qm}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{x}{2}}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\withqmGen{\phiEq{2}{x}}}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{y}{2}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{2}{y}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\qm}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\withqmGen{\phiEq{y}{2}}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\withqmGen{\phiEq{2}{y}}}
         \end{flalign*}
         Not valid are weaker static values like
         \begin{flalign*}
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{2}{2}}\\
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiEq{x}{x}}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{2}{2}}\\
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiEq{y}{y}}
         \end{flalign*}
         or stronger values like
         \begin{flalign*}
-        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{x}{2}}{\phiAnd{\phiEq{y}{3}}{\phiEq{x}{2}}}
+        &\dgthoare{}{\phiEq{2}{2}}{\sVarAssign{y}{2}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
+        \end{flalign*}
+        
+        Likewise, with precondition $\qm$ (motivated by case “too strict” in section \ref{ssec:the-problem-with}) valid return values include
+        \begin{flalign*}
+        &\dgthoare{}{\qm}{\sVarAssign{y}{2}}{\qm}\\
+        &\dgthoare{}{\qm}{\sVarAssign{y}{2}}{\withqmGen{\phiEq{y}{2}}}
+        \end{flalign*}
+        bot not
+        \begin{flalign*}
+        &\dgthoare{}{\qm}{\sVarAssign{y}{2}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
         \end{flalign*}
     \end{example}
     
@@ -170,7 +184,7 @@ This gradual partial function has desirable properties:
         \end{displaymath}
         using Hoare logic.
         
-        Now, let $\setGFormula$ be extended suing the “dedicated wildcard” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+        Now, let $\setGFormula$ be extended using the “dedicated wildcard” approach (see section \ref{ssec:dedicated-wildcard-formula}).
         The deterministic lifting of the Hoare logic will verify
         \begin{displaymath}
         \dgthoare{}{\qm}{\sVarAssign{x}{3}}{\qm}
@@ -178,10 +192,11 @@ This gradual partial function has desirable properties:
         The unknown formula as postcondition is necessary, as anything else (e.g. $\phiEq{x}{3}$) would break the strength condition (take the above static judgments, both of their postconditions cannot be implied by any static formula).
         Note that the “wildcard with upper bound” approach (see \ref{ssec:wildcard-with-upper}) would allow specifying $\withqmGen{\phiEq{x}{3}}$ as postcondition.
         
-        Since $\gphiImplies{\qm}{\phiEq{x}{1}}$ holds, we can deduce
+        Using \ref{lem:det2grad} we can deduce
         \begin{displaymath}
         \gthoare{}{\qm}{\sVarAssign{x}{3}}{\phiEq{x}{1}}
         \end{displaymath}
+        since $\gphiImplies{\qm}{\phiEq{x}{1}}$ holds.
         An optimal gradual lifting would not be able to deduce this judgment, as it requires the existing of some $\phi \in \gamma(\qm) = \setFormulaA$ such that
         \begin{displaymath}
         \thoare{}{\phi}{\sVarAssign{x}{3}}{\phiEq{x}{1}}
@@ -190,7 +205,7 @@ This gradual partial function has desirable properties:
         However, the only working instantiation according to Hoare logic is $\phi = \phiEq{3}{1}$ which is not satisfiable.
         It follows that the obtained lifting is not optimal, even though the deterministic lifting is.
         
-        Note that with $\withqmGen{\phiEq{x}{3}}$ as a postcondition, one cannot deduce above above gradual judgment (since $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{1}}$) does not hold.
+        Note that with $\withqmGen{\phiEq{x}{3}}$ as a postcondition, one cannot deduce above gradual judgment (since $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{1}}$) does not hold.
         This example motivates the use of more powerful gradual syntax extensions, as apparently they result in more optimal gradual liftings.
     \end{example}
     
@@ -233,12 +248,21 @@ This gradual partial function has desirable properties:
         \end{mathpar}
         Soundness of the Hoare logic implies that assertions are guaranteed to hold at runtime.
         It is therefore reasonable for \svl to implement assertions as no-operations.
+        It follows that \gvl implements them the same way.
         
         A valid deterministic lifting of \tset{HAssert} is able to verify
         \begin{displaymath}
         \dgthoare{~}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}
         \end{displaymath}
-        However, if the gradual dynamic semantics of \gvl still implement assertions as a no-operation, then $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold.
-        On the other hand, adding a runtime check that throws an exception on failure would restore preservation.
+        However $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold (if $\phi_a$ is not $\phiTrue$):
+        Choose $\grad{\pi}, \grad{\pi'} \in \setGProgramState$ such that $\gsstepConsume{\sAssert{$\phi_a$}}{\grad{\pi}}{\grad{\pi'}}$ holds.
+        Furthermore we demand $\neg \evalgphiGen{\grad{\pi}}{\withqmGen{\phi_a}}$ (such a program state exists since $\phi_a$ is not $\phiTrue$).
+        Since the assertion is a no-operation, it follows that $\neg \evalgphiGen{\grad{\pi'}}{\withqmGen{\phi_a}}$.
+        According to definition \ref{def:valid-hoare-triple}, we can deduce from $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ that $\evalgphiGen{\grad{\pi'}}{\withqmGen{\phi_a}}$.
+        This would be a contradiction.
+        
+        
+        On the other hand, a small-step semantics that is stuck or throws an exception if the assertion is violated would restore preservation.
+        In general, small-step semantics that are rely on guarantees given by static semantics may turn out too weak after gradualization of the static semantics.
     \end{example}
 \end{description}

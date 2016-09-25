@@ -1,7 +1,9 @@
 % assuming total for now (otherwise: split partial function into total function and definedness predicate)
 
-In this section, we assume that we are dealing with a total function $f : \setFormula \rightarrow \setFormula$.
-The concepts are directly applicable to functions with higher arity.
+In this section, we assume that we are dealing with a \emph{total} function $f : \setFormula \rightarrow \setFormula$.
+Partial functions are dealt with in section \ref{sssec:lifting-partial-functions}.
+
+The following concepts are directly applicable to functions with higher arity.
 
 \begin{description}
     \item[Introduction]~\\
@@ -28,7 +30,7 @@ The concepts are directly applicable to functions with higher arity.
 \end{description}
 
 \begin{definition}[Sound Function Lifting]
-    A lifted function is \textbf{sound/valid} if it adheres to the above rules.
+    A lifted function is \textbf{sound} if it adheres to the above rules.
 \end{definition}
 
 Note that the rules for sound lifting only give a lower bound for the gradual return values.

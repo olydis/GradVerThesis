@@ -35,8 +35,8 @@
 
 
 %% generic language introduction
-While aiming to give a general procedure for deriving gradually verified languages, we have to make certain assumptions about \svl in order to concisely describe our approach and reason about its correctness.
-We believe that most statically verified programming languages satisfy the following assumptions and thus qualify as starting point for our procedure.
+While aiming to give a general procedure for deriving imperative gradually verified languages, we have to make certain assumptions about \svl in order to concisely describe our approach and reason about its correctness.
+We believe that most imperative statically verified programming languages satisfy the following assumptions and thus qualify as starting point for our procedure.
 
 Assumptions about \svl:
 \begin{description}
@@ -158,7 +158,7 @@ Assumptions about \svl:
     \end{comment}
     
 \item[Formula Semantics]~\\
-    While types restrict which values are valid for a certain variable,
+    While types restrict which values or expressions are valid for a certain variable,
     formulas restrict which program states are valid for a certain point during execution. 
 
     They are used for annotations like method contracts or invariants.
@@ -188,10 +188,13 @@ Assumptions about \svl:
     \end{definition}
     
     \begin{definition}[Formula Implication]~\\
+        \label{def:form-implication}
         A formula $\phi_1$ \textbf{implies} formula $\phi_2$ (written $\phiImplies{\phi_1}{\phi_2}$) iff
         \begin{displaymath}
         \envs{\phi_1} \subseteq \envs{\phi_2}
         \end{displaymath}
+        We will consistently use $\implies$ to denote logical implication, whereas $\Rightarrow$ exclusively denotes formula implication as defined here.
+        (Note the different lengths of the implication arrows.)
     \end{definition}
     
     \begin{definition}[Formula Equality]~\\
@@ -227,7 +230,7 @@ Assumptions about \svl:
         \end{flalign*}
     \end{definition}
     
-    We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphi{\pi}{\phi} ~\}$ is a filter, i.e.
+    We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphiGen{\pi}{\phi} ~\}$ is a filter, i.e.
     \begin{itemize}
         \item It is non-empty. This ensures that every program state is describable by at least one formula.
         This is true as we demanded a formula $\phiTrue$ that describes every program state.
@@ -235,7 +238,7 @@ Assumptions about \svl:
         Intuitively, this states that multiple formulas about the same program state can be combined.
         In case the formula syntax contains a logical conjunction operator, this criterion is met.
         \item If $\evalphiGen{\pi}{\phi_a}$ and $\phiImplies{\phi_a}{\phi_b}$ then $\evalphiGen{\pi}{\phi_b}$.
-        This is true by definition of $\phiImplies{\cdot}{\cdot}$.
+        This is true by definition of $\phiImplies{\cdot}{\cdot}$ (see \ref{def:form-implication}).
     \end{itemize}
     
 \item[Static Semantics]~\\

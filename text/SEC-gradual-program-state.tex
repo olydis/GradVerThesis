@@ -2,12 +2,9 @@ Recall that program state has a notion of remaining work, see section \ref{sec:a
 As the set of possible statements has been augmented from $\setStmt$ to $\setGStmt$, the notion of remaining work might have to be augmented as well in order to allow encoding the additional statements.
 
 This augmentation leads to a superset $\setGProgramState \supseteq \setProgramState$ of gradual program states.
-Example:
-\begin{flalign*}
-	\setProgramState ~  & =~ (\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setStmt  \\
-    \text{is extended to} \quad\quad\quad\quad\quad\\
-	\setGProgramState ~ & =~ (\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setGStmt
-\end{flalign*}
+\begin{example}{Gradual Program State}
+is extended to
+\end{example}
 
 We give meaning to gradual program states using concretization.
 \begin{definition}[Concretization of Gradual Program States]
@@ -29,5 +26,13 @@ Consequence:
 \end{displaymath}
 \end{comment}
 
-We demand that formula semantics are not affected by this extension, which is trivially the case if evaluation does not depend on the continuation in the first place:
-$$\forall \phi \in \setFormula, \grad{\pi} \in \setGProgramState, \pi \in \gamma_{\pi}(\grad{\pi}).~~ \evalphiGen{\grad{\pi}}{\phi} \iff \evalphiGen{\pi}{\phi}$$
+\begin{lemma}[Gradual Program State Does Not Affect Formula Semantics]
+    \label{lemma:gradPS-form-sem}
+    We demand that formula semantics are not affected by gradualization of the program state:
+    \begin{displaymath}
+    \forall \phi \in \setFormula, \grad{\pi} \in \setGProgramState, \pi \in \gamma_{\pi}(\grad{\pi}).~~ \evalphiGen{\grad{\pi}}{\phi} \iff \evalphiGen{\pi}{\phi}
+    \end{displaymath}
+    
+    This is trivially the case if evaluation does not depend on the (now gradual) continuation in the first place.
+\end{lemma}
+

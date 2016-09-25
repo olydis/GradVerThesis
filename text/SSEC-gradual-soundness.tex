@@ -28,14 +28,14 @@ We define gradual soundness of \gvl as follows:
 Valid Hoare triples for the gradual system are defined as
 \begin{flalign*}
 & \gtHoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setGFormula \times \setGStmt \times \setGFormula                                                                                                                                                                          \\
-& \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ 
-\forall \grad{\pi_{pre}}, \grad{\pi_{post}} \in \setGProgramState.~ \gsstepConsume{\grad{s}}{\grad{\pi_{pre}}}{\grad{\pi_{post}}} \implies (\evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}})
+& \gtHoare {~} {\grad{\phi_{pre}}} {\grad{s}} {\grad{\phi_{post}}} ~\defiff~ \forall \grad{\pi_{pre}}, \grad{\pi_{post}} \in \setGProgramState.~\\
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~ \gsstepConsume{\grad{s}}{\grad{\pi_{pre}}}{\grad{\pi_{post}}} \implies (\evalgphiGen{\grad{\pi_{pre}}}{\grad{\phi_{pre}}} \implies \evalgphiGen{\grad{\pi_{post}}}{\grad{\phi_{post}}})
 \end{flalign*}
 
 %% ...have nothing to do with gradual lifting
 Note that $\gtHoare {~} {\cdot} {\cdot} {\cdot}$ is not a sound gradual lifting of $\tHoare{~}{\cdot}{\cdot}{\cdot}$.
-A gradual lifting would declare the Hoare triple $\hoare{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$ valid ()due to the existence of a valid instantiation, e.g. $\hoare{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$).
-However, this triple is clearly not valid as the postcondition is not guaranteed for all executions satisfying the precondition (\qm is always satisfied).
+A gradual lifting would declare the Hoare triple $\hoare{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$ valid due to the existence of a valid instantiation, e.g. $\hoare{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$).
+However, this triple is clearly not valid as the postcondition is not guaranteed for all executions satisfying the precondition ($\qm$ is always satisfied).
 Recall that sound lifting was introduced in order to comply with the expectations a programmer would have when using a gradual verification system.
 The validity predicate $\gtHoare {} {\cdot} {\cdot} {\cdot}$ plays a higher conceptual role (correctness proofs), is invisible to the programmer and therefore not affected by any user experience expectations.
 

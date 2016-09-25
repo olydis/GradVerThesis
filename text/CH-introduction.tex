@@ -17,7 +17,7 @@ Approaches to check whether program behavior complies with given annotations can
         Using static verification usually requires rigorous annotation of the entire source code, as otherwise there might be too little information to find a proof.
         While fully annotating own code can be tedious (there are supporting tools), using unannotated libraries can become a problem:
         Even if it is possible annotate the API afterwards, lacking the source code the verifier is unable to prove those annotations.
-        In case the annotation are wrong this results in inconsistent proves.
+        In case the annotation are wrong this results in inconsistent proofs.
         
     \item[Dynamic verification]~\\
         The specification is turned into \textbf{runtime checks}, making sure that the program adheres to its specification during execution.
@@ -40,10 +40,10 @@ Gradual typing emerged from very similar drawbacks of static and dynamic type sy
 This is no surprise from a theoretical perspective as type systems are a special case of program verification. 
 These similarities motivated our idea of reinterpreting and adapting the gradual typing approach to the verification setting.
 
-Chapter \ref{sec:categorization-of-existing} introducing the concepts motivating and driving our approach.
+Chapter \ref{sec:categorization-of-existing} introduces the concepts motivating and driving our approach.
 Furthermore it categorizes existing work that goes in a similar direction, pointing out how it differs from our work.
 In chapter \ref{ch:gradualization-of-a} we describe our approach of gradualization in a generic way, meant to be used as a manual or template for designing gradual verification systems.
-We follow that manual in form of case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic in order to enable safe static reasoning about shared mutable state.
+We follow that manual in form of case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic frames in order to enable safe static reasoning about shared mutable state.
 
 % TODO: remaining chapters
 

@@ -1,18 +1,14 @@
 %% intro
 Formulas play a role for some statements, extending their syntax may thus also affect the syntax of statements.
-
-
-%% assert
-A common example are assertion statements $\sAssert{$\phi$}$.
-Having a gradual formula syntax available does not necessary mean that all statements have to adopt it.
-In case of the assertion statement there might be little benefit in allowing gradual formulas.
-% TODO? say why, say that it is nonsense for the syntax extensions we gave but NOT for the one in the implementation
+A common example are assertion statements $\sAssert{$\phi$}$, which can now be extended to $\sAssert{$\grad{\phi}$}$.
+However, having a gradual formula syntax available does not necessarily mean that all statements have to adopt it.
+% Examples can be found in chapter \ref{ch:case-study--implicit} which derives a gradual language \gvlidf that .
 
 %% call
 A more complex example affected by gradualization of formulas is a call statement $\ttt{$m$();}$ in presence of method contracts.
 Although not directly visible, this statement's semantics (static and dynamic) is affected by the contract of $m$, consisting of pre- and postcondition.
 One can think of $m$ as a reference to some method definition including method contract.
-Note that in practice such method definitions usually reside in a “program context” that is then passed to static and dynamic semantics.
+Note that in practice such method definitions usually reside in a “program context” that the static and dynamic semantics are parameterized with.
 As the full meaning of such a statement is unknown without context, it is hard to reason about it abstractly.
 W.l.o.g. we will thus think of $m$ as syntactic sugar for 
 \begin{align*}

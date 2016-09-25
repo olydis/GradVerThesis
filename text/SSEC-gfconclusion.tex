@@ -1,16 +1,16 @@
 Since lifted predicates and functions directly affect the gradual semantics of \gvl, they must adhere to certain rules in order to be sound.
 What soundness means is a direct consequence of the gradual guarantee for gradual verification systems, which we derive from the gradual guarantee for gradual type systems by Siek et al. \cite{siek2015refined}.
 
-For simplicity we will simply call programs “correct” if they are successfully verifiable by the gradual verifier.
+For simplicity we will simply call programs “acceptable” if they are successfully verifiable by the gradual verifier.
 
 \begin{definition}[Gradual Guarantee (Static Semantics)]
     \label{grad-guarantee-static}
-    Correct programs remain correct when reducing precision of any formula.
+    Acceptable programs remain acceptable when reducing precision of any formula.
 \end{definition}
 
 \begin{definition}[Gradual Guarantee (Dynamic Semantics)]
     \label{grad-guarantee-dynamic}
-    Correct programs with certain observational behavior (termination, values of variables, output, etc.) will have the same observational behavior after reducing precision of any formula.
+    Acceptable programs with certain observational behavior (termination, values of variables, output, etc.) will have the same observational behavior after reducing precision of any formula.
 \end{definition}
 
 \begin{comment}

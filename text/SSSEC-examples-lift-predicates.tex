@@ -142,6 +142,7 @@
 
 Note that the definition of lifted evaluation was lifted only w.r.t. the second parameter.
 There is no point in lifting evaluation w.r.t. the program state since gradual program state has no impact on evaluation (see \ref{sec:gradual-program-state}).
+
 We define denotational semantics of gradual formulas analogous to the non-gradual variant (see definition \ref{def:frm-den-sem}):
 \begin{definition}[Denotational Formula Semantics $\envs{\cdot}$ of Gradual Formulas]~\\
     \label{def:gfrm-den-sem}
@@ -212,7 +213,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     \end{displaymath}
     with sound liftings $\grad{P}$ and $\grad{Q}$.
     
-    Then $\grad{(P \wedge Q)}$ is a sound lifting of $(P \vee Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
+    Then $\grad{(P \wedge Q)}$ is a sound lifting of $(P \wedge Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \wedge Q)}$.
 \end{lemma}
 \begin{proof}

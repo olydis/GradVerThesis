@@ -27,15 +27,23 @@ separating conjunction (\ttt{*}) ensures that both sides of the conjunction refe
     {\ttt{p1.age++}}
     {\phiCons{\phiMapsTo{p1.age}{20}}{\phiMapsTo{p2.age}{19}}}
     \end{displaymath}
-    The use of separating conjunction in the precondition guarantees that \ttt{p1.age} and \ttt{p2.age} reference disjoint memory locations.
+    The separating conjunction in the precondition guarantees that \ttt{p1.age} and \ttt{p2.age} reference disjoint memory locations.
     The operation is therefore guaranteed to leave \ttt{p2.age} untouched.
+    
+    % TODO:
+    Note, however, that a system applying above Hoare triple 
+    Note, however, that the use of the separating conjunction in the precondition challenges the system to establish that \ttt{p1} and \ttt{p2} do not alias.
+    ()
 \end{example}
 
 %% IDF
 A drawback of separation logic is that formulas cannot contain heap-dependent expressions (e.g. $\ttt{p1.age <= 19}$) as they are not directly expressible using the explicit syntax (see above: values of memory locations are explicitly tracked).
 The concept of implicit dynamic frames (IDF) \cite{smans2009implicit} addresses this issue by decoupling the permissions to access a certain heap location from assertions about its value.
 It introduces an “accessibility predicate” \ttt{acc(\textit{loc})} that represents the permission to access heap location \textit{loc}.
-Parkinson and Summers \cite{parkinson2011relationship} worked out the formal relationship between separation logic and IDF.
+
+Parkinson and Summers worked out the formal relationship between separation logic and IDF \cite{parkinson2011relationship}.
+Specifically, they define a logic that syntactically subsumes and semantically agrees with both separation logic and implicit dynamic frames.
+Finally, they show that the separation logic fragment of their logic can be encoded into the implicit dynamic frames fragment while preserving semantics.
 
 \begin{example}{Power of Implicit Dynamic Frames}~\\
     \label{ex:pow-idf}
@@ -51,13 +59,13 @@ Parkinson and Summers \cite{parkinson2011relationship} worked out the formal rel
 
 As formulas can mention heap locations in arbitrary predicates, it has to be ensured that a formula contains accessibility predicates to all heap locations mentioned.
 This property of formulas is called “self-framing”.
-The pre- and postcondition of example \ref{ex:pow-idf} are self-framing whereas the sub-formula $\phiEq{p1.age}{20}$ would not be.
-It is essential that access cannot be duplicated and thus also not be shared between threads, allowing race-free reasoning about concurrent programs.
+The pre- and postcondition of example \ref{ex:pow-idf} are self-framed whereas the sub-formula $\phiEq{p1.age}{20}$ would not be.
+% MENTION? It is essential that access cannot be duplicated, implying that and thus also not be shared between threads, allowing race-free reasoning about concurrent programs.
 
 %% Chalice
 Implicit dynamic frames was implemented as part of the Chalice verifier \cite{leino2009verification}.
 Chalice is also the name of the underlying simple imperative programming language that has constructs for thread creation and thus relies on IDF for sound race-free reasoning.
-Chalice was also implemented as a front-end of the Viper toolset. % developed at ETH Zürich.
+Chalice was also implemented as a front-end of the Viper toolset \cite{MuellerSchwerhoffSummers16}. % developed at ETH Zürich.
 
 %% formal semantics
 The static semantics of our example language in chapter \ref{ch:case-study--implicit} is based on the Hoare logic for Chalice given by Summers and Drossopoulou \cite{summers2013formal}.
