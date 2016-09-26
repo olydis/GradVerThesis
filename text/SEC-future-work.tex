@@ -1,3 +1,4 @@
+%% optimality
 After realizing that optimality of gradual liftings (or “consistent lifting”, as called in AGT \cite{garcia2016abstracting}) is likely impossible to achieve in the verification setting, we focused mainly on soundness of liftings.
 Furthermore, we showed that our approach of obtaining a gradual Hoare logic using deterministic liftings does not result in an optimally lifted Hoare logic, even if the deterministic lifting was optimal (see example \ref{cex:opt-det2grad}).
 We have also shown that a more expressive gradual syntax can reduce that problem, yet we have not formalized that relationship or determined what is necessary to preserve optimality.
@@ -36,6 +37,15 @@ Furthermore, it is unclear whether optimality/consistency as defined by AGT is e
 We conjecture that a notion of consistency that relies on valid Hoare triples instead of deducible Hoare triples would solve this problem, yet it is unclear what the implications of this definition would be.
 Most importantly, it would severely complicate optimality proofs, as they suddenly rely on dynamic semantics (from which validity of Hoare triples arises) instead of static semantics (Hoare logic).
 
+%% non-termination
+The “plausibility” interpretation of unknown formulas motivated us to define $\gamma(\qm)$ as the set of all satisfiable formulas (see section \ref{sec:gradual-formulas}).
+However, this definition implies that $\qm$ may not be usable as a postcondition of non-terminating statements (for which proving $\phiFalse$ as a postcondition would make sense).
+As a consequence, programmers may not be able to be imprecise about termination of a statement.
+Note that \svlidf does not contain non-terminating constructs, so we did not deal with this problem in chapter \ref{ch:case-study--implicit}.
+It is not clear how this case should be approached since the current definition of $\gamma(\qm)$ is clearly justified (for terminating programs).
+Maybe the introduction of an additional wildcard $\qm_{\bot}$ with $\gamma(\qm_{\bot}) = \setFormula$ proves useful in order to be imprecise about termination.
+
+%% IDF
 In the case study, we have not made full use of the capabilities of implicit dynamic frames, yet.
 Tracking exclusive access to memory locations also allows race-free reasoning about concurrent programs (see \cite{summers2013formal} gives a Hoare logic).
 It would be interesting to see gradual verification applied to such a setting, as it reflects more closely the reality of modern programming languages.

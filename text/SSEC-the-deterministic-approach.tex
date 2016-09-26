@@ -269,12 +269,12 @@ This gradual partial function has desirable properties:
 \end{description}
 
 
-\begin{lemma}[Reduced Runtime Checks]
+\begin{lemma}[Reduced Runtime Checks]~\\
     \label{lemma:runtime-checks-reduced}
-    Assume that $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2'}}$ holds for some $\grad{\phi_1}, \grad{s}, \grad{\phi_2}$.
-    If \tset{GDPreservation} holds, the runtime check $\sAssert{\grad{\phi_2}}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{GPreservation'}) can be simplified or omitted.
+    Assume that $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2'}}$ holds for some $\grad{\phi_1}, \grad{s}, \grad{\phi_2'}$.
+    If \tset{GDPreservation} holds, the runtime check $\sAssert{$\grad{\phi_2}$}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{GPreservation'}) can be simplified or omitted.
     
-    Specifically, it is sufficient to insert a runtime check (predicate) $P \subset \setProgramState$ if
+    Specifically, it is sufficient to insert a runtime check (predicate) $P \subseteq \setProgramState$ if
     \begin{gather*}
     \envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}
     \end{gather*}
@@ -288,3 +288,14 @@ This gradual partial function has desirable properties:
     Note that $P(\pi) = \setProgramState$ is a sufficient runtime check if $\envs{\grad{\phi_2'}} \subseteq \envs{\grad{\phi_2}}$.
     In other words, no runtime check is necessary in this case.
 \end{lemma}
+\begin{proof}~\\
+    The restriction $\envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
+    $\grad{\phi_2'}$ is ensured by \tset{GDPreservation}, $P$ is explicitly checked.
+    
+    On the other hand, $\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P$ ensures that $P$ is not stricter than necessary.
+    Assume there exists a program state $\pi \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\pi \not \in (\envs{\grad{\phi_2'}} \cap P$.
+    It follows that $\neg P(\pi)$, i.e. a runtime exception is thrown that indicates that a runtime check fails.
+    However, $\pi$ neither violates $\grad{\phi_2'}$ nor $\grad{\phi_2}$ and is thus not expected to violate any runtime checks.
+\end{proof}
+
+

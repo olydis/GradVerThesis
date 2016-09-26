@@ -30,10 +30,8 @@ separating conjunction (\ttt{*}) ensures that both sides of the conjunction refe
     The separating conjunction in the precondition guarantees that \ttt{p1.age} and \ttt{p2.age} reference disjoint memory locations.
     The operation is therefore guaranteed to leave \ttt{p2.age} untouched.
     
-    % TODO:
-    Note, however, that a system applying above Hoare triple 
-    Note, however, that the use of the separating conjunction in the precondition challenges the system to establish that \ttt{p1} and \ttt{p2} do not alias.
-    ()
+    Note that proving the “more powerful” precondition $\phiCons{\phiMapsTo{p1.age}{19}}{\phiMapsTo{p2.age}{19}}$ challenges the system to establish that \ttt{p1} and \ttt{p2} do not alias.
+    In other words, more sophisticated reasoning and possibly stronger contracts by the user are required to derive formulas containing the separating conjunction.
 \end{example}
 
 %% IDF

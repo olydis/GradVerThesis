@@ -1,7 +1,77 @@
+%%intro
 It is expected that gradual verification can induce runtime overhead.
 Specifically, in the presence of unknown formulas runtime checks are necessary to guarantee soundness of the gradual system.
 
-With the methodology we introduced in chapter \ref{ch:gradualization-of-a} there are two potential places that introduce runtime checks.
+%%where runtime overhead can come from
+With the methodology we introduced in chapter \ref{ch:gradualization-of-a} there are two potential causes for runtime checks.
+The first cause is the gradual Hoare judgment, which in general requires runtime measures to ensure the postcondition dynamically (see section \ref{ssec:gradual-soundness}).
+We have also discussed how those runtime checks can be reduced or even eliminated if \tset{GDPreservation} holds (see lemma \ref{lemma:runtime-checks-reduced}).
+The second cause is more subtle and originates in restricting the domain of the small-step semantics to achieve completeness as described in section \ref{ssec:perfect-knowledge}.
+Restricting the domain usually means adding additional checks that determine whether the function is defined or not.
+Example \ref{ex:cex-gdpres} illustrates this effect using the example of an assertion statement.
+Note that a compiler may also simplify or omit these static checks using the knowledge provided by the deterministic lifting (given that  \tset{GDPreservation} holds).
 
+%% svlidf
+In chapter \ref{ch:case-study--implicit} we designed the small-step semantics of \svlidf to be (partially) complete in the first place (see lemma \ref{lemma:pc-idf}).
+Note however, that ???mark them gray or something??? were not necessary for \svlidf, yet they are necessary for \gvlidf.
 
-\label{lemma:runtime-checks-reduced}
+%% static annotations
+It is a desirable property of gradual systems to not impose any runtime overhead (compared to the static system) should all annotations be static.
+We give sufficient criteria for such a gradual verification system.
+\begin{lemma}[Overhead-Free Gradually Verified Language]
+    \label{lemma:oh-free}
+    For fully statically annotated programs, no runtime overhead is necessary if \tset{GDPreservation} and
+    \begin{align}
+    \label{lemma-frm:oh-free}
+    \forall \phi_1 \in \setFormula,\, s \in \setStmt,\, \grad{\phi_2} \in \setGFormula.~ \dgthoare{}{\phi_1}{s}{\grad{\phi_2}} \implies \grad{\phi_2} \in \setFormula
+    \end{align}
+    holds.
+    Intuitively, this condition states that the deterministic gradual Hoare logic is precise for all static input.
+    
+   % Optimality of the deterministic lifting does not necessarily imply \ref{lemma-frm:oh-free} if \tset{GDPreservation} holds.
+   % A stricter version of this lemma would thus read:
+   % For fully statically annorated programs, no runtime overhead is necessary if \tset{GDPreservation} and the deterministic gradual Hoare logic is an optimal deterministic lifting.
+\end{lemma}
+\begin{proof}
+    We prove that 
+    \begin{align}
+    \begin{split}
+    \label{frm:oh-free1}
+    \forall \phi_1, \phi_{2b} \in \setFormula,\, s \in \setStmt.~
+    &\thoare{}{\phi_1}{s}{\phi_{2b}} \\
+    \implies 
+    (\exists \phi_{2a} \in \setFormula.~ &\dgthoare{}{\phi_1}{s}{\phi_{2a}} \wedge \phiImplies{\phi_{2a}}{\phi_{2b}})
+    \end{split}
+    \end{align}
+    As a consequence, all reasoning that allows the static system to be runtime check free also applies to the gradual system (if all annotations are static).
+    
+    Proof for \ref{lemma-frm:oh-free}:
+    \begin{align*}
+    \thoare{}{\phi_1}{s}{\phi_{2b}}
+    \end{align*}
+    for some $\phi_1, \phi_{2b} \in \setFormula,\, s \in \setStmt$.
+    Using the introduction rule of deterministic liftings it follows that
+    \begin{align*}
+    \dgthoare{}{\phi_1}{s}{\grad{\phi_2}}
+    \end{align*}
+    for some $\grad{\phi_2} \in \setGFormula$.
+    According to assumption \ref{lemma-frm:oh-free}, $\grad{\phi_2} = \phi_{2a}$ for some $\phi_{2a} \in \setFormula$.
+    Using the strength rule of deterministic liftings it follows immediately that $\phiImplies{\phi_{2a}}{\phi_{2b}}$.
+
+\begin{comment}
+    Proof for claim that optimality of $\dgthoare{}{\cdot}{\cdot}{\cdot}$ implies \ref{lemma-frm:oh-free} if \tset{GDPreservation} holds.
+    Let $\Phi \defeq \{~ \phi_2 ~|~ \thoare{}{\phi_1}{s}{\phi_2} ~\}$ for some  $\phi_1 \in \setFormula,\, s \in \setStmt$.
+    $\Phi$ is the set of all deducible postconditions for given precondition and statement.
+    If $\Phi$ is not empty, then the introduction rule of deterministic liftings implies that
+    $\dgthoare{}{\phi_1}{s}{\grad{\phi_2}}$ for some $\grad{\phi_2} \in \setGFormula$.
+    \begin{description}
+        \item[Case 1: $\exists \pi_1, \pi_2.~ \sstepConsume{s}{\pi_1}{\pi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$]~\\
+        Due to soundness of the static system, it follows that
+        \begin{displaymath}
+        \forall \phi_2 \in \Phi.~ \evalphiGen{\pi_2}{\phi_2}
+        \end{displaymath}
+    \end{description}
+    \end{comment}
+\end{proof}
+
+\gvlidf satisfies the criteria given by lemma \ref{lemma:oh-free} and can thus be implemented overhead-free for statically annotated programs.
