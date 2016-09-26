@@ -146,6 +146,14 @@ Assumptions about \svl:
     
     We assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
     W.l.o.g. we assume $\forall \pi \in \setProgramStateFin.~ \sstepStuck{\pi}$, i.e. final states are stuck.
+    
+    We assume that dynamic semantics of a sequence $\sSeq{$s_1$}{$s_2$}$ is implemented such that 
+    \begin{displaymath}
+    \sstepConsume{\sSeq{$s_1$}{$s_2$}}{\pi_1}{\pi_3} \iff \exists \pi_2 \in \setProgramState.~ \sstepConsume{s_1}{\pi_1}{\pi_2} \wedge \sstepConsume{s_2}{\pi_2}{\pi_3}
+    \end{displaymath}
+    for all $\pi_1, \pi_3 \in \setProgramState$.
+    
+    
     % We say a statement “throws an exception” if its small-step semantics transitions into an exceptional state.
     \begin{comment}
     Optionally, there may be a subset $~\setProgramStateEx \subseteq \setProgramStateFin~$ of states indicating exceptional termination of the program.
@@ -230,6 +238,13 @@ Assumptions about \svl:
         \forall \pi_{pre}, \pi_{post} \in \setProgramState.~ \sstepConsume{s}{\pi_{pre}}{\pi_{post}} \implies (\evalphiGen{\pi_{pre}}{\phi_{pre}} \implies \evalphiGen{\pi_{post}}{\phi_{post}})
         \end{flalign*}
     \end{definition}
+    \begin{lemma}[Compositional Validity of Hoare Triples]
+        \label{lem:comp-tHoare}
+        \begin{displaymath}
+        \forall \phi_1, \phi_2, \phi_3 \in \setFormula,\, s_1, s_2 \in \setStmt.~ \tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3} \implies \tHoare{}{\phi_1} {\sSeq{$s_1$}{$s_2$}} {\phi_3}
+        \end{displaymath}
+    \end{lemma}
+    % TODO: proof
     
     We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphiGen{\pi}{\phi} ~\}$ is a filter, i.e.
     \begin{itemize}

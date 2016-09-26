@@ -204,7 +204,7 @@ The overall proof is a structural induction on statement $s$.
     \gtHoare {} {\grad{\phi}} {\sDeclare {${T}$} {${x}$}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
     \end{gather}
     holds (using \ref{frm:tmpp2}, find proof below).
-    Using lemma ??? we can combine \ref{frm:tmpp4} and \ref{frm:tmpp5} to derive the goal:
+    Using lemma \ref{lem:comp-gtHoare} we can combine \ref{frm:tmpp4} and \ref{frm:tmpp5} to derive the goal:
     \begin{align}
     \gtHoare{}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
     \end{align}

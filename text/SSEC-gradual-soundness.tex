@@ -36,6 +36,15 @@ We define gradual soundness of \gvl as follows:
     
     This definition is analogous to definition \ref{def:valid-hoare-triple}.
 \end{definition}
+\begin{lemma}[Compositional Validity of Gradual Hoare Triples]
+    \label{lem:comp-gtHoare}
+    \begin{displaymath}
+    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_3} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ \gtHoare{}{\grad{\phi_1}} {\grad{s_1}} {\grad{\phi_2}} ~\wedge~ \gtHoare{}{\grad{\phi_2}} {\grad{s_2}} {\grad{\phi_3}} \implies \tHoare{}{\grad{\phi_1}} {\sSeq{$\grad{s_1}$}{$\grad{s_2}$}} {\grad{\phi_3}}
+    \end{displaymath}
+\end{lemma}
+\begin{proof}
+    Analogous to proof of lemma \ref{lem:comp-tHoare}.
+\end{proof}
 
 %% ...have nothing to do with gradual lifting
 Note that $\gtHoare {~} {\cdot} {\cdot} {\cdot}$ is not a sound gradual lifting of $\tHoare{~}{\cdot}{\cdot}{\cdot}$.
