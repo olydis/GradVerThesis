@@ -1,0 +1,2 @@
+{ acc(x.f) * acc(y.f) } x.f := y.f { true }
+ { (x = y) * acc(y.f) } x.f := y.f { true }

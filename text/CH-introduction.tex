@@ -8,19 +8,19 @@ Approaches to check whether program behavior complies with given annotations can
 \begin{description}
     \item[Static verification]~\\
         The program is not executed. 
-        Instead \textbf{formal methods} (like Hoare logic or separation logic) are used, trying to derive a proof for given assertions.
+        Instead \emph{formal methods} (like Hoare logic or separation logic) are used, trying to derive a proof for given assertions.
         
         \textbf{Drawbacks}\\
         The syntax available for static verification is naturally limited by the underlying formal logic.
-        Complex properties might thus not be expressible, resulting in inability to prove subsequent goals.
+        Complex properties (e.g. including database lookups or library calls) might thus not be expressible, resulting in inability to prove subsequent goals.
         Furthermore, the logic itself might fail proving certain goals due to code complexity and undecidability in general.
         Using static verification usually requires rigorous annotation of the entire source code, as otherwise there might be too little information to find a proof.
         While fully annotating own code can be tedious (there are supporting tools), using unannotated libraries can become a problem:
-        Even if it is possible annotate the API afterwards, lacking the source code the verifier is unable to prove those annotations.
-        In case the annotation are wrong this results in inconsistent proofs.
+        Even if it is possible to annotate the API afterwards, lacking the source code the verifier is unable to prove those annotations.
+        In case the annotations are wrong this results in inconsistent proofs.
         
     \item[Dynamic verification]~\\
-        The specification is turned into \textbf{runtime checks}, making sure that the program adheres to its specification during execution.
+        The specification is turned into \emph{runtime checks}, making sure that the program adheres to its specification during execution.
         Violations cause a runtime exception to be thrown, effectively preventing the program from entering a state that contradicts its specification.
         Note that in practice this approach is often combined with control flow based testing techniques to detect misbehavior as early as possible.
         
@@ -30,26 +30,25 @@ Approaches to check whether program behavior complies with given annotations can
         The usage of runtime checks naturally imposes a runtime overhead which is not always acceptable.
 \end{description}
 
-The goal of this work is to formalize “gradual verification”, an approach that seamlessly combines static and dynamic verification in order to weaken or even avoid above drawbacks.
+The goal of this work is to formalize “gradual verification”, an approach that seamlessly combines static and dynamic verification in order to weaken or even avoid above drawbacks by introducing an “unknown” formula $\qm$.
 The resulting system provides a continuum between traditional static and dynamic verification, meaning that both extremes are compatible with, but only special cases of the gradual verification system.
 Section \ref{sec:motivationexamples} gives example scenarios of both static and dynamic verification suffering from their drawbacks, illustrating how gradual verification could avoid them.
 % Programmers
 
-Our approach is based on recent formalizations regarding gradual typing, using the concept of abstract interpretation to define a gradual system in terms of a static one (this process is called “gradualization”).
-Gradual typing emerged from very similar drawbacks of static and dynamic type systems.
+Our approach is based on recent advances in formalizing gradual typing, specifically “Abstracting Gradual Typing” \cite{garcia2016abstracting} by Garcia, Clark and Tanter.
+They describe a process called “gradualization” that uses the concept of abstract interpretation to define a gradual system in terms of a static one.
+Gradual typing emerged from drawbacks of static and dynamic type systems that are very similar to the drawbacks of verification systems outlined above.
 This is no surprise from a theoretical perspective as type systems are a special case of program verification. 
 These similarities motivated our idea of reinterpreting and adapting the gradual typing approach to the verification setting.
 
 Chapter \ref{sec:categorization-of-existing} introduces the concepts motivating and driving our approach.
 Furthermore it categorizes existing work that goes in a similar direction, pointing out how it differs from our work.
 In chapter \ref{ch:gradualization-of-a} we describe our approach of gradualization in a generic way, meant to be used as a manual or template for designing gradual verification systems.
-We follow that manual in form of case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic frames in order to enable safe static reasoning about shared mutable state.
-
-% TODO: remaining chapters
+We follow that manual in form of a case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic frames in order to enable safe static reasoning about shared mutable state.
+We conclude with an evaluation of our approach (chapter \ref{ch:evaluation-analysis}) and a conclusion (chapter \ref{ch:conclusion}).
+The appendix contains additional information like proofs. % TODO: is that all?
 
 \begin{comment}
-~\\ % more detail???
-
 
 Most modern programming languages use static methods to some degree, ruling out at least some types of runtime failure.
 %% static typing
@@ -76,8 +75,6 @@ Note that such languages are usually driven by cost-benefit and usability consid
 %% static verification
 % example?
 
-% research Eiffel!
-% Design-by-Contract!!! Eiffel!
 % D even has both
 
 % this is more of a consequence of the “deep roots” of dynamic verification!!!
