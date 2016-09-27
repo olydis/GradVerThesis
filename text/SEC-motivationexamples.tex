@@ -1,73 +1,83 @@
 
-\subsection{Argument Validation}
+\subsection{Parameter Validation}
 \label{ssec:argument-validation}
-The following Java example motivates the use of verification for argument validation.
+The following Java example motivates the use of verification for parameter validation.
 \begin{lstlisting}
-// spec: no resource leaks
-boolean hasLegalDriver(Car c)
+// spec: callable only if (this.balance >= amount)
+void withdrawCoins(int amount)
 {
-    // business logic:
-    resAllocate();
-    boolean result = c.driver.age >= 18;
-    resFree();
-    return result;
+    // business logic
+    this.balance -= amount;
 }
 \end{lstlisting}
-A call to \ttt{hasLegalDriver} fails if \ttt{c} or \ttt{c.driver} evaluate to \ttt{null}.
-Note that, although the Java runtime has defined behavior in those cases (throwing an exception), we have created a resource leak.
-To prevent this from happening, arguments have to be validated before entering the business logic.
+It is supposed to be impossible for \ttt{withdrawCoins} to create a negative balance, hence the restriction.
+To enforce this specification in Java, one may validate the parameter \ttt{amount} before entering the business logic.
 \begin{lstlisting}
-boolean hasLegalDriver(Car c)
+void withdrawCoins(int amount)
 {
-    if (!(c != null))
-        throw new IllegalArgException("expected c != null");
-    if (!(c.driver != null))
-        throw new IllegalArgException("expected c.driver != null");
+    if (!(this.balance >= amount))
+        throw new IllegalArgException("expected this.balance >= amount");
         
-    // business logic (requires 'c.driver.age' to evaluate)
+    // business logic
+    this.balance -= amount;
 }
 \end{lstlisting}
 
-Note that these runtime checks dynamically verify a method contract, having \ttt{c != null \&\& c.driver != null} as precondition.
+Note that this runtime check dynamically verify a method contract that has \ttt{this.balance >= amount} as precondition.
 Naturally, the drawbacks of dynamic verification apply:
 Violations of the method contract are only detected at runtime, possibly go unnoticed for a long time and impose a runtime overhead which might not be acceptable in all scenarios.
 
 Java even has a dedicated assertion syntax, simplifying dynamic verification:
 \begin{lstlisting}
-boolean hasLegalDriver(Car c)
+void withdrawCoins(int amount)
 {
-    assert c != null;
-    assert c.driver != null;
-
-    // business logic (requires 'c.driver.age' to evaluate)
+    assert this.balance >= amount;
+    
+    // business logic
+    this.balance -= amount;
 }
 \end{lstlisting}
 
 Using additional tools, a more declarative approach is possible using JML syntax:
 \begin{lstlisting}
-//@ requires c != null && c.driver != null;
-boolean hasLegalDriver(Car c)
+//@ requires this.balance >= amount;
+void withdrawCoins(int amount)
 {
-    // business logic (requires 'c.driver.age' to evaluate)
+    // business logic
+    this.balance -= amount;
 }
 \end{lstlisting}
 
-Using JML4c (see \cite{sarcar2010new}) or similar tools, this annotations is compiled back into equivalent runtime assertions.
+Using JML4c (see \cite{sarcar2010new}) or similar tools, this annotation is compiled back into equivalent runtime assertions.
 However, the declarative approach also enables the use of static verification tools like ESC/Java (see \cite{leino2000esc}) to ensure at compile time that every call to \ttt{hasLegalDriver} adheres to the method contract.
 Static verification will only succeed if the precondition is provable at all call sites.
 
-Gradual verification would pursue a combined approach without drawbacks:
-Static verification is used where possible, dynamic verification where needed.
+Consider the following example code:
+\begin{lstlisting}
+acc.balance = 100;
+acc.withdrawCoins(50);
+acc.withdrawCoins(30);
+\end{lstlisting}
+
+Using dynamic verification methods, the validity of both calls is only established at runtime, although the calls clearly adhere to the contract.
+However, static verification most likely fail due to incomplete knowledge:
+The method contract does not state how \ttt{this.balanced} is changed during a call to \ttt{withdrawCoins}, meaning that it cannot prove the precondition for the second call (we assume that the static verifier exclusively relies on the contract while reasoning about a method call).
+An additional postcondition \ttt{ensures this.balance = old(this.balance) - amount} would solve that problem, resulting in overall success of the verification.
+
+Gradual verification would realize a combined, best-effort approach without the need for full annotation:
+Static verification is used where possible (here: the first method call), dynamic verification where needed (here: the second method call).
 Where static verification proves a violation of the method contract, an error is found at compile time (which would have required tests with full code coverage to detect otherwise).
 Where static verification proves compliance with the method contract, no runtime checks are emitted in order to enforce the contract.
 Only call sites which are provable neither to violate nor to adhere with the contract will be enhanced with runtime assertions.
 
+This is realized by giving \ttt{withdrawCoins} an unknown postcondition $\qm$, which will be treated as any plausible formula (in this example, one that proves that the balance is still high enough).
+Whenever assumptions about $\qm$ are made statically, they are accompanied with a runtime check that ensures the validity of those assumptions at runtime.
 
 
 \subsection{Limitations of Static Verification}
 \label{ssec:limitations-of-static}
-The following example is written in a Java-like language with dedicated syntax for method contracts (similar to Eiffel and Spec\#).
-We assume that this language is statically verified, i.e. static verification is part of the compilation.
+The following example is written in a Java-like language with dedicated syntax for method contracts (similar to Eiffel \cite{meyer1988eiffel} and Spec\# \cite{the-spec-programming-system-an-overview}).
+We assume that this language is statically verified, i.e. static verification is part of the compilation process.
 
 The example shows the limitations of static verification using the Collatz sequence as an algorithm too complex to describe concisely in a method contract:
 \begin{lstlisting}
@@ -90,14 +100,14 @@ int myRandom(int seed)
     return result;
 }
 \end{lstlisting}
-The first method \ttt{collatzIterations} iterates given number of times, starting at given value.
-We assume that the only provable contract is that positive start value results in positive result.
+The first method \ttt{collatzIterations} iterates the Collatz sequence a given number of times \ttt{iter}, starting with given value \ttt{start}.
+We assume that the only provable contract is that positive start value results in a positive result.
 The second method \ttt{myRandom} uses the Collatz sequence to generate a pseudo random number from given seed.
-It is known to the programmer that start values up to 10000 result in convergence of the sequence after 300 iterations.
+It is known to the programmer that start values up to 10000 result in convergence of the Collatz sequence after less than 300 iterations.
 After mapping 4 to 3, we are thus given a number between 1 and 3, as described in the postcondition.
 
-Unfortunately, the verifier cannot deduce this fact since the postcondition of \ttt{collatzIterations} only guarantees positive result, but no specific range of values.
-Again, we can resort to dynamic methods to aid verification:
+Unfortunately, the verifier cannot deduce this fact since the postcondition of \ttt{collatzIterations} only guarantees positive results, but no specific range of values.
+We could resort to dynamic methods to aid verification, realizing a “cast” of knowledge:
 
 \begin{lstlisting}
 ...
@@ -117,13 +127,12 @@ Again, we can resort to dynamic methods to aid verification:
 }
 \end{lstlisting}
 
-This solution is not satisfying as it required additional work by the programmer to convince the verifier.
+This solution is not satisfying as it required additional work by the programmer to convince the static verifier.
 Furthermore, the solution is in an unintuitive location:
-The problem is not caused by \ttt{myRandom}, yet it is solved there.
-The actual problem is that the postcondition of \ttt{collatzIterations} is too weak, causing the verifier to fail deducing our knowledge.
+The problem is caused by the weak postcondition of \ttt{collatzIterations}, yet it is addressed in \ttt{myRandom}.
 
 Gradual verification allows enhancing the postcondition with “unknown” knowledge that can be interpreted by the verifier as an arbitrary plausible static formula.
-At the same time appropriate runtime checks have to be injected to guarantee that this treatment was in fact valid:
+Again, appropriate runtime checks will be injected to guarantee that the static treatment of $\qm$ is in fact valid:
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
     requires 1 <= start;
