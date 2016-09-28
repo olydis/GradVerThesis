@@ -6,11 +6,11 @@ To drastically simplify notation, we will therefore define $\evalphiGen{\cdot}{\
         \evalphi {\phi}
     }
     {
-        \evalphiGen{(H, (\rho, A, s) \cdot S)}{\phi}
+        \evalphiGen{\langle H, \langle \rho, A, s \rangle \cdot S \rangle}{\phi}
     }
 \end{mathpar}
 
-Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $\vDash \subseteq \setHeap \times \setVarEnv \times \setDFootprint \times \setFormula$.
+Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $\vDash~ \subseteq \setHeap \times \setVarEnv \times \setDFootprint \times \setFormula$.
 \begin{figure}
     \boxed{\evalphi \phi}
     \input{data/svl-sem-dyn-form}

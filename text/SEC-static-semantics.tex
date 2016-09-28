@@ -1,6 +1,6 @@
 %% intro
 The static semantics of \svlidf consist of typing rules and a Hoare logic making use of those typing rules.
-All the rules are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field or retrieve the contract of a called method.
+Both are implicitly parameterized over some program $p \in \setProgram$, necessary for example to extract the type of a field or retrieve the contract of a called method.
 
 %% typing
 Figure \ref{fig:svl-sem-stat-typing} inductively defines a typing predicate $\sType{\cdot}{\cdot}{\cdot} \subseteq \setTypeEnv \times \setExpr \times \setType$ where

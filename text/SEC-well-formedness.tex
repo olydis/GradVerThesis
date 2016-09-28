@@ -1,4 +1,4 @@
-Apart from checking method contracts, a verifier or compiler may enforce further rules before accepting a program as “well formed”.
+Apart from checking method contracts, a verifier or compiler may enforce further rules before accepting a program as “well-formed”.
 For \svlidf we give the rules formalized in figure \ref{fig:idf-wf}.
 
 \begin{figure}[h]
@@ -25,13 +25,13 @@ int identity(int a)
     return a;
 }
 \end{lstlisting}
-While the method passes static verification, it could lead to unsound proofs.
+While the method itself passes static verification, it could lead to unsound proofs when called.
 Note how \tset{HCall} forwards the postcondition after replacing known variables with their counterparts.
 \phiEq{b}{3} is unaffected by this replacement, ending up in the postcondition of the call statement.
 
-Should the call site also know a variable \ttt{b}, then \phiEq{b}{3} will most likely not reflect the state of that variable.
+Should the call site also know a variable \ttt{b}, then \phiEq{b}{3} will most likely not reflect the true state of that variable.
 \end{example}
 
 For similar reasons, we prevent writes to the method's parameter and $\ethis$.
 Changes to those variables would otherwise end up in the postcondition which is forwarded to the call site.
-However, since writes to the parameter or $\ethis$ do not affect variables at the call site, this information would be false.
+However, since writes to the parameter or $\ethis$ do not affect variables at the call site (due to call-by-value semantics), this information would be false.

@@ -1,7 +1,7 @@
 %% intro
 The integral advantage of IDF is the ability to use heap-dependent predicates in formulas.
 Accessibility-predicates are explicitly tracked as part of formulas and represent exclusive access to a certain field.
-As illustrated in section \ref{ssec:implicit-dynamic-frames} sound reasoning is only possible if a formula contains access $\ttt{acc}$ for all the fields it mentions.
+As illustrated in section \ref{ssec:implicit-dynamic-frames} sound reasoning is only possible if a formula contains access for all the fields it mentions.
 This property is called self-framing and will be formalized in this section, drawing on the definitions given by Summers and Drossopoulou \cite{summers2013formal}.
 %An IDF assertion is self-framing if:
 %For any state in which the assertion is true,
@@ -16,7 +16,6 @@ The footprint of a formula is the set of fields it has access to, which can be i
     \begin{displaymath}
     \setSFootprint \defeq \PP^{\setExpr \times \setFieldName} 
     \end{displaymath}
-    
     Static footprints are required for static reasoning, mainly for determining whether or not a formula is self-framing.
     Later, they will be helpful for formalizing the gradual Hoare logic of \gvlidf.
     
@@ -41,16 +40,22 @@ The footprint of a formula is the set of fields it has access to, which can be i
     \begin{example}{Aliasing Access}\\
         \label{ex:aliasing-access}
         Let $H$ and $\rho$ be defined such that $a, b, c \in \setExpr$ all evaluate to the same memory location $o \in \setLoc$.
-        Then:
+        Furthermore, $d \in \setExpr$ evaluates to $\enull$.
+        
+        Then the following footprints are calculated:
         \begin{alignat*}{2}
-        & \staticFP{\phiCons{\phiAcc{a}{f}}{\phiCons{\phiAcc{b}{f}}{\phiAcc{c}{g}}}} &&= \{ \langle a, f \rangle, \langle b, f \rangle, \langle c, g \rangle \}\\
-        & \dynamicFP{H}{\rho}{\phiCons{\phiAcc{a}{f}}{\phiCons{\phiAcc{b}{f}}{\phiAcc{c}{g}}}} &&= \{ \langle o, f \rangle, \langle o, g \rangle \}
+        & \staticFP
+        {\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiAcc{c}{g}}{\phiAcc{d}{h}}}} 
+        &&= \{ \langle a, f \rangle, \langle b, f \rangle, \langle c, g \rangle, \langle d, h \rangle \}\\
+        & \dynamicFP{H}{\rho}
+        {\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiAcc{c}{g}}{\phiAcc{d}{h}}}} 
+        &&= \{ \langle o, f \rangle, \langle o, g \rangle \}
         \end{alignat*}
     \end{example}
     
     Note that the scenario in example \ref{ex:aliasing-access} violates the intuition behind the separating conjunction (introduced in section \ref{ssec:implicit-dynamic-frames}), which is supposed to guarantee that both “sides” of it have access to disjoint memory locations.
     This principle is violated by above formula because of $\phiAcc{a}{f}$ and $\phiAcc{b}{f}$.
-    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated, rendering above formulas unsatisfiable.
+    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated, rendering above formulas unsatisfiable in any environment where \ttt{a} and \ttt{b} alias.
 \end{description}
 \begin{figure}[h]
     \boxed{\staticFP {\phi} = A_s}
@@ -85,9 +90,9 @@ Figure \ref{fig:svl-frmphi} formalizes the predicate.
     \label{fig:svl-frmphi}
 \end{figure}
 Note how \tset{SfrmSepOp} augments the footprint the right sub-formula is checked against using the footprint of the left sub-formula.
-This way, access predicates within a formula are able to frame expressions in the same formula, if mentioned in the right order.
+This ways, access predicates within a formula are able to frame expressions in the same formula, if mentioned in the right order.
 
-MOTIVATION FOR THIS? extraction?
+% MOTIVATION FOR THIS? extraction?
 
 \begin{example}{Framing Formulas}
     \begin{flalign*}
