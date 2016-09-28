@@ -76,12 +76,12 @@ Consider the Hoare triple
 \hoare{\qm}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
 \end{displaymath}
 It is the job of the gradual verifier to prove the triple using above gradual inductive rules.
-Using rule inversion it can deduce that 
-\begin{align*}
-&\gphiImplies{\grad{\phi_{q1}}} {\grad{\phi_{q2}}} \\
-&\gthoare {} {\qm} {\sVarAssign{y}{2}} {\grad{\phi_{q1}}} \\
-&\gthoare {} {\grad{\phi_{q2}}} {\sVarAssign{x}{3}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
-\end{align*}
+Using rule inversion (rule \tset{\gradT HSeq}) it can deduce that 
+\begin{gather*}
+\gphiImplies{\grad{\phi_{q1}}} {\grad{\phi_{q2}}} \\
+\gthoare {} {\qm} {\sVarAssign{y}{2}} {\grad{\phi_{q1}}} \\
+\gthoare {} {\grad{\phi_{q2}}} {\sVarAssign{x}{3}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
+\end{gather*}
 has to hold for some $\grad{\phi_{q1}}, \grad{\phi_{q2}} \in \setGFormula$.
 There are a variety of valid instantiations for both variables:
 \begin{description}
@@ -90,26 +90,32 @@ There are a variety of valid instantiations for both variables:
     The implication trivially holds.
         
     \item[Too weak: $\grad{\phi_{q1}} = \qm,~ \grad{\phi_{q2}} = \qm$]~\\
-    Whenever there exists a valid instantiation at all, the wildcard is also a valid one.
+    Whenever there exists a valid instantiation at all, the wildcard is also a valid one, so always choosing it would be an easy way of implementing a gradual verifier.
     Note however, that the knowledge about the first statement is lost which results in the necessity of dynamic checks to ensure $\phiEq{x}{3}$ after $\sVarAssign{y}{2}$.
     Before, this check could have been optimized away.
     In general, choosing $\qm$ as intermediate gradual formulas allows verifying arbitrary inconsistent judgments (a manifestation of the lack of optimality of $\gthoare {} {\cdot} {\cdot} {\cdot}$).
-    For example, 
-    \begin{displaymath}
-    \gthoare{}{\phiTrue}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiEq{y}{100}}
-    \end{displaymath}
-    is verifiable if the gradual verifier chooses $\qm$ as intermediate gradual formulas.
     
-    Consequently, the verifier should try to be “as precise as possible” in order to detect inconsistencies at compile time.
+    \begin{example}{Inconsistent Gradual Verification}
+        \begin{displaymath}
+        \gthoare{}{\phiTrue}{\sSeq{\sVarAssign{y}{2}}{\sVarAssign{x}{3}}}{\phiEq{y}{100}}
+        \end{displaymath}
+        is verifiable if the gradual verifier chooses $\qm$ as intermediate gradual formulas.
+    \end{example}
+    
+    Consequently, the verifier may try to be “as precise as possible” in order to detect inconsistencies at compile time.
         
     \item[Too strict: $\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
-    The instantiation is stricter than necessary -- but nevertheless valid according to the rules.
-    The implication holds (the knowledge about \ttt{x} is dropped), and $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ holds since $\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ does.
+    This instantiation is fully static, i.e. precise.
+    
+    However, the instantiation is stricter than necessary -- but nevertheless valid according to the rules.
+    The implication holds (the knowledge about \ttt{x} is dropped), and $$\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ holds since $$\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ does.
+    
+    % REMOVE???
     This instantiation illustrates the requirement of runtime checks to ensure preservation as described in section \ref{ssec:gradual-soundness}.
     The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ right after the assignment.
     Unfortunately, this assertion alters runtime behavior:
     Code that would have never thrown an exception when evaluated with the runtime of \svl might now throw an exception.
-    This is a violation of the dynamic gradual guarantee.
+    This is a violation of the dynamic gradual guarantee (note that we are still designing the static system, so no violation).
     Note that it is actually the runtime semantics breaking the guarantee, yet it is the “bad decision” made by the verifier that leads up to it.
     
     Consequently, further rules are necessary to prevent the verifier from making decisions that are, as in this case, not general.
@@ -120,7 +126,7 @@ Note that above observations do not apply to a static verifier as the former two
 The weak instantiation is syntactically impossible, the too strict instantiation relied on the fact that the precondition (of the overall judgment) is a wildcard.
 
 %% dilemma, consequence
-On the other side, decisions of the gradual verifier have the power to change the runtime behavior or let obvious inconsistencies go unnoticed.
+On the other hand, decisions of the gradual verifier have the power to change the runtime behavior or let obvious inconsistencies go unnoticed.
 We propose a different approach, resulting in a deterministic gradual Hoare logic which also obviates the need of injecting runtime assertions.
 
 

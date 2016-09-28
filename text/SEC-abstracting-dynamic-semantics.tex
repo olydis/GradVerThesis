@@ -1,4 +1,5 @@
 Let $\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$ be a sound gradual lifting of $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$.
+As shown in section \ref{ssec:gradual-soundness}, \tset{\gradT Preservation'} is a tautology, i.e. the gradual system is sound.
 
 \begin{comment}
 %% make progress work
@@ -8,92 +9,10 @@ So we artificially make conclusion true by demanding that lifting is total.
 This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
 \end{comment}
 
-%% preservation
-\begin{mathpar}
-    \inferrule* [Right=GPreservation']
-    {
-        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-    {
-        \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}
-    }
-\end{mathpar}
-\begin{lemma}[\tset{GPreservation'} Tautology]
-    \label{lemma:tauto}
-    \tset{GPreservation'} is a tautology if $\gsstepConsume{\sAssert{$\phi_a$}}{\cdot}{\cdot}$ is an optimal lifting of $\sstepConsume{\sAssert{$\phi_a$}}{\cdot}{\cdot}$. 
-    
-    \begin{example}{Optimal Gradual Small-Step Semantics for Runtime Assertion}~\\
-        \label{ex:gss-ra}
-        This example gives an optimal lifting of the small-step semantics for assertions given in example \ref{ex:ss-ra}.
-        \begin{mathpar}
-            \inferrule* [right=\gradT SsAssert~~]
-            {
-                \evalgphiGen{\langle \sigma, \sAssert{$\grad{\phi_a}$} \rangle}{\grad{\phi_a}}
-            }
-            {
-                \gsstep{\langle \sigma, \sAssert{$\grad{\phi_a}$} \rangle}{\langle \sigma, \sSkip \rangle}
-            }
-            \inferrule* [Right=\gradT SsAssertEx]
-            {
-                \neg~ \evalgphiGen{\langle \sigma, \sAssert{$\grad{\phi_a}$} \rangle}{\grad{\phi_a}}
-            }
-            {
-                \gsstep{\langle \sigma, \sAssert{$\grad{\phi_a}$} \rangle}{\pi_{EX}}
-            }
-        \end{mathpar}
-        Optimality of this lifting follows from optimality of gradual formula semantics according to lemma \ref{ex:opt-lift-evalphi}.
-    \end{example}
-\end{lemma}
-\begin{proof}
-    Goal: $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$.
-    According to definition \ref{def:valid-ghoare-triple} we may assume
-    \begin{align}
-    \label{eq:ttemp1}
-    \gsstepConsume{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\pi_1}}{\grad{\pi_2}}
-    \end{align}
-    and
-    \begin{align}
-    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
-    \end{align}
-    for some $\grad{\pi_1}, \grad{\pi_2} \in \setGProgramState$.
-    We have to show
-    \begin{align}
-    \label{eq:ttemp1g}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
-    \end{align}
-    
-    It follows from \ref{eq:ttemp1} that there exists $\grad{\pi} \in \setGProgramState$ such that
-    \begin{align}
-    \label{eq:ttemp2}
-    \gsstepConsume{\sAssert{$\grad{\phi_2}$}}{\grad{\pi}}{\grad{\pi_2}}
-    \end{align}
-    From optimality of the lifting it follows that there exists a $\pi \in \gamma(\grad{\pi})$ (and thus also $\phi_2 \in \gamma(\grad{\phi_2})$) such that
-    \begin{align}
-    \label{eq:ttemp3}
-    \sstepConsume{\sAssert{$\phi_2$}}{\pi}{\pi_2}
-    \end{align}
-    for some $\pi_2 \in \setProgramState$.
-    The semantics of the assertion statement introduced in section \ref{ssec:gradual-soundness} implies that
-    \begin{align}
-    \label{eq:ttemp4}
-    \evalphiGen{\pi_2}{\phi_2}
-    \end{align}
-    Using the laws of gradual function lifting we can derive from \ref{eq:ttemp2} and \ref{eq:ttemp3} that
-    \begin{align}
-    \label{eq:ttemp5}
-    \pi_2 \in \gamma(\grad{\pi_2})
-    \end{align}
-    According to lemma \ref{lemma:gradPS-form-sem} we can combine \ref{eq:ttemp4} and \ref{eq:ttemp5} to derive
-    \begin{align}
-    \label{eq:ttemp6}
-    \evalphiGen{\grad{\pi_2}}{\phi_2}
-    \end{align}
-    The goal follows using $\phi_2 \in \gamma(\grad{\phi_2})$.
-\end{proof}
-
+%% preservation is tautology
 
 %% preservationX
-In case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}:
+However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}:
 \begin{mathpar}
     \inferrule* [Right=GDPreservation]
     {

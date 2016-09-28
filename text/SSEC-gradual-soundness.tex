@@ -6,7 +6,7 @@ These semantics will by construction be compatible with the semantics of \svl an
 Note however that there is an additional requirement concerning the correct interplay between Hoare logic and small-step semantics, namely soundness.
 We define gradual soundness of \gvl as follows:
 \begin{mathpar}
-    \inferrule* [Right=GProgress]
+    \inferrule* [Right=\gradT Progress]
     {
         ???
     }
@@ -15,7 +15,7 @@ We define gradual soundness of \gvl as follows:
     }
 \end{mathpar}
 \begin{mathpar}
-    \inferrule* [Right=GPreservation]
+    \inferrule* [Right=\gradT Preservation]
     {
         \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
     }
@@ -65,7 +65,7 @@ With this in mind we can reiterate our approach for preservation.
 
 We extend the set of final states $\setGProgramStateFin$ with a designated exceptional state $\pi_{EX}$, representing failure of a runtime check.
 Furthermore we introduce an assertion statement $\sAssert{$\grad{\phi}$}$ (if not already available) that throws an exception, i.e. steps to $\pi_{EX}$ should the condition not hold.
-\begin{example}{Gradual Small-Step Semantics for Runtime Assertion}
+\begin{example}{Gradual Small-Step Semantics for Runtime Assertion}~\\
     \label{ex:ss-ra}
     We assume that $\setGProgramState = (\setVar \rightharpoonup \mathbb{Z}) \times \setGStmt$ as introduced in example \ref{ex:grad-ps}. %\ref{ex:ps-primitive}.
     Furthermore we assume that there exists a no-operation statement $\sSkip$.
@@ -89,7 +89,7 @@ Furthermore we introduce an assertion statement $\sAssert{$\grad{\phi}$}$ (if no
 
 Preservation of can then be rewritten as
 \begin{mathpar}
-    \inferrule* [Right=GPreservation']
+    \inferrule* [Right=\gradT Preservation']
     {
         \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
     }
@@ -98,6 +98,40 @@ Preservation of can then be rewritten as
     }
 \end{mathpar}
 Intuitively, this definition states that an assertion is inserted during compilation whenever gradual Hoare logic is used to derive the premise.
+However, $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$ is a tautology.
+
+\begin{lemma}[\tset{\gradT Preservation'} Tautology]
+    \label{lemma:tauto}
+    \tset{\gradT Preservation'} is a tautology. 
+\end{lemma}
+\begin{proof}~\\
+    Goal: $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$.
+    
+    According to definition \ref{def:valid-ghoare-triple} we may assume
+    \begin{align}
+    \label{eq:ttemp1}
+    \gsstepConsume{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\pi_1}}{\grad{\pi_2}}
+    \end{align}
+    and
+    \begin{align}
+    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
+    \end{align}
+    for some $\grad{\pi_1}, \grad{\pi_2} \in \setGProgramState$ and have to show
+    \begin{align}
+    \label{eq:ttemp1g}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \end{align}
+    
+    It follows from \ref{eq:ttemp1} and lemma \ref{lem:comp-gtHoare} that there exists $\grad{\pi} \in \setGProgramState$ such that
+    \begin{align}
+    \label{eq:ttemp2}
+    \gsstepConsume{\sAssert{$\grad{\phi_2}$}}{\grad{\pi}}{\grad{\pi_2}}
+    \end{align}
+    Then \ref{eq:ttemp1g} follows by definition of the assertion statement (see example \ref{ex:ss-ra} for an illustration).
+\end{proof}
+
+That \tset{\gradT Preservation'} is a tautology makes sense, realizing that (without demanding any degree of optimality) $\gthoare{}{\cdot}{\cdot}{\cdot}$ carries zero information.
+We will address this issue later (section \ref{ssec:the-deterministic-approach}), also rethinking the way we obtain $\gthoare{}{\cdot}{\cdot}{\cdot}$ in the first place.
 
 Note that there is room for an optimized implementation of the injected assertions.
 \begin{example}{Non-Optimal Runtime Check Insertion}~\\

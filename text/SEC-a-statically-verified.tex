@@ -320,18 +320,19 @@ We believe that most imperative statically verified programming languages satisf
     is derivable from given Hoare rules.
     \end{comment}
     
-    %% information monotonic - required?
-    We assume that the Hoare predicate is monotonic in the precondition w.r.t. implication:
-    \begin{align*}
-    \forall s \in \setStmt.~& \\
-    \forall \phi_1, \phi_2 \in \setFormula.~&\\
-    \forall \phi_1' \in \setFormula.~&
-    (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {s} {\phi_1'}\\
-    \implies
-    \exists \phi_2' \in \setFormula.~&
-    (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {s} {\phi_2'}
-    \end{align*}
-    
+    \begin{lemma}[Hoare Logic Monotonicity]
+        \label{ass:hl-mono}
+        We assume that the Hoare predicate is monotonic in the precondition w.r.t. implication:
+        \begin{align*}
+        \forall s \in \setStmt.~& \\
+        \forall \phi_1, \phi_2 \in \setFormula.~&\\
+        \forall \phi_1' \in \setFormula.~&
+        (\phiImplies {\phi_1} {\phi_2}) ~~\wedge~ \thoare {~} {\phi_1} {s} {\phi_1'}\\
+        \implies
+        \exists \phi_2' \in \setFormula.~&
+        (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {s} {\phi_2'}
+        \end{align*}
+    \end{lemma}
     Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.
     
     \begin{comment}
