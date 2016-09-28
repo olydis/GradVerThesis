@@ -1,18 +1,18 @@
 Design-by-Contract, a term coined by Bertrand Meyer \cite{meyer2002design}, is a paradigm aiming for verifiable source code, e.g. by adding method contracts and tightly integrating them with the compiler and runtime.
 Meyer implemented this concept in his programming language Eiffel \cite{meyer1988eiffel}, providing compiler support for generating runtime checks required for dynamic verification (also called runtime verification).
-Combining design-by-contract with static verification techniques lead to the concept of “verified design-by-contract” \cite{crocker2004safe}.
+Combining design-by-contract with static verification techniques led to the concept of “verified design-by-contract” \cite{crocker2004safe}.
 
 Similar developments took place regarding Java and JML specifications.
 Static verification using theorem provers was investigated by Jacobs and Poll \cite{jacobs2001logic} and is implemented as part of ESC/Java \cite{nelson2004extended}.
-Turning JML specifications into runtime assertion checks (RAC) to drive dynamic verification was described by Cheon and Leavens \cite{cheon2002runtime} and lead up to the development of JML4c \cite{sarcar2010new}.
+Turning JML specifications into runtime assertion checks (RAC) to drive dynamic verification was described by Cheon and Leavens \cite{cheon2002runtime} and led up to the development of JML4c \cite{sarcar2010new}.
 
-A more recent programming language with built-in support to express specification, coming with both static and dynamic verification tools is Spec\# \cite{the-spec-programming-system-an-overview}.
+A more recent programming language with built-in support to express specifications, coming with both static and dynamic verification tools is Spec\# \cite{the-spec-programming-system-an-overview}.
 Its compiler facilitates theorem provers for static verification and emits runtime checks for dynamic verification.
 It was developed further to cope with the challenges of concurrent object-orientation \cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs}.
 The concepts found their way to main stream programming in the form of “Code Contracts” \cite{embedded-contract-languages}, a toolset deeply integrated with the Microsoft .NET framework and thus available in a variety of programming languages.
 
-The limitations of both static and dynamic verification led to a recent trend of using both approaches at the same time (as observable in above programming languages).
-Due to its rigidity, static verification is treated more as a best effort service, meant to detect big inconsistencies or contract violations (the more coverage, the better).
+The limitations of both static and dynamic verification motivated a recent trend of using both approaches at the same time (as observable in above programming languages).
+Due to its rigidity, static verification is treated more as a best effort service, meant to detect as many inconsistencies or contract violations as possible (the more coverage, the better).
 Additionally, dynamic verification is used to restore the guarantee that static verification no longer provides.
 
 Recent research focused on combining both approaches in a more meaningful and complementary way by focusing dynamic verification and testing efforts specifically to code areas where static verification had less success.
