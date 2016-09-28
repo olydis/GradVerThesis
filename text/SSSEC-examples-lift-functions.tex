@@ -1,6 +1,6 @@
-% intro!? NOT the same gradual formula syntax as for predicate examples
 
-%% lAND
+%% lOR
+\begin{comment}
 \begin{lemma}[Optimal Lifting of Or Operator]~\\
     Let $\setGFormula$ be extended using the “bounded unknown” approach (see section \ref{ssec:wildcard-with-upper}).
     We assume that $\vee$ is part of the formula syntax such that $\envs{\phi_1 \vee \phi_2} = \envs{\phi_1} \cup \envs{\phi_2}$.
@@ -14,12 +14,29 @@
     \end{flalign*}
     Then $\gphiOr{\:}{\:}$ is an optimal lifting of $\phiOr{\:}{\:}$.
 \end{lemma}
-\begin{proof}
+\begin{proof}~\\
+    Goal: $\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} = \alpha(\{~ \phiOr{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\grad{\phi_1}),\, \phi_2 \in \gamma(\grad{\phi_2}) ~\})$
+    
+    \begin{description}
+        \item[Case $\grad{\phi_1} = \phi_1 \wedge \grad{\phi_2} = \phi_2$]
+        \begin{align*}
+        &\gphiOr{$\phi_1$}{$\phi_2$}\\
+        =~
+        &\alpha(\{~ \phiOr{$\phi_1$}{$\phi_2$} ~\})\\
+        =~
+        &\phiOr{$\phi_1$}{$\phi_2$}
+        \end{align*}
+        See proof for lemma \ref{lemma:eq-fun-lift-agt} for proof for last equality.
+        \item[Otherwise]
+        Let $\overline{\phi} = \{~ \phiOr{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\grad{\phi_1}),\, \phi_2 \in \gamma(\grad{\phi_2}) ~\}$.
+        Then $\overline{\phi}$ is either empty (if one of the concretizations is, due to unsatisfiable static part) or is infinitely (assuming that $\setFormula$ is).
+        If it is empty, then 
+    \end{description}
     Soundness
         Introduction
         \begin{align*}
         &\phiOr{$\phi_1$}{$\phi_2$}\\
-        =
+        =~
         &\gphiOr{$\phi_1$}{$\phi_2$}
         \end{align*}
         
@@ -59,6 +76,7 @@
     \end{align*}
     \end{comment}
 \end{proof}
+\end{comment}
 
 %% composite
 \begin{lemma}[Sound Lifting of Composed Function]~\\
@@ -74,31 +92,33 @@
     Optimality of $\grad{g}$ and $\grad{f}$ does not imply optimality of $\grad{(g \circ f)}$.
 \end{lemma}
 \begin{proof}
-    Introduction
-    \begin{align*}
-    &g(f(\phi))\\
-    \overset{Introduction~\grad{g}}{\mpt}
-    &\grad{g}(f(\phi))\\
-    \overset{\substack{Introduction~\grad{f}\\\&\\Monotonicity~\grad{g}}}{\mpt}
-    &\grad{g}(\grad{f}(\phi))\\
-    =
-    &\grad{g}(\grad{f}(\phi))\\
-    =
-    &(\grad{g} \circ \grad{f})(\phi)\\
-    =
-    &\grad{(g \circ f)}(\phi)
-    \end{align*}
-    
-    Monotonicity
-    \begin{align*}
-    &\grad{\phi_1} \mpt \grad{\phi_2}\\
-    \overset{Monotonicity~\grad{f}}{\implies}
-    &\grad{f}(\grad{\phi_1}) \mpt \grad{f}(\grad{\phi_2})\\
-    \overset{Monotonicity~\grad{g}}{\implies}
-    &\grad{g}(\grad{f}(\grad{\phi_1})) \mpt \grad{g}(\grad{f}(\grad{\phi_2}))\\
-    \overset{Definition}{\implies}
-    &\grad{(g \circ f)}(\grad{\phi_1}) \mpt \grad{(g \circ f)}(\grad{\phi_2})
-    \end{align*}
+    \begin{description}
+        \item[Introduction]
+        \begin{align*}
+        &g(f(\phi))\\
+        \overset{Introduction~\grad{g}}{\mpt}~
+        &\grad{g}(f(\phi))\\
+        \overset{\substack{Introduction~\grad{f}\\\&\\Monotonicity~\grad{g}}}{\mpt}~
+        &\grad{g}(\grad{f}(\phi))\\
+        =~
+        &\grad{g}(\grad{f}(\phi))\\
+        =~
+        &(\grad{g} \circ \grad{f})(\phi)\\
+        =~
+        &\grad{(g \circ f)}(\phi)
+        \end{align*}
+        
+        \item[Monotonicity]
+        \begin{align*}
+        &\grad{\phi_1} \mpt \grad{\phi_2}\\
+        \overset{Monotonicity~\grad{f}}{\quad\quad\implies\quad\quad}
+        &\grad{f}(\grad{\phi_1}) \mpt \grad{f}(\grad{\phi_2})\\
+        \overset{Monotonicity~\grad{g}}{\quad\quad\implies\quad\quad}
+        &\grad{g}(\grad{f}(\grad{\phi_1})) \mpt \grad{g}(\grad{f}(\grad{\phi_2}))\\
+        \overset{Definition}{\quad\quad\implies\quad\quad}
+        &\grad{(g \circ f)}(\grad{\phi_1}) \mpt \grad{(g \circ f)}(\grad{\phi_2})
+        \end{align*}
+    \end{description}
 \end{proof}
 
 \begin{comment}

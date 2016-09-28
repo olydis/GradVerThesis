@@ -44,6 +44,7 @@ This observation motivates an additional notion of optimality.
 %% AGT
 Again, definition of optimal function lifting coincides with the definition of ‚Äúconsistent function lifting‚Äù given by AGT.
 \begin{lemma}[Equivalence with Consistent Function Lifting (AGT)]\label{lemma:consistent-func-lifting-direct}~\\
+    \label{lemma:eq-fun-lift-agt}
     Let $\alpha : \PP(\setFormula) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ \overline{f} \}$-partial Galois connection (see appendix \ref{app:part-galois}, definition \ref{def:pgc}).\\ 
     Let $\grad{f} : \setGFormula \rightarrow \setGFormula$ be defined as
     \begin{displaymath}
@@ -61,22 +62,22 @@ Again, definition of optimal function lifting coincides with the definition of ‚
         Proof:
         
         $\alpha(\overline{f}(\gamma(\phi)))$ defined, since $\{ \overline{f} \}$-partial Galois connection, i.e.
-        \begin{align*}
+        \begin{align}
+        \label{frm:pgc-ass}
         \alpha(\overline{f}(\gamma(\phi))) = \alpha(\{ f(\phi) \}) = \grad{\phi}
-        \end{align*}
-        Then
-        Rule 1
-        \begin{align*}
+        \end{align}
+        Applying rule 1 of partial Galois connections to \ref{frm:pgc-ass}
+        \begin{align}
+        \label{frm:pgc-ass1}
         &\{~ f(\phi) ~\} \subseteq \gamma(\grad{\phi})\\
-        \end{align*}
-        Rule 2
-        \begin{align*}
-        &\{~ f(\phi) ~\} \subseteq \gamma(f(\phi))\\
-        \implies
+        \end{align}
+        Applying rule 2 of partial Galois connections to \ref{frm:pgc-ass}, using $\{~ f(\phi) ~\} \subseteq \gamma(f(\phi))$
+        \begin{align}
+        \label{frm:pgc-ass2}
         & \grad{\phi} \sqsubseteq f(\phi)
-        \end{align*}
+        \end{align}
         
-        Combining:
+        Combining \ref{frm:pgc-ass1} and \ref{frm:pgc-ass2}
         \begin{align*}
         &\{~ f(\phi) ~\} \subseteq \gamma(\grad{\phi}) \subseteq \gamma(f(\phi))\\
         \implies
@@ -131,7 +132,7 @@ Again, definition of optimal function lifting coincides with the definition of ‚
         \implies
         &\overline{f}(\gamma(\grad{\phi})) \subseteq \gamma(\grad{f'}(\grad{\phi}))\\
         \end{align*}
-        Using rule 2
+        Using rule 2 of partial Galois connections
         \begin{align*}
         &\overline{f}(\gamma(\grad{\phi})) \subseteq \gamma(\grad{f'}(\grad{\phi}))\\
         \implies
