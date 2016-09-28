@@ -2,9 +2,9 @@
 % the resulting gradual system compatible with the old one (otherwise it would trivially not  satisfy the gradual guarantee \ref{grad-guarantee}).
 
 The fundamental concept of gradual verification is the introduction of a wildcard formula $\qm$ into the formula syntax.
-The first difference of \gvl in comparison to \svl is an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
+Therefore, the first difference of \gvl in comparison to \svl is an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
 The gradual verifier is supposed to succeed in presence of the wildcard, should it be plausible that there exists a static formula that would make a static verifier succeed.
-Example:
+\begin{example}{Wildcard as Precondition}
 \begin{lstlisting}
 int increment(int i)
     requires ?;
@@ -14,8 +14,10 @@ int increment(int i)
 }
 \end{lstlisting}
 The gradual verifier is expected to successfully verify this method contract since there exists a static formula (\ttt{i == 2}), that would let static verification succeed.
+\end{example}
 
-On the other hand, a gradual verifier should reject the following method contract as there is no plausible (i.e. satisfiable) instantiation of \qm that would make static verification work:
+On the other hand, a gradual verifier should reject the following method contract as there is no plausible (i.e. satisfiable) instantiation of $\qm$ that would make static verification work.
+\begin{example}{Implausible Wildcard as Precondition}
 \begin{lstlisting}
 int nonSense(int i)
     requires ?;
@@ -24,14 +26,14 @@ int nonSense(int i)
     return i;
 }
 \end{lstlisting}
+\end{example}
 
-This intuition about \qm is formalized in the following sections.
+This intuition about $\qm$ is formalized in the following sections.
 
 We decorate gradual formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
 Using the concept of abstract interpretation, we want to give meaning to gradual formulas by mapping them back to a set of static formulas (called “concretization”).
 This way we can reason about a gradual formula by applying preexisting static reasoning to the formula's concretization.
-For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\phi}$ iff $\pi$ satisfies (at least) one of the formulas drawn from the concretization of $\grad{\phi}$.
-(This intuition is formalized in section \ref{ssec:lifting-predicates}.)
+For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\phi}$ iff $\pi$ satisfies (at least) one of the formulas drawn from the concretization of $\grad{\phi}$ (this example is formalized in lemma \ref{ex:opt-lift-evalphi}).
 
 \begin{definition}[Concretization]~\\
     Let $\gamma : \setGFormula \rightarrow \PP(\setFormula)$ be defined as
@@ -41,7 +43,7 @@ For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\
     \end{align*}
 \end{definition}
 
-Static formula are mapped to a singleton set containing just them.
+Static formulas are mapped to a singleton set containing just them.
 This reflects our goal to preserve the meaning of static formulas in the gradual setting.
 The wildcard is mapped to the set of all satisfiable formulas, reflecting the idea of treating it as any plausible static formula.
 
