@@ -1,8 +1,8 @@
 %% intro
-When first introducing \tset{GDPreservation} in section \ref{ssec:the-deterministic-approach}, we also gave an example (\ref{ex:cex-gdpres}) of a language violating \tset{GDPreservation}.
+When first introducing \tset{\dgradT Preservation} in section \ref{ssec:the-deterministic-approach}, we also gave an example (\ref{ex:cex-gdpres}) of a language violating \tset{\dgradT Preservation}.
 The root of the problem seemed to be the existence of small-step derivations that are not verifiable using static Hoare logic.
 A Hoare logic that can prove all small-step derivations correct is called “complete”.
-However, as illustrated in example \ref{ex:cex-gdpres}, incompleteness of the Hoare logic may not necessarily indicate weakness of the Hoare logic, but may also be due to optimized small-step semantics.
+However, as illustrated in example \ref{ex:cex-gdpres}, incompleteness of the Hoare logic may not necessarily indicate weakness of the Hoare logic, but may also be caused by optimized small-step semantics.
 
 % EXAMPLES
 
@@ -32,17 +32,18 @@ As long as soundness is not broken, those changes do not have observable effects
 
 %% further stuff
 Based on a complete semantics of \svl, the following requirements for \gvl are sufficient to satisfy \tset{GDPreservation}.
-\begin{definition}[Semi-Optimal Gradual Hoare Logic]
+\begin{definition}[Semi-Optimal Gradual Hoare Logic]~\\
     \label{def:perf-stat}
     We call a deterministically lifted Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot}$ \textbf{semi-optimal} iff
     \begin{align*}
     \forall \phi_1 \in \setFormula,\, \grad{s} \in \setGStmt,\, \grad{\phi_2} \in \setGFormula.&~ \dgthoare{}{\phi_1}{\grad{s}}{\grad{\phi_2}}\\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{}{\phi_1}{s}{\phi_2}
     \end{align*}
     Intuitively, the deterministic lifting is only supposed to be defined for static preconditions if there exists some corresponding derivation of the static Hoare logic.
+    
     Note that optimal deterministic liftings are semi-optimal.
     Semi-optimality can be viewed as a very weak optimality measure.
 \end{definition}
-\begin{definition}[Semi-Optimal Gradual Small-Step Semantics]
+\begin{definition}[Semi-Optimal Gradual Small-Step Semantics]~\\
     \label{def:perf-dyn}
     We call a total, lifted small-step semantics $\gsstep{\cdot}{\cdot}$ \textbf{semi-optimal} iff
     \begin{comment}
@@ -55,17 +56,18 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
     \end{align*}
     Intuitively, the gradual small-step semantics is not supposed to define derivations if all concretizations would be stuck in the original small-step semantics.
     Note that the rules of gradual lifting (of partial functions) allow arbitrary behavior in case the small-step semantics are stuck (i.e. the function is undefined).
+    
     Optimal deterministic liftings are semi-optimal.
     Semi-optimality can be viewed as a very weak optimality measure.
 \end{definition}
 
 We call the semantics of \gvl semi-optimal if both Hoare logic and small-step semantics are semi-optimal as defined above.
 
-\begin{theorem}[Completeness and Semi-Optimality imply \tset{GDPreservation}]
+\begin{theorem}[Completeness and Semi-Optimality imply \tset{\dgradT Preservation}]~\\
     \label{thm:compl-and-so-to-gdpres}
     If the semantics of \svl are complete and the semantics of \gvl are semi-optimal, then \tset{GDPreservation} is satisfied.
 \end{theorem}
-\begin{proof}
+\begin{proof}~\\
     To prove \tset{GDPreservation} we may assume:
     \begin{align}
     \label{frm:tmp0}
@@ -81,7 +83,8 @@ We call the semantics of \gvl semi-optimal if both Hoare logic and small-step se
     \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
     \end{align}
     
-    Case $\grad{\phi_1} = \phi_1$ for some $\phi_1 \in \setFormula$:
+    \begin{description}
+        \item[Case:] $\grad{\phi_1} = \phi_1$ for some $\phi_1 \in \setFormula$~\\
         We can simplify \ref{frm:tmp2} as
         \begin{align}
         \label{frm:tmpx0}
@@ -133,7 +136,7 @@ We call the semantics of \gvl semi-optimal if both Hoare logic and small-step se
         \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
         \end{align}
     
-    Case $\grad{\phi_1}$ partially unknown, i.e. $\gamma(\grad{\phi_1})$ closed over implication:
+        \item[Case:] $\grad{\phi_1}$ partially unknown~\\
         From semi-optimality of \ref{frm:tmp1} (see definition \ref{def:perf-dyn}) we can derive
         \begin{align}
         \label{frm:tmp6}
@@ -165,7 +168,7 @@ We call the semantics of \gvl semi-optimal if both Hoare logic and small-step se
         \evalphiGen{\pi_1}{\phi_1} ~\wedge~ \phiImplies{\phi_1}{\phi_{1a}} ~\wedge~ \phiImplies{\phi_1}{\phi_{1b}}
         \quad\quad\text{for some } \phi_1 \in \setFormula
         \end{align}
-        From monotonicity of $\thoare{}{\cdot}{\cdot}{\cdot}$ in its first argument (% REF %) we can deduce
+        From monotonicity of $\thoare{}{\cdot}{\cdot}{\cdot}$ in its first argument (lemma \ref{ass:hl-mono}) we can deduce
         \begin{align}
         \label{frm:tmp9}
         \thoare{}{\phi_1}{s}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}
@@ -198,7 +201,7 @@ We call the semantics of \gvl semi-optimal if both Hoare logic and small-step se
         \label{frm:tmp13}
         \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
         \end{align}
-        Now, using $\phi_1 \in \gamma(\grad{\phi_1})$ (implied from the fact that $\phi_{1a} \in \gamma(\grad{\phi_1})$, $\phiImplies{\phi_1}{\phi_{1a}}$) we can apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can derive
+        Now, using $\phi_1 \in \gamma(\grad{\phi_1})$ (implied from the fact that $\phi_{1a} \in \gamma(\grad{\phi_1})$, $\phiImplies{\phi_1}{\phi_{1a}}$, see see section \ref{ssec:generalization}) we can apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can derive
         \begin{align}
         \label{frm:tmp15}
         \grad{\phi} \mpt \grad{\phi_2}
@@ -208,4 +211,5 @@ We call the semantics of \gvl semi-optimal if both Hoare logic and small-step se
         \label{frm:tmp16}
         \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
         \end{align}
+    \end{description}
 \end{proof}

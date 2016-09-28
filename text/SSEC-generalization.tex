@@ -1,0 +1,14 @@
+In general, we will make the following assumptions:
+\begin{enumerate}
+    \item $\setFormula \subset \setGFormula$
+    \item $\qm \not \in \setFormula$
+    \item $\qm \in \setGFormula$
+    \item $\gamma(\qm) = \setFormula$
+    \item $\gamma(\phi) = \{~\phi~\}$ ~~~for all $\phi \in \setFormula$
+    \item If $\grad{\phi} \in \setGFormula$ is partially unknown, then $\gamma(\grad{\phi})$ is closed over implication, i.e.
+    \begin{displaymath}
+    \forall \phi \in \gamma(\grad{\phi}), \phi' \in \setFormula.~ (\phiImplies{\phi'}{\phi}) \implies \phi' \in \gamma(\grad{\phi})
+    \end{displaymath}
+\end{enumerate}
+
+The gradual syntax extensions introduced in sections \ref{ssec:dedicated-wildcard-formula} and \ref{ssec:wildcard-with-upper} comply with above assumptions.

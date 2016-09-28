@@ -14,7 +14,7 @@ This always works since the lifting can be defined arbitrarily wherever the orig
 %% preservationX
 However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}:
 \begin{mathpar}
-    \inferrule* [Right=GDPreservation]
+    \inferrule* [Right=\dgradT Preservation]
     {
         \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
     }
@@ -25,8 +25,8 @@ However, in case the deterministic lifting approach is used to derive a gradual 
 This stronger notion allows considering return values of the deterministic lifting as static knowledge.
 As illustrated in section \ref{sssec:gradual-verification-illustrated}, such static knowledge can be used for optimizations.
 
-To summarize, \tset{GPreservation'} is sufficient for soundness of the gradual system whereas \tset{GDPreservation} is valuable for optimizations.
-In the remainder of this section we will thus determine sufficient criteria for \tset{GDPreservation}.
+To summarize, \tset{\gradT Preservation'} is sufficient for soundness of the gradual system whereas \tset{\dgradT Preservation} is valuable for optimizations.
+In the remainder of this section we will thus determine sufficient criteria for \tset{\dgradT Preservation}.
 
 
 \begin{comment}
