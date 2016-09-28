@@ -31,47 +31,49 @@
     \end{mathpar}
     Then $~\gphiImplies{\cdot}{\cdot}~$ is an optimal lifting of $~\phiImplies{\cdot}{\cdot}~$.
 \end{lemma}
-\begin{proof}
+\begin{proof}~\\
     Goal:
     $$\gphiImplies{\grad{\phi_1}}{\grad{\phi_2}} \iff \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2}$$
     
-    $\implies$:
-        Case \tset{GImplStatic}:
-        \begin{align*}
-        &\gphiImplies{\phi_1}{\phi_2}\\
-        \implies
-        &\phiImplies{\phi_1}{\phi_2}\\
-        \implies
-        &(\exists \phi_1' \in \gamma(\phi_1), \phi_2' \in \gamma(\phi_2).~ \phiImplies{\phi_1'}{\phi_2'})
-        \end{align*}
-        
-        Case \tset{GImplGrad1}:
-        \begin{align*}
-        &\gphiImplies{\qm}{\phi}\\
-        \implies
-        &\phi \in \setFormulaA\\
-        \implies
-        &(\exists \phi_1 \in \setFormulaA.~ \phiImplies{\phi_1}{\phi})\\
-        \implies
-        &(\exists \phi_1 \in \gamma(\qm), \phi_2 \in \gamma(\phi).~ \phiImplies{\phi_1}{\phi_2})
-        \end{align*}
-        
-        Case \tset{GImplGrad2}:
-        \begin{align*}
-        &\gamma(\grad{\phi}) \neq \emptyset ~\wedge~ \phiTrue \in \gamma(\qm)\\
-        \implies
-        &(\exists \phi_1 \in \gamma(\grad{\phi}).~ \phiImplies{\phi_1}{\phiTrue}) ~\wedge~ \phiTrue \in \gamma(\qm)\\
-        \implies
-        &(\exists \phi_1 \in \gamma(\grad{\phi}), \phi_2 \in \gamma(\qm).~ \phiImplies{\phi_1}{\phi_2})
-        \end{align*}
-        
-    $\impliedby$:
-        \begin{align*}
-        \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) \wedge \phiImplies{\phi_1}{\phi_2}
-        \end{align*}
-        Case $\grad{\phi_2} = \qm$:
+    \begin{description}
+        \item[Case $\implies$]~\\
+        \begin{description}
+            \item[Case \tset{GImplStatic}]
+            \begin{align*}
+            &\gphiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &\phiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &(\exists \phi_1' \in \gamma(\phi_1), \phi_2' \in \gamma(\phi_2).~ \phiImplies{\phi_1'}{\phi_2'})
+            \end{align*}
+            
+            \item[Case \tset{GImplGrad1}]
+            \begin{align*}
+            &\gphiImplies{\qm}{\phi}\\
+            \implies
+            &\phi \in \setFormulaA\\
+            \implies
+            &(\exists \phi_1 \in \setFormulaA.~ \phiImplies{\phi_1}{\phi})\\
+            \implies
+            &(\exists \phi_1 \in \gamma(\qm), \phi_2 \in \gamma(\phi).~ \phiImplies{\phi_1}{\phi_2})
+            \end{align*}
+            
+            \item[Case \tset{GImplGrad2}]
+            \begin{align*}
+            &\gamma(\grad{\phi}) \neq \emptyset ~\wedge~ \phiTrue \in \gamma(\qm)\\
+            \implies
+            &(\exists \phi_1 \in \gamma(\grad{\phi}).~ \phiImplies{\phi_1}{\phiTrue}) ~\wedge~ \phiTrue \in \gamma(\qm)\\
+            \implies
+            &(\exists \phi_1 \in \gamma(\grad{\phi}), \phi_2 \in \gamma(\qm).~ \phiImplies{\phi_1}{\phi_2})
+            \end{align*}
+        \end{description}
+        \item[Case $\impliedby$]~\\
+        Given: $\phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) \wedge \phiImplies{\phi_1}{\phi_2}$
+        \begin{description}
+            \item[Case $\grad{\phi_2} = \qm$]~\\
             Apply $\tset{GImplGrad2}$.
-        Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \qm$:
+            
+            \item[Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \qm$]
             \begin{align*}
             &\phi_1 \in \gamma(\qm) \wedge \phiImplies{\phi_1}{\phi_2}\\
             \implies
@@ -80,13 +82,16 @@
             &\phi_2 \in \setFormulaA
             \end{align*}
             Apply $\tset{GImplGrad1}$.
-        Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \phi_1$:
+            
+            \item[Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \phi_1$]~\\
             Apply $\tset{GImplStatic}$.
+        \end{description}
+    \end{description}
 \end{proof}
 
 %% evalphi
-\begin{lemma}[Optimal Lifting of Evaluation]~\\
-    \label{ex:opt-lift-evalphi}
+\begin{lemma}[Optimal Lifting of Evaluation]
+    \label{ex:opt-lift-evalphi}~\\
     Let $\setGFormula$ be extended using the “bounded unknown” approach (see section \ref{ssec:wildcard-with-upper}).
     Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
     \begin{mathpar}
@@ -110,45 +115,49 @@
     
     Then $~\evalgphiGen{\cdot}{\cdot}~$ is an optimal lifting of $~\evalphiGen{\cdot}{\cdot}~$.
 \end{lemma}
-\begin{proof}
+\begin{proof}~\\
     Goal:
     $$\evalgphiGen{\pi}{\grad{\phi}} \iff \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen{\pi}{\phi}$$
     
-    $\implies$:
-        Case \tset{\gradT EvalStatic}:
-        \begin{align*}
-        &\evalgphiGen{\pi}{\phi}\\
-        \implies
-        &\evalphiGen{\pi}{\phi}\\
-        \implies
-        &(\exists \phi' \in \gamma(\phi).~ \evalphiGen{\pi}{\phi'})
-        \end{align*}
-        
-        Case \tset{\gradT EvalGrad}:
-        \begin{align*}
-        &\evalgphiGen{\pi}{\withqmGen{\phi}}\\
-        \implies
-        &\evalphiGen{\pi}{\phi}\\
-        \implies
-        &(\exists \phi' \in \gamma(\withqmGen{\phi}).~ \evalphiGen{\pi}{\phi'})
-        \end{align*}
-    
-    $\impliedby$:
-        \begin{align*}
-        \phi' \in \gamma(\grad{\phi}) \wedge \evalphiGen{\pi}{\phi'}
-        \end{align*}
-        Case $\grad{\phi} = \withqmGen{\phi}$:
+    \begin{description}
+        \item[Case $\implies$]~\\
+        \begin{description}
+            \item[Case \tset{\gradT EvalStatic}]
+            \begin{align*}
+            &\evalgphiGen{\pi}{\phi}\\
+            \implies
+            &\evalphiGen{\pi}{\phi}\\
+            \implies
+            &(\exists \phi' \in \gamma(\phi).~ \evalphiGen{\pi}{\phi'})
+            \end{align*}
+            
+            \item[Case \tset{\gradT EvalGrad}]
+            \begin{align*}
+            &\evalgphiGen{\pi}{\withqmGen{\phi}}\\
+            \implies
+            &\evalphiGen{\pi}{\phi}\\
+            \implies
+            &(\exists \phi' \in \gamma(\withqmGen{\phi}).~ \evalphiGen{\pi}{\phi'})
+            \end{align*}
+            
+        \end{description}
+        \item[Case $\impliedby$]~\\
+        Given: $\phi' \in \gamma(\grad{\phi}) \wedge \evalphiGen{\pi}{\phi'}$
+        \begin{description}
+            \item[Case $\grad{\phi} = \withqmGen{\phi}$] ~\\
             It follows from definition \ref{def:gamma-bounded-unk} that $\phiImplies{\phi'}{\phi}$ and thus $\evalphiGen{\pi}{\phi}$.
             Apply $\tset{\gradT EvalGrad}$.
-            
-        Case $\grad{\phi} = \phi$:
+            \item[Case $\grad{\phi} = \phi$] ~\\
             It follows that $\phi = \phi'$.
             Apply $\tset{\gradT EvalStatic}$.
+        \end{description}
+    \end{description}
 \end{proof}
 
 Note that the definition of lifted evaluation was lifted only w.r.t. the second parameter.
-There is no point in lifting evaluation w.r.t. the program state since gradual program state has no impact on evaluation (see \ref{sec:gradual-program-state}).
+There is no point in lifting evaluation w.r.t. the program state since gradual program state has no impact on evaluation (see lemma \ref{lemma:gradPS-form-sem}).
 
+\begin{comment}
 We define denotational semantics of gradual formulas analogous to the non-gradual variant (see definition \ref{def:frm-den-sem}):
 \begin{definition}[Denotational Formula Semantics $\envs{\cdot}$ of Gradual Formulas]~\\
     \label{def:gfrm-den-sem}
@@ -157,6 +166,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     \envs{\grad{\phi}} \defeq \{~ \pi \in \setProgramState ~|~ \evalgphiGen{\pi}{\grad{\phi}} ~\}
     \end{displaymath}
 \end{definition}
+\end{comment}
 
 %% composite
 \begin{lemma}[Sound Lifting of Composite Predicate]~\\
@@ -176,7 +186,8 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \circ Q)}$.
 \end{lemma}
 \begin{proof}
-    Introduction
+    \begin{description}
+        \item[Introduction] 
         \begin{align*}
         &(P \circ Q)(\phi_1, \phi_3)\\
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
@@ -189,7 +200,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
         &\grad{(P \circ Q)}(\phi_1, \phi_3)\\
         \end{align*}
         
-    Monotonicity
+        \item[Monotonicity] 
         \begin{align*}
         &\grad{(P \circ Q)}(\grad{\phi_1}, \grad{\phi_3}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
@@ -203,6 +214,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
         &\grad{(P \circ Q)}(\grad{\phi_1'}, \grad{\phi_3'})\\
         \end{align*}
+    \end{description}
 \end{proof}
 
 %% conjunction
@@ -223,7 +235,8 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \wedge Q)}$.
 \end{lemma}
 \begin{proof}
-    Introduction
+    \begin{description}
+        \item[Introduction] 
         \begin{align*}
         &(P \wedge Q)(\phi)\\
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
@@ -235,8 +248,8 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
         &\grad{(P \wedge Q)}(\phi)\\
         \end{align*}
-    
-    Monotonicity
+        
+        \item[Monotonicity] 
         \begin{align*}
         &(\grad{P} \wedge \grad{Q})(\grad{\phi}) ~\wedge~ \grad{\phi} \mpt \grad{\phi'}\\
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
@@ -248,6 +261,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
         \overset{Definition}{~\quad\quad\implies\quad\quad~}
         &\grad{(P \wedge Q)}(\grad{\phi'})\\
         \end{align*}
+    \end{description}
 \end{proof}
 
 %% disjunction

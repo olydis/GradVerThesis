@@ -11,7 +11,7 @@ Furthermore, it is unclear whether optimality/consistency as defined by AGT is e
     \thoare{}{\phiEq{x}{10000}}{s}{\phiAnd{\ttt{1 <= x}}{\ttt{x <= 4}}}
     \end{displaymath}
     can be verified and that no stronger postcondition could be verified (due to limitations of the verifier).
-    However, we know that \ttt{x} will have value 4 afterwards, i.e. the following Hoare triple holds:
+    However, we know that \ttt{x} will have value 4 afterwards, i.e. the following Hoare triple is valid:
     \begin{displaymath}
     \hoare{\phiEq{x}{10000}}{s}{\phiEq{x}{4}}
     \end{displaymath}

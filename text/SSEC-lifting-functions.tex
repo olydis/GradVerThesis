@@ -7,7 +7,7 @@ The following concepts are directly applicable to functions with higher arity.
 
 \begin{description}
     \item[Introduction]~\\
-    By making sure to comply with the gradual guarantee, we made design a gradual verification system immune to reduction of precision at any stage.
+    With predicate lifting we made sure to design a gradual verification system that is “immune” to reduction of precision.
     Therefore, when replacing function $f$ with its gradual lifting $\grad{f}$, we expect the result to be the same or less precise.
     \begin{displaymath}
     \forall \phi \in \setFormula.~ f(\phi) \sqsubseteq \grad{f}(\phi)
@@ -44,20 +44,22 @@ This observation motivates an additional notion of optimality.
 %% AGT
 Again, definition of optimal function lifting coincides with the definition of “consistent function lifting” given by AGT.
 \begin{lemma}[Equivalence with Consistent Function Lifting (AGT)]\label{lemma:consistent-func-lifting-direct}~\\
-    Let $\alpha : \PP(\setFormula) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ \overline{f} \}$-partial Galois connection.\\ 
+    Let $\alpha : \PP(\setFormula) \rightharpoonup \setGFormula$ be a partial function such that $\langle \gamma, \alpha \rangle$ is a $\{ \overline{f} \}$-partial Galois connection (see appendix \ref{app:part-galois}, definition \ref{def:pgc}).\\ 
     Let $\grad{f} : \setGFormula \rightarrow \setGFormula$ be defined as
     \begin{displaymath}
     \grad{f}(\grad{\phi}) \defeq \alpha(\overline{f}(\gamma(\grad{\phi})))
     \end{displaymath}
     where $\overline{f}$ means that $f$ is applied to every element of the set.
     Then $\grad{f}$ is an optimal lifting of $f$.
-\end{lemma} %PROOF (hard part by contradiction! :-)
-\begin{proof}
-    Helping
+\end{lemma}
+\begin{proof}~
+    \begin{description}
+        \item[Adjoint Equation] 
         \begin{align*}
         \alpha(\overline{f}(\gamma(\phi))) = f(\phi)
         \end{align*}
-    Proof
+        Proof:
+        
         $\alpha(\overline{f}(\gamma(\phi)))$ defined, since $\{ \overline{f} \}$-partial Galois connection, i.e.
         \begin{align*}
         \alpha(\overline{f}(\gamma(\phi))) = \alpha(\{ f(\phi) \}) = \grad{\phi}
@@ -83,31 +85,34 @@ Again, definition of optimal function lifting coincides with the definition of �
         & \grad{\phi} = f(\phi)
         \end{align*}
         
-    Soundness
-        Introduction
-        \begin{align*}
-        &\grad{f}(\phi)\\
-        = 
-        &\alpha(\overline{f}(\gamma(\phi)))\\
-        = 
-        &f(\phi)
-        \end{align*}
+        \item[Soundness]~
+        \begin{description}
+            \item[Introduction] 
+            \begin{align*}
+            &\grad{f}(\phi)\\
+            =~
+            &\alpha(\overline{f}(\gamma(\phi)))\\
+            =~ 
+            &f(\phi)
+            \end{align*}
+            
+            \item[Monotonicity]~\\ 
+            We assume $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ with $\grad{\phi_1} \mpt \grad{\phi_2}$
+            \begin{align*}
+            &\grad{\phi_1} \mpt \grad{\phi_2}\\
+            \implies
+            &\gamma(\grad{\phi_1}) \subseteq \gamma(\grad{\phi_2})\\
+            \implies
+            &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \overline{f}(\gamma(\grad{\phi_2}))\\
+            \implies % closure
+            &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \gamma(\alpha(\overline{f}(\gamma(\grad{\phi_2}))))\\
+            \implies % rule 2
+            &\alpha(\overline{f}(\gamma(\grad{\phi_1}))) \mpt \alpha(\overline{f}(\gamma(\grad{\phi_2})))\\
+            \end{align*}
+        \end{description}
         
-        Monotonicity
-        We assume $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ with $\grad{\phi_1} \mpt \grad{\phi_2}$
-        \begin{align*}
-        &\grad{\phi_1} \mpt \grad{\phi_2}\\
-        \implies
-        &\gamma(\grad{\phi_1}) \subseteq \gamma(\grad{\phi_2})\\
-        \implies
-        &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \overline{f}(\gamma(\grad{\phi_2}))\\
-        \implies % closure
-        &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \gamma(\alpha(\overline{f}(\gamma(\grad{\phi_2}))))\\
-        \implies % rule 2
-        &\alpha(\overline{f}(\gamma(\grad{\phi_1}))) \mpt \alpha(\overline{f}(\gamma(\grad{\phi_2})))\\
-        \end{align*}
-    
-    Optimality
+        \item[Optimality]~\\
+        
         Proof by contradiction.
         Assume there exists a sound lifting $\grad{f'}$ such that $\grad{f'}(\grad{\phi}) \sqsubset \grad{f}(\grad{\phi})$ for some $\grad{\phi} \in \setGFormula$.
         Using the introduction rule:
@@ -135,6 +140,7 @@ Again, definition of optimal function lifting coincides with the definition of �
         &\grad{f}(\grad{\phi}) \mpt \grad{f'}(\grad{\phi})\\
         \end{align*}
         Contradiction.
+    \end{description}       
 \end{proof}
 
 

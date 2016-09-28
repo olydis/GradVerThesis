@@ -4,12 +4,12 @@ Since \gvl contains gradual formulas and gradual statements, the gradualized Hoa
 Similarly, the gradualized small-step semantics is expected to have signature $\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$ instead of $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$.
 Usually semantics are defined inductively, meaning that they are defined in terms of further predicates or functions (e.g. implication between formulas).
 These functions will have new signatures as well in order to deal with the extended syntax of \gvl.
-This section will present a procedure called “lifting”, which formalizes this adaptation of predicates and functions.
+This section will present a procedure called “gradual lifting”, which formalizes this adaptation of predicates and functions.
 
-\begin{definition}[Gradual Lifting]
+\begin{comment}[Gradual Lifting]
     The procedure of extending an existing predicate/function in order to deal with gradual formulas.
     The resulting predicate/function has the same signature as the original one, with occurrences of \setFormula, \setStmt and \setProgramState replaced by \setGFormula, \setGStmt, \setGProgramState.
-\end{definition}
+\end{comment}
 
-Our rules for lifting rely merely on the existence of a concretization function and a notion of precision.
+Our rules for gradual lifting rely merely on the existence of a concretization function and a notion of precision.
 We will thus restrict our formalizations and explanations to (gradual) formulas, whereas they are directly applicable to other gradualized sets.

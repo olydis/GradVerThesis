@@ -1,0 +1,56 @@
+In lemma \ref{lemma:consistent-func-lifting-direct} we mentioned partial Galois connections.
+In this section, we give a formal definition and motivate why we used them instead of regular Galois connections.
+
+%% def
+Definition originated from Miné \cite{mine2004weakly}, ... ??? nico, adapted to our setting.
+\begin{definition}[Partial Galois connection]~\\
+    \label{def:pgc}
+    Let $(\PP^{\setFormula}, \subseteq)$ and $(\setGFormula, \mpt)$ be two posets, $\mathcal{F}$ a set of operators on $\PP^{\setFormula}$, $\alpha : \PP^{\setFormula} \rightharpoonup \setGFormula$ a partial function and $\gamma : \setGFormula \rightarrow \PP^{\setFormula}$ a total function. 
+    
+    The pair $\langle \alpha, \gamma \rangle$ is an $\mathcal{F}$-partial Galois connection if and only if:
+    \begin{enumerate}
+        \item If $\alpha(\overline{\phi})$ is defined, then $\overline{\phi} \subseteq \gamma(\alpha(\overline{\phi}))$
+        \item If $\alpha(\overline{\phi})$ is defined, then $\overline{\phi} \subseteq \gamma(\grad{\phi})$ implies $\alpha(\overline{\phi}) \mpt \grad{\phi}$
+        \item For all $F \in \mathcal{F}$ and $\grad{\phi} \in \setGFormula$, $\alpha(F(\gamma(\grad{\phi})))$
+    \end{enumerate}
+This definition can be generalized for a set $\mathcal{F}$ of arbitrary $n$-ary operators.
+\end{definition}
+
+%% motivation
+In our work we use partial Galois connections because a traditional Galois connection between $\setGFormula$ and $\PP^{\setFormula}$ may not always exist (and does not exist in case of \gvlidf, as introduced in chapter \ref{ch:case-study--implicit}).
+\begin{lemma}{Non-Existence of Galois Connection}
+    Assume that $\setFormula$, $\setGFormula$ and $\gamma$ as in \svlidf/\gvlidf (see chapter \ref{ch:case-study--implicit}).
+    Then there exists no $\alpha$ such that $\langle \alpha, \gamma \rangle$ is a Galois connection.
+\end{lemma}
+\begin{proof}
+    It is essential that $\setFormula$ cannot express knowledge like 
+    \begin{align}
+    \label{ex-frm:appro}
+    \ttt{x} \in \{1,2,3\}
+    \end{align}
+    since there is neither a logical disjunction (that would allow writing $\phiOr{\phiEq{x}{1}}{\phiOr{\phiEq{x}{2}}{\phiEq{x}{3}}}$) nor an inequality operator \ttt{<=} (that would allow writing $\phiCons{\ttt{(1 <= x)}}{\ttt{(x <= 3)}}$) nor any other sufficient syntax.
+    
+    Hence, this knowledge can only be approximated, e.g. as
+    \begin{align*}
+    \phiAnd{\phiAnd{\phiNeq{x}{0}}{\phiNeq{x}{4}}}{\phiNeq{x}{5}}
+    \end{align*}
+    Now, let $\overline{\phi}$ be the set of all approximation for $\ref{ex-frm:appro}$, i.e.
+    \begin{align*}
+    \label{ex-frm:appro-set}
+    \overline{\phi} = \{~ \phi \in \setFormula ~|~ \envs{\phiEq{x}{1}} \cup \envs{\phiEq{x}{2}} \cup \envs{\phiEq{x}{3}} \subseteq \envs{\phi} ~\}
+    \end{align*}
+    Then there exists no least (most precise) element $\grad{\phi}$ that conservatively approximates $\overline{\phi}$.
+    As a consequence $\alpha(\overline{\phi})$ cannot be defined.
+    
+    Take an arbitrary formula $\grad{\phi}$ with $\overline{\phi} \subseteq \gamma(\grad{\phi})$.
+    Then $\grad{\phi}$ cannot contain an equality including \ttt{x} (or it would not conservatively approximate $\overline{\phi}$ anymore).
+    As a result, $\grad{\phi}$ can only make statements about \ttt{x} using inequalities.
+    Since $\grad{\phi}$ is finite, there must be an integer that has not yet been excluded from the set of possible values for \ttt{x}.
+    Therefore, adding a corresponding inequality to $\grad{\phi}$ yields a gradual formula that is more precise, and still conservatively approximates $\overline{\phi}$.
+\end{proof}
+
+Partial Galois connections add more flexibility by also giving a (sufficiently strong) meaning to partial abstraction functions $\alpha$.
+%In our setting, it requires that $\alpha$ is defined only for sets of formulas that emerged from concretization and subsequent static reasoning.
+
+
+
