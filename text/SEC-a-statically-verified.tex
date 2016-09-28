@@ -38,7 +38,6 @@
 While aiming to give a general procedure for deriving imperative gradually verified languages, we have to make certain assumptions about \svl in order to concisely describe our approach and reason about its correctness.
 We believe that most imperative statically verified programming languages satisfy the following assumptions and thus qualify as starting point for our procedure.
 
-Assumptions about \svl:
 \begin{description}
 \item[Syntax]~\\
     We assume the existence of the following two syntactic categories:
@@ -47,7 +46,7 @@ Assumptions about \svl:
     	\phi & \in \setFormula
     \end{align*}
     
-    % We assume that there is a sequence operator \ttt{;} such that: $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
+    We assume that there is a sequence operator \ttt{;} such that $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
     % or munch that into syntax figure above?
     
     \begin{comment}
@@ -78,7 +77,7 @@ Assumptions about \svl:
     \end{example}
     
     Note how these examples use statements to represent continuations (the “remaining work”), necessary for the operational semantics to deduce a state transition.
-    In general, a different representation may be used to...
+    In general, a different representation may be used to encode this continuation (e.g. a lower-level machine language emitted by the compiler).
     
     \begin{comment}
     In order to determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
@@ -115,9 +114,10 @@ Assumptions about \svl:
     As usual, 
     %taking $n$ steps is abbreviated as $\sstepGeneric{\cdot}{n}{\cdot}$ (undefinedness is propagated), 
     taking a finite amount of steps is abbreviated as $\ssteps{\cdot}{\cdot}$.
-    Also, we write $\sstepStuck{\pi}$ to state that $\pi$ is a “stuck” state, i.e. that $\pi$ is not in the domain of partial small-step function.
+    Also, we write $\sstepStuck{\pi}$ to state that $\pi$ is a “stuck” state, i.e. that $\pi$ is not in the domain of the partial small-step function.
     
     Furthermore we define $\sstepConsume{s}{\cdot}{\cdot} \subseteq \setProgramState \times \setProgramState$ as a predicate indicating whether a program state is reachable from another program state by executing statement $s$.
+    This is useful for abstracting over the precise implementation of both $\setProgramState$ (see examples \ref{ex:ps-primitive} and \ref{ex:ps-stacked}) and the small-step semantics.
     
     \begin{example}{Execution of Given Statement}
         Assume that program state is defined as in example \ref{ex:ps-primitive}.
@@ -130,10 +130,11 @@ Assumptions about \svl:
         \pi_2 = \langle [x \mapsto 8, y \mapsto 2],\,\, \sVarAssign{y}{x} \rangle
         \end{displaymath}
         
-        This notation is useful as it abstracts from the implementation details of the small-step semantics.
-        We want to be able to reason about small-step derivations that correspond to executing certain statements without worrying about the exact number of steps taken.
+        Apparently the notation hides away the implementation details of the small-step semantics.
+        It enables reasoning about small-step derivations (that correspond to executing certain statements) without worrying about the exact number of steps taken.
         
-        Note that the judgment $\ssteps{\pi_1}{\pi_2}$ is also independent from the number of steps taken, yet it does not encode what is supposed to happen during those steps:
+        Note that the judgment $\ssteps{\pi_1}{\pi_2}$ is also independent from the number of steps taken, yet it does not encode what is supposed to happen during those steps.
+        For $\pi_1$ defined as above
         \begin{displaymath}
         \pi_2 = \langle [x \mapsto 8, y \mapsto 8],\,\, \sSkip \rangle
         \end{displaymath}
@@ -148,9 +149,10 @@ Assumptions about \svl:
     W.l.o.g. we assume $\forall \pi \in \setProgramStateFin.~ \sstepStuck{\pi}$, i.e. final states are stuck.
     
     We assume that dynamic semantics of a sequence $\sSeq{$s_1$}{$s_2$}$ is implemented such that 
-    \begin{displaymath}
+    \begin{align}
+    \label{frm:assume-seq-ss}
     \sstepConsume{\sSeq{$s_1$}{$s_2$}}{\pi_1}{\pi_3} \iff \exists \pi_2 \in \setProgramState.~ \sstepConsume{s_1}{\pi_1}{\pi_2} \wedge \sstepConsume{s_2}{\pi_2}{\pi_3}
-    \end{displaymath}
+    \end{align}
     for all $\pi_1, \pi_3 \in \setProgramState$.
     
     
@@ -170,7 +172,8 @@ Assumptions about \svl:
     formulas restrict which program states are valid for a certain point during execution. 
 
     They are used for annotations like method contracts or invariants.
-    For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$ in the program state at the call site.
+    For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$.
+    This is a restriction of program states corresponding to the very beginning of the method call.
     
     We assume that we are given a computable predicate
     \begin{displaymath}
@@ -206,6 +209,7 @@ Assumptions about \svl:
     \end{definition}
     
     \begin{definition}[Formula Equality]~\\
+        \label{def:form-eq}
         Two formulas $\phi_1$ and $\phi_2$ are \textbf{equal} iff
         \begin{displaymath}
         \envs{\phi_1} = \envs{\phi_2}
@@ -215,16 +219,22 @@ Assumptions about \svl:
     % TODO examples
     
     \begin{lemma}[Partial Order of Formulas]~\\
+        \label{lemma:po-form}
         The implication predicate is a partial order on $\setFormula$.
     \end{lemma}
-    % PROOF
+    \begin{proof}%[Lemma \ref{lemma:po-form}]
+        Follows from definitions \ref{def:form-implication}, \ref{def:form-eq} and the fact that $\subseteq$ induces a partial order.
+    \end{proof}
     
-    We assume that there is a largest element $\phiTrue \in \setFormula$ that describes every program state.
+    We assume that there is a largest element $\phiTrue \in \setFormula$ with $\envs{\phiTrue} = \setProgramState$.
+    
+    \begin{comment}
     Note that the presence of an unsatisfiable formula (as invariant, pre-/postcondition, assertion, ...) in a sound verification system implies that the corresponding source code location is unreachable:
     Preservation guarantees that any reachable program state satisfies potentially annotated formulas, trivially ensuring that the formula is satisfiable.
     
     This property is true regardless of whether \svl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
+    \end{comment}
     
     With this semantics we can formalize the notion of valid Hoare triples.
     \begin{definition}[Validity of Hoare Triples]~\\
@@ -240,17 +250,41 @@ Assumptions about \svl:
     \end{definition}
     \begin{lemma}[Compositional Validity of Hoare Triples]
         \label{lem:comp-tHoare}
-        \begin{displaymath}
-        \forall \phi_1, \phi_2, \phi_3 \in \setFormula,\, s_1, s_2 \in \setStmt.~ \tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3} \implies \tHoare{}{\phi_1} {\sSeq{$s_1$}{$s_2$}} {\phi_3}
-        \end{displaymath}
+        \begin{align*}
+        \forall \phi_1, \phi_2, \phi_3 \in \setFormula,\, s_1, s_2 \in \setStmt.~
+        &\tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}\\
+        \implies
+        &\tHoare{}{\phi_1} {\sSeq{$s_1$}{$s_2$}} {\phi_3}
+        \end{align*}
     \end{lemma}
-    % TODO: proof
+    \begin{proof}
+        We are given 
+        \begin{displaymath}
+        \evalphiGen{\pi_1}{\phi_1}
+        \end{displaymath}
+        and
+        \begin{displaymath}
+        \sstepConsume{\sSeq{$s_1$}{$s_2$}}{\pi_1}{\pi_3}
+        \end{displaymath}
+        for some $\pi_1, \pi_3 \in \setProgramState$.
+        
+        According to assumption \ref{frm:assume-seq-ss} this implies
+        \begin{displaymath}
+        \sstepConsume{s_1}{\pi_1}{\pi_2} \wedge \sstepConsume{s_2}{\pi_2}{\pi_3}
+        \end{displaymath}
+        for some $\pi_2 \in \setProgramState$.
+        Using the assumptions
+        \begin{displaymath}
+        \tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}
+        \end{displaymath}
+        we can deduce $\evalphiGen{\pi_3}{\phi_3}$.
+    \end{proof}
     
     We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphiGen{\pi}{\phi} ~\}$ is a filter, i.e.
     \begin{itemize}
         \item It is non-empty. This ensures that every program state is describable by at least one formula.
-        This is true as we demanded a formula $\phiTrue$ that describes every program state.
-        \item If $\evalphiGen{\pi}{\phi_a}$ and $\evalphiGen{\pi}{\phi_b}$, then there exists $\phi \in \setFormula$ with  $~~\evalphiGen{\pi}{\phi} ~~\wedge~~ \phiImplies{\phi}{\phi_a} ~~\wedge~~ \phiImplies{\phi}{\phi_b}$.
+        This is the case as we demanded that $\phiTrue$ describes every program state.
+        \item If $\evalphiGen{\pi}{\phi_a}$ and $\evalphiGen{\pi}{\phi_b}$, then there exists $\phi \in \setFormula$ with  $$~~\evalphiGen{\pi}{\phi} ~~\wedge~~ \phiImplies{\phi}{\phi_a} ~~\wedge~~ \phiImplies{\phi}{\phi_b}$$
         Intuitively, this states that multiple formulas about the same program state can be combined.
         In case the formula syntax contains a logical conjunction operator, this criterion is met.
         \item If $\evalphiGen{\pi}{\phi_a}$ and $\phiImplies{\phi_a}{\phi_b}$ then $\evalphiGen{\pi}{\phi_b}$.
@@ -258,12 +292,12 @@ Assumptions about \svl:
     \end{itemize}
     
 \item[Static Semantics]~\\
-    We assume that there is a Hoare logic (HL)
+    We assume that there is a Hoare logic
     \begin{displaymath}
-    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormulaA \times \setStmt \times \setFormulaA
+    \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
-    While the Hoare logic might be defined for arbitrary formulas in practice, we only ever reason about it in presence of satisfiable formulas, hence the “restricted domain”???.
+    % While the Hoare logic might be defined for arbitrary formulas in practice, we only ever reason about it in presence of satisfiable formulas, hence the “restricted domain”???.
     
     In practice, this predicate might also have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
@@ -271,6 +305,7 @@ Assumptions about \svl:
     % TODO: program als parameter...
     
     %% SEQ
+    \begin{comment}
     We assume that 
     \begin{mathpar}
         \inferrule* [Right=HoareSequence]
@@ -283,9 +318,10 @@ Assumptions about \svl:
         }
     \end{mathpar}
     is derivable from given Hoare rules.
+    \end{comment}
     
     %% information monotonic - required?
-    We further assume that this predicate is monotonic in the precondition w.r.t. implication:
+    We assume that the Hoare predicate is monotonic in the precondition w.r.t. implication:
     \begin{align*}
     \forall s \in \setStmt.~& \\
     \forall \phi_1, \phi_2 \in \setFormula.~&\\
