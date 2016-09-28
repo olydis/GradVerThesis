@@ -1,30 +1,33 @@
 %% intro
 Formulas play a role for some statements, extending their syntax may thus also affect the syntax of statements.
 A common example are assertion statements $\sAssert{$\phi$}$, which can now be extended to $\sAssert{$\grad{\phi}$}$.
-However, having a gradual formula syntax available does not necessarily mean that all statements have to adopt it.
+Note however, that having a gradual formula syntax available does not necessarily mean that all statements \emph{have} to adopt it.
 % Examples can be found in chapter \ref{ch:case-study--implicit} which derives a gradual language \gvlidf that .
 
 %% call
-A more complex example affected by gradualization of formulas is a call statement $\ttt{$m$();}$ in presence of method contracts.
-Although not directly visible, this statement's semantics (static and dynamic) is affected by the contract of $m$, consisting of pre- and postcondition.
-One can think of $m$ as a reference to some method definition including method contract.
-Note that in practice such method definitions usually reside in a “program context” that the static and dynamic semantics are parameterized with.
-As the full meaning of such a statement is unknown without context, it is hard to reason about it abstractly.
-W.l.o.g. we will thus think of $m$ as syntactic sugar for 
-\begin{align*}
-&\ttt{assert $\phi_{m_{pre}}$;}\\
-&\ttt{// body of $m$}\\
-&\ttt{assume $\phi_{m_{post}}$;}
-\end{align*}
-
-%%% contract
-As one of the main goals of gradual verification is to allow for gradual method contracts, it makes sense to extend the syntax accordingly.
-This means that the syntax of the desugared call statement is affected:
-\begin{align*}
-&\ttt{assert $\grad{\phi_{m_{pre}}}$;}\\
-&\ttt{// body of $m$}\\
-&\ttt{assume $\grad{\phi_{m_{post}}}$;}
-\end{align*}
+A more complex example affected by gradualization of formulas is a call statement $\ttt{$m$()}$ in presence of method contracts.
+\begin{example}{Gradual Call Statement}~\\
+    Although not directly visible, the (static and dynamic) semantics of a call statement is affected by the contract of $m$, consisting of pre- and postcondition.
+    One can think of $m$ as a reference to or syntactic sugar for some method definition including method contract.
+    Note that in practice such method definitions usually reside in a “program context” that the static and dynamic semantics are parameterized with.
+    
+    As the full meaning of such a statement is unknown without context, it is hard to reason about it abstractly.
+    W.l.o.g. we will thus think of $m$ as syntactic sugar for 
+    \begin{align*}
+    &\ttt{assert $\phi_{m_{pre}}$;}\\
+    &\ttt{// body of $m$}\\
+    &\ttt{assume $\phi_{m_{post}}$;}
+    \end{align*}
+    
+    %%% contract
+    As one of the main goals of gradual verification is to allow for gradual method contracts, it makes sense to extend the syntax accordingly.
+    This means that the syntax of the desugared call statement is affected:
+    \begin{align*}
+    &\ttt{assert $\grad{\phi_{m_{pre}}}$;}\\
+    &\ttt{// body of $m$}\\
+    &\ttt{assume $\grad{\phi_{m_{post}}}$;}
+    \end{align*}
+\end{example}
 
 %% general
 In general, statement syntax is extended, resulting in a superset $\setGStmt \supseteq \setStmt$ of gradual statements.
