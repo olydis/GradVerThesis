@@ -1,70 +1,73 @@
 %% Intro
-As seen in section \ref{ssec:gradual-soundness}, the lifted Hoare predicate in general requires an additional runtime assertion to guarantee preservation.
+%As seen in section \ref{ssec:gradual-soundness}, the lifted Hoare predicate in general requires an additional runtime assertion to guarantee preservation.
 In case the Hoare rules of \svl are given inductively, we can make use of the rules for composite, disjunctive and conjunctive predicate lifting (see section \ref{sssec:examples-lift-predicates}).
-The rules allow us to soundly lift each individual inductive rule in order to end up with a sound lifting of the overall predicate predicate.
+The rules allow us to soundly lift each individual inductive rule in order to end up with a sound lifting of the overall predicate.
 
 %% example
-Example Hoare logic:
-\begin{mathpar}
-    \inferrule* [right=HSeq]
-    {
-        \phiImplies{\phi_{q1}} {\phi_{q2}} \\\\
-        \thoare {} {\phi_p} {{s_1}} {\phi_{q1}} \\
-        \thoare {} {\phi_{q2}} {{s_2}} {\phi_r}
-    }
-    {
-        \thoare {} {\phi_p} {\sSeq{$s_1$}{$s_2$}} {\phi_r}
-    }
+\begin{example}{Rule-wise Hoare Logic Lifting}
+    Given:
+    \begin{mathpar}
+        \inferrule* [right=HSeq]
+        {
+            \phiImplies{\phi_{q1}} {\phi_{q2}} \\\\
+            \thoare {} {\phi_p} {{s_1}} {\phi_{q1}} \\
+            \thoare {} {\phi_{q2}} {{s_2}} {\phi_r}
+        }
+        {
+            \thoare {} {\phi_p} {\sSeq{$s_1$}{$s_2$}} {\phi_r}
+        }
+        
+        \inferrule* [Right=HAssign]
+        {
+            ~
+        }
+        {
+            \thoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
+        }
+    \end{mathpar}
+    Rule-wise lifting:
+    \begin{mathpar}
+        \inferrule* [right=\gradT HSeq]
+        {
+            \gphiImplies{\grad{\phi_{q1}}} {\grad{\phi_{q2}}} \\\\
+            \gthoare {} {\grad{\phi_p}} {{s_1}} {\grad{\phi_{q1}}} \\
+            \gthoare {} {\grad{\phi_{q2}}} {{s_2}} {\grad{\phi_r}}
+        }
+        {
+            \gthoare {} {\grad{\phi_p}} {\sSeq{$s_1$}{$s_2$}} {\grad{\phi_r}}
+        }
+        
+        \inferrule* [right=\gradT HAssign1]
+        {
+            ~
+        }
+        {
+            \gthoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
+        }
+        
+        \inferrule* [right=\gradT HAssign2]
+        {
+            ~
+        }
+        {
+            \gthoare {} {\qm} {\sVarAssign{$x$}{$e$}} {\grad{\phi}}
+        }
+        
+        \inferrule* [right=\gradT HAssign3]
+        {
+            ~
+        }
+        {
+            \gthoare {} {\grad{\phi}} {\sVarAssign{$x$}{$e$}} {\qm}
+        }
+    \end{mathpar}
     
-    \inferrule* [Right=HAssign]
-    {
-        ~
-    }
-    {
-        \thoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
-    }
-\end{mathpar}
-Rule-wise lifting:
-\begin{mathpar}
-    \inferrule* [right=GHSeq]
-    {
-        \gphiImplies{\grad{\phi_{q1}}} {\grad{\phi_{q2}}} \\\\
-        \gthoare {} {\grad{\phi_p}} {{s_1}} {\grad{\phi_{q1}}} \\
-        \gthoare {} {\grad{\phi_{q2}}} {{s_2}} {\grad{\phi_r}}
-    }
-    {
-        \gthoare {} {\grad{\phi_p}} {\sSeq{$s_1$}{$s_2$}} {\grad{\phi_r}}
-    }
-    
-    \inferrule* [right=GHAssign1]
-    {
-        ~
-    }
-    {
-        \gthoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
-    }
-    
-    \inferrule* [right=GHAssign2]
-    {
-        ~
-    }
-    {
-        \gthoare {} {\qm} {\sVarAssign{$x$}{$e$}} {\grad{\phi}}
-    }
-    
-    \inferrule* [right=GHAssign3]
-    {
-        ~
-    }
-    {
-        \gthoare {} {\grad{\phi}} {\sVarAssign{$x$}{$e$}} {\qm}
-    }
-\end{mathpar}
+    Note the usage of composite predicate lifting (lemma \ref{lemma:pred-lift-comp}) for \tset{\gradT HSeq}.
+\end{example}
 
 %% example descr
-Note the usage of composite predicate lifting for \tset{GHSeq}.
-The overall Hoare predicate $\thoare {} {\cdot} {\cdot} {\cdot}$ can be thought of as a disjunction of all inductive rules.
-It follows that $\gthoare {} {\cdot} {\cdot} {\cdot}$, being the disjunction of above lifted rules is also a sound lifting.
+% The overall Hoare predicate $\thoare {} {\cdot} {\cdot} {\cdot}$ can be thought of as a disjunction of all inductive rules.
+% It follows that $\gthoare {} {\cdot} {\cdot} {\cdot}$, being the disjunction of above lifted rules is also a sound lifting.
 
 %% theory vs verifier practice (many choices)
 Unfortunately, a gradual verifier using $\gthoare {} {\cdot} {\cdot} {\cdot}$ gets into a practical dilemma.
