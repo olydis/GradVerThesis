@@ -2,7 +2,7 @@
 In section \ref{sssec:regular-conjunction} we showed that regular non-separating conjunction ~$\phiAnd{$\cdot$}{$\cdot$}$~ is not expressible using existing syntax of \svlidf.
 Fortunately, the same is not true for \gvlidf:
 $$\phiAnd{$\cdot$}{$\cdot$} : \setGFormula \times \setGFormula \rightarrow \setGFormula$$
-is definable (and computable), as we will show in this section.
+is definable (and computable).
 Key to the definition is the existence of a normal form for partly unknown formulas $\withqm{\phi}$, that is free of accessibility-predicates.
 Having a non-separating conjunction at hand will prove useful for defining some gradual liftings.
 
@@ -23,7 +23,8 @@ Having a non-separating conjunction at hand will prove useful for defining some 
     \begin{displaymath}
     \phiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$} ~\defeq~ \withqm{\phiCons{\snorm{\static{$\grad{\phi_1}$}}}{\snorm{\static{$\grad{\phi_2}$}}}}
     \end{displaymath}
-    Then $\envs{\phiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$}} = \envs{\grad{\phi_1}} \cap \envs{\grad{\phi_2}}$
+    Then $\envs{\phiAnd{$\grad{\phi_1}$}{$\grad{\phi_2}$}} = \envs{\grad{\phi_1}} \cap \envs{\grad{\phi_2}}$ where
+    
 \end{theorem}
 \begin{proof}
     \begin{align*}
