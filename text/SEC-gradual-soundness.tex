@@ -8,8 +8,8 @@ Specifically, we show that the semantics are complete and semi-optimal w.r.t. al
 For those remaining statements we prove by induction that \tset{\dgradT Preservation} still holds.
 The overall proof is a structural induction on statement $s$.
 
-\begin{lemma}[Partial Completeness of \svlidf]~\\
-    \label{lemma:pc-idf}
+\begin{lemma}[Partial Completeness of \svlidf]
+    \label{lemma:pc-idf}~\\
     The semantics of \svlidf is complete (see definition \ref{def:completeness}) w.r.t. \\
     $\sSkip, \sFieldAssign {$x$} {$f$} {$y$}, \sVarAssign {$x$} {$e$}, \sAlloc {$x$} {$C$}, \sReturn {$x$}, \sAssert {$\phi$}, \sRelease {$\phi$}$
     \begin{comment}
@@ -81,8 +81,8 @@ The overall proof is a structural induction on statement $s$.
     \end{description}
 \end{proof}
 
-\begin{lemma}[Partial Semi-Optimality of \gvlidf]~\\
-    \label{lemma:pso-idf}
+\begin{lemma}[Partial Semi-Optimality of \gvlidf]
+    \label{lemma:pso-idf}~\\
     The semantics of \gvlidf is semi-optimal (see definitions \ref{def:perf-stat} and \ref{def:perf-dyn}) w.r.t.\\
     $\sSkip, \sFieldAssign {$x$} {$f$} {$y$}, \sVarAssign {$x$} {$e$}, \sAlloc {$x$} {$C$}, \sReturn {$x$}, \sAssert {$\phi$}, \sRelease {$\phi$}$
     \begin{comment}
@@ -175,8 +175,8 @@ The overall proof is a structural induction on statement $s$.
     \end{description}
 \end{proof}
 
-\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Declaration]~\\
-    \label{lemma:is-decl}
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Declaration]
+    \label{lemma:is-decl}~\\
     Assume \tset{\dgradT Preservation} holds for $s \in \setGStmt$.\\
     Then \tset{\dgradT Preservation} holds for $\sSeq{\sDeclare{$T$}{$x$}}{$s$}$ (for all $T \in \setType,\, x \in \setVar$).
 \end{lemma}
@@ -234,8 +234,8 @@ The overall proof is a structural induction on statement $s$.
     The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
 \end{proof}
 
-\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Calls]~\\
-    \label{lemma:is-call}
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Calls]
+    \label{lemma:is-call}~\\
     Assume \tset{\dgradT Preservation} holds for the method body of method $\edot{y}{m}$.\\
     Then \tset{\dgradT Preservation} holds for $\sCall {$x$} {$y$} {$m$} {$z$}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
 \end{lemma}
@@ -325,8 +325,8 @@ The overall proof is a structural induction on statement $s$.
     The goal follows from \ref{frm:tmpp2010a} and \ref{frm:tmpp2011a} using the fact that the formulas contain disjoint memory locations.
 \end{proof}
 
-\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Hold]~\\
-    \label{lemma:is-hold}
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Hold]
+    \label{lemma:is-hold}~\\
     Assume \tset{\dgradT Preservation} holds for $s \in \setGStmt$.\\
     Then \tset{\dgradT Preservation} holds for $\sHold {$\phi$} {$s$}$ (for all $\phi \in \setFormula$).
 \end{lemma}
@@ -334,8 +334,8 @@ The overall proof is a structural induction on statement $s$.
     Omitted.
 \end{proof}
 
-\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Sequences]~\\
-    \label{lemma:is-seq}
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Sequences]
+    \label{lemma:is-seq}~\\
     Assume \tset{\dgradT Preservation} holds for $s_1, s_2 \in \setGStmt$.\\
     Then \tset{\dgradT Preservation} holds for $\sSeq {$s_1$} {$s_2$}$.
 \end{lemma}

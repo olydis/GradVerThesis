@@ -143,8 +143,8 @@ Assume we have obtained the deterministic lifting $\dgthoare {~} {\cdot} {\cdot}
 As mentioned before, this gradual partial function has desirable properties:
 \begin{description}
     \item[(a) Obtaining a Sound Gradual Lifting]
-    \begin{lemma}[Deterministic Lifting as Sound Lifting]~\\
-        \label{lem:det2grad}
+    \begin{lemma}[Deterministic Lifting as Sound Lifting]
+        \label{lem:det2grad}~\\
         Let $\dgrad{P}$ be a deterministic lifting of $P$.
         Then
         \begin{displaymath}
@@ -191,7 +191,7 @@ As mentioned before, this gradual partial function has desirable properties:
     Optimality of the deterministic lifting does not imply optimality of the obtained gradual lifting.
     
     \begin{example}{Counterexample of Optimality Induced by Deterministic Lifting}
-        \label{cex:opt-det2grad}
+        \label{cex:opt-det2grad}~\\
         Assume that, one can verify
         \begin{displaymath}
         \thoare{}{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiAnd{\phiEq{y}{4}}{\phiEq{x}{3}}}
@@ -255,7 +255,7 @@ As mentioned before, this gradual partial function has desirable properties:
     Note that this rule is no longer a tautology, compliance also depends on the gradual dynamic semantics of \gvl.
     
     \begin{example}{\tset{\dgradT Preservation} Counterexample}
-        \label{ex:cex-gdpres}
+        \label{ex:cex-gdpres}~\\
         Assume that \svl contains an assertion statement with corresponding Hoare rule.
         \begin{mathpar}
             \inferrule* [Right=HAssert]
@@ -288,8 +288,8 @@ As mentioned before, this gradual partial function has desirable properties:
 \end{description}
 
 
-\begin{lemma}[Reduced Runtime Checks]~\\
-    \label{lemma:runtime-checks-reduced}
+\begin{lemma}[Reduced Runtime Checks]
+    \label{lemma:runtime-checks-reduced}~\\
     Assume that $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2'}}$ holds for some $\grad{\phi_1}, \grad{s}, \grad{\phi_2'}$.
     If \tset{\dgradT Preservation} holds, the runtime check $\sAssert{$\grad{\phi_2}$}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{\gradT Preservation'}) can be simplified or omitted.
     

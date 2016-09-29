@@ -10,13 +10,22 @@ To understand how to approach dynamically verified languages, we have to examine
 The static end is (by construction) the one where all formulas are static and the unknown formula “\qm” is never used.
 In contrast, annotating $\qm$ everywhere corresponds to a system that solely relies on runtime checks.
 One can further define that leaving out annotations (e.g. precondition, postcondition, or even both) corresponds to an annotation of $\qm$.
-A dynamically verified language (say, Java) can be imitated using this process.
-Given such a language, the steps are thus as follows:
+A dynamically verified language (say, Java with its mechanisms like runtime assertions) can be thought of as a gradually verified language with all annotations left out, defaulting to $\qm$.
+Such a gradually verified language can be derived as follows:
 
 %% steps
-First one has to identify what the goal of a static verification system would be for the language at hand.
-Common examples include race-condition avoidance or a no-throw guarantee.
-One can then develop a sound Hoare logic that achieves that goal, including syntax extensions to the language that allow leveraging that Hoare logic.
-Gradualization can be applied to that system, introducing $\qm$ as a “default formula”, which allows making all newly introduced syntax extensions optional again.
-The syntax of the resulting gradually verified language should thus be a superset of the dynamically verified one.
-Contracts that were before explicitly realized as runtime checks can now be removed and encoded using the extended syntax.
+\begin{enumerate}
+    \item 
+    Identify what the goal of a static verification system would be for the language at hand.
+    Common examples include race-condition avoidance or a no-throw guarantee.
+    
+    \item
+    Develop a sound Hoare logic that achieves that goal, including syntax extensions to the language that allow leveraging that Hoare logic.
+    The resulting system corresponds to a statically verified language.
+    
+    \item
+    Gradualization can be applied to that system, introducing $\qm$ as a “default formula”, which allows making all previously introduced syntax extensions optional again.
+    The syntax of the resulting gradually verified language is therefore a superset of the original, dynamically verified one.
+\end{enumerate}
+
+Contracts that were before explicitly realized as runtime checks can now be removed and encoded using the optional annotation syntax.

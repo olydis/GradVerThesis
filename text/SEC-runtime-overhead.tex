@@ -19,7 +19,7 @@ Note however, that ???mark them gray or something??? were not necessary for \svl
 It is a desirable property of gradual systems to not impose any runtime overhead (compared to the static system) should all annotations be static.
 We give sufficient criteria for such a gradual verification system.
 \begin{lemma}[Overhead-Free Gradually Verified Language]
-    \label{lemma:oh-free}
+    \label{lemma:oh-free}~\\
     For fully statically annotated programs, no runtime overhead is necessary if \tset{GDPreservation} and
     \begin{align}
     \label{lemma-frm:oh-free}
@@ -32,7 +32,7 @@ We give sufficient criteria for such a gradual verification system.
    % A stricter version of this lemma would thus read:
    % For fully statically annorated programs, no runtime overhead is necessary if \tset{GDPreservation} and the deterministic gradual Hoare logic is an optimal deterministic lifting.
 \end{lemma}
-\begin{proof}
+\begin{proof}~\\
     We prove that 
     \begin{align}
     \begin{split}
@@ -43,9 +43,9 @@ We give sufficient criteria for such a gradual verification system.
     (\exists \phi_{2a} \in \setFormula.~ &\dgthoare{}{\phi_1}{s}{\phi_{2a}} \wedge \phiImplies{\phi_{2a}}{\phi_{2b}})
     \end{split}
     \end{align}
-    As a consequence, all reasoning that allows the static system to be runtime check free also applies to the gradual system (if all annotations are static).
+    As a consequence, all reasoning that allows the static system to be runtime check free must also apply to the gradual system (if all annotations are static).
     
-    Proof for \ref{lemma-frm:oh-free}:
+    Proof for \ref{lemma-frm:oh-free1}:
     \begin{align*}
     \thoare{}{\phi_1}{s}{\phi_{2b}}
     \end{align*}
@@ -74,4 +74,4 @@ We give sufficient criteria for such a gradual verification system.
     \end{comment}
 \end{proof}
 
-\gvlidf satisfies the criteria given by lemma \ref{lemma:oh-free} and can thus be implemented overhead-free for statically annotated programs.
+Note: \gvlidf satisfies the criteria given by lemma \ref{lemma:oh-free} (without proof) and can thus be implemented overhead-free for statically annotated programs.

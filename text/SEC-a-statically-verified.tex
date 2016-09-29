@@ -218,8 +218,8 @@ We believe that most imperative statically verified programming languages satisf
     
     % TODO examples
     
-    \begin{lemma}[Partial Order of Formulas]~\\
-        \label{lemma:po-form}
+    \begin{lemma}[Partial Order of Formulas]
+        \label{lemma:po-form}~\\
         The implication predicate is a partial order on $\setFormula$.
     \end{lemma}
     \begin{proof}%[Lemma \ref{lemma:po-form}]
@@ -249,7 +249,7 @@ We believe that most imperative statically verified programming languages satisf
         \end{flalign*}
     \end{definition}
     \begin{lemma}[Compositional Validity of Hoare Triples]
-        \label{lem:comp-tHoare}
+        \label{lem:comp-tHoare}~\\
         \begin{align*}
         \forall \phi_1, \phi_2, \phi_3 \in \setFormula,\, s_1, s_2 \in \setStmt.~
         &\tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}\\

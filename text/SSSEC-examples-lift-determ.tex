@@ -1,5 +1,5 @@
-\begin{lemma}[Composability of Deterministic Lifting]~\\
-    \label{lemma:det-lift-comp}
+\begin{lemma}[Composability of Deterministic Lifting]
+    \label{lemma:det-lift-comp}~\\
     Let $\dgrad{P_1}, \dgrad{P_2}$ be sound deterministic liftings of predicates $P_1, P_2$.
     Let $P_2$ be monotonic w.r.t. implication in its first parameter.
     Then
@@ -131,8 +131,8 @@ We further demonstrate deterministic lifting by means of the following Hoare rul
 Note that gradual liftings of these rules can be found in section \ref{ssec:the-problem-with}, where we demonstrated the problems that ultimately lead to deterministic liftings.
 
 We start by lifting implication, which is used in \tset{HSeq}.
-\begin{lemma}[Optimal Deterministic Lifting of Implication]~\\
-    \label{lemma:opt-lift-impl}
+\begin{lemma}[Optimal Deterministic Lifting of Implication]
+    \label{lemma:opt-lift-impl}~\\
     Let $\id : \setGFormula \rightarrow \setGFormula$ be the identity function.
     Then $\id$ is an optimal deterministic lifting of $\phiImplies{\cdot}{\cdot} \subseteq \setFormula \times \setFormula$.
 \end{lemma}
