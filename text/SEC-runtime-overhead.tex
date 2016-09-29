@@ -5,11 +5,11 @@ Specifically, in the presence of unknown formulas runtime checks are necessary t
 %%where runtime overhead can come from
 With the methodology we introduced in chapter \ref{ch:gradualization-of-a} there are two potential causes for runtime checks.
 The first cause is the gradual Hoare judgment, which in general requires runtime measures to ensure the postcondition dynamically (see section \ref{ssec:gradual-soundness}).
-We have also discussed how those runtime checks can be reduced or even eliminated if \tset{GDPreservation} holds (see lemma \ref{lemma:runtime-checks-reduced}).
+We have also discussed how those runtime checks can be reduced or even eliminated if \tset{\dgradT Soundness} holds (see lemma \ref{lemma:runtime-checks-reduced}).
 The second cause is more subtle and originates in restricting the domain of the small-step semantics to achieve completeness as described in section \ref{ssec:perfect-knowledge}.
 Restricting the domain usually means adding additional checks that determine whether the function is defined or not.
 Example \ref{ex:cex-gdpres} illustrates this effect using the example of an assertion statement.
-Note that a compiler may also simplify or omit these static checks using the knowledge provided by the deterministic lifting (given that  \tset{GDPreservation} holds).
+Note that a compiler may also simplify or omit these static checks using the knowledge provided by the deterministic lifting (given that  \tset{\dgradT Soundness} holds).
 
 %% svlidf
 In chapter \ref{ch:case-study--implicit} we designed the small-step semantics of \svlidf to be (partially) complete in the first place (see lemma \ref{lemma:pc-idf}).
@@ -20,7 +20,7 @@ It is a desirable property of gradual systems to not impose any runtime overhead
 We give sufficient criteria for such a gradual verification system.
 \begin{lemma}[Overhead-Free Gradually Verified Language]
     \label{lemma:oh-free}~\\
-    For fully statically annotated programs, no runtime overhead is necessary if \tset{GDPreservation} and
+    For fully statically annotated programs, no runtime overhead is necessary if \tset{\dgradT Soundness} and
     \begin{align}
     \label{lemma-frm:oh-free}
     \forall \phi_1 \in \setFormula,\, s \in \setStmt,\, \grad{\phi_2} \in \setGFormula.~ \dgthoare{}{\phi_1}{s}{\grad{\phi_2}} \implies \grad{\phi_2} \in \setFormula
@@ -28,9 +28,9 @@ We give sufficient criteria for such a gradual verification system.
     holds.
     Intuitively, this condition states that the deterministic gradual Hoare logic is precise for all static input.
     
-   % Optimality of the deterministic lifting does not necessarily imply \ref{lemma-frm:oh-free} if \tset{GDPreservation} holds.
+   % Optimality of the deterministic lifting does not necessarily imply \ref{lemma-frm:oh-free} if \tset{\dgradT Soundness} holds.
    % A stricter version of this lemma would thus read:
-   % For fully statically annorated programs, no runtime overhead is necessary if \tset{GDPreservation} and the deterministic gradual Hoare logic is an optimal deterministic lifting.
+   % For fully statically annorated programs, no runtime overhead is necessary if \tset{\dgradT Soundness} and the deterministic gradual Hoare logic is an optimal deterministic lifting.
 \end{lemma}
 \begin{proof}~\\
     We prove that 
@@ -59,7 +59,7 @@ We give sufficient criteria for such a gradual verification system.
     Using the strength rule of deterministic liftings it follows immediately that $\phiImplies{\phi_{2a}}{\phi_{2b}}$.
 
 \begin{comment}
-    Proof for claim that optimality of $\dgthoare{}{\cdot}{\cdot}{\cdot}$ implies \ref{lemma-frm:oh-free} if \tset{GDPreservation} holds.
+    Proof for claim that optimality of $\dgthoare{}{\cdot}{\cdot}{\cdot}$ implies \ref{lemma-frm:oh-free} if \tset{\dgradT Soundness} holds.
     Let $\Phi \defeq \{~ \phi_2 ~|~ \thoare{}{\phi_1}{s}{\phi_2} ~\}$ for some  $\phi_1 \in \setFormula,\, s \in \setStmt$.
     $\Phi$ is the set of all deducible postconditions for given precondition and statement.
     If $\Phi$ is not empty, then the introduction rule of deterministic liftings implies that

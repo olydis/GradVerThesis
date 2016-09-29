@@ -178,7 +178,7 @@ Verifying \ttt{getFourA}, the deterministic lifting determined $\phiAnd{\phiAnd{
 However, verifying \ttt{getFourB}, the deterministic lifting ends up with $\qm$ as knowledge, from which $\phiEq{result}{4}$ can only be implied by instantiating $\qm$ accordingly.
 
 The intuition behind the negligible assertion can be formalized:
-In case \tset{\dgradT Preservation} holds, we are guaranteed that the postcondition returned by the deterministic lifting actually holds for every execution.
+In case \tset{\dgradT Soundness} holds, we are guaranteed that the postcondition returned by the deterministic lifting actually holds for every execution.
 In other words, it is static knowledge that can be used to reason about the outcome of runtime assertions at verification time.
 In case of function \ttt{getFourA}, the compiler would be able to treat $\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}$ as static knowledge that is usable to formally guarantee the success of $\sAssert{\phiEq{result}{4}}$.
 

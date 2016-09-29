@@ -1,5 +1,5 @@
 %% intro
-When first introducing \tset{\dgradT Preservation} in section \ref{ssec:the-deterministic-approach}, we also gave an example (\ref{ex:cex-gdpres}) of a language violating \tset{\dgradT Preservation}.
+When first introducing \tset{\dgradT Soundness} in section \ref{ssec:the-deterministic-approach}, we also gave an example (\ref{ex:cex-gdpres}) of a language violating \tset{\dgradT Soundness}.
 The root of the problem seemed to be the existence of small-step derivations that are not verifiable using static Hoare logic.
 A Hoare logic that can prove all small-step derivations correct is called “complete”.
 However, as illustrated in example \ref{ex:cex-gdpres}, incompleteness of the Hoare logic may not necessarily indicate weakness of the Hoare logic, but may also be caused by optimized small-step semantics.
@@ -31,7 +31,7 @@ As long as soundness is not broken, those changes do not have observable effects
 \end{proof}
 
 %% further stuff
-Based on a complete semantics of \svl, the following requirements for \gvl are sufficient to satisfy \tset{GDPreservation}.
+Based on a complete semantics of \svl, the following requirements for \gvl are sufficient to satisfy \tset{\dgradT Soundness}.
 \begin{definition}[Semi-Optimal Gradual Hoare Logic]~\\
     \label{def:perf-stat}
     We call a deterministically lifted Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot}$ \textbf{semi-optimal} iff
@@ -63,12 +63,12 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
 
 We call the semantics of \gvl semi-optimal if both Hoare logic and small-step semantics are semi-optimal as defined above.
 
-\begin{theorem}[Completeness and Semi-Optimality imply \tset{\dgradT Preservation}]~\\
+\begin{theorem}[Completeness and Semi-Optimality imply \tset{\dgradT Soundness}]~\\
     \label{thm:compl-and-so-to-gdpres}
-    If the semantics of \svl are complete and the semantics of \gvl are semi-optimal, then \tset{GDPreservation} is satisfied.
+    If the semantics of \svl are complete and the semantics of \gvl are semi-optimal, then \tset{\dgradT Soundness} is satisfied.
 \end{theorem}
 \begin{proof}~\\
-    To prove \tset{GDPreservation} we may assume:
+    To prove \tset{\dgradT Soundness} we may assume:
     \begin{align}
     \label{frm:tmp0}
     \dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}\\

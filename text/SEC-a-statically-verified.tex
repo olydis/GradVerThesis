@@ -230,7 +230,7 @@ We believe that most imperative statically verified programming languages satisf
     
     \begin{comment}
     Note that the presence of an unsatisfiable formula (as invariant, pre-/postcondition, assertion, ...) in a sound verification system implies that the corresponding source code location is unreachable:
-    Preservation guarantees that any reachable program state satisfies potentially annotated formulas, trivially ensuring that the formula is satisfiable.
+    Soundness guarantees that any reachable program state satisfies potentially annotated formulas, trivially ensuring that the formula is satisfiable.
     
     This property is true regardless of whether \svl forbids usage of unsatisfiable formulas entirely or whether it only fails when trying to use the corresponding code (which would involve proving that a satisfiable formula implies an unsatisfiable one).
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
