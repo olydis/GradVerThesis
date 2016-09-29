@@ -168,7 +168,7 @@ We start by lifting implication, which is used in \tset{HSeq}.
 
 Using lemma \ref{lemma:det-lift-comp} and lemma \ref{lemma:opt-lift-impl}, the deterministic lifting of \tset{HSeq} reduces to
 \begin{mathpar}
-    \inferrule* [right=DGHSeq]
+    \inferrule* [right=\dgradT HSeq]
     {
         \dgthoare {} {\grad{\phi_p}} {\grad{s_1}} {\grad{\phi_q}} \\
         \dgthoare {} {\grad{\phi_q}} {\grad{s_2}} {\grad{\phi_r}}
@@ -181,7 +181,7 @@ Note that we used inductive notation to define a function -- there are no free v
 
 For the assignment rule we can derive
 \begin{mathpar}
-    \inferrule* [right=DGHAssign1]
+    \inferrule* [right=\dgradT HAssign1]
     {
         x \not \in \FV(\phi) \\
         x \not \in \FV(e)
@@ -190,9 +190,9 @@ For the assignment rule we can derive
         \dgthoare {} {\phi} {\sVarAssign{$x$}{$e$}} {\phiAnd{$\phi$}{\phiEq{$x$}{$e$}}}
     }
     
-    \inferrule* [right=DGHAssign2]
+    \inferrule* [right=\dgradT HAssign2]
     {
-        \tset{DGHAssign1} \textit{ does not apply}
+        \tset{\dgradT HAssign1} \textit{ does not apply}
     }
     {
         \dgthoare {} {\grad{\phi}} {\sVarAssign{$x$}{$e$}} {\qm}

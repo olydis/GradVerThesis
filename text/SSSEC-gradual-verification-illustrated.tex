@@ -57,9 +57,9 @@ Deducing $\gthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}
 \begin{mathpar}
     \inferrule* [Right=Lemma \ref{lem:det2grad}]
     {
-        \inferrule* [right=DGHSeq]
+        \inferrule* [right=\dgradT HSeq]
         {
-            \inferrule* [right=DGHAssign1]
+            \inferrule* [right=\dgradT HAssign1]
             {
                 \ttt{i} \not \in \FV(\phiTrue) \\\\
                 \ttt{i} \not \in \FV(\ttt{4})
@@ -68,7 +68,7 @@ Deducing $\gthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}
                 \mathcal{D}_1
             }
             \\
-            \inferrule* [Right=DGHAssign1]
+            \inferrule* [Right=\dgradT HAssign1]
             {
                 \ttt{result} \not \in \FV({\phiAnd{\phiTrue}{\phiEq{i}{4}}}) \\\\
                 \ttt{result} \not \in \FV(\ttt{i})
@@ -119,15 +119,15 @@ Deducing $\gthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}
 \begin{mathpar}
     \inferrule* [Right=Lemma \ref{lem:det2grad}]
     {
-        \inferrule* [right=DGHSeq]
+        \inferrule* [right=\dgradT HSeq]
         {
-            \inferrule* [right=DGHAssign2]
+            \inferrule* [right=\dgradT HAssign2]
             {~}
             {
                 \mathcal{D}_1
             }
             \\
-            \inferrule* [right=DGHAssign2]
+            \inferrule* [right=\dgradT HAssign2]
             {~}
             {
                 \mathcal{D}_2

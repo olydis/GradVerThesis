@@ -43,9 +43,9 @@ From this multivalued function we can obtain a lifted version, following similar
 
 %% def
 \begin{definition}[Deterministic Lifting]~\\
-    Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $$\dgrad{P} : \setFormula \rightharpoonup \setFormula$$ \textbf{deterministic lifting} of $P$ if the following three conditions are met.
+    Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $$\dgrad{P} : \setFormula \rightharpoonup \setFormula$$ \textbf{deterministic lifting} of $P$ if the following three conditions are met.\\
     (As before, the rules can be adapted to different parameter types and higher arity.
-    We indicate an adaptation to Hoare logic in light gray using function notation for $\dgrad{\vdash}$.)
+    We indicate an adaptation to Hoare logic in blue using function notation for $\dgrad{\vdash}$.)
 \end{definition}
 
 \begin{description}
@@ -54,7 +54,7 @@ From this multivalued function we can obtain a lifted version, following similar
     \begin{displaymath}
     \forall \langle \phi_1, \phi_2 \rangle \in P.~ \phi_1 \in \dom{\dgrad{P}}
     \end{displaymath}
-    \textcolor{gray}{
+    \textcolor{blue}{
         \begin{displaymath}
         \forall \langle \phi_1, s, \phi_2 \rangle \in \thoare{}{\cdot}{\cdot}{\cdot}.~ \langle \phi_1, s \rangle \in \dom{\dgrad{\vdash}}
         \end{displaymath}
@@ -69,7 +69,7 @@ From this multivalued function we can obtain a lifted version, following similar
         \forall \phi_1 \in \gamma(\grad{\phi_1}),\, \phi \in \setFormula.~ P(\phi_1, \phi) \implies\\
         \exists \phi_2 \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi_2) ~\wedge~ (\phiImplies{\phi_2}{\phi})
     \end{mathpar}
-    \textcolor{gray}{
+    \textcolor{blue}{
         \begin{mathpar}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s} \in \setGStmt.~ 
         \dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}\\
@@ -126,7 +126,7 @@ From this multivalued function we can obtain a lifted version, following similar
     \implies 
     \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
     \end{displaymath}
-    \textcolor{gray}{
+    \textcolor{blue}{
         \begin{displaymath}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ 
         \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom{\dgrad{\vdash}}

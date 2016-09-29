@@ -9,7 +9,7 @@ We identify the following rules:
     In other words, switching to the gradual system may never “break the code”.
     A predicate $\grad{P}$ that is part of the gradual semantics must thus satisfy:
     \begin{mathpar}
-        \inferrule* [Right=GPredIntro]
+        \inferrule* [Right=\gradT PredIntro]
         {
             P(\phi_1, \phi_2)
         }
@@ -27,7 +27,7 @@ We identify the following rules:
     In order to satisfy the gradual guarantee, the semantics of \gvl must be immune to reduction of precision.
     A predicate $\grad{P}$ that is part of the gradual semantics must thus remain satisfied when reducing the precision of arguments
     \begin{mathpar}
-        \inferrule* [Right=GPredMon]
+        \inferrule* [Right=\gradT PredMon]
         {
             \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \\
             \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \\

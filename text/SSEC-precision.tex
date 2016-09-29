@@ -1,7 +1,7 @@
 Comparing gradual formulas (e.g. $\ttt{x = 3}$, $\withqmGen{\ttt{x = 3}}$, $\qm$) gives rise to a notion of “precision”.
 Intuitively, $\ttt{x = 3}$ is more precise than $\withqmGen{\ttt{x = 3}}$ which is more precise than $\qm$.
 Using concretization, we can formalize this intuition.
-\begin{definition}[Formula Precision]
+\begin{definition}[Formula Precision]\label{def:mpt}
     $$\grad{\phi_a} \sqsubseteq \grad{\phi_b}  \quad\iff\quad  \gamma(\grad{\phi_a}) \subseteq \gamma(\grad{\phi_b})$$
     Read: Formula $\grad{\phi_a}$ is “at least as precise as” $\grad{\phi_b}$.
 \end{definition}

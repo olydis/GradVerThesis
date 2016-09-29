@@ -42,6 +42,7 @@ Implementation strategies for all of the following predicates can be found in th
     \end{comment}
     
     \item[Gradual Variable Extraction]~\\
+    Let $\overline{x} \in \PP^{\setVar}$ be a set of variables.\\
     Let $\dgrad{P}_{\overline{x}} \subseteq \setGFormula \rightharpoonup \setGFormula$ be an optimal deterministic lifting of 
     \\$P_{\overline{x}}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phi_2} ~~\wedge~~ \FV(\phi_2) \cap \overline{x} = \emptyset ~~\wedge~~ \sfrmphi \phi_2$ 
     \\(found as component of \tset{HAlloc}, \tset{HVarAssign}, \tset{HReturn}, \tset{HCall} and in a sense \tset{HHold}: the equality between the free variable sets can be reformulated as an application of $P_{\overline{x}}$)

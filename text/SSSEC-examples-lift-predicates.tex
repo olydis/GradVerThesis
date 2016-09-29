@@ -3,7 +3,7 @@
     Let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
     Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined inductively as
     \begin{mathpar}
-        \inferrule* [Right=GImplStatic]
+        \inferrule* [Right=\gradT ImplStatic]
         {
             \phiImplies{\phi_1}{\phi_2}
         }
@@ -12,7 +12,7 @@
         }
     \end{mathpar}
     \begin{mathpar}
-        \inferrule* [Right=GImplGrad1]
+        \inferrule* [Right=\gradT ImplGrad1]
         {
             \phi \in \setFormulaA
         }
@@ -21,7 +21,7 @@
         }
     \end{mathpar}
     \begin{mathpar}
-        \inferrule* [Right=GImplGrad2]
+        \inferrule* [Right=\gradT ImplGrad2]
         {
             ~
         }
@@ -38,7 +38,7 @@
     \begin{description}
         \item[Case $\implies$]~\\
         \begin{description}
-            \item[Case \tset{GImplStatic}]
+            \item[Case \tset{\gradT ImplStatic}]
             \begin{align*}
             &\gphiImplies{\phi_1}{\phi_2}\\
             \implies
@@ -47,7 +47,7 @@
             &(\exists \phi_1' \in \gamma(\phi_1), \phi_2' \in \gamma(\phi_2).~ \phiImplies{\phi_1'}{\phi_2'})
             \end{align*}
             
-            \item[Case \tset{GImplGrad1}]
+            \item[Case \tset{\gradT ImplGrad1}]
             \begin{align*}
             &\gphiImplies{\qm}{\phi}\\
             \implies
@@ -58,7 +58,7 @@
             &(\exists \phi_1 \in \gamma(\qm), \phi_2 \in \gamma(\phi).~ \phiImplies{\phi_1}{\phi_2})
             \end{align*}
             
-            \item[Case \tset{GImplGrad2}]
+            \item[Case \tset{\gradT ImplGrad2}]
             \begin{align*}
             &\gamma(\grad{\phi}) \neq \emptyset ~\wedge~ \phiTrue \in \gamma(\qm)\\
             \implies
@@ -71,7 +71,7 @@
         Given: $\phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) \wedge \phiImplies{\phi_1}{\phi_2}$
         \begin{description}
             \item[Case $\grad{\phi_2} = \qm$]~\\
-            Apply $\tset{GImplGrad2}$.
+            Apply $\tset{\gradT ImplGrad2}$.
             
             \item[Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \qm$]
             \begin{align*}
@@ -81,10 +81,10 @@
             \implies
             &\phi_2 \in \setFormulaA
             \end{align*}
-            Apply $\tset{GImplGrad1}$.
+            Apply $\tset{\gradT ImplGrad1}$.
             
             \item[Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \phi_1$]~\\
-            Apply $\tset{GImplStatic}$.
+            Apply $\tset{\gradT ImplStatic}$.
         \end{description}
     \end{description}
 \end{proof}
