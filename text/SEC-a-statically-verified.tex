@@ -391,32 +391,9 @@ We believe that most imperative statically verified programming languages satisf
     
 \item[Soundness]~\\
     We expect that given static semantics are sound w.r.t. given dynamic semantics.
-    \begin{mathpar}
-        \inferrule* [Right=Progress]
-        {
-            ???
-        }
-        {
-            ???
-        }
-    \end{mathpar}
-    \begin{comment}
-        \inferrule* [Right=Progress]
-        {
-            \pi \in \wsp(s_1) \\ 
-        }
-        {
-            \exists n \in \setNat,\, s_2 \in \setStmt.~ \sssem^n(\pi) \in \setProgramState_{s_2}
-        }
-    \end{comment}
-    \begin{mathpar}
-        \inferrule* [Right=Preservation]
-        {
-            \thoare{~}{\phi_1}{s}{\phi_2}
-        }
-        {
-            \tHoare{~}{\phi_1}{s}{\phi_2}
-        }
-    \end{mathpar}
-    % progress blabla
+    This means that Hoare triples judged valid by the Hoare logic are also valid semantically:
+    \begin{definition}[Soundness]\label{def:snd}~\\
+        Let $\phi_1, \phi_2 \in \setFormula$ and $s \in \setStmt$.\\
+        If $\thoare{}{\phi_1}{s}{\phi_2}$ then $\tHoare{}{\phi_1}{s}{\phi_2}$
+    \end{definition}
 \end{description}

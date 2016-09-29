@@ -235,26 +235,21 @@ As mentioned before, this gradual partial function has desirable properties:
     
     \item[(c) Free Transitivity]~\\
     Furthermore, applying Hoare rules transitively induces no more additional runtime cost:
-    As described in \ref{ssec:gradual-soundness}, every judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ must be accompanied with the injection of a runtime check in order to guarantee preservation.
+    As described in \ref{ssec:gradual-soundness}, every judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ must be accompanied with the injection of a runtime check in order to guarantee soundness.
     Note that applying gradual Hoare logic to a sequence of statements (using \tset{\gradT HSec}) requires such judgment for every single statement, resulting in assertions between every pair of statements.
     
     Using a deterministic lifting transitively induces no such runtime cost since no judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ is made.
-    Only after applying lemma \ref{lem:det2grad} in the very end of verification, an assertion will be injected to ensure preservation for the overall judgment.
+    Only after applying lemma \ref{lem:det2grad} in the very end of verification, an assertion will be injected to ensure soundness for the overall judgment.
     
-    \item[(d) Preservation]~\\
-    Deterministic liftings are designed in a way that enables defining a stronger notion of preservation that does not rely on runtime assertions.
-    \begin{mathpar}
-        \inferrule* [Right=\dgradT Preservation]
-        {
-            \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-        }
-        {
-            \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-        }
-    \end{mathpar}
+    \item[(d) Soundness]~\\
+    Deterministic liftings are designed in a way that enables defining a stronger notion of soundness that does not rely on runtime assertions.
+    \begin{definition}[\dgradT Soundness]\label{def:dgsnd}~\\
+        Let $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ and $\grad{s} \in \setGStmt$.\\
+        If $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ then $\gtHoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
+    \end{definition}
     Note that this rule is no longer a tautology, compliance also depends on the gradual dynamic semantics of \gvl.
     
-    \begin{example}{\tset{\dgradT Preservation} Counterexample}
+    \begin{example}{\tset{\dgradT Soundness} Counterexample}
         \label{ex:cex-gdpres}~\\
         Assume that \svl contains an assertion statement with corresponding Hoare rule.
         \begin{mathpar}
@@ -282,7 +277,7 @@ As mentioned before, this gradual partial function has desirable properties:
         According to definition \ref{def:valid-hoare-triple}, we can deduce from $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ that $\evalgphiGen{\grad{\pi'}}{\withqmGen{\phiEq{x}{2}}}$.
         No such $\grad{\pi'}$ exists.
         
-        On the other hand, a small-step semantics that is stuck or throws an exception if the assertion is violated would restore preservation.
+        On the other hand, a small-step semantics that is stuck or throws an exception if the assertion is violated would restore soundness.
         In general, small-step semantics that are rely on guarantees given by static semantics may turn out too weak after gradualization of the static semantics.
     \end{example}
 \end{description}
@@ -291,7 +286,7 @@ As mentioned before, this gradual partial function has desirable properties:
 \begin{lemma}[Reduced Runtime Checks]
     \label{lemma:runtime-checks-reduced}~\\
     Assume that $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2'}}$ holds for some $\grad{\phi_1}, \grad{s}, \grad{\phi_2'}$.
-    If \tset{\dgradT Preservation} holds, the runtime check $\sAssert{$\grad{\phi_2}$}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{\gradT Preservation'}) can be simplified or omitted.
+    If \tset{\dgradT Soundness} holds, the runtime check $\sAssert{$\grad{\phi_2}$}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{\gradT Soundness}) can be simplified or omitted.
     
     Specifically, it is sufficient to insert a runtime check (predicate) $P \subseteq \setProgramState$ if
     \begin{gather*}
@@ -309,7 +304,7 @@ As mentioned before, this gradual partial function has desirable properties:
 \end{lemma}
 \begin{proof}~\\
     The restriction $\envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
-    $\grad{\phi_2'}$ is ensured by \tset{\dgradT Preservation}, $P$ is explicitly checked.
+    $\grad{\phi_2'}$ is ensured by \tset{\dgradT Soundness}, $P$ is explicitly checked.
     
     On the other hand, $\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P$ ensures that $P$ is not stricter than necessary.
     Assume there exists a program state $\pi \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\pi \not \in (\envs{\grad{\phi_2'}} \cap P$.

@@ -30,7 +30,7 @@ and
 \gthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}
 \end{displaymath}
 
-As established in section \ref{ssec:gradual-soundness}, runtime assertions have to be injected whenever such a judgment is made, in order to guarantee preservation.
+As established in section \ref{ssec:gradual-soundness}, runtime assertions have to be injected whenever such a judgment is made, in order to guarantee soundness.
 The resulting program, as executed by small-step semantics looks as follows.
 \begin{lstlisting}
 int getFourA(int i)

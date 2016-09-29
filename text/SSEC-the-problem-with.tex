@@ -1,5 +1,5 @@
 %% Intro
-%As seen in section \ref{ssec:gradual-soundness}, the lifted Hoare predicate in general requires an additional runtime assertion to guarantee preservation.
+%As seen in section \ref{ssec:gradual-soundness}, the lifted Hoare predicate in general requires an additional runtime assertion to guarantee soundness.
 In case the Hoare rules of \svl are given inductively, we can make use of the rules for composite, disjunctive and conjunctive predicate lifting (see section \ref{sssec:examples-lift-predicates}).
 The rules allow us to soundly lift each individual inductive rule in order to end up with a sound lifting of the overall predicate.
 
@@ -111,7 +111,7 @@ There are a variety of valid instantiations for both variables:
     The implication holds (the knowledge about \ttt{x} is dropped), and $$\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ holds since $$\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ does.
     
     % REMOVE???
-    This instantiation illustrates the requirement of runtime checks to ensure preservation as described in section \ref{ssec:gradual-soundness}.
+    This instantiation illustrates the requirement of runtime checks to ensure soundness as described in section \ref{ssec:gradual-soundness}.
     The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ right after the assignment.
     Unfortunately, this assertion alters runtime behavior:
     Code that would have never thrown an exception when evaluated with the runtime of \svl might now throw an exception.

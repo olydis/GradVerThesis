@@ -4,25 +4,10 @@ Furthermore, function lifting is applied to the small-step semantics of \svl, re
 These semantics will by construction be compatible with the semantics of \svl and comply with the gradual guarantee.
 
 Note however that there is an additional requirement concerning the correct interplay between Hoare logic and small-step semantics, namely soundness.
-We define gradual soundness of \gvl as follows:
-\begin{mathpar}
-    \inferrule* [Right=\gradT Progress]
-    {
-        ???
-    }
-    {
-        ???
-    }
-\end{mathpar}
-\begin{mathpar}
-    \inferrule* [Right=\gradT Preservation]
-    {
-        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-    {
-        \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-\end{mathpar}
+\begin{definition}[\gradT Soundness (First Iteration)]\label{def:gsnd-i}~\\
+    Let $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ and $\grad{s} \in \setGStmt$.\\
+    If $\gthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ then $\gtHoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
+\end{definition}
 
 %% valid gradual Hoare triples
 \begin{definition}[Validity of Gradual Hoare Triples]~\\
@@ -54,14 +39,14 @@ Recall that gradual lifting was introduced in order to comply with the expectati
 The validity predicate $\gtHoare {} {\cdot} {\cdot} {\cdot}$ on the other hand is defined semantically, is invisible to the programmer and therefore not affected by the logic behind gradual lifting.
 
 %% clash
-Unfortunately, the different concepts collide in the gradual preservation condition.
+Unfortunately, the different concepts collide in gradual soundness (see definition \ref{def:gsnd-i}).
 On the one hand gradual Hoare logic must comply with the gradual guarantee and thus verify $\gthoare{~}{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$.
-On the other hand $\gtHoare{~}{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$ does not hold since the Hoare triple is invalid.
-Gradual preservation is therefore unsatisfiable if formalized as above.
+On the other hand $\gtHoare{~}{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$ does not hold since the Hoare triple is not valid semantically.
+Gradual soundness is therefore unsatisfiable if formalized as above.
 
 %% moral: we need dynamic checks
 This conflict is nothing but a reminder that gradualization is not for free, but may require runtime checks in order to be sound.
-With this in mind we can reiterate our approach for preservation.
+With this in mind we can reiterate our definition of soundness.
 
 We extend the set of final states $\setGProgramStateFin$ with a designated exceptional state $\pi_{EX}$, representing failure of a runtime check.
 Furthermore we introduce an assertion statement $\sAssert{$\grad{\phi}$}$ (if not already available) that throws an exception, i.e. steps to $\pi_{EX}$ should the condition not hold.
@@ -87,22 +72,17 @@ Furthermore we introduce an assertion statement $\sAssert{$\grad{\phi}$}$ (if no
     \end{mathpar}
 \end{example}
 
-Preservation of can then be rewritten as
-\begin{mathpar}
-    \inferrule* [Right=\gradT Preservation']
-    {
-        \gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-    {
-        \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}
-    }
-\end{mathpar}
-Intuitively, this definition states that an assertion is inserted during compilation whenever gradual Hoare logic is used to derive the premise.
+Soundness can then be redefined as
+\begin{definition}[\gradT Soundness]\label{def:gsnd}~\\
+    Let $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ and $\grad{s} \in \setGStmt$.\\
+    If $\gthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ then $\gtHoare{}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$
+\end{definition}
+Intuitively, this definition states that an assertion is inserted during verification, whenever gradual Hoare logic is used.
 However, $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$ is a tautology.
 
-\begin{lemma}[\tset{\gradT Preservation'} Tautology]
+\begin{lemma}[\tset{\gradT Soundness} Tautology]
     \label{lemma:tauto}~\\
-    \tset{\gradT Preservation'} is a tautology. 
+    \tset{\gradT Soundness} is a tautology. 
 \end{lemma}
 \begin{proof}~\\
     Goal: $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$.
@@ -130,7 +110,7 @@ However, $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}
     Then \ref{eq:ttemp1g} follows by definition of the assertion statement (see example \ref{ex:ss-ra} for an illustration).
 \end{proof}
 
-That \tset{\gradT Preservation'} is a tautology makes sense, realizing that (without demanding any degree of optimality) $\gthoare{}{\cdot}{\cdot}{\cdot}$ carries zero information.
+That \tset{\gradT Soundness} is a tautology makes sense, realizing that (without demanding any degree of optimality) $\gthoare{}{\cdot}{\cdot}{\cdot}$ carries zero information.
 We will address this issue later (section \ref{ssec:the-deterministic-approach}), also rethinking the way we obtain $\gthoare{}{\cdot}{\cdot}{\cdot}$ in the first place.
 
 Note that there is room for an optimized implementation of the injected assertions.

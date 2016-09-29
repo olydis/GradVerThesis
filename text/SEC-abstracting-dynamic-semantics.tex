@@ -9,24 +9,15 @@ So we artificially make conclusion true by demanding that lifting is total.
 This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
 \end{comment}
 
-%% preservation is tautology
+%% soundness is tautology
 
-%% preservationX
-However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of preservation introduced in section \ref{ssec:the-deterministic-approach}:
-\begin{mathpar}
-    \inferrule* [Right=\dgradT Preservation]
-    {
-        \dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-    {
-        \gtHoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}
-    }
-\end{mathpar}
+%% soundnessX
+However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of soundness introduced in section \ref{ssec:the-deterministic-approach} (definition \ref{def:dgsnd}).
 This stronger notion allows considering return values of the deterministic lifting as static knowledge.
 As illustrated in section \ref{sssec:gradual-verification-illustrated}, such static knowledge can be used for optimizations.
 
-To summarize, \tset{\gradT Preservation'} is sufficient for soundness of the gradual system whereas \tset{\dgradT Preservation} is valuable for optimizations.
-In the remainder of this section we will thus determine sufficient criteria for \tset{\dgradT Preservation}.
+% To summarize, \tset{\gradT Soundness} is sufficient for a gradual system whereas \tset{\dgradT Soundness} is valuable for optimizations.
+In the remainder of this section we will thus determine sufficient criteria for \tset{\dgradT Soundness}.
 
 
 \begin{comment}
