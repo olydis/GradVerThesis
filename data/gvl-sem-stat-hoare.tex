@@ -30,14 +30,14 @@
     
     \inferrule* [Right=\dgradT HVarAssign]
     {
-        \gphiImplies{\grad{\phi}} {\accFor {{e}}}\\
-        {\wo {\grad{\phi}} {x}} = \grad{\phi'}\\
+        \gphiImpliesEv{\grad{\phi}} {\accFor {{e}}} {\grad{\phi'}}\\
+        {\wo {\grad{\phi'}} {x}} = \grad{\phi''}\\
         {x} \not \in {\FV({e})} \\
         \sType {\Gamma} {\ex{${x}$}} {T} \\
         \sType {\Gamma} {e} {T}
     }
     {
-        \dgthoare {\Gamma} {\grad{\phi}} {{\sVarAssign {${x}$} {${e}$}}} {\gphiCons{$\grad{\phi'}$}{${\ensuremath{{\phiEq {${\ex{${x}$}}$} {${e}$}}}}$}}
+        \dgthoare {\Gamma} {\grad{\phi}} {{\sVarAssign {${x}$} {${e}$}}} {\gphiCons{$\grad{\phi''}$}{${\ensuremath{{\phiEq {${\ex{${x}$}}$} {${e}$}}}}$}}
     }
     
     \inferrule* [Right=\dgradT HReturn]
@@ -76,7 +76,7 @@
     
     \inferrule* [Right=\dgradT HRelease]
     {
-        \gphiImpliesEv{\grad{\phi}}{\phi_r}{\grad{\phi'}}\\
+        %\gphiImpliesEv{\grad{\phi}}{\phi_r}{\grad{\phi'}}\\
         {\wo {\grad{\phi'}} {\phi_r}} = \grad{\phi''}
     }
     {

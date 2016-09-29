@@ -1,0 +1,55 @@
+
+\begin{lemma}[Optimal Lifting of Evaluation]~\\
+    \label{ex:idf-opt-lift-evalphi}
+    Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
+    \begin{mathpar}
+        \inferrule* [Right=\gradT EvalStatic]
+        {
+            \evalphiGen{\pi}{\phi}
+        }
+        {
+            \evalgphiGen{\pi}{\phi}
+        }
+    \end{mathpar}
+    \begin{mathpar}
+        \inferrule* [Right=\gradT EvalGrad]
+        {
+            \evalphiGen{\pi}{\phi}\\
+            A_s \sfrmphi \phi\\
+            \forall \langle e, f \rangle \in A_s.~ \evalphiGen{\pi}{\phiAcc{$e$}{$f$}}
+        }
+        {
+            \evalgphiGen{\pi}{\withqm{\phi}}
+        }
+    \end{mathpar}
+    
+    Then $~\evalgphiGen{\cdot}{\cdot}~$ is an optimal lifting of $~\evalphiGen{\cdot}{\cdot}~$.
+    Note the additional effort necessary in rule $\tset{\gradT EvalGrad}$ compared to the non-IDF version in lemma \ref{ex:opt-lift-evalphi}.
+    The additional premises make sure that there exists a way to frame $\phi$ with the access provided by $\pi$.
+\end{lemma}
+
+\begin{lemma}[Optimal Lifting of Self-Framing]~\\
+    \label{ex:idf-opt-lift-sfrmphi}
+    Let $~~\sfrmgphi \cdot~ \subseteq \setGFormula$ be defined inductively as
+    \begin{mathpar}
+        \inferrule* [Right=\gradT SfrmStatic]
+        {
+            \sfrmphi \phi
+        }
+        {
+            \sfrmgphi \phi
+        }
+    \end{mathpar}
+    \begin{mathpar}
+        \inferrule* [Right=\gradT SfrmGrad]
+        {
+            \evalphiGen{\pi}{\phi}
+        }
+        {
+            \sfrmgphi \withqm{\phi}
+        }
+    \end{mathpar}
+    
+    Then $~\sfrmgphi \cdot~$ is an optimal lifting of $~\sfrmphi \cdot~$.
+    The premise of \tset{\gradT SfrmGrad} makes sure that the concretization of $\withqm{\phi}$ is not empty.
+\end{lemma}

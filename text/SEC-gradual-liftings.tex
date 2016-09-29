@@ -1,56 +1,91 @@
-With a concretization $\gamma$ at hand, we can use gradual lifting as introduced in section \ref{sec:lifting-predicates-and} to derive gradual versions of some commonly used predicates.
+With a concretization $\gamma$ at hand, we can use gradual lifting (see section \ref{sec:lifting-predicates-and}) to derive gradual versions of some commonly used predicates.
+Furthermore, we deterministically lift (see section \ref{ssec:the-deterministic-approach}) predicates that appear as components in the Hoare logic (see figure \ref{fig:svl-sem-stat-hoare}).
 
-\begin{lemma}[Optimal Lifting of Evaluation]~\\
-    \label{ex:idf-opt-lift-evalphi}
-    Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
-    \begin{mathpar}
-        \inferrule* [Right=\gradT EvalStatic]
-        {
-            \evalphiGen{\pi}{\phi}
-        }
-        {
-            \evalgphiGen{\pi}{\phi}
-        }
-    \end{mathpar}
-    \begin{mathpar}
-        \inferrule* [Right=\gradT EvalGrad]
-        {
-            \evalphiGen{\pi}{\phi}\\
-            A_s \sfrmphi \phi\\
-            \forall \langle e, f \rangle \in A_s.~ \evalphiGen{\pi}{\phiAcc{e}{f}}
-        }
-        {
-            \evalgphiGen{\pi}{\withqm{\phi}}
-        }
-    \end{mathpar}
-    
-    Then $~\evalgphiGen{\cdot}{\cdot}~$ is an optimal lifting of $~\evalphiGen{\cdot}{\cdot}~$.
-    Note the additional effort necessary in rule $\tset{\gradT EvalGrad}$ compared to the non-IDF version in lemma \ref{ex:opt-lift-evalphi}.
-    The additional premises make sure that there exists a way to frame $\phi$ with the access provided by $\pi$.
-\end{lemma}
+Implementation strategies for all of the following predicates can be found in the appendix \ref{app:impl-strat}.
 
-\begin{lemma}[Optimal Lifting of Self-Framing]~\\
-    \label{ex:idf-opt-lift-sfrmphi}
-    Let $~~\sfrmgphi \cdot~ \subseteq \setGFormula$ be defined inductively as
-    \begin{mathpar}
-        \inferrule* [Right=\gradT SfrmStatic]
-        {
-            \sfrmphi \phi
-        }
-        {
-            \sfrmgphi \phi
-        }
-    \end{mathpar}
-    \begin{mathpar}
-        \inferrule* [Right=\gradT SfrmGrad]
-        {
-            \evalphiGen{\pi}{\phi}
-        }
-        {
-            \sfrmgphi \withqm{\phi}
-        }
-    \end{mathpar}
+\begin{itemize}
+    \item 
+    Let $~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be an optimal predicate lifting of $\evalphiGen{\cdot}{\cdot}$ 
+    \\(defined in section \ref{ssec:formula-semantics})
     
-    Then $~\sfrmgphi \cdot~$ is an optimal lifting of $~\sfrmphi \cdot~$.
-    The premise of \tset{\gradT SfrmGrad} makes sure that the concretization of $\withqm{\phi}$ is not empty.
-\end{lemma}
+    \item 
+    Let $~\sfrmgphi \cdot~ \subseteq \setGFormula$ be an optimal predicate lifting of $\sfrmphi \cdot$ 
+    \\(defined in section \ref{ssec:framing})
+    
+    \item 
+    Let $\dgrad{P}_{\phi_t} \subseteq \setGFormula \rightharpoonup \setGFormula$ be an optimal deterministic lifting of 
+    \\$P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phi_t} \wedge \phi_1 = \phi_2$ 
+    \\(shape of \tset{HAssert}, found as component of \tset{HVarAssign} and \tset{HHold})
+    \\We define a more intuitive notation that matches the original static predicate:
+    \begin{displaymath}
+    \gphiImpliesEv{\grad{\phi_1}}{\phi_t}{\grad{\phi_2}} ~\defiff~ \dgrad{P}_{\phi_t}(\grad{\phi_1}) = \grad{\phi_2}
+    \end{displaymath}
+    
+    \item 
+    Let $\dgrad{P} \subseteq \setGFormula \times \setGFormula \rightharpoonup \setGFormula$ be an optimal deterministic lifting of 
+    \\$P(\phi_1, \phi_t, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~\wedge \sfrmphi \phi_2$ 
+    \\(shape of \tset{HRelease}, found as component of \tset{HFieldAssign}, \tset{HCall} and \tset{HHold})
+    \\We define a more intuitive notation that reflects the dual nature with “\ttt{*}”:
+    \begin{displaymath}
+    \wo{\grad{\phi}}{\grad{\phi_t}} ~\defeq~ \dgrad{P}(\grad{\phi}, \grad{\phi_t})
+    \end{displaymath}
+\end{itemize}
+
+
+
+\begin{description}
+    \item[Implication of fixed static formula: $P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phi_t} \wedge \phi_1 = \phi_2$]~\\
+    This predicate is not only a component of some rules but also the overall shape of \tset{HAssert}.
+    \begin{lemma}~\\
+        Let $\dgrad{P}_{\phi_t} : \setGFormula \rightharpoonup \setGFormula$ be defined as
+        \begin{alignat*}{2}
+        & \dgrad{P}_{\phi_t}(\phi)          & &= \phi  \quad\text{if } \phiImplies{\phi}{\phi_t} \\
+        & \dgrad{P}_{\phi_t}(\withqm{\phi}) & &= \withqm{\phiCons{\norms{\phi}}{\norms{\phi_t}}}
+        \end{alignat*}
+        Then $\dgrad{P}_{\phi_t}$ is an optimal deterministic lifting of $P_{\phi_t}$.
+    \end{lemma}
+    We define a more intuitive notation that matches original static predicate:
+    \begin{displaymath}
+    \gphiImpliesEv{\grad{\phi_1}}{\phi_t}{\grad{\phi_2}} ~\defiff~ \dgrad{P}_{\phi_t}(\grad{\phi_1}) = \grad{\phi_2}
+    \end{displaymath}
+    
+    \item[Formula extraction: $P_{\phi_t}(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~~\wedge~~ \sfrmphi \phi_2$]~\\
+    This predicate is a component of \tset{HFieldAssign}, \tset{HCall}, \tset{HHold} and also is the overall shape of \tset{HRelease}.
+    \begin{lemma}~\\
+        Let $\dgrad{P}_{\phi_t} : \setGFormula \rightharpoonup \setGFormula$ be defined as
+        \begin{alignat*}{2}
+        & \dgrad{P}_{\phi_t}(\phi_1)          & &= \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~\} \\
+        & \dgrad{P}_{\phi_t}(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_{\phi_t}(\phi_1)}
+        \end{alignat*}
+        Then $\dgrad{P}_{\phi_t}$ is well-defined and an optimal deterministic lifting of $P_{\phi_t}$.
+    \end{lemma}
+    We define a more intuitive notation that reflects the dual nature with \ttt{*}:
+    \begin{displaymath}
+    \wo{\grad{\phi}}{\phi_t} ~\defeq~ \dgrad{P}_{\phi_t}(\grad{\phi})
+    \end{displaymath}
+    We extend the domain of $\wo{}{}$ to deal with gradual parameters:
+    \begin{displaymath}
+    \wo{\grad{\phi}}{(\withqm{\phi_t})} ~\defeq~ \wo{\grad{\phi}}{\static{$\grad{\phi}$}}
+    \end{displaymath}
+    Formally, this extension optimally lifts the function w.r.t. its second parameter.
+    
+    \item[Variable extraction: $P_x(\phi_1, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phi_2} ~~\wedge~~ x \not \in \FV(\phi_2) ~~\wedge~~ \sfrmphi \phi_2$]~\\
+    This predicate is a component of \tset{HAlloc}, \tset{HVarAssign}, \tset{HReturn}, \tset{HCall} and in a sense \tset{HHold} (the equality between the free variable sets can be reformulated as repeated application of $P_x$).
+    \begin{lemma}~\\
+        Let $\dgrad{P}_x : \setGFormula \rightharpoonup \setGFormula$ be defined as
+        \begin{alignat*}{2}
+        & \dgrad{P}_x(\phi_1)          & &= \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phi_2} \wedge x \not \in \FV(\phi_2) ~\} \\
+        & \dgrad{P}_x(\withqm{\phi_1}) & &= \withqm{\dgrad{P}_x(\phi_1)}
+        \end{alignat*}
+        Then $\dgrad{P}_x$ is well-defined and an optimal deterministic lifting of $P_x$.
+    \end{lemma}
+    We extend the domain of the extraction function $\wo{}{}$ to deal with variables:
+    \begin{alignat*}{2}
+    & \wo{\grad{\phi}}{x} ~\defeq~ \dgrad{P}_x(\grad{\phi}) & ~
+    \end{alignat*}
+    We further extend the function to deal with sets of variables element-wise
+    \begin{alignat*}{2}
+    & \wo{\grad{\phi}}{\emptyset}        & & ~\defeq~ \grad{\phi}                   \\
+    & \wo{\grad{\phi}}{(\{ x \} \cup X)} & & ~\defeq~ \wo{(\wo{\grad{\phi}}{x})}{X}
+    \end{alignat*}
+\end{description}
