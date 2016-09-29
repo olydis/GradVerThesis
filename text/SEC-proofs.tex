@@ -1,2 +1,1155 @@
 This section contains proofs for most lemmas and theorems mentioned in this work.
 
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:po-form}]
+    Follows from definitions \ref{def:form-implication}, \ref{def:form-eq} and the fact that $\subseteq$ induces a partial order.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lem:comp-tHoare}]
+    We are given 
+    \begin{displaymath}
+    \evalphiGen{\pi_1}{\phi_1}
+    \end{displaymath}
+    and
+    \begin{displaymath}
+    \sstepConsume{\sSeq{$s_1$}{$s_2$}}{\pi_1}{\pi_3}
+    \end{displaymath}
+    for some $\pi_1, \pi_3 \in \setProgramState$.
+    
+    According to assumption \ref{frm:assume-seq-ss} this implies
+    \begin{displaymath}
+    \sstepConsume{s_1}{\pi_1}{\pi_2} \wedge \sstepConsume{s_2}{\pi_2}{\pi_3}
+    \end{displaymath}
+    for some $\pi_2 \in \setProgramState$.
+    Using the assumptions
+    \begin{displaymath}
+    \tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}
+    \end{displaymath}
+    we can deduce $\evalphiGen{\pi_3}{\phi_3}$.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:ol-impl}]~\\
+    Goal:
+    $$\gphiImplies{\grad{\phi_1}}{\grad{\phi_2}} \iff \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2}$$
+    
+    \begin{description}
+        \item[Case $\implies$]~\\
+        \begin{description}
+            \item[Case \tset{\gradT ImplStatic}]
+            \begin{align*}
+            &\gphiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &\phiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &(\exists \phi_1' \in \gamma(\phi_1), \phi_2' \in \gamma(\phi_2).~ \phiImplies{\phi_1'}{\phi_2'})
+            \end{align*}
+            
+            \item[Case \tset{\gradT ImplGrad1}]
+            \begin{align*}
+            &\gphiImplies{\qm}{\phi}\\
+            \implies
+            &\phi \in \setFormulaA\\
+            \implies
+            &(\exists \phi_1 \in \setFormulaA.~ \phiImplies{\phi_1}{\phi})\\
+            \implies
+            &(\exists \phi_1 \in \gamma(\qm), \phi_2 \in \gamma(\phi).~ \phiImplies{\phi_1}{\phi_2})
+            \end{align*}
+            
+            \item[Case \tset{\gradT ImplGrad2}]
+            \begin{align*}
+            &\gamma(\grad{\phi}) \neq \emptyset ~\wedge~ \phiTrue \in \gamma(\qm)\\
+            \implies
+            &(\exists \phi_1 \in \gamma(\grad{\phi}).~ \phiImplies{\phi_1}{\phiTrue}) ~\wedge~ \phiTrue \in \gamma(\qm)\\
+            \implies
+            &(\exists \phi_1 \in \gamma(\grad{\phi}), \phi_2 \in \gamma(\qm).~ \phiImplies{\phi_1}{\phi_2})
+            \end{align*}
+        \end{description}
+        \item[Case $\impliedby$]~\\
+        Given: $\phi_1 \in \gamma(\grad{\phi_1}) \wedge \phi_2 \in \gamma(\grad{\phi_2}) \wedge \phiImplies{\phi_1}{\phi_2}$
+        \begin{description}
+            \item[Case $\grad{\phi_2} = \qm$]~\\
+            Apply $\tset{\gradT ImplGrad2}$.
+            
+            \item[Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \qm$]
+            \begin{align*}
+            &\phi_1 \in \gamma(\qm) \wedge \phiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &\phi_1 \in \setFormulaA \wedge \phiImplies{\phi_1}{\phi_2}\\
+            \implies
+            &\phi_2 \in \setFormulaA
+            \end{align*}
+            Apply $\tset{\gradT ImplGrad1}$.
+            
+            \item[Case $\grad{\phi_2} = \phi_2 \wedge \grad{\phi_1} = \phi_1$]~\\
+            Apply $\tset{\gradT ImplStatic}$.
+        \end{description}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{ex:opt-lift-evalphi}]~\\
+    Goal:
+    $$\evalgphiGen{\pi}{\grad{\phi}} \iff \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen{\pi}{\phi}$$
+    
+    \begin{description}
+        \item[Case $\implies$]~\\
+        \begin{description}
+            \item[Case \tset{\gradT EvalStatic}]
+            \begin{align*}
+            &\evalgphiGen{\pi}{\phi}\\
+            \implies
+            &\evalphiGen{\pi}{\phi}\\
+            \implies
+            &(\exists \phi' \in \gamma(\phi).~ \evalphiGen{\pi}{\phi'})
+            \end{align*}
+            
+            \item[Case \tset{\gradT EvalGrad}]
+            \begin{align*}
+            &\evalgphiGen{\pi}{\withqmGen{\phi}}\\
+            \implies
+            &\evalphiGen{\pi}{\phi}\\
+            \implies
+            &(\exists \phi' \in \gamma(\withqmGen{\phi}).~ \evalphiGen{\pi}{\phi'})
+            \end{align*}
+            
+        \end{description}
+        \item[Case $\impliedby$]~\\
+        Given: $\phi' \in \gamma(\grad{\phi}) \wedge \evalphiGen{\pi}{\phi'}$
+        \begin{description}
+            \item[Case $\grad{\phi} = \withqmGen{\phi}$] ~\\
+            It follows from definition \ref{def:gamma-bounded-unk} that $\phiImplies{\phi'}{\phi}$ and thus $\evalphiGen{\pi}{\phi}$.
+            Apply $\tset{\gradT EvalGrad}$.
+            \item[Case $\grad{\phi} = \phi$] ~\\
+            It follows that $\phi = \phi'$.
+            Apply $\tset{\gradT EvalStatic}$.
+        \end{description}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:pred-lift-comp}]
+    \begin{description}
+        \item[Introduction] 
+        \begin{align*}
+        &(P \circ Q)(\phi_1, \phi_3)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\exists \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \wedge Q(\phi_2, \phi_3))\\
+        \overset{Introduction}{~\quad\quad\implies\quad\quad~}
+        &(\exists \phi_2 \in \setFormula.~ \grad{P}(\phi_1, \phi_2) \wedge \grad{Q}(\phi_2, \phi_3))\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \circ \grad{Q})(\phi_1, \phi_3)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \circ Q)}(\phi_1, \phi_3)\\
+        \end{align*}
+        
+        \item[Monotonicity] 
+        \begin{align*}
+        &\grad{(P \circ Q)}(\grad{\phi_1}, \grad{\phi_3}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \circ \grad{Q})(\grad{\phi_1}, \grad{\phi_3}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\exists \grad{\phi_2} \in \setGFormula.~ \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \wedge \grad{Q}(\grad{\phi_2}, \grad{\phi_3})) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_3} \mpt \grad{\phi_3'}\\
+        \overset{Monotonicity}{~\quad\quad\implies\quad\quad~}
+        &(\exists \grad{\phi_2} \in \setGFormula.~ \grad{P}(\grad{\phi_1'}, \grad{\phi_2}) \wedge \grad{Q}(\grad{\phi_2}, \grad{\phi_3'}))\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \circ \grad{Q})(\grad{\phi_1'}, \grad{\phi_3'})\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \circ Q)}(\grad{\phi_1'}, \grad{\phi_3'})\\
+        \end{align*}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:sl-conj-pred}]
+    \begin{description}
+        \item[Introduction] 
+        \begin{align*}
+        &(P \wedge Q)(\phi)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &P(\phi) ~\wedge~ Q(\phi)\\
+        \overset{Introduction}{~\quad\quad\implies\quad\quad~}
+        &\grad{P}(\phi) ~\wedge~ \grad{Q}(\phi)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} ~\wedge~ \grad{Q})(\phi)\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \wedge Q)}(\phi)\\
+        \end{align*}
+        
+        \item[Monotonicity] 
+        \begin{align*}
+        &(\grad{P} \wedge \grad{Q})(\grad{\phi}) ~\wedge~ \grad{\phi} \mpt \grad{\phi'}\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{P}(\grad{\phi}) ~\wedge~ \grad{Q}(\grad{\phi}) ~\wedge~ \grad{\phi} \mpt \grad{\phi'}\\
+        \overset{Monotonicity}{~\quad\quad\implies\quad\quad~}
+        &\grad{P}(\grad{\phi'}) ~\wedge~ \grad{Q}(\grad{\phi'})\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &(\grad{P} \wedge \grad{Q})(\grad{\phi'})\\
+        \overset{Definition}{~\quad\quad\implies\quad\quad~}
+        &\grad{(P \wedge Q)}(\grad{\phi'})\\
+        \end{align*}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:sl-disj-pred}]
+    \begin{align*}
+    &\grad{(P \vee Q)}(\grad{\phi})\\
+    \overset{Definition}{~\quad\quad\iff\quad\quad~}
+    &(\grad{P} \vee \grad{Q})(\grad{\phi})\\
+    \overset{Definition}{~\quad\quad\iff\quad\quad~}
+    &\grad{P}(\grad{\phi}) \vee \grad{Q}(\grad{\phi})\\
+    \overset{AGT Def.}{~\quad\quad\iff\quad\quad~}
+    &(\exists \phi \in \gamma(\grad{\phi}).~ P(\phi)) \vee (\exists \phi \in \gamma(\grad{\phi}).~ Q(\phi))\\
+    \overset{}{~\quad\quad\iff\quad\quad~}
+    &(\exists \phi \in \gamma(\grad{\phi}).~ P(\phi) ~\vee~ Q(\phi))\\
+    \overset{Definition}{~\quad\quad\iff\quad\quad~}
+    &(\exists \phi \in \gamma(\grad{\phi}).~ (P \vee Q)(\phi))
+    \end{align*}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:eq-fun-lift-agt}]~
+    \begin{description}
+        \item[Adjoint Equation] 
+        \begin{align*}
+        \alpha(\overline{f}(\gamma(\phi))) = f(\phi)
+        \end{align*}
+        Proof:
+        
+        $\alpha(\overline{f}(\gamma(\phi)))$ defined, since $\{ \overline{f} \}$-partial Galois connection, i.e.
+        \begin{align}
+        \label{frm:pgc-ass}
+        \alpha(\overline{f}(\gamma(\phi))) = \alpha(\{ f(\phi) \}) = \grad{\phi}
+        \end{align}
+        Applying rule 1 of partial Galois connections to \ref{frm:pgc-ass}
+        \begin{align}
+        \label{frm:pgc-ass1}
+        &\{~ f(\phi) ~\} \subseteq \gamma(\grad{\phi})\\
+        \end{align}
+        Applying rule 2 of partial Galois connections to \ref{frm:pgc-ass}, using $\{~ f(\phi) ~\} \subseteq \gamma(f(\phi))$
+        \begin{align}
+        \label{frm:pgc-ass2}
+        & \grad{\phi} \sqsubseteq f(\phi)
+        \end{align}
+        
+        Combining \ref{frm:pgc-ass1} and \ref{frm:pgc-ass2}
+        \begin{align*}
+        &\{~ f(\phi) ~\} \subseteq \gamma(\grad{\phi}) \subseteq \gamma(f(\phi))\\
+        \implies
+        & \gamma(\grad{\phi}) = \{~ f(\phi) ~\}\\
+        \implies
+        & \grad{\phi} = f(\phi)
+        \end{align*}
+        
+        \item[Soundness]~
+        \begin{description}
+            \item[Introduction] 
+            \begin{align*}
+            &\grad{f}(\phi)\\
+            =~
+            &\alpha(\overline{f}(\gamma(\phi)))\\
+            =~ 
+            &f(\phi)
+            \end{align*}
+            
+            \item[Monotonicity]~\\ 
+            We assume $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ with $\grad{\phi_1} \mpt \grad{\phi_2}$
+            \begin{align*}
+            &\grad{\phi_1} \mpt \grad{\phi_2}\\
+            \implies
+            &\gamma(\grad{\phi_1}) \subseteq \gamma(\grad{\phi_2})\\
+            \implies
+            &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \overline{f}(\gamma(\grad{\phi_2}))\\
+            \implies % closure
+            &\overline{f}(\gamma(\grad{\phi_1})) \subseteq \gamma(\alpha(\overline{f}(\gamma(\grad{\phi_2}))))\\
+            \implies % rule 2
+            &\alpha(\overline{f}(\gamma(\grad{\phi_1}))) \mpt \alpha(\overline{f}(\gamma(\grad{\phi_2})))\\
+            \end{align*}
+        \end{description}
+        
+        \item[Optimality]~\\
+        
+        Proof by contradiction.
+        Assume there exists a sound lifting $\grad{f'}$ such that $\grad{f'}(\grad{\phi}) \sqsubset \grad{f}(\grad{\phi})$ for some $\grad{\phi} \in \setGFormula$.
+        Using the introduction rule:
+        \begin{align*}
+        &\forall \phi \in \setFormula.~ f(\phi) \mpt \grad{f'}(\phi)
+        \end{align*}
+        Using the monotonicity rule:
+        \begin{align*}
+        &\forall \phi \in \gamma(\grad{\phi}).~ \grad{f'}(\phi) \mpt \grad{f'}(\grad{\phi})
+        \end{align*}
+        Transitivity:
+        \begin{align*}
+        &\forall \phi \in \gamma(\grad{\phi}).~ f(\phi) \mpt \grad{f'}(\grad{\phi})\\
+        \implies
+        &\forall \phi \in \gamma(\grad{\phi}).~ f(\phi) \in \gamma(\grad{f'}(\grad{\phi}))\\
+        \implies
+        &\overline{f}(\gamma(\grad{\phi})) \subseteq \gamma(\grad{f'}(\grad{\phi}))\\
+        \end{align*}
+        Using rule 2 of partial Galois connections
+        \begin{align*}
+        &\overline{f}(\gamma(\grad{\phi})) \subseteq \gamma(\grad{f'}(\grad{\phi}))\\
+        \implies
+        &\alpha(\overline{f}(\gamma(\grad{\phi}))) \mpt \grad{f'}(\grad{\phi})\\
+        \implies
+        &\grad{f}(\grad{\phi}) \mpt \grad{f'}(\grad{\phi})\\
+        \end{align*}
+        Contradiction.
+    \end{description}       
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:sl-comp}]
+    \begin{description}
+        \item[Introduction]
+        \begin{align*}
+        &g(f(\phi))\\
+        \overset{Introduction~\grad{g}}{\mpt}~
+        &\grad{g}(f(\phi))\\
+        \overset{\substack{Introduction~\grad{f}\\\&\\Monotonicity~\grad{g}}}{\mpt}~
+        &\grad{g}(\grad{f}(\phi))\\
+        =~
+        &\grad{g}(\grad{f}(\phi))\\
+        =~
+        &(\grad{g} \circ \grad{f})(\phi)\\
+        =~
+        &\grad{(g \circ f)}(\phi)
+        \end{align*}
+        
+        \item[Monotonicity]
+        \begin{align*}
+        &\grad{\phi_1} \mpt \grad{\phi_2}\\
+        \overset{Monotonicity~\grad{f}}{\quad\quad\implies\quad\quad}
+        &\grad{f}(\grad{\phi_1}) \mpt \grad{f}(\grad{\phi_2})\\
+        \overset{Monotonicity~\grad{g}}{\quad\quad\implies\quad\quad}
+        &\grad{g}(\grad{f}(\grad{\phi_1})) \mpt \grad{g}(\grad{f}(\grad{\phi_2}))\\
+        \overset{Definition}{\quad\quad\implies\quad\quad}
+        &\grad{(g \circ f)}(\grad{\phi_1}) \mpt \grad{(g \circ f)}(\grad{\phi_2})
+        \end{align*}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lem:comp-gtHoare}]~\\
+    Analogous to proof of lemma \ref{lem:comp-tHoare}.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:tauto}]~\\
+    Goal: $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$.
+    
+    According to definition \ref{def:valid-ghoare-triple} we may assume
+    \begin{align}
+    \label{eq:ttemp1}
+    \gsstepConsume{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\pi_1}}{\grad{\pi_2}}
+    \end{align}
+    and
+    \begin{align}
+    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
+    \end{align}
+    for some $\grad{\pi_1}, \grad{\pi_2} \in \setGProgramState$ and have to show
+    \begin{align}
+    \label{eq:ttemp1g}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \end{align}
+    
+    It follows from \ref{eq:ttemp1} and lemma \ref{lem:comp-gtHoare} that there exists $\grad{\pi} \in \setGProgramState$ such that
+    \begin{align}
+    \label{eq:ttemp2}
+    \gsstepConsume{\sAssert{$\grad{\phi_2}$}}{\grad{\pi}}{\grad{\pi_2}}
+    \end{align}
+    Then \ref{eq:ttemp1g} follows by definition of the assertion statement (see example \ref{ex:ss-ra} for an illustration).
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lem:det2grad}]~\\
+    \begin{description}
+        \item[Introduction] 
+        \begin{align*}
+        &P(\phi_1, \phi_2) \\
+        \overset{Introduction}{~\quad\implies\quad~} 
+        &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2}\\
+        \overset{Strength}{~\quad\implies\quad~} 
+        &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi) \wedge \phiImplies{\phi}{\phi_2} \\
+        \overset{}{~\quad\implies\quad~} 
+        &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi}{\phi_2} \\
+        \overset{}{~\quad\implies\quad~} 
+        &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~  \gphiImplies{\grad{\phi_2}}{\phi_2} \\
+        \overset{Def}{~\quad\implies\quad~} 
+        &\grad{P}(\phi_1, \phi_2)
+        \end{align*}
+        
+        \item[Monotonicity] 
+        \begin{align*}
+        &\grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        \overset{Def}{~\quad\implies\quad~}
+        &(\exists \grad{\phi}.~ \dgrad{P}(\grad{\phi_1}) = \grad{\phi} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        \overset{Monotonicity}{~\quad\implies\quad~}
+        &(\exists \grad{\phi}, \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \grad{\phi} \mpt \grad{\phi'} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        \overset{}{~\quad\implies\quad~} 
+        &(\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
+        \overset{}{~\quad\implies\quad~} 
+        &(\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2'}})\\
+        \overset{Def}{~\quad\implies\quad~} 
+        &\grad{P}(\phi_1', \phi_2') \\
+        \end{align*}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:runtime-checks-reduced}]~\\
+    The restriction $\envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
+    $\grad{\phi_2'}$ is ensured by \tset{\dgradT Soundness}, $P$ is explicitly checked.
+    
+    On the other hand, $\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P$ ensures that $P$ is not stricter than necessary.
+    Assume there exists a program state $\pi \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\pi \not \in (\envs{\grad{\phi_2'}} \cap P$.
+    It follows that $\neg P(\pi)$, i.e. a runtime exception is thrown that indicates that a runtime check fails.
+    However, $\pi$ neither violates $\grad{\phi_2'}$ nor $\grad{\phi_2}$ and is thus not expected to violate any runtime checks.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:det-lift-comp}]~
+    \begin{description}
+        \item[Introduction]
+        \begin{align*}
+        & \phantom{\overset{}{~\quad\quad\implies\quad\quad~}}~
+        P_3(\phi_1, \phi_3)\\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)\\
+        & \overset{Introduction}{~\quad\quad\implies\quad\quad~} 
+        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+        \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2})\\
+        & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
+        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+        \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge 
+        (\exists \phi_2' \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_2'}{\phi_2}))\\
+        & \overset{lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
+        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+        \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge 
+        (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ \phiImplies{\phi_2'}{\phi_2} \wedge P_2(\phi_2', \phi_3')))\\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+        (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ P_2(\phi_2', \phi_3'))\\
+        & \overset{Introduction}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+        (\exists \phi_2' \in \gamma(\grad{\phi_2}), \grad{\phi_3'}.~ \dgrad{P_2}(\phi_2') = \grad{\phi_3'})\\
+        & \overset{Monotonicity}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
+        (\exists \grad{\phi_3}.~ \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3})\\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_3}.~ \dgrad{P_2}(\dgrad{P_1}(\phi_1)) = \grad{\phi_3}\\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_3}.~ \dgrad{P_3}(\phi_1) = \grad{\phi_3}
+        \end{align*}
+        
+        \item[Strength]
+        \begin{align*}
+        & \phantom{\overset{}{~\quad\quad\implies\quad\quad~}}~
+        \dgrad{P_3}(\grad{\phi_1}) = \grad{\phi_3} \wedge \phi_1 \in \gamma(\grad{\phi_1}) \wedge P_3(\phi_1, \phi)\\
+        & \overset{Defenitions}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}, \phi'.~ 
+        \dgrad{P_1}(\grad{\phi_1}) = \grad{\phi_2} \wedge \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3} \wedge 
+        \phi_1 \in \gamma(\grad{\phi_1}) \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge P_1(\phi_1, \phi') \wedge P_2(\phi', \phi)\\
+        & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}, \phi'.~ 
+        \dgrad{P_1}(\grad{\phi_1}) = \grad{\phi_2} \wedge \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3} \wedge 
+        \phi_1 \in \gamma(\grad{\phi_1}) \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge P_1(\phi_1, \phi') \wedge P_2(\phi', \phi)
+        \wedge (\exists \phi_2 \in \gamma(\grad{\phi_2}).~ P_1(\phi_1, \phi_2) \wedge \phiImplies{\phi_2}{\phi'}) \\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}, \phi', \phi_2 \in \gamma(\grad{\phi_2}).~ 
+        \dgrad{P_1}(\grad{\phi_1}) = \grad{\phi_2} \wedge \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3} \wedge 
+        \phi_1 \in \gamma(\grad{\phi_1}) \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi', \phi)
+        \wedge \phiImplies{\phi_2}{\phi'} \\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}, \phi', \phi_2 \in \gamma(\grad{\phi_2}).~ 
+        \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}  \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi', \phi)
+        \wedge \phiImplies{\phi_2}{\phi'} \\
+        & \overset{lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}, \phi_2 \in \gamma(\grad{\phi_2}), \phi''.~ 
+        \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}   \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi'')
+        \wedge \phiImplies{\phi''}{\phi} \\
+        & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
+        \exists \grad{\phi_2}, \phi_2 \in \gamma(\grad{\phi_2}), \phi''.~ 
+        \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}  \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi'') 
+        \wedge \phiImplies{\phi''}{\phi}  \\
+        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+        \wedge (\exists \phi_3 \in \gamma(\grad{\phi_3}).~ P_2(\phi_2, \phi_3) \wedge \phiImplies{\phi_3}{\phi''}) \\
+        & \overset{}{~\quad\quad\implies\quad\quad~} 
+        \exists \phi_2 \in \gamma(\grad{\phi_2}), \phi_3 \in \gamma(\grad{\phi_3}).~ 
+        P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
+        \wedge \phiImplies{\phi_3}{\phi} \\
+        & \overset{Defenition}{~\quad\quad\implies\quad\quad~} 
+        \exists \phi_3 \in \gamma(\grad{\phi_3}).~ 
+        P_3(\phi_1, \phi_3)
+        \wedge \phiImplies{\phi_3}{\phi} 
+        \end{align*}
+        
+        \item[Monotonicity]~\\
+        Compositions of monotonic functions are monotonic.
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:opt-lift-impl}]~
+    \begin{description}
+        \item[Soundness]
+        \begin{description}
+            \item[Introduction] The identity function is total.
+            
+            \item[Strength]~\\
+            Known:
+            $$\id(\grad{\phi_1}) = \grad{\phi_2} \wedge \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phiImplies{\phi_1}{\phi}$$
+            Goal:
+            $$\exists \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2} \wedge \phiImplies{\phi_2}{\phi}$$
+            The goal is satisfied when choosing $\phi_2 = \phi_1$
+            
+            \item[Monotonicity] Trivial.
+        \end{description}
+        \item[Optimality]~\\
+        Proof by contradiction.
+        
+        Assume there was another, more optimal deterministic lifting $\dgrad{f} : \setGFormula \rightarrow \setGFormula$.
+        Note that $\dgrad{f}$ must be total as it would otherwise not satisfy the introduction rule.
+        Let $\grad{\phi} \in \setGFormula$ be a chosen such that $\dgrad{f}(\grad{\phi}) \sqsubset \id(\grad{\phi})$ (exists, since $\dgrad{f}$ is more optimal).
+        
+        Then there exists $\phi \in (\gamma(\id(\grad{\phi})) \backslash \gamma(\dgrad{f}(\grad{\phi}))$, i.e. $\phi \in (\gamma(\grad{\phi}) \backslash \gamma(\dgrad{f}(\grad{\phi}))$.
+        Applying the strength rule to $\dgrad{f}$ and $\phiImplies{\phi}{\phi}$ we can deduce
+        $$\exists \phi' \in \gamma(\dgrad{f}(\grad{\phi})).~ \phiImplies{\phi}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}$$
+        This means that $\phi \in \gamma(\dgrad{f}(\grad{\phi}))$.
+        Contradiction.
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:compl-sem}]~\\
+    \svl only ever executes a statement $s$ if it was successfully verified.
+    After extending the Hoare logic, derivable Hoare triples are still derivable.
+    Successful verification implies that there exists some Hoare derivation $\thoare{}{\phi_1}{s}{\phi_2}$ for every statement $s$ executed by the program.
+    Soundness of the Hoare logic implies that the small-step semantics do not get stuck while executing $s$.
+    Thus, the restricted domain of $\sstep{\cdot}{\cdot}$ can never affect reachable executions.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Theorem \ref{thm:compl-and-so-to-gdpres}]~\\
+    To prove \tset{\dgradT Soundness} we may assume:
+    \begin{align}
+    \label{frm:tmp0}
+    \dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}\\
+    \label{frm:tmp1}
+    \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}\\
+    \label{frm:tmp2}
+    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
+    \end{align}
+    Goal: 
+    \begin{align}
+    \label{frm:tmp3}
+    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+    \end{align}
+    
+    \begin{description}
+        \item[Case:] $\grad{\phi_1} = \phi_1$ for some $\phi_1 \in \setFormula$~\\
+        We can simplify \ref{frm:tmp2} as
+        \begin{align}
+        \label{frm:tmpx0}
+        \evalphiGen{\grad{\pi_1}}{\phi_1}
+        \end{align}
+        From semi-optimality of \ref{frm:tmp0} (see definition \ref{def:perf-dyn}) we can derive
+        \begin{align}
+        \label{frm:tmpx1}
+        \thoare{}{\phi_1}{s}{\phi}
+        \quad\quad\text{for some } s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula
+        \end{align}
+        Applying the strength rule for deterministic liftings we can derive from \ref{frm:tmpx1} and \ref{frm:tmp0} that
+        \begin{align}
+        \label{frm:tmpx2}
+        \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ \phiImplies{\phi_2}{\phi}
+        \quad\quad\text{for some } \phi_2 \in \gamma(\grad{\phi_2})
+        \end{align}
+        From soundness (progress) of the static Hoare logic we can deduce that executing $s$ from a program state satisfying $\phi_1$ (like $\grad{\pi_1}$) does not end up in a stuck state.
+        Combining this knowledge with $\ref{frm:tmp1}$ we can conclude that executing $s$ must terminate (otherwise, $\gsstep{\cdot}{\cdot}$, being the gradual lifting, could not terminate for $\grad{s} \sqsupseteq s$).
+        \begin{align}
+        \label{frm:tmpx3}
+        \sstepConsume{s}{\pi_1}{\pi_2}
+        \quad\quad\text{for some } \pi_1 \in \gamma(\grad{\pi_1}),\, \pi_2 \in \setProgramState
+        \end{align}
+        From soundness of the static Hoare logic we can deduce
+        \begin{align}
+        \label{frm:tmpx4}
+        \evalphiGen{\pi_2}{\phi_2}
+        \end{align}
+        Applying the introduction rule of gradually lifted functions to \ref{frm:tmpx3} we can derive
+        \begin{align}
+        \label{frm:tmpx5}
+        \gsstepConsume{s}{\pi_1}{\grad{\pi}} ~\wedge~ \pi_2 \sqsubseteq \grad{\pi}
+        \quad\quad\text{for some } \grad{\pi} \in \setGProgramState
+        \end{align}
+        Applying the monotonicity rule of gradually lifted functions to \ref{frm:tmpx5} and \ref{frm:tmp1} we can derive that
+        \begin{align}
+        \label{frm:tmpx7}
+        \grad{\pi} \mpt \grad{\pi_2}
+        \end{align}
+        It follows from lemma \ref{lemma:gradPS-form-sem} that
+        \begin{align}
+        \label{frm:tmpx8}
+        \evalphiGen{\grad{\pi_2}}{\phi_2}
+        \end{align}
+        We can generalize this using $\phi_2 \in \gamma(\grad{\phi_2})$ (see \ref{frm:tmpx2})
+        \begin{align}
+        \label{frm:tmpx9}
+        \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+        \end{align}
+        
+        \item[Case:] $\grad{\phi_1}$ partially unknown~\\
+        From semi-optimality of \ref{frm:tmp1} (see definition \ref{def:perf-dyn}) we can derive
+        \begin{align}
+        \label{frm:tmp6}
+        \sstepConsume{s}{\pi_1}{\pi_2}
+        \quad\quad\text{for some } \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}),\, \pi_2 \in \setProgramState
+        \end{align}
+        Recall that formula evaluation is immune to concretization (REF), so from \ref{frm:tmp2} follows
+        \begin{align}
+        \label{frm:tmp5}
+        \evalgphiGen{\pi_1}{\grad{\phi_1}}
+        \text{\quad\quad or equivalently \quad\quad}
+        \evalphiGen{\pi_1}{\phi_{1a}}
+        \quad\quad\text{for some } \phi_{1a} \in \gamma(\grad{\phi_1}) 
+        \end{align}
+        Using the monotonicity of $\gsstep{\cdot}{\cdot}$ we can deduce from \ref{frm:tmp1} and \ref{frm:tmp6} that
+        \begin{align}
+        \label{frm:tmp6x}
+        \pi_2 \in \gamma(\grad{\pi_2})
+        \end{align}
+        From completeness of the static system (see definition \ref{def:completeness}) it follows from \ref{frm:tmp6} that
+        \begin{align}
+        \label{frm:tmp7}
+        \thoare{}{\phi_{1b}}{s}{\phi} ~\wedge~ \evalphiGen{\pi_1}{\phi_{1b}}
+        \quad\quad\text{for some } \phi_{1b}, \phi \in \setFormula
+        \end{align}
+        Due to $\envs{\pi_1}$ being a filter we can derive from $\evalphiGen{\pi_1}{\phi_{1a}}$ (\ref{frm:tmp5}) and $\evalphiGen{\pi_1}{\phi_{1b}}$ (\ref{frm:tmp7}) that
+        \begin{align}
+        \label{frm:tmp8}
+        \evalphiGen{\pi_1}{\phi_1} ~\wedge~ \phiImplies{\phi_1}{\phi_{1a}} ~\wedge~ \phiImplies{\phi_1}{\phi_{1b}}
+        \quad\quad\text{for some } \phi_1 \in \setFormula
+        \end{align}
+        From monotonicity of $\thoare{}{\cdot}{\cdot}{\cdot}$ in its first argument (lemma \ref{ass:hl-mono}) we can deduce
+        \begin{align}
+        \label{frm:tmp9}
+        \thoare{}{\phi_1}{s}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}
+        \quad\quad\text{for some } \phi_2 \in \setFormula
+        \end{align}
+        Applying the introduction rule for deterministic liftings we can deduce
+        \begin{align}
+        \label{frm:tmp10}
+        \dgthoare{}{\phi_1}{s}{\grad{\phi}}
+        \quad\quad\text{for some } \grad{\phi} \in \setGFormula
+        \end{align}
+        Applying the strength rule for deterministic liftings we can derive from \ref{frm:tmp9} and \ref{frm:tmp10} that
+        \begin{align}
+        \label{frm:tmp11}
+        \thoare{}{\phi_1}{s}{\phi_2} ~\wedge~ \phiImplies{\phi_2}{\phi'}
+        \quad\quad\text{for some } \phi_2 \in \gamma(\grad{\phi})
+        \end{align}
+        From soundness of the static system we can deduce (using \ref{frm:tmp10}, \ref{frm:tmp6}, \ref{frm:tmp8}) that
+        \begin{align}
+        \label{frm:tmp12}
+        \evalphiGen{\pi_2}{\phi_2}
+        \end{align}
+        and therefore (using \ref{frm:tmp6x} and lemma \ref{lemma:gradPS-form-sem})
+        \begin{align}
+        \label{frm:tmp14}
+        \evalgphiGen{\grad{\pi_2}}{\phi_2}
+        \end{align}
+        and therefore (using \ref{frm:tmp11})
+        \begin{align}
+        \label{frm:tmp13}
+        \evalgphiGen{\grad{\pi_2}}{\grad{\phi}}
+        \end{align}
+        Now, using $\phi_1 \in \gamma(\grad{\phi_1})$ (implied from the fact that $\phi_{1a} \in \gamma(\grad{\phi_1})$, $\phiImplies{\phi_1}{\phi_{1a}}$, see see section \ref{ssec:generalization}) we can apply monotonicity of deterministic liftings to \ref{frm:tmp10}, we can derive
+        \begin{align}
+        \label{frm:tmp15}
+        \grad{\phi} \mpt \grad{\phi_2}
+        \end{align}
+        and therefore
+        \begin{align}
+        \label{frm:tmp16}
+        \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
+        \end{align}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:gdpres-seq}]
+    \begin{mathpar}
+        \inferrule* [Right=seq]
+        {
+            \inferrule* [Right=\dgradT Soundness]
+            {
+                \inferrule* [Right=inversion]
+                {
+                    \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
+                }
+                {
+                    \dgthoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
+                    \dgthoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+                }
+            }
+            {
+                \gtHoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
+                \gtHoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
+            }
+        }
+        {
+            \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}
+        }
+    \end{mathpar}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:snd-svlidf}]
+    % TODO
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:ss-wd}]
+    For $\sstep{\cdot}{\cdot}$ to be well-defined, at most one result can be deducible per input.
+    The rules in figure \ref{fig:svl-sem-dyn-sstep} are syntax directed, so we can focus on individual rules when checking for determinism.
+    This can be done by looking at the source of all variables used to construct return values (i.e. the variables used on the right hand side of $\sstep{}{}$ in the conclusion).
+    All those variables must either be drawn directly from the input or be uniquely specified using premises.
+    
+    \tset{\gradT SsSkip}
+    $H, \rho, A, s, S$ are directly drawn from the input.
+    
+    \tset{\gradT SsFieldAssign}
+    $\rho, A, s, S$ are directly drawn from the input, $H'$ is defined using premises and depends on the uniqueness of $H, o, f, v_y$.
+    These are drawn from input or are result of expression evaluation which is deterministic.
+    
+    The same approach can be used for all remaining rules.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:gvlidf-sdl-hl}]~
+    \begin{description}
+        \item[Well-definedness] The rules are syntax directed and only can deduce at most one result per input.
+        \item[Deterministic lifting] Rule-wise.
+        
+        \tset{HSkip}:
+        See lemma \ref{lemma:opt-lift-impl}.
+        
+        \tset{HAlloc}, \tset{HFieldAssign}, \tset{HReturn}, \tset{HAssert}:
+        Composition of lifted components as defined in \ref{ssec:lifted-helper-functions}.
+        
+        Remaining rules analogous.
+    \end{description}
+\end{proofatend}
+
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:gss-wd}]
+    For $\gsstep{\cdot}{\cdot}$ to be well-defined, the inductive rules may allow deducing at most one return value for every input.
+    For the most part, this is the case due to $\sstep{\cdot}{\cdot}$ being well-defined (see lemma \ref{lemma:ss-wd}).
+    We show that the same is true for adjustments made in figure \ref{fig:gvl-sem-dyn-sstep}.
+    Note the adjustments do not change the fact that the inductive rules are syntax-directed.
+    
+    Rule \tset{\gradT SsCall} is deterministic:
+    $H, \rho, A, x, y, m, z, s, S$ are forwarded from the input, $\rho', A', r$ are uniquely determined by the premises.
+    
+    Rule \tset{\gradT SsCallFinish} is deterministic:
+    $H, \rho, x, A, A', s, S$ are forwarded from the input, $v_r$ is uniquely determined by the premises.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:gss-sl}]
+    For the rules copied from $\sstep{\cdot}{\cdot}$, the rules are trivially satisfied as there is no difference between gradual and non-gradual statements.
+    Precision is only meaningful for call statements:
+    
+    \begin{description}
+        \item[\tset{\gradT SsCall}]~
+        \begin{description}
+            \item[Introduction]~\\
+            For static precondition, \tset{\gradT SsCall} is identical to \tset{SsCall}.
+            
+            \item[Monotonicity]~\\
+            Reducing the precision of the precondition results in all permissions being passed to the topmost stack frame.
+            Having more permissions than before cannot introduce runtime failures.
+            Succeeding executions will thus be observationally identical after reducing precision.
+        \end{description}
+        
+        \item[\tset{\gradT SsCallFinish}]~
+        \begin{description}
+            \item[Introduction]~\\
+            For static postcondition, \tset{\gradT SsCallFinish} is identical to \tset{SsCallFinish}.
+            
+            \item[Monotonicity]~\\
+            The return value of \tset{\gradT SsCallFinish} is independent of the postcondition thus monotonic w.r.t. to it.
+            In terms of definedness, reducing the precision of the postcondition cannot result in premises that were satisfied before to be unsatisfied.
+        \end{description}
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:pc-idf}]
+    Goal:
+    \begin{flalign*}
+    \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
+    \implies \exists \Gamma \in \setTypeEnv,\, \phi_1, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
+    \end{flalign*}
+    for statements $s$ mentioned in the lemma.
+    
+    \begin{description}
+        \item[$\sSkip$]~\\
+        $$\thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$$
+        trivially holds for $\phi_1 = \phi_2 = \phiTrue$ and any $\Gamma$
+        
+        
+        \item[$\sFieldAssign {$x$} {$f$} {$y$} $]~\\
+        Known: $\sstepConsume{\sFieldAssign {$x$} {$f$} {$y$}}{\pi_1}{\pi_2}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\pi_1, \pi_2 \in \setProgramState$.
+        
+        We choose 
+        \begin{align*}
+        &\phi_1 = \phiAcc{$x$}{$f$}\\
+        &\phi_2 = \phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}
+        \end{align*}
+        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phi_2}$ can be deduced using \tset{HFieldAssign} (for some $\Gamma$).
+        Also $\evalphiGen{\pi_1}{\phi_1}$ holds by inversion of \tset{\dgradT SsFieldAssign}.
+        
+        
+        \item[$\sVarAssign {$x$} {$e$}$]~\\
+        Known: $\sstepConsume{\sVarAssign {$x$} {$e$}}{\pi_1}{\pi_2}$ for some $x \in \setVar,\, e \in \setExpr$ and $\pi_1, \pi_2 \in \setProgramState$.
+        
+        We choose 
+        \begin{align*}
+        &\phi_1 = \accFor{$e$}\\
+        &\phi_2 = \phiCons{\phiTrue}{\phiEq{$x$}{$e$}}
+        \end{align*}
+        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phi_2}$ can be deduced using \tset{HVarAssign} (for some $\Gamma$).
+        The remaining premises as well as $\evalphiGen{\pi_1}{\phi_1}$ hold by inversion of \tset{\dgradT SsVarAssign}. 
+        
+        
+        \item[$\sAlloc {$x$} {$C$}$]~\\
+        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+        
+        
+        \item[$\sReturn {$x$}$]~\\
+        $\thoare{\Gamma}{\phiTrue}{\sReturn {$x$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
+        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
+        
+        
+        \item[$\sAssert {$\phi$}$]~\\
+        $\thoare{\Gamma}{\phi}{\sAssert {$\phi$}}{\phi}$ can be deduced using \tset{HAlloc} (for some $\Gamma$).
+        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsAssert}.
+        
+        
+        \item[$\sRelease {$\phi$}$]~\\
+        $\thoare{\Gamma}{\phi}{\sRelease {$\phi$}}{\phiTrue}$ can be deduced using \tset{HRelease} (for some $\Gamma$).
+        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsRelease}.
+    \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:pso-idf}]
+    Semi-optimality of the gradual small-step semantics is trivially the case due to being identical with the small-step semantics of \svlidf.
+    
+    Semi-optimality of the deterministic gradual Hoare logic:
+    Goal:
+    \begin{align*}
+    \forall \Gamma \in \setTypeEnv,\, \phi_1 \in \setFormula,\, \grad{\phi_2} \in \setGFormula.&~ \dgthoare{\Gamma}{\phi_1}{\grad{s}}{\grad{\phi_2}}\\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2}
+    \end{align*}
+    for statements $s$ mentioned in the lemma.
+    
+    \begin{description}
+        \item[$\sSkip$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sSkip}{\grad{\phi_2}}$ for some $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sSkip}{\phi_1}$ holds (\tset{HSkip}).
+        
+        \item[$\sFieldAssign {$x$} {$f$} {$y$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\grad{\phi_2}}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HFieldAssign}) we can deduce:
+        \begin{align*}
+        \wo{\phi_1}{\phiAcc{x}{f}} = \grad{\phi'}
+        \end{align*}
+        for some $\grad{\phi'} \in \setGFormula$.
+        Expanding the definition of $\wo{\cdot}{\cdot}$
+        \begin{align*}
+        \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{\phiAcc{x}{f}}{$\phi_2$}} ~\} = \grad{\phi'}
+        \end{align*}
+        It follows that $\phiImplies{\phi_1}{\phiAcc{x}{f}}$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}}$ holds (\tset{HFieldAssign}).
+        
+        
+        \item[$\sVarAssign {$x$} {$e$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\grad{\phi_2}}$ for some $x \in \setVar,\, e \in \setExpr$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HVarAssign}) we can deduce:
+        \begin{gather*}
+        \phiImplies{\phi_1}{\accFor{e}}\\
+        x \not \in \FV(e)
+        \end{gather*}
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phiCons{\phiTrue}{\phiEq{$x$}{$e$}}}$ holds (\tset{HVarAssign}).
+        
+        
+        \item[$\sAlloc {$x$} {$C$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sAlloc {$x$} {$C$}}{\grad{\phi_2}}$ for some $x \in \setVar,\, C \in \setClassName$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sAlloc {$x$} {$C$}}{\phiCons{\phiCons{\phiTrue}{\phiNeq{$x$}{\enull}}}{...}}$ holds (\tset{HAlloc}).
+        
+        
+        \item[$\sReturn {$x$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sReturn {$x$}}{\grad{\phi_2}}$ for some $x \in \setVar$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sReturn {$x$}}{\phiCons{\phiTrue}{\phiEq{\eresult}{$x$}}}$ holds (\tset{HReturn}).
+        
+        
+        \item[$\sAssert {$\phi$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sAssert {$\phi$}}{\grad{\phi_2}}$ for some $\phi \in \setFormula$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HAssert}) we can deduce:
+        \begin{gather*}
+        \gphiImpliesEv{\phi_1}{\phi}{\grad{\phi'}}
+        \end{gather*}
+        for some $\grad{\phi'} \in \setGFormula$.
+        By definition of $\gphiImpliesEv{\cdot}{\cdot}{\cdot}$ it follows that $\phiImplies{\phi_1}{\phi}$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sAssert {$\phi$}}{\phi_1}$ holds (\tset{HAssert}).
+        
+        
+        \item[$\sRelease {$\phi$}$]~\\
+        Known: $\dgthoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\grad{\phi_2}}$ for some $\phi \in \setFormula$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
+        Applying inversion (rule \tset{\dgradT HRelease}) we can deduce:
+        \begin{gather*}
+        \gphiImpliesEv{\phi_1}{\phi}{\grad{\phi'}}
+        \end{gather*}
+        for some $\grad{\phi'} \in \setGFormula$.
+        By definition of $\gphiImpliesEv{\cdot}{\cdot}{\cdot}$ it follows that $\phiImplies{\phi_1}{\phi}$.
+        
+        Then $\thoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\phiTrue}$ holds (\tset{HRelease}).
+    \end{description}
+\end{proofatend}
+
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:is-decl}]
+    Assumption:
+    \begin{align}
+    \dgthoare{\Gamma}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
+    \end{align}
+    Using inversion of rule $\tset{\dgradT HDeclare}$ we know that
+    \begin{gather}
+    \label{frm:tmpp1}
+    {x} \not\in \dom{\Gamma} \\
+    \label{frm:tmpp2}
+    {x} \not \in {\FV(\grad{\phi})} \\
+    \dgthoare {{\Gamma}, {x} : {T}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
+    \end{gather}
+    Using the induction hypothesis we may apply \tset{\dgradT Soundness} to $s$, deducing
+    \begin{gather}
+    \label{frm:tmpp4}
+    \gtHoare {} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
+    \end{gather}
+    Furthermore we can show that
+    \begin{gather}
+    \label{frm:tmpp5}
+    \gtHoare {} {\grad{\phi}} {\sDeclare {${T}$} {${x}$}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
+    \end{gather}
+    holds (using \ref{frm:tmpp2}, find proof below).
+    Using lemma \ref{lem:comp-gtHoare} we can combine \ref{frm:tmpp4} and \ref{frm:tmpp5} to derive the goal:
+    \begin{align}
+    \gtHoare{}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
+    \end{align}
+    
+    Proof for \ref{frm:tmpp5}:
+    Assumptions:
+    \begin{gather}
+    \label{frm:tmpp7}
+    \gsstepConsume{\sDeclare {${T}$} {${x}$}}{\pi_1}{\pi_2}\\
+    \label{frm:tmpp8}
+    \evalgphiGen {\pi_1} {\grad{\phi}}
+    \end{gather}
+    for some $\pi_1, \pi_2 \in \setGProgramState$.
+    Goal:
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
+    \end{gather}
+    Applying rule inversion (\tset{SsDeclare}) to \ref{frm:tmpp7} we can see that $\pi_2$ is like $\pi_1$, but with $x$ set to $\defaultValue{${T}$}$ (and the assertion consumed).
+    It follows that
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}
+    \end{gather}
+    Since we know that $\grad{\phi}$ does not contain $x$ (see \ref{frm:tmpp2}), we can deduce that
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\grad{\phi}}
+    \end{gather}
+    The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:is-call}]
+    Assumption:
+    \begin{align}
+    \dgthoare {\Gamma} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
+    \end{align}
+    Using inversion of rule $\tset{\dgradT HCall}$ we know that
+    \begin{gather}
+    \label{frm:tmpp1a}
+    \wo {\wo {\grad{\phi}} {x}} {\grad{\phi_p}} = \grad{\phi'}\\
+    {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {$\grad{\phi_{pre}}$} {$\grad{\phi_{post}}$}}$} {$s$}}} \\
+    \gphiImplies{\grad{\phi}}{\gphiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{$\grad{\phi_p}$}} \\
+    x \neq y \wedge x \neq z' \\
+    \grad{\phi_p} = {\grad{\phi_{pre}}[{y}, {z'} / {\ethis}, {{z}}]} \\
+    \label{frm:tmpp5a}
+    \grad{\phi_q} = {\grad{\phi_{post}}[{y}, {z'}, {x} / {\ethis}, {{z}}, {\eresult}]}
+    \end{gather}
+    From gradual well-formedness (section \ref{ssec:well-formedness}) it follows that
+    \begin{gather}
+    \gthoare {z : T_p, \ethis : C, \eresult : T_r} {\grad{\phi_{pre}}} {s} {\grad{\phi_{post}}} \\
+    \FV(\grad{\phi_{pre}}) \subseteq \{ z, \ethis \} \\
+    \label{frm:tmpp8a}
+    \FV(\grad{\phi_{post}}) \subseteq \{ z, \ethis, \eresult \} \\
+    \sfrmgphi \grad{\phi_{pre}} \\
+    \sfrmgphi \grad{\phi_{post}} \\
+    \label{frm:tmpp11a}
+    z, \ethis \not \in \mods(s)
+    \end{gather}
+    %\begin{comment2}
+    %Using the induction hypothesis we may assume that
+    %\begin{gather}
+    %\label{frm:tmpp100a}
+    %\gtHoare {} {\grad{\phi_{pre}}} {\textit{<method body>}} {\grad{\phi_{post}}}
+    %\end{gather}
+    %(note that the method body is $s$, combined with necessary measures to ensure the postcondition).
+    %\end{comment2}
+    As shown below, it follows that 
+    \begin{align}
+    \label{frm:tmpp101a}
+    \gtHoare {} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
+    \end{align}
+    
+    Proof for \ref{frm:tmpp101a}:
+    Assumptions:
+    \begin{gather}
+    \label{frm:tmpp1000a}
+    \gsstepConsume{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}{\pi_1}{\pi_2}\\
+    \label{frm:tmpp1001a}
+    \evalgphiGen {\pi_1} {\grad{\phi}}
+    \end{gather}
+    for some $\pi_1, \pi_2 \in \setGProgramState$.
+    Goal:
+    \begin{gather}
+    \evalgphiGen {\pi_2} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
+    \end{gather}
+    Applying rule inversion to \ref{frm:tmpp1000a} we derive that there exists $\pi_{pre}, \pi_{post} \in \setGProgramState$ such that
+    \begin{gather}
+    \label{frm:tmpp1010a}
+    \gsstep{\pi_1}{\pi_{pre}}\\
+    \label{frm:tmpp1011a}
+    \gsstepConsume{s}{\pi_{pre}}{\pi_{post}}\\
+    \label{frm:tmpp1012a}
+    \gsstep{\pi_{post}}{\pi_2}
+    \end{gather}
+    where \ref{frm:tmpp1010a} is determined by \tset{\gradT SsCall} and \ref{frm:tmpp1012a} by \tset{\gradT SsCallFinish}.
+    Applying rule inversion to \ref{frm:tmpp1012a} it follows that
+    \begin{gather}
+    \evalgphiGen {\pi_{post}} {\grad{\phi_{post}}}
+    \end{gather}
+    Combining \ref{frm:tmpp5a} and \ref{frm:tmpp8a} we can show that $\grad{\phi_{q}}$ may only contain $y, z', x$.
+    \tset{\gradT SsCallFinish} assigns $\eresult$ to $x$, which reflects the substitution in \ref{frm:tmpp5a}.
+    Because of \ref{frm:tmpp11a} $\grad{\phi_{q}}$ does not contain false information about $y$ and $z'$ (as described in section \ref{sec:well-formedness}).
+    It follows that
+    \begin{gather}
+    \label{frm:tmpp2010a}
+    \evalgphiGen {\pi_2} {\grad{\phi_{q}}}
+    \end{gather}
+    Since the variables and fields mentioned in $\grad{\phi'}$ are guaranteed to be disjoint from those in $\grad{\phi_p}$ and due to \ref{frm:tmpp1a}, those memory locations cannot be changed by the call.
+    Furthermore $x$ is not in $\grad{\phi'}$ such that there cannot be a contradiction to the knowledge in $\grad{\phi_{q}}$ (which may contain information of $x$, provided by the call).
+    It follows that
+    \begin{gather}
+    \label{frm:tmpp2011a}
+    \evalgphiGen {\pi_2} {\grad{\phi'}}
+    \end{gather}
+    The goal follows from \ref{frm:tmpp2010a} and \ref{frm:tmpp2011a} using the fact that the formulas contain disjoint memory locations.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:is-hold}]
+    Omitted.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:is-seq}]
+    Analogous to lemma \ref{lemma:gdpres-seq}.
+\end{proofatend}
+
+
+\begin{proofatend}[Proof of Theorem \ref{thm:gvlidf-dgsnd}]~\\
+    Structural induction over statement $s$.
+    Most cases are handled by theorem \ref{thm:compl-and-so-to-gdpres} and lemmas \ref{lemma:pc-idf} and \ref{lemma:pso-idf}.
+    The remaining cases are covered by lemmas 
+    \ref{lemma:is-decl},
+    \ref{lemma:is-call},
+    \ref{lemma:is-hold} and
+    \ref{lemma:is-seq}.
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:oh-free}]~\\
+    We prove that 
+    \begin{align}
+    \begin{split}
+    \label{frm:oh-free1}
+    \forall \phi_1, \phi_{2b} \in \setFormula,\, s \in \setStmt.~
+    &\thoare{}{\phi_1}{s}{\phi_{2b}} \\
+    \implies 
+    (\exists \phi_{2a} \in \setFormula.~ &\dgthoare{}{\phi_1}{s}{\phi_{2a}} \wedge \phiImplies{\phi_{2a}}{\phi_{2b}})
+    \end{split}
+    \end{align}
+    As a consequence, all reasoning that allows the static system to be runtime check free must also apply to the gradual system (if all annotations are static).
+    
+    Proof for \ref{lemma-frm:oh-free1}:
+    \begin{align*}
+    \thoare{}{\phi_1}{s}{\phi_{2b}}
+    \end{align*}
+    for some $\phi_1, \phi_{2b} \in \setFormula,\, s \in \setStmt$.
+    Using the introduction rule of deterministic liftings it follows that
+    \begin{align*}
+    \dgthoare{}{\phi_1}{s}{\grad{\phi_2}}
+    \end{align*}
+    for some $\grad{\phi_2} \in \setGFormula$.
+    According to assumption \ref{lemma-frm:oh-free}, $\grad{\phi_2} = \phi_{2a}$ for some $\phi_{2a} \in \setFormula$.
+    Using the strength rule of deterministic liftings it follows immediately that $\phiImplies{\phi_{2a}}{\phi_{2b}}$.
+    
+    \begin{comment}
+    Proof for claim that optimality of $\dgthoare{}{\cdot}{\cdot}{\cdot}$ implies \ref{lemma-frm:oh-free} if \tset{\dgradT Soundness} holds.
+    Let $\Phi \defeq \{~ \phi_2 ~|~ \thoare{}{\phi_1}{s}{\phi_2} ~\}$ for some  $\phi_1 \in \setFormula,\, s \in \setStmt$.
+    $\Phi$ is the set of all deducible postconditions for given precondition and statement.
+    If $\Phi$ is not empty, then the introduction rule of deterministic liftings implies that
+    $\dgthoare{}{\phi_1}{s}{\grad{\phi_2}}$ for some $\grad{\phi_2} \in \setGFormula$.
+    \begin{description}
+    \item[Case 1: $\exists \pi_1, \pi_2.~ \sstepConsume{s}{\pi_1}{\pi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$]~\\
+    Due to soundness of the static system, it follows that
+    \begin{displaymath}
+    \forall \phi_2 \in \Phi.~ \evalphiGen{\pi_2}{\phi_2}
+    \end{displaymath}
+    \end{description}
+    \end{comment}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:gc-nonex}]~\\
+    It is essential that $\setFormula$ cannot express knowledge like 
+    \begin{align}
+    \label{ex-frm:appro}
+    \ttt{x} \in \{1,2,3\}
+    \end{align}
+    since there is neither a logical disjunction (that would allow writing $\phiOr{\phiEq{x}{1}}{\phiOr{\phiEq{x}{2}}{\phiEq{x}{3}}}$) nor an inequality operator \ttt{<=} (that would allow writing $\phiCons{\ttt{(1 <= x)}}{\ttt{(x <= 3)}}$) nor any other sufficiently expressive syntax.
+    
+    Hence, this knowledge can only be approximated, e.g. as
+    \begin{align*}
+    \phiAnd{\phiAnd{\phiNeq{x}{0}}{\phiNeq{x}{4}}}{\phiNeq{x}{5}}
+    \end{align*}
+    Now, let $\overline{\phi}$ be the set of all approximation for $\ref{ex-frm:appro}$, i.e.
+    \begin{align*}
+    \label{ex-frm:appro-set}
+    \overline{\phi} = \{~ \phi \in \setFormula ~|~ \envs{\phiEq{x}{1}} \cup \envs{\phiEq{x}{2}} \cup \envs{\phiEq{x}{3}} \subseteq \envs{\phi} ~\}
+    \end{align*}
+    Then there exists no least (most precise) element $\grad{\phi}$ that conservatively over-approximates $\overline{\phi}$.
+    As a consequence $\alpha(\overline{\phi})$ cannot be defined.
+    
+    Proof by contradiction: \\
+    Assume there exists a least element $\grad{\phi}$ that conservatively approximates $\overline{\phi}$, i.e. $\overline{\phi} \subseteq \gamma(\grad{\phi})$.
+    Then $\grad{\phi}$ cannot contain an equality including \ttt{x}.
+    As a result, $\grad{\phi}$ can only make statements about \ttt{x} using inequalities.
+    Since $\grad{\phi}$ is finite, there must be an integer that has not yet been excluded from the set of possible values for \ttt{x}.
+    Therefore, adding a corresponding inequality to $\grad{\phi}$ yields a gradual formula that is more precise than $\grad{\phi}$ and still conservatively approximates $\overline{\phi}$.\\
+    This contradicts the assumption that $\grad{\phi}$ is the least element with that property.
+\end{proofatend}
+

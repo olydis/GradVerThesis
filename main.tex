@@ -88,12 +88,19 @@ paper=a4
 }
 
 % THEOREMS
+%\input{deferred-proofs}
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{lemma}[definition]{Lemma}
 \newtheorem{corollary}[definition]{Corollary}
 \theoremstyle{definition}
 \newtheorem{exmp}[definition]{Example}
+
+%\fixstatement{theorem}
+%\fixstatement{lemma}
+\newenvironment{proofatend}{\begin{proof}}{%
+    \end{proof}\ignorespacesafterend
+}
 
 \newenvironment{example}[1]{\begin{leftbar}\begin{exmp}[#1]~}{\end{exmp}\end{leftbar}}
 

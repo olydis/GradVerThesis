@@ -32,46 +32,5 @@ We give sufficient criteria for such a gradual verification system.
    % A stricter version of this lemma would thus read:
    % For fully statically annorated programs, no runtime overhead is necessary if \tset{\dgradT Soundness} and the deterministic gradual Hoare logic is an optimal deterministic lifting.
 \end{lemma}
-\begin{proof}~\\
-    We prove that 
-    \begin{align}
-    \begin{split}
-    \label{frm:oh-free1}
-    \forall \phi_1, \phi_{2b} \in \setFormula,\, s \in \setStmt.~
-    &\thoare{}{\phi_1}{s}{\phi_{2b}} \\
-    \implies 
-    (\exists \phi_{2a} \in \setFormula.~ &\dgthoare{}{\phi_1}{s}{\phi_{2a}} \wedge \phiImplies{\phi_{2a}}{\phi_{2b}})
-    \end{split}
-    \end{align}
-    As a consequence, all reasoning that allows the static system to be runtime check free must also apply to the gradual system (if all annotations are static).
-    
-    Proof for \ref{lemma-frm:oh-free1}:
-    \begin{align*}
-    \thoare{}{\phi_1}{s}{\phi_{2b}}
-    \end{align*}
-    for some $\phi_1, \phi_{2b} \in \setFormula,\, s \in \setStmt$.
-    Using the introduction rule of deterministic liftings it follows that
-    \begin{align*}
-    \dgthoare{}{\phi_1}{s}{\grad{\phi_2}}
-    \end{align*}
-    for some $\grad{\phi_2} \in \setGFormula$.
-    According to assumption \ref{lemma-frm:oh-free}, $\grad{\phi_2} = \phi_{2a}$ for some $\phi_{2a} \in \setFormula$.
-    Using the strength rule of deterministic liftings it follows immediately that $\phiImplies{\phi_{2a}}{\phi_{2b}}$.
-
-\begin{comment}
-    Proof for claim that optimality of $\dgthoare{}{\cdot}{\cdot}{\cdot}$ implies \ref{lemma-frm:oh-free} if \tset{\dgradT Soundness} holds.
-    Let $\Phi \defeq \{~ \phi_2 ~|~ \thoare{}{\phi_1}{s}{\phi_2} ~\}$ for some  $\phi_1 \in \setFormula,\, s \in \setStmt$.
-    $\Phi$ is the set of all deducible postconditions for given precondition and statement.
-    If $\Phi$ is not empty, then the introduction rule of deterministic liftings implies that
-    $\dgthoare{}{\phi_1}{s}{\grad{\phi_2}}$ for some $\grad{\phi_2} \in \setGFormula$.
-    \begin{description}
-        \item[Case 1: $\exists \pi_1, \pi_2.~ \sstepConsume{s}{\pi_1}{\pi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$]~\\
-        Due to soundness of the static system, it follows that
-        \begin{displaymath}
-        \forall \phi_2 \in \Phi.~ \evalphiGen{\pi_2}{\phi_2}
-        \end{displaymath}
-    \end{description}
-    \end{comment}
-\end{proof}
 
 Note: \gvlidf satisfies the criteria given by lemma \ref{lemma:oh-free} (without proof) and can thus be implemented overhead-free for statically annotated programs.

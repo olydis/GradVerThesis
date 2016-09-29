@@ -22,64 +22,6 @@ The overall proof is a structural induction on statement $s$.
         \item $\sRelease {$\phi$}$
     \end{comment}
 \end{lemma}
-\begin{proof}
-    Goal:
-    \begin{flalign*}
-    \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
-    \implies \exists \Gamma \in \setTypeEnv,\, \phi_1, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}
-    \end{flalign*}
-    for statements $s$ mentioned in the lemma.
-    
-    \begin{description}
-        \item[$\sSkip$]~\\
-        $$\thoare{\Gamma}{\phi_1}{s}{\phi_2} \wedge \evalphiGen{\pi_1}{\phi_1}$$
-        trivially holds for $\phi_1 = \phi_2 = \phiTrue$ and any $\Gamma$
-        
-        
-        \item[$\sFieldAssign {$x$} {$f$} {$y$} $]~\\
-        Known: $\sstepConsume{\sFieldAssign {$x$} {$f$} {$y$}}{\pi_1}{\pi_2}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\pi_1, \pi_2 \in \setProgramState$.
-        
-        We choose 
-        \begin{align*}
-        &\phi_1 = \phiAcc{$x$}{$f$}\\
-        &\phi_2 = \phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}
-        \end{align*}
-        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phi_2}$ can be deduced using \tset{HFieldAssign} (for some $\Gamma$).
-        Also $\evalphiGen{\pi_1}{\phi_1}$ holds by inversion of \tset{\dgradT SsFieldAssign}.
-        
-        
-        \item[$\sVarAssign {$x$} {$e$}$]~\\
-        Known: $\sstepConsume{\sVarAssign {$x$} {$e$}}{\pi_1}{\pi_2}$ for some $x \in \setVar,\, e \in \setExpr$ and $\pi_1, \pi_2 \in \setProgramState$.
-        
-        We choose 
-        \begin{align*}
-        &\phi_1 = \accFor{$e$}\\
-        &\phi_2 = \phiCons{\phiTrue}{\phiEq{$x$}{$e$}}
-        \end{align*}
-        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phi_2}$ can be deduced using \tset{HVarAssign} (for some $\Gamma$).
-        The remaining premises as well as $\evalphiGen{\pi_1}{\phi_1}$ hold by inversion of \tset{\dgradT SsVarAssign}. 
-        
-        
-        \item[$\sAlloc {$x$} {$C$}$]~\\
-        $\thoare{\Gamma}{\phiTrue}{\sAlloc {$x$} {$C$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
-        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
-            
-            
-        \item[$\sReturn {$x$}$]~\\
-        $\thoare{\Gamma}{\phiTrue}{\sReturn {$x$}}{\phi_2}$ can be deduced using \tset{HAlloc} (for some $\Gamma$ and $\phi_2$).
-        Furthermore $\evalphiGen{\pi_1}{\phiTrue}$ trivially holds. 
-            
-
-        \item[$\sAssert {$\phi$}$]~\\
-        $\thoare{\Gamma}{\phi}{\sAssert {$\phi$}}{\phi}$ can be deduced using \tset{HAlloc} (for some $\Gamma$).
-        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsAssert}.
-        
-        
-        \item[$\sRelease {$\phi$}$]~\\
-        $\thoare{\Gamma}{\phi}{\sRelease {$\phi$}}{\phiTrue}$ can be deduced using \tset{HRelease} (for some $\Gamma$).
-        Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsRelease}.
-    \end{description}
-\end{proof}
 
 \begin{lemma}[Partial Semi-Optimality of \gvlidf]
     \label{lemma:pso-idf}~\\
@@ -95,263 +37,31 @@ The overall proof is a structural induction on statement $s$.
         \item $\sRelease {$\phi$}$
     \end{comment}
 \end{lemma}
-\begin{proof}
-    Semi-optimality of the gradual small-step semantics is trivially the case due to being identical with the small-step semantics of \svlidf.
-    
-    Semi-optimality of the deterministic gradual Hoare logic:
-    Goal:
-    \begin{align*}
-    \forall \Gamma \in \setTypeEnv,\, \phi_1 \in \setFormula,\, \grad{\phi_2} \in \setGFormula.&~ \dgthoare{\Gamma}{\phi_1}{\grad{s}}{\grad{\phi_2}}\\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{\Gamma}{\phi_1}{s}{\phi_2}
-    \end{align*}
-    for statements $s$ mentioned in the lemma.
-    
-    \begin{description}
-        \item[$\sSkip$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sSkip}{\grad{\phi_2}}$ for some $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sSkip}{\phi_1}$ holds (\tset{HSkip}).
-                
-        \item[$\sFieldAssign {$x$} {$f$} {$y$}$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\grad{\phi_2}}$ for some $x, y \in \setVar,\, f \in \setFieldName$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        Applying inversion (rule \tset{\dgradT HFieldAssign}) we can deduce:
-        \begin{align*}
-        \wo{\phi_1}{\phiAcc{x}{f}} = \grad{\phi'}
-        \end{align*}
-        for some $\grad{\phi'} \in \setGFormula$.
-        Expanding the definition of $\wo{\cdot}{\cdot}$
-        \begin{align*}
-        \underset{\phiImplies{}{}}{\min} \{~ \phi_2 \in \setFormulaB ~|~ \phiImplies{\phi_1}{\phiCons{\phiAcc{x}{f}}{$\phi_2$}} ~\} = \grad{\phi'}
-        \end{align*}
-        It follows that $\phiImplies{\phi_1}{\phiAcc{x}{f}}$.
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sFieldAssign {$x$} {$f$} {$y$}}{\phiCons{\phiCons{\phiTrue}{\phiAcc{$x$}{$f$}}}{\phiCons{\phiNeq{x}{\enull}}{\phiEq{\edot{x}{f}}{y}}}}$ holds (\tset{HFieldAssign}).
-        
-        
-        \item[$\sVarAssign {$x$} {$e$}$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\grad{\phi_2}}$ for some $x \in \setVar,\, e \in \setExpr$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        Applying inversion (rule \tset{\dgradT HVarAssign}) we can deduce:
-        \begin{gather*}
-        \phiImplies{\phi_1}{\accFor{e}}\\
-        x \not \in \FV(e)
-        \end{gather*}
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sVarAssign {$x$} {$e$}}{\phiCons{\phiTrue}{\phiEq{$x$}{$e$}}}$ holds (\tset{HVarAssign}).
-        
-        
-        \item[$\sAlloc {$x$} {$C$}$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sAlloc {$x$} {$C$}}{\grad{\phi_2}}$ for some $x \in \setVar,\, C \in \setClassName$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sAlloc {$x$} {$C$}}{\phiCons{\phiCons{\phiTrue}{\phiNeq{$x$}{\enull}}}{...}}$ holds (\tset{HAlloc}).
-        
-        
-        \item[$\sReturn {$x$}$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sReturn {$x$}}{\grad{\phi_2}}$ for some $x \in \setVar$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sReturn {$x$}}{\phiCons{\phiTrue}{\phiEq{\eresult}{$x$}}}$ holds (\tset{HReturn}).
-       
-        
-        \item[$\sAssert {$\phi$}$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sAssert {$\phi$}}{\grad{\phi_2}}$ for some $\phi \in \setFormula$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        Applying inversion (rule \tset{\dgradT HAssert}) we can deduce:
-        \begin{gather*}
-        \gphiImpliesEv{\phi_1}{\phi}{\grad{\phi'}}
-        \end{gather*}
-        for some $\grad{\phi'} \in \setGFormula$.
-        By definition of $\gphiImpliesEv{\cdot}{\cdot}{\cdot}$ it follows that $\phiImplies{\phi_1}{\phi}$.
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sAssert {$\phi$}}{\phi_1}$ holds (\tset{HAssert}).
-        
-        
-        \item[$\sRelease {$\phi$}$]~\\
-        Known: $\dgthoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\grad{\phi_2}}$ for some $\phi \in \setFormula$ and $\phi_1 \in \setProgramState,\, \grad{\phi_2} \in \setGProgramState$.
-        Applying inversion (rule \tset{\dgradT HRelease}) we can deduce:
-        \begin{gather*}
-       \gphiImpliesEv{\phi_1}{\phi}{\grad{\phi'}}
-        \end{gather*}
-        for some $\grad{\phi'} \in \setGFormula$.
-        By definition of $\gphiImpliesEv{\cdot}{\cdot}{\cdot}$ it follows that $\phiImplies{\phi_1}{\phi}$.
-        
-        Then $\thoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\phiTrue}$ holds (\tset{HRelease}).
-    \end{description}
-\end{proof}
 
 \begin{lemma}[\tset{\dgradT Soundness} Induction Step for Declaration]
     \label{lemma:is-decl}~\\
     Assume \tset{\dgradT Soundness} holds for $s \in \setGStmt$.\\
     Then \tset{\dgradT Soundness} holds for $\sSeq{\sDeclare{$T$}{$x$}}{$s$}$ (for all $T \in \setType,\, x \in \setVar$).
 \end{lemma}
-\begin{proof}
-    Assumption:
-    \begin{align}
-    \dgthoare{\Gamma}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
-    \end{align}
-    Using inversion of rule $\tset{\dgradT HDeclare}$ we know that
-    \begin{gather}
-    \label{frm:tmpp1}
-    {x} \not\in \dom{\Gamma} \\
-    \label{frm:tmpp2}
-    {x} \not \in {\FV(\grad{\phi})} \\
-    \dgthoare {{\Gamma}, {x} : {T}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
-    \end{gather}
-    Using the induction hypothesis we may apply \tset{\dgradT Soundness} to $s$, deducing
-    \begin{gather}
-    \label{frm:tmpp4}
-    \gtHoare {} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}} {s} {\grad{\phi'}}
-    \end{gather}
-    Furthermore we can show that
-    \begin{gather}
-    \label{frm:tmpp5}
-    \gtHoare {} {\grad{\phi}} {\sDeclare {${T}$} {${x}$}} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
-    \end{gather}
-    holds (using \ref{frm:tmpp2}, find proof below).
-    Using lemma \ref{lem:comp-gtHoare} we can combine \ref{frm:tmpp4} and \ref{frm:tmpp5} to derive the goal:
-    \begin{align}
-    \gtHoare{}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
-    \end{align}
-    
-    Proof for \ref{frm:tmpp5}:
-    Assumptions:
-    \begin{gather}
-    \label{frm:tmpp7}
-    \gsstepConsume{\sDeclare {${T}$} {${x}$}}{\pi_1}{\pi_2}\\
-    \label{frm:tmpp8}
-    \evalgphiGen {\pi_1} {\grad{\phi}}
-    \end{gather}
-    for some $\pi_1, \pi_2 \in \setGProgramState$.
-    Goal:
-    \begin{gather}
-    \evalgphiGen {\pi_2} {\gphiCons{${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$}{$\grad{\phi}$}}
-    \end{gather}
-    Applying rule inversion (\tset{SsDeclare}) to \ref{frm:tmpp7} we can see that $\pi_2$ is like $\pi_1$, but with $x$ set to $\defaultValue{${T}$}$ (and the assertion consumed).
-    It follows that
-    \begin{gather}
-    \evalgphiGen {\pi_2} {\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}
-    \end{gather}
-    Since we know that $\grad{\phi}$ does not contain $x$ (see \ref{frm:tmpp2}), we can deduce that
-    \begin{gather}
-    \evalgphiGen {\pi_2} {\grad{\phi}}
-    \end{gather}
-    The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
-\end{proof}
 
 \begin{lemma}[\tset{\dgradT Soundness} Induction Step for Calls]
     \label{lemma:is-call}~\\
     Assume \tset{\dgradT Soundness} holds for the method body of method $\edot{y}{m}$.\\
     Then \tset{\dgradT Soundness} holds for $\sCall {$x$} {$y$} {$m$} {$z$}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
 \end{lemma}
-\begin{proof}
-    Assumption:
-    \begin{align}
-    \dgthoare {\Gamma} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
-    \end{align}
-    Using inversion of rule $\tset{\dgradT HCall}$ we know that
-    \begin{gather}
-    \label{frm:tmpp1a}
-    \wo {\wo {\grad{\phi}} {x}} {\grad{\phi_p}} = \grad{\phi'}\\
-    {\mmethod{{C}, {m}}} = {{\method {${T_r}$} {${m}$} {${T_p}$} {${z}$} {${\contract {$\grad{\phi_{pre}}$} {$\grad{\phi_{post}}$}}$} {$s$}}} \\
-    \gphiImplies{\grad{\phi}}{\gphiCons{${\phiNeq {${\ex{${y}$}}$} {${\ev{${\enull}$}}$}}$}{$\grad{\phi_p}$}} \\
-    x \neq y \wedge x \neq z' \\
-    \grad{\phi_p} = {\grad{\phi_{pre}}[{y}, {z'} / {\ethis}, {{z}}]} \\
-    \label{frm:tmpp5a}
-    \grad{\phi_q} = {\grad{\phi_{post}}[{y}, {z'}, {x} / {\ethis}, {{z}}, {\eresult}]}
-    \end{gather}
-    From gradual well-formedness (section \ref{ssec:well-formedness}) it follows that
-    \begin{gather}
-    \gthoare {z : T_p, \ethis : C, \eresult : T_r} {\grad{\phi_{pre}}} {s} {\grad{\phi_{post}}} \\
-    \FV(\grad{\phi_{pre}}) \subseteq \{ z, \ethis \} \\
-    \label{frm:tmpp8a}
-    \FV(\grad{\phi_{post}}) \subseteq \{ z, \ethis, \eresult \} \\
-    \sfrmgphi \grad{\phi_{pre}} \\
-    \sfrmgphi \grad{\phi_{post}} \\
-    \label{frm:tmpp11a}
-    z, \ethis \not \in \mods(s)
-    \end{gather}
-    %\begin{comment2}
-    %Using the induction hypothesis we may assume that
-    %\begin{gather}
-    %\label{frm:tmpp100a}
-    %\gtHoare {} {\grad{\phi_{pre}}} {\textit{<method body>}} {\grad{\phi_{post}}}
-    %\end{gather}
-    %(note that the method body is $s$, combined with necessary measures to ensure the postcondition).
-    %\end{comment2}
-    As shown below, it follows that 
-    \begin{align}
-    \label{frm:tmpp101a}
-    \gtHoare {} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
-    \end{align}
-    
-    Proof for \ref{frm:tmpp101a}:
-    Assumptions:
-    \begin{gather}
-    \label{frm:tmpp1000a}
-    \gsstepConsume{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}{\pi_1}{\pi_2}\\
-    \label{frm:tmpp1001a}
-    \evalgphiGen {\pi_1} {\grad{\phi}}
-    \end{gather}
-    for some $\pi_1, \pi_2 \in \setGProgramState$.
-    Goal:
-    \begin{gather}
-    \evalgphiGen {\pi_2} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
-    \end{gather}
-    Applying rule inversion to \ref{frm:tmpp1000a} we derive that there exists $\pi_{pre}, \pi_{post} \in \setGProgramState$ such that
-    \begin{gather}
-    \label{frm:tmpp1010a}
-    \gsstep{\pi_1}{\pi_{pre}}\\
-    \label{frm:tmpp1011a}
-    \gsstepConsume{s}{\pi_{pre}}{\pi_{post}}\\
-    \label{frm:tmpp1012a}
-    \gsstep{\pi_{post}}{\pi_2}
-    \end{gather}
-    where \ref{frm:tmpp1010a} is determined by \tset{\gradT SsCall} and \ref{frm:tmpp1012a} by \tset{\gradT SsCallFinish}.
-    Applying rule inversion to \ref{frm:tmpp1012a} it follows that
-    \begin{gather}
-    \evalgphiGen {\pi_{post}} {\grad{\phi_{post}}}
-    \end{gather}
-    Combining \ref{frm:tmpp5a} and \ref{frm:tmpp8a} we can show that $\grad{\phi_{q}}$ may only contain $y, z', x$.
-    \tset{\gradT SsCallFinish} assigns $\eresult$ to $x$, which reflects the substitution in \ref{frm:tmpp5a}.
-    Because of \ref{frm:tmpp11a} $\grad{\phi_{q}}$ does not contain false information about $y$ and $z'$ (as described in section \ref{sec:well-formedness}).
-    It follows that
-    \begin{gather}
-    \label{frm:tmpp2010a}
-    \evalgphiGen {\pi_2} {\grad{\phi_{q}}}
-    \end{gather}
-    Since the variables and fields mentioned in $\grad{\phi'}$ are guaranteed to be disjoint from those in $\grad{\phi_p}$ and due to \ref{frm:tmpp1a}, those memory locations cannot be changed by the call.
-    Furthermore $x$ is not in $\grad{\phi'}$ such that there cannot be a contradiction to the knowledge in $\grad{\phi_{q}}$ (which may contain information of $x$, provided by the call).
-    It follows that
-    \begin{gather}
-    \label{frm:tmpp2011a}
-    \evalgphiGen {\pi_2} {\grad{\phi'}}
-    \end{gather}
-    The goal follows from \ref{frm:tmpp2010a} and \ref{frm:tmpp2011a} using the fact that the formulas contain disjoint memory locations.
-\end{proof}
 
 \begin{lemma}[\tset{\dgradT Soundness} Induction Step for Hold]
     \label{lemma:is-hold}~\\
     Assume \tset{\dgradT Soundness} holds for $s \in \setGStmt$.\\
     Then \tset{\dgradT Soundness} holds for $\sHold {$\phi$} {$s$}$ (for all $\phi \in \setFormula$).
 \end{lemma}
-\begin{proof}
-    Omitted.
-\end{proof}
 
 \begin{lemma}[\tset{\dgradT Soundness} Induction Step for Sequences]
     \label{lemma:is-seq}~\\
     Assume \tset{\dgradT Soundness} holds for $s_1, s_2 \in \setGStmt$.\\
     Then \tset{\dgradT Soundness} holds for $\sSeq {$s_1$} {$s_2$}$.
 \end{lemma}
-\begin{proof}
-    Analogous to lemma \ref{lemma:gdpres-seq}.
-\end{proof}
 
-\begin{theorem}[\gvlidf Satisfies \tset{\dgradT Soundness}]~\\
+\begin{theorem}[\gvlidf Satisfies \tset{\dgradT Soundness}]\label{thm:gvlidf-dgsnd}~\\
     The semantics of \gvlidf comply with \tset{\dgradT Soundness}.
 \end{theorem}
-\begin{proof}~\\
-    Structural induction over statement $s$.
-    Most cases are handled by theorem \ref{thm:compl-and-so-to-gdpres} and lemmas \ref{lemma:pc-idf} and \ref{lemma:pso-idf}.
-    The remaining cases are covered by lemmas 
-    \ref{lemma:is-decl},
-    \ref{lemma:is-call},
-    \ref{lemma:is-hold} and
-    \ref{lemma:is-seq}.
-\end{proof}

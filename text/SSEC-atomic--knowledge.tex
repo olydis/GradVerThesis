@@ -13,31 +13,6 @@ Fortunately, \tset{\dgradT Soundness} can be proved for sequences inductively.
     \label{lemma:gdpres-seq}~\\
     If \tset{\dgradT Soundness} holds for statements $s_1$ and $s_2$ then it holds for $s_1;s_2$
 \end{lemma}
-\begin{proof}
-    \begin{mathpar}
-        \inferrule* [Right=seq]
-        {
-            \inferrule* [Right=\dgradT Soundness]
-            {
-                \inferrule* [Right=inversion]
-                {
-                    \dgthoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}\\
-                }
-                {
-                    \dgthoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
-                    \dgthoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
-                }
-            }
-            {
-                \gtHoare{~}{\grad{\phi_1}}{\grad{s_1}}{\grad{\phi_2}}\\
-                \gtHoare{~}{\grad{\phi_2}}{\grad{s_2}}{\grad{\phi_3}}
-            }
-        }
-        {
-            \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}
-        }
-    \end{mathpar}
-\end{proof}
 
 As we will show in the case study (section \ref{sec:gradual-soundness}) this inductive approach can be applied to other composite statements like method calls.
 As a result, it is sufficient to prove \tset{\dgradT Soundness} for “primitive” statements, e.g. by using the approach introduced in the previous section:

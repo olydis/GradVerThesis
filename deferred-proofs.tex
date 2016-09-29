@@ -1,0 +1,58 @@
+\usepackage{etex,etoolbox}
+\usepackage{thmtools}
+\usepackage{environ}
+
+\makeatletter
+\providecommand{\@fourthoffour}[4]{#4}
+% We define an addition for the theorem-like environments; when
+% \newtheorem{thm}{Theorem} is declared, the macro \thm expands
+% to {...}{...}{...}{Theorem} and with \@fourthoffour we access
+% to it; then we make available \@currentlabel (the theorem number)
+% also outside the environment.  
+\newcommand\fixstatement[2][\proofname\space of]{%
+  \ifcsname thmt@original@#2\endcsname
+    % the theorem has been declared with \declaretheorem
+    \AtEndEnvironment{#2}{%
+      \xdef\pat@label{\expandafter\expandafter\expandafter
+        \@fourthoffour\csname thmt@original@#2\endcsname\space\@currentlabel}%
+      \xdef\pat@proofof{\@nameuse{pat@proofof@#2}}%
+    }%
+  \else
+    % the theorem has been declared with \newtheorem
+    \AtEndEnvironment{#2}{%
+      \xdef\pat@label{\expandafter\expandafter\expandafter
+        \@fourthoffour\csname #1\endcsname\space\@currentlabel}%
+      \xdef\pat@proofof{\@nameuse{pat@proofof@#2}}%
+    }%
+  \fi
+  \@namedef{pat@proofof@#2}{#1}%
+}
+
+% We allocate a block of 1000 token registers; in this way \prooftoks
+% is 1000 and we can access the following registers of the block by
+% \prooftoks+n (0<n<1000); we'll use a dedicated counter for it
+% that is stepped at every proof
+\globtoksblk\prooftoks{1000}
+\newcounter{proofcount}
+
+% We gather the contents of the proof as argument to \proofatend
+% and then we store
+% "\begin{proof}[Proof of <theoremname> <theoremnumber>]#1\end{proof}"
+% in the next token register of the allocated block
+\NewEnviron{proofatend}{%
+  \edef\next{%
+    \noexpand\begin{proof}[\pat@proofof\space\pat@label]%
+    \unexpanded\expandafter{\BODY}}%
+  \global\toks\numexpr\prooftoks+\value{proofcount}\relax=\expandafter{\next\end{proof}}
+  \stepcounter{proofcount}}
+
+% \printproofs simply loops over the used token registers of the
+% block, freeing their contents
+\def\printproofs{%
+  \count@=\z@
+  \loop
+    \the\toks\numexpr\prooftoks+\count@\relax
+    \ifnum\count@<\value{proofcount}%
+    \advance\count@\@ne
+  \repeat}
+\makeatother

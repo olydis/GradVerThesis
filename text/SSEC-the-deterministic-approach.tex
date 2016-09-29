@@ -152,39 +152,6 @@ As mentioned before, this gradual partial function has desirable properties:
         \end{displaymath}
         is a sound gradual lifting of $P$.
     \end{lemma}
-    \begin{proof}~\\
-        \begin{description}
-            \item[Introduction] 
-            \begin{align*}
-            &P(\phi_1, \phi_2) \\
-            \overset{Introduction}{~\quad\implies\quad~} 
-            &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2}\\
-            \overset{Strength}{~\quad\implies\quad~} 
-            &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ P(\phi_1, \phi) \wedge \phiImplies{\phi}{\phi_2} \\
-            \overset{}{~\quad\implies\quad~} 
-            &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi}{\phi_2} \\
-            \overset{}{~\quad\implies\quad~} 
-            &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~  \gphiImplies{\grad{\phi_2}}{\phi_2} \\
-            \overset{Def}{~\quad\implies\quad~} 
-            &\grad{P}(\phi_1, \phi_2)
-            \end{align*}
-            
-            \item[Monotonicity] 
-            \begin{align*}
-            &\grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
-            \overset{Def}{~\quad\implies\quad~}
-            &(\exists \grad{\phi}.~ \dgrad{P}(\grad{\phi_1}) = \grad{\phi} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
-            \overset{Monotonicity}{~\quad\implies\quad~}
-            &(\exists \grad{\phi}, \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \grad{\phi} \mpt \grad{\phi'} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
-            \overset{}{~\quad\implies\quad~} 
-            &(\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
-            \overset{}{~\quad\implies\quad~} 
-            &(\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2'}})\\
-            \overset{Def}{~\quad\implies\quad~} 
-            &\grad{P}(\phi_1', \phi_2') \\
-            \end{align*}
-        \end{description}
-    \end{proof}
     
     This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
     
@@ -302,14 +269,5 @@ As mentioned before, this gradual partial function has desirable properties:
     Note that $P(\pi) = \setProgramState$ is a sufficient runtime check if $\envs{\grad{\phi_2'}} \subseteq \envs{\grad{\phi_2}}$.
     In other words, no runtime check is necessary in this case.
 \end{lemma}
-\begin{proof}~\\
-    The restriction $\envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
-    $\grad{\phi_2'}$ is ensured by \tset{\dgradT Soundness}, $P$ is explicitly checked.
-    
-    On the other hand, $\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P$ ensures that $P$ is not stricter than necessary.
-    Assume there exists a program state $\pi \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\pi \not \in (\envs{\grad{\phi_2'}} \cap P$.
-    It follows that $\neg P(\pi)$, i.e. a runtime exception is thrown that indicates that a runtime check fails.
-    However, $\pi$ neither violates $\grad{\phi_2'}$ nor $\grad{\phi_2}$ and is thus not expected to violate any runtime checks.
-\end{proof}
 
 

@@ -222,9 +222,6 @@ We believe that most imperative statically verified programming languages satisf
         \label{lemma:po-form}~\\
         The implication predicate is a partial order on $\setFormula$.
     \end{lemma}
-    \begin{proof}%[Lemma \ref{lemma:po-form}]
-        Follows from definitions \ref{def:form-implication}, \ref{def:form-eq} and the fact that $\subseteq$ induces a partial order.
-    \end{proof}
     
     We assume that there is a largest element $\phiTrue \in \setFormula$ with $\envs{\phiTrue} = \setProgramState$.
     
@@ -257,28 +254,6 @@ We believe that most imperative statically verified programming languages satisf
         &\tHoare{}{\phi_1} {\sSeq{$s_1$}{$s_2$}} {\phi_3}
         \end{align*}
     \end{lemma}
-    \begin{proof}
-        We are given 
-        \begin{displaymath}
-        \evalphiGen{\pi_1}{\phi_1}
-        \end{displaymath}
-        and
-        \begin{displaymath}
-        \sstepConsume{\sSeq{$s_1$}{$s_2$}}{\pi_1}{\pi_3}
-        \end{displaymath}
-        for some $\pi_1, \pi_3 \in \setProgramState$.
-        
-        According to assumption \ref{frm:assume-seq-ss} this implies
-        \begin{displaymath}
-        \sstepConsume{s_1}{\pi_1}{\pi_2} \wedge \sstepConsume{s_2}{\pi_2}{\pi_3}
-        \end{displaymath}
-        for some $\pi_2 \in \setProgramState$.
-        Using the assumptions
-        \begin{displaymath}
-        \tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}
-        \end{displaymath}
-        we can deduce $\evalphiGen{\pi_3}{\phi_3}$.
-    \end{proof}
     
     We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphiGen{\pi}{\phi} ~\}$ is a filter, i.e.
     \begin{itemize}

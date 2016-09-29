@@ -8,23 +8,9 @@ It uses a number of lifted components that we defined in section \ref{sec:gradua
     \label{fig:gvl-sem-stat-hoare}
 \end{figure}
 
-\begin{lemma}[\gvlidf: Sound Deterministic Lifting of Hoare Logic]
+\begin{lemma}[\gvlidf: Sound Deterministic Lifting of Hoare Logic]\label{lemma:gvlidf-sdl-hl}~\\
     The inductive definition we give induces a well-defined partial function.
     This function is a sound deterministic lifting (see \ref{ssec:the-deterministic-approach}) of the Hoare logic of \svlidf defined in section \ref{sec:static-semantics}.
 \end{lemma}
-\begin{proof}~
-    \begin{description}
-        \item[Well-definedness] The rules are syntax directed and only can deduce at most one result per input.
-        \item[Deterministic lifting] Rule-wise.
-        
-        \tset{HSkip}:
-        See lemma \ref{lemma:opt-lift-impl}.
-        
-        \tset{HAlloc}, \tset{HFieldAssign}, \tset{HReturn}, \tset{HAssert}:
-        Composition of lifted components as defined in \ref{ssec:lifted-helper-functions}.
-        
-        Remaining rules analogous.
-    \end{description}
-\end{proof}
 
 A sound predicate lifting $\gtHoare{\cdot}{\cdot}{\cdot}{\cdot}$ can be derived using lemma \ref{lem:det2grad}.

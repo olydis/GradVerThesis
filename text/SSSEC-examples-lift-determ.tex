@@ -8,102 +8,6 @@
     \end{displaymath}
     is a sound deterministic lifting of $P_3(\phi_1, \phi_3) = \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)$.
 \end{lemma}
-\begin{proof}~
-    \begin{description}
-        \item[Introduction]
-        \begin{align*}
-        & \phantom{\overset{}{~\quad\quad\implies\quad\quad~}}~
-        P_3(\phi_1, \phi_3)\\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)\\
-        & \overset{Introduction}{~\quad\quad\implies\quad\quad~} 
-        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
-        \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2})\\
-        & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
-        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
-        \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge 
-        (\exists \phi_2' \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_2'}{\phi_2}))\\
-        & \overset{lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
-        \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
-        \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge 
-        (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ \phiImplies{\phi_2'}{\phi_2} \wedge P_2(\phi_2', \phi_3')))\\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
-        (\exists \phi_2' \in \gamma(\grad{\phi_2}), \phi_3'.~ P_2(\phi_2', \phi_3'))\\
-        & \overset{Introduction}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
-        (\exists \phi_2' \in \gamma(\grad{\phi_2}), \grad{\phi_3'}.~ \dgrad{P_2}(\phi_2') = \grad{\phi_3'})\\
-        & \overset{Monotonicity}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \wedge 
-        (\exists \grad{\phi_3}.~ \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3})\\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_3}.~ \dgrad{P_2}(\dgrad{P_1}(\phi_1)) = \grad{\phi_3}\\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_3}.~ \dgrad{P_3}(\phi_1) = \grad{\phi_3}
-        \end{align*}
-        
-        \item[Strength]
-        \begin{align*}
-        & \phantom{\overset{}{~\quad\quad\implies\quad\quad~}}~
-        \dgrad{P_3}(\grad{\phi_1}) = \grad{\phi_3} \wedge \phi_1 \in \gamma(\grad{\phi_1}) \wedge P_3(\phi_1, \phi)\\
-        & \overset{Defenitions}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}, \phi'.~ 
-        \dgrad{P_1}(\grad{\phi_1}) = \grad{\phi_2} \wedge \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3} \wedge 
-        \phi_1 \in \gamma(\grad{\phi_1}) \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge P_1(\phi_1, \phi') \wedge P_2(\phi', \phi)\\
-        & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}, \phi'.~ 
-        \dgrad{P_1}(\grad{\phi_1}) = \grad{\phi_2} \wedge \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3} \wedge 
-        \phi_1 \in \gamma(\grad{\phi_1}) \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-         \wedge P_1(\phi_1, \phi') \wedge P_2(\phi', \phi)
-        \wedge (\exists \phi_2 \in \gamma(\grad{\phi_2}).~ P_1(\phi_1, \phi_2) \wedge \phiImplies{\phi_2}{\phi'}) \\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}, \phi', \phi_2 \in \gamma(\grad{\phi_2}).~ 
-        \dgrad{P_1}(\grad{\phi_1}) = \grad{\phi_2} \wedge \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3} \wedge 
-        \phi_1 \in \gamma(\grad{\phi_1}) \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi', \phi)
-        \wedge \phiImplies{\phi_2}{\phi'} \\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}, \phi', \phi_2 \in \gamma(\grad{\phi_2}).~ 
-        \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}  \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi', \phi)
-        \wedge \phiImplies{\phi_2}{\phi'} \\
-        & \overset{lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}, \phi_2 \in \gamma(\grad{\phi_2}), \phi''.~ 
-        \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}   \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi'')
-        \wedge \phiImplies{\phi''}{\phi} \\
-        & \overset{Strength}{~\quad\quad\implies\quad\quad~} 
-        \exists \grad{\phi_2}, \phi_2 \in \gamma(\grad{\phi_2}), \phi''.~ 
-        \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}  \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi'') 
-        \wedge \phiImplies{\phi''}{\phi}  \\
-        & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-        \wedge (\exists \phi_3 \in \gamma(\grad{\phi_3}).~ P_2(\phi_2, \phi_3) \wedge \phiImplies{\phi_3}{\phi''}) \\
-        & \overset{}{~\quad\quad\implies\quad\quad~} 
-        \exists \phi_2 \in \gamma(\grad{\phi_2}), \phi_3 \in \gamma(\grad{\phi_3}).~ 
-        P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
-        \wedge \phiImplies{\phi_3}{\phi} \\
-        & \overset{Defenition}{~\quad\quad\implies\quad\quad~} 
-        \exists \phi_3 \in \gamma(\grad{\phi_3}).~ 
-        P_3(\phi_1, \phi_3)
-        \wedge \phiImplies{\phi_3}{\phi} 
-        \end{align*}
-        
-        \item[Monotonicity]~\\
-        Compositions of monotonic functions are monotonic.
-    \end{description}
-\end{proof}
 In other words, deterministic liftings of composite predicates can be obtained by composing piecewise deterministic liftings.
 Optimality of the piecewise liftings does not guarantee optimality of the overall lifting. % double release
 
@@ -136,35 +40,6 @@ We start by lifting implication, which is used in \tset{HSeq}.
     Let $\id : \setGFormula \rightarrow \setGFormula$ be the identity function.
     Then $\id$ is an optimal deterministic lifting of $\phiImplies{\cdot}{\cdot} \subseteq \setFormula \times \setFormula$.
 \end{lemma}
-\begin{proof}~
-    \begin{description}
-        \item[Soundness]
-        \begin{description}
-            \item[Introduction] The identity function is total.
-            
-            \item[Strength]~\\
-            Known:
-            $$\id(\grad{\phi_1}) = \grad{\phi_2} \wedge \phi_1 \in \gamma(\grad{\phi_1}) \wedge \phiImplies{\phi_1}{\phi}$$
-            Goal:
-            $$\exists \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2} \wedge \phiImplies{\phi_2}{\phi}$$
-            The goal is satisfied when choosing $\phi_2 = \phi_1$
-            
-            \item[Monotonicity] Trivial.
-        \end{description}
-        \item[Optimality]~\\
-        Proof by contradiction.
-        
-        Assume there was another, more optimal deterministic lifting $\dgrad{f} : \setGFormula \rightarrow \setGFormula$.
-        Note that $\dgrad{f}$ must be total as it would otherwise not satisfy the introduction rule.
-        Let $\grad{\phi} \in \setGFormula$ be a chosen such that $\dgrad{f}(\grad{\phi}) \sqsubset \id(\grad{\phi})$ (exists, since $\dgrad{f}$ is more optimal).
-        
-        Then there exists $\phi \in (\gamma(\id(\grad{\phi})) \backslash \gamma(\dgrad{f}(\grad{\phi}))$, i.e. $\phi \in (\gamma(\grad{\phi}) \backslash \gamma(\dgrad{f}(\grad{\phi}))$.
-        Applying the strength rule to $\dgrad{f}$ and $\phiImplies{\phi}{\phi}$ we can deduce
-        $$\exists \phi' \in \gamma(\dgrad{f}(\grad{\phi})).~ \phiImplies{\phi}{\phi'} ~\wedge~ \phiImplies{\phi'}{\phi}$$
-        This means that $\phi \in \gamma(\dgrad{f}(\grad{\phi}))$.
-        Contradiction.
-    \end{description}
-\end{proof}
 
 Using lemma \ref{lemma:det-lift-comp} and lemma \ref{lemma:opt-lift-impl}, the deterministic lifting of \tset{HSeq} reduces to
 \begin{mathpar}

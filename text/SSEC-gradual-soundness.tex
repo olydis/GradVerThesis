@@ -23,13 +23,13 @@ Note however that there is an additional requirement concerning the correct inte
 \end{definition}
 \begin{lemma}[Compositional Validity of Gradual Hoare Triples]
     \label{lem:comp-gtHoare}
-    \begin{displaymath}
-    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_3} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ \gtHoare{}{\grad{\phi_1}} {\grad{s_1}} {\grad{\phi_2}} ~\wedge~ \gtHoare{}{\grad{\phi_2}} {\grad{s_2}} {\grad{\phi_3}} \implies \tHoare{}{\grad{\phi_1}} {\sSeq{$\grad{s_1}$}{$\grad{s_2}$}} {\grad{\phi_3}}
-    \end{displaymath}
+    \begin{align*}
+    \forall \grad{\phi_1}, \grad{\phi_2}, \grad{\phi_3} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ 
+    &\gtHoare{}{\grad{\phi_1}} {\grad{s_1}} {\grad{\phi_2}} ~\wedge~ \gtHoare{}{\grad{\phi_2}} {\grad{s_2}} {\grad{\phi_3}} \\
+    \implies
+    &\tHoare{}{\grad{\phi_1}} {\sSeq{$\grad{s_1}$}{$\grad{s_2}$}} {\grad{\phi_3}}
+    \end{align*}
 \end{lemma}
-\begin{proof}
-    Analogous to proof of lemma \ref{lem:comp-tHoare}.
-\end{proof}
 
 %% ...have nothing to do with gradual lifting
 Note that $\gtHoare {~} {\cdot} {\cdot} {\cdot}$ is not a sound gradual lifting of $\tHoare{~}{\cdot}{\cdot}{\cdot}$.
@@ -84,31 +84,6 @@ However, $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}
     \label{lemma:tauto}~\\
     \tset{\gradT Soundness} is a tautology. 
 \end{lemma}
-\begin{proof}~\\
-    Goal: $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$.
-    
-    According to definition \ref{def:valid-ghoare-triple} we may assume
-    \begin{align}
-    \label{eq:ttemp1}
-    \gsstepConsume{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\pi_1}}{\grad{\pi_2}}
-    \end{align}
-    and
-    \begin{align}
-    \evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}
-    \end{align}
-    for some $\grad{\pi_1}, \grad{\pi_2} \in \setGProgramState$ and have to show
-    \begin{align}
-    \label{eq:ttemp1g}
-    \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
-    \end{align}
-    
-    It follows from \ref{eq:ttemp1} and lemma \ref{lem:comp-gtHoare} that there exists $\grad{\pi} \in \setGProgramState$ such that
-    \begin{align}
-    \label{eq:ttemp2}
-    \gsstepConsume{\sAssert{$\grad{\phi_2}$}}{\grad{\pi}}{\grad{\pi_2}}
-    \end{align}
-    Then \ref{eq:ttemp1g} follows by definition of the assertion statement (see example \ref{ex:ss-ra} for an illustration).
-\end{proof}
 
 That \tset{\gradT Soundness} is a tautology makes sense, realizing that (without demanding any degree of optimality) $\gthoare{}{\cdot}{\cdot}{\cdot}$ carries zero information.
 We will address this issue later (section \ref{ssec:the-deterministic-approach}), also rethinking the way we obtain $\gthoare{}{\cdot}{\cdot}{\cdot}$ in the first place.

@@ -14,7 +14,7 @@
     \end{flalign*}
     Then $\gphiOr{\:}{\:}$ is an optimal lifting of $\phiOr{\:}{\:}$.
 \end{lemma}
-\begin{proof}~\\
+\begin{proofaten}~\\
     Goal: $\gphiOr{$\grad{\phi_1}$}{$\grad{\phi_2}$} = \alpha(\{~ \phiOr{$\phi_1$}{$\phi_2$} ~|~ \phi_1 \in \gamma(\grad{\phi_1}),\, \phi_2 \in \gamma(\grad{\phi_2}) ~\})$
     
     \begin{description}
@@ -75,11 +75,11 @@
     &\gphiAnd{$\phi_1'$}{$\phi_2'$}\\
     \end{align*}
     \end{comment2}
-\end{proof}
+\end{proofaten}
 \end{comment}
 
 %% composite
-\begin{lemma}[Sound Lifting of Composed Function]~\\
+\begin{lemma}[Sound Lifting of Composed Function]\label{lemma:sl-comp}~\\
     Let $g, f : \setFormula \rightarrow \setFormula$ be arbitrary functions.
     
     Let $\grad{(g \circ f)} : \setGFormula \rightarrow \setGFormula$ be defined as
@@ -91,35 +91,6 @@
     Then $\grad{(g \circ f)}$ is a sound lifting of $(g \circ f)$, i.e. “piecewise” lifting of composed functions is allowed.
     Optimality of $\grad{g}$ and $\grad{f}$ does not imply optimality of $\grad{(g \circ f)}$.
 \end{lemma}
-\begin{proof}
-    \begin{description}
-        \item[Introduction]
-        \begin{align*}
-        &g(f(\phi))\\
-        \overset{Introduction~\grad{g}}{\mpt}~
-        &\grad{g}(f(\phi))\\
-        \overset{\substack{Introduction~\grad{f}\\\&\\Monotonicity~\grad{g}}}{\mpt}~
-        &\grad{g}(\grad{f}(\phi))\\
-        =~
-        &\grad{g}(\grad{f}(\phi))\\
-        =~
-        &(\grad{g} \circ \grad{f})(\phi)\\
-        =~
-        &\grad{(g \circ f)}(\phi)
-        \end{align*}
-        
-        \item[Monotonicity]
-        \begin{align*}
-        &\grad{\phi_1} \mpt \grad{\phi_2}\\
-        \overset{Monotonicity~\grad{f}}{\quad\quad\implies\quad\quad}
-        &\grad{f}(\grad{\phi_1}) \mpt \grad{f}(\grad{\phi_2})\\
-        \overset{Monotonicity~\grad{g}}{\quad\quad\implies\quad\quad}
-        &\grad{g}(\grad{f}(\grad{\phi_1})) \mpt \grad{g}(\grad{f}(\grad{\phi_2}))\\
-        \overset{Definition}{\quad\quad\implies\quad\quad}
-        &\grad{(g \circ f)}(\grad{\phi_1}) \mpt \grad{(g \circ f)}(\grad{\phi_2})
-        \end{align*}
-    \end{description}
-\end{proof}
 
 \begin{comment}
 \begin{align*}
