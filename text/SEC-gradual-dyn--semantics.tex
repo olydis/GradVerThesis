@@ -36,21 +36,26 @@ If no other derivation exists, we map to this state.
     For the rules copied from $\sstep{\cdot}{\cdot}$, the rules are trivially satisfied as there is no difference between gradual and non-gradual statements.
     Precision is only meaningful for call statements:
 
-    
-    \tset{\gradT SsCall}
-        Introduction
-        For static precondition, \tset{\gradT SsCall} is identical to \tset{SsCall}.
+    \begin{description}
+        \item[\tset{\gradT SsCall}]~
+        \begin{description}
+            \item[Introduction]~\\
+            For static precondition, \tset{\gradT SsCall} is identical to \tset{SsCall}.
+            
+            \item[Monotonicity]~\\
+            Reducing the precision of the precondition results in all permissions being passed to the topmost stack frame.
+            Having more permissions than before cannot introduce runtime failures.
+            Succeeding executions will thus be observationally identical after reducing precision.
+        \end{description}
         
-        Monotonicity
-        Reducing the precision of the precondition results in all permissions being passed to the topmost stack frame.
-        Having more permissions than before cannot introduce runtime failures.
-        Succeeding executions will thus be observationally identical after reducing precision.
-        
-    \tset{\gradT SsCallFinish}
-        Introduction
-        For static postcondition, \tset{\gradT SsCallFinish} is identical to \tset{SsCallFinish}.
-        
-        Monotonicity
-        The return value of \tset{\gradT SsCallFinish} is independent of the postcondition thus monotonic w.r.t. to it.
-        In terms of definedness, reducing the precision of the postcondition cannot result in premises that were satisfied before to be unsatisfied.
+        \item[\tset{\gradT SsCallFinish}]~
+        \begin{description}
+            \item[Introduction]~\\
+            For static postcondition, \tset{\gradT SsCallFinish} is identical to \tset{SsCallFinish}.
+            
+            \item[Monotonicity]~\\
+            The return value of \tset{\gradT SsCallFinish} is independent of the postcondition thus monotonic w.r.t. to it.
+            In terms of definedness, reducing the precision of the postcondition cannot result in premises that were satisfied before to be unsatisfied.
+        \end{description}
+    \end{description}
 \end{proof}

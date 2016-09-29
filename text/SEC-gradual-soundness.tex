@@ -1,16 +1,16 @@
 Proposed gradual Hoare logic is sound w.r.t. the small-step semantics if runtime checks are injected as proposed in section \ref{ssec:gradual-soundness} (see lemma \ref{lemma:tauto} for proof).
 % BY construction, what about progress? \gsssem exceptional? THEOREM?
 
-However, \gvlidf also complies with the stronger notion of soundness \tset{GDPreservation} introduced in section \ref{ssec:gradual-soundness}.
+However, \gvlidf also complies with the stronger notion of soundness \tset{\dgradT Preservation} introduced in section \ref{ssec:gradual-soundness}.
 We will show how the small-step semantics $\sstep{\cdot}{\cdot}$ and $\gsstep{\cdot}{\cdot}$ realize the approach introduced in section \ref{ssec:atomic--knowledge}.
 
-Specifically, we show that the semantics are complete and perfect w.r.t. all statements except declarations, sequences, method calls and hold.
-For those remaining statements we prove by induction that \tset{GDPreservation} still holds.
+Specifically, we show that the semantics are complete and semi-optimal w.r.t. all statements except declarations, sequences, method calls and hold.
+For those remaining statements we prove by induction that \tset{\dgradT Preservation} still holds.
 The overall proof is a structural induction on statement $s$.
 
-\begin{lemma}[Partial Completeness of \svlidf]
+\begin{lemma}[Partial Completeness of \svlidf]~\\
     \label{lemma:pc-idf}
-    The semantics of \svlidf is complete (see definition \ref{def:completeness}) w.r.t. 
+    The semantics of \svlidf is complete (see definition \ref{def:completeness}) w.r.t. \\
     $\sSkip, \sFieldAssign {$x$} {$f$} {$y$}, \sVarAssign {$x$} {$e$}, \sAlloc {$x$} {$C$}, \sReturn {$x$}, \sAssert {$\phi$}, \sRelease {$\phi$}$
     \begin{comment}
         \item $\sSkip$
@@ -81,9 +81,9 @@ The overall proof is a structural induction on statement $s$.
     \end{description}
 \end{proof}
 
-\begin{lemma}[Partial Semi-Optimality of \gvlidf]
+\begin{lemma}[Partial Semi-Optimality of \gvlidf]~\\
     \label{lemma:pso-idf}
-    The semantics of \gvlidf is semi-optimal (see definitions \ref{def:perf-stat} and \ref{def:perf-dyn}) w.r.t.
+    The semantics of \gvlidf is semi-optimal (see definitions \ref{def:perf-stat} and \ref{def:perf-dyn}) w.r.t.\\
     $\sSkip, \sFieldAssign {$x$} {$f$} {$y$}, \sVarAssign {$x$} {$e$}, \sAlloc {$x$} {$C$}, \sReturn {$x$}, \sAssert {$\phi$}, \sRelease {$\phi$}$
     \begin{comment}
         \item $\sSkip$
@@ -175,10 +175,10 @@ The overall proof is a structural induction on statement $s$.
     \end{description}
 \end{proof}
 
-\begin{lemma}[\tset{GDPreservation} Induction Step for Declaration]
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Declaration]~\\
     \label{lemma:is-decl}
-    Assume \tset{GDPreservation} holds for $s \in \setGStmt$.
-    Then \tset{GDPreservation} holds for $\sSeq{\sDeclare{$T$}{$x$}}{$s$}$ (for all $T \in \setType,\, x \in \setVar$).
+    Assume \tset{\dgradT Preservation} holds for $s \in \setGStmt$.\\
+    Then \tset{\dgradT Preservation} holds for $\sSeq{\sDeclare{$T$}{$x$}}{$s$}$ (for all $T \in \setType,\, x \in \setVar$).
 \end{lemma}
 \begin{proof}
     Assumption:
@@ -234,10 +234,10 @@ The overall proof is a structural induction on statement $s$.
     The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
 \end{proof}
 
-\begin{lemma}[\tset{GDPreservation} Induction Step for Calls]
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Calls]~\\
     \label{lemma:is-call}
-    Assume \tset{GDPreservation} holds for the method body of method $\edot{y}{m}$.
-    Then \tset{GDPreservation} holds for $\sCall {$x$} {$y$} {$m$} {$z$}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
+    Assume \tset{\dgradT Preservation} holds for the method body of method $\edot{y}{m}$.\\
+    Then \tset{\dgradT Preservation} holds for $\sCall {$x$} {$y$} {$m$} {$z$}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
 \end{lemma}
 \begin{proof}
     Assumption:
@@ -325,28 +325,28 @@ The overall proof is a structural induction on statement $s$.
     The goal follows from \ref{frm:tmpp2010a} and \ref{frm:tmpp2011a} using the fact that the formulas contain disjoint memory locations.
 \end{proof}
 
-\begin{lemma}[\tset{GDPreservation} Induction Step for Hold]
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Hold]~\\
     \label{lemma:is-hold}
-    Assume \tset{GDPreservation} holds for $s \in \setGStmt$.
-    Then \tset{GDPreservation} holds for $\sHold {$\phi$} {$s$}$ (for all $\phi \in \setFormula$).
+    Assume \tset{\dgradT Preservation} holds for $s \in \setGStmt$.\\
+    Then \tset{\dgradT Preservation} holds for $\sHold {$\phi$} {$s$}$ (for all $\phi \in \setFormula$).
 \end{lemma}
 \begin{proof}
     Omitted.
 \end{proof}
 
-\begin{lemma}[\tset{GDPreservation} Induction Step for Sequences]
+\begin{lemma}[\tset{\dgradT Preservation} Induction Step for Sequences]~\\
     \label{lemma:is-seq}
-    Assume \tset{GDPreservation} holds for $s_1, s_2 \in \setGStmt$.
-    Then \tset{GDPreservation} holds for $\sSeq {$s_1$} {$s_2$}$.
+    Assume \tset{\dgradT Preservation} holds for $s_1, s_2 \in \setGStmt$.\\
+    Then \tset{\dgradT Preservation} holds for $\sSeq {$s_1$} {$s_2$}$.
 \end{lemma}
 \begin{proof}
     Analogous to lemma \ref{lemma:gdpres-seq}.
 \end{proof}
 
-\begin{theorem}[\gvlidf Satisfies \tset{GDPreservation}]
-    The semantics of \gvlidf comply with \tset{GDPreservation}.
+\begin{theorem}[\gvlidf Satisfies \tset{\dgradT Preservation}]~\\
+    The semantics of \gvlidf comply with \tset{\dgradT Preservation}.
 \end{theorem}
-\begin{proof}
+\begin{proof}~\\
     Structural induction over statement $s$.
     Most cases are handled by theorem \ref{thm:compl-and-so-to-gdpres} and lemmas \ref{lemma:pc-idf} and \ref{lemma:pso-idf}.
     The remaining cases are covered by lemmas 
