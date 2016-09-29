@@ -9,9 +9,9 @@ More specifically, a type safety proof for the reduced term can be computed from
 
 In the static system, this process would always succeed (and is thus not necessary to ensure type safety).
 However, in the gradual system, deriving a proof for a reduced term may fail due to inconsistent judgments in the proofs of the unreduced term.
-For example, the unreduced term may judge $T_1 \grad{<} \qm$ and $\qm \grad{<} T_2$, whereas the reduced term requires $T_1 \grad{<} T_2$ (a property called “consistent transitivity”).
+For example, the unreduced term may judge $T_1~\grad{<}~\qm$ and $\qm~\grad{<}~T_2$, whereas the reduced term requires $T_1~\grad{<}~T_2$ to hold (a property called “consistent transitivity”).
 Evidence is the minimum information necessary to detect those inconsistencies.
-It is thus created while initially type checking a term (“initial evidence”, side product of “\gradT Tapp”) and evolved during reduction as part of the runtime semantics.
+It is thus created while initially type checking a term (“initial evidence”, side product of gradual typing rule “\gradT Tapp”) and evolved during reduction as part of the runtime semantics.
 
 
 \begin{comment}{Combining Proofs}~\\
@@ -26,7 +26,7 @@ Unfortunately, no equivalent concepts exist in our setting.
 Type safety is a property that can be ensured for every single runtime derivation of a typed $\lambda$-calculus.
 \svl and \gvl have a notion of soundness, however this is not a property that gives meaning to intermediate reduction steps.
 Likewise, a static (“type”) derivation $\thoare{}{\phi_1}{s}{\phi_2}$ does not evolve during execution of $s$ (as would be the case for type derivations in a typed $\lambda$-calculus).
-Soundness is a property that exclusively affects the very last program state of a successful execution of $s$ as a total.
+Soundness is a property that exclusively affects the very last program state of a successful execution of $s$ as a whole.
 
 Given an execution $\gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}$, it would have to be the job of evidence to ensure that $\evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}$.
 Note that $\grad{\pi_2}$ corresponds to the reduced term in the setting of AGT, $\grad{\phi_2}$ corresponds to the type of $\grad{\pi_2}$ as postulated by the gradual type system.
@@ -34,22 +34,29 @@ One can imagine how complex evidence would have to be, as it effectively tracks 
 On the other hand, one may simply check $\evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}$.
 
 Ultimately, both the explicit check and the evidence approach are equivalent, yet one is more natural than the other depending on the setting.
-The following example tries to illustrate how an evidence approach would deduce soundness of a gradual assertion statement.
-\begin{example}{Sound Gradual Assertion using Evidence}~\\
-    Given a judgment $\gthoare{}{\qm}{\sAssert{\phiEq{x}{3}}}{\phiEq{x}{3}}$ and an execution $\gsstepConsume{\sAssert{\phiEq{x}{3}}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\qm}$, we have to derive that $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ (without simply evaluating).
+The following example tries to illustrate how soundness of a gradual assertion statement would be deducible using evidence.
+\begin{example}{Sound Gradual Assertion using Evidence}\label{ex:snd-evidence}~\\
+    Given a judgment $\gthoare{}{\qm}{\sAssert{\phiEq{x}{3}}}{\phiEq{x}{3}}$ and an execution $\gsstepConsume{\sAssert{\phiEq{x}{3}}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\qm}$, we have to \emph{derive} $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ (i.e. we may not simply evaluate).
     
     From runtime derivations lying in the past we are given a proof why $\evalgphiGen{\grad{\pi_1}}{\qm}$ holds.
     Ultimately, this proof may involve information about the value of $x$ (for instance, there might have been an assignment to $x$ in the past, i.e. $\grad{\pi_1}$ has evolved from a program state that had type $\phiEq{x}{...}$).
     Now, this proof can be combined with the proof for $\gthoare{}{\qm}{\sAssert{\phiEq{x}{3}}}{\phiEq{x}{3}}$, say $\gphiImplies{\qm}{\phiEq{x}{3}}$.
-    In case the combined proof results in a transitive judgment $\gphiImplies{\phi}{\gphiImplies{\qm}{\phiEq{x}{3}}}$, this judgment can be checked for consistency.
+    In case the combined proof results in a transitive judgment $\gphiImplies{\phi}{\gphiImplies{\qm}{\phiEq{x}{3}}}$, this judgment can be checked for consistency (i.e. whether $\gphiImplies{\phi}{\phiEq{x}{3}}$ holds).
     
     Should combining both proofs succeed, we ultimately end up with a proof for $\evalgphiGen{\grad{\pi_1}}{\phiEq{x}{3}}$ which is also a proof for $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ (due to the small-step semantics of assertions).
     
     Evaluation of $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ is arguably less complex and does not require any proofs.
+    \begin{comment}
+    Note also that the assertion example above is a very simple case. In general, it might be required to show consistency of more complex proofs, e.g. by proving that $$\gphiImplies{\phiAnd{$(\phiAnd{$(\wo{\phi}{\eresult})$}{\phiEq{\eresult}{\ethis}})[\ttt{x},\ttt{y}/\eresult,\ethis]$}{\phiEq{x}{p}}}{\phiEq{y}{p}}$$
+    holds given $$\gphiImplies{\phiAnd{$(\phiAnd{$(\wo{\phi}{\eresult})$}{\phiEq{\eresult}{\ethis}})[\ttt{x},\ttt{y}/\eresult,\ethis]$}{\phiEq{x}{p}}}{\phiEq{y}{p}}$$
+    , which requires evidence sophisticated enough to model the program environment.
+    \end{comment}
 \end{example}
 
+Our checking approach adapted to AGT would correspond to literally checking whether a reduced term has its postulated type -- however, this is only possible with additional runtime support (track runtime type information, tagging) and thus not as straight-forward to implement as the evidence approach.
+
 %% moral
-The big conceptual difference between type systems (setting of AGT) and verification (setting of this work) is that the former operates on syntactical typing derivations, whereas the latter operates on semantically defined predicates.
+The fundamental conceptual difference between type systems (setting of AGT) and verification (setting of this work) is that the former operates on syntactical typing derivations, whereas the latter operates on semantically defined predicates.
 It is arguably more complex to use evidence for predicting the behavior of a semantically defined predicate.
 %In our setting, “type derivations” $\evalphiGen{\cdot}{\cdot}$ .
 
@@ -58,7 +65,7 @@ Both make a statement about the type of a term/program state \emph{after} applyi
 However, in one system, the rule is given, in the other system the rule is (supposed to be) derivable from given static semantics.
 The static semantics of a statically verified programming language exclusively “type” functions operating on program states (corresponding to a number of specialized T$\lambda$ rule of AGT).
 \tset{HSeq} would correspond to a B-combinator that is derivable in AGT using Tapp and T$\lambda$.
-Note the duality of which rules are given and which are derived in each setting.
+Note the duality of which rules are given and which are derivable in each setting.
 
 %Finally, there is a difference of what is required to be gradually lifted in our work, compared to AGT.
 %The role of the Hoare logic requires it to be gradually lifted, resulting in a gradual Hoare logic that effectively assigns plausible types to gradual statements.

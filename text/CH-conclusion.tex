@@ -1,6 +1,17 @@
+Gradual verification aims to overcome drawbacks of static or dynamic verification by seamlessly combining both approaches.
+As a result, programmers can freely choose the amount of static annotations to provide and thus have complete control over the degree of static verification used.
 
-Recap, remind reader what big picture was.
-Briefly outline your thesis, motivation, problem, and proposed solution.
+In this work we have developed a procedure of deriving an imperative gradually verified programming language from a statically verified one.
+We have done so by adapting the work on “Abstracting Gradual Typing” (AGT, \cite{garcia2016abstracting}) by Garcia, Clark and Tanter to the setting of program verification.
+Therefore, we used the concepts of abstract interpretation to give a meaning to gradual formulas.
+Furthermore we generalized their notion of gradual lifting and applied it to the semantics of the statically verified language.
+We also developed the notion of deterministic lifting in order to overcome a number of practical issues related to predicate lifting and transitivity.
+Note that we did not make use of their way of providing gradual dynamic semantics using “evidence”, see section \ref{sec:soundness-using-evidence} for discussion.
+
+Finally, we illustrated our approach by gradualizing an imperative statically verified language using implicit dynamic frames to enable safe reasoning about shared mutable data structures.
+
+%Recap, remind reader what big picture was.
+%Briefly outline your thesis, motivation, problem, and proposed solution.
 
 
 
