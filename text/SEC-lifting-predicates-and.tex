@@ -1,5 +1,4 @@
 The Hoare logic of \svl is a ternary predicate $\thoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setFormula \times \setStmt \times \setFormula$.
-% TODO: ensure consistency, setFormulaA vs setFormula
 Since \gvl contains gradual formulas and gradual statements, the gradualized Hoare logic is expected to have signature $\gthoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setGFormula \times \setGStmt \times \setGFormula$.
 Similarly, the gradualized small-step semantics is expected to have signature $\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$ instead of $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$.
 Usually semantics are defined inductively, meaning that they are defined in terms of further predicates or functions (e.g. implication between formulas).

@@ -1,16 +1,6 @@
 Let $\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$ be a sound gradual lifting of $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$.
 As shown in section \ref{ssec:gradual-soundness}, \tset{\gradT Soundness} is a tautology, i.e. the gradual system is sound.
 
-\begin{comment}
-%% make progress work
-TODO when progress definition is final
-Progress: Note that premise is tautology.
-So we artificially make conclusion true by demanding that lifting is total.
-This always works since the lifting can be defined arbitrarily wherever the original function is undefined.
-\end{comment}
-
-%% soundness is tautology
-
 %% soundnessX
 However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of soundness introduced in section \ref{ssec:the-deterministic-approach} (definition \ref{def:dgsnd}).
 This stronger notion allows considering return values of the deterministic lifting as static knowledge.

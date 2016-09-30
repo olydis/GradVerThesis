@@ -34,9 +34,9 @@ Note however that there is an additional requirement concerning the correct inte
 %% ...have nothing to do with gradual lifting
 Note that $\gtHoare {~} {\cdot} {\cdot} {\cdot}$ is not a sound gradual lifting of $\tHoare{~}{\cdot}{\cdot}{\cdot}$.
 A gradual lifting would declare the Hoare triple $\hoare{\qm}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$ valid due to the existence of a valid concretization, e.g. $\hoare{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiEq{y}{4}}$).
-However, this triple is clearly not valid as the postcondition is not guaranteed for all executions satisfying the precondition ($\qm$ is always satisfied).
+However, this triple is clearly not valid semantically since the postcondition is not guaranteed for all executions satisfying the precondition ($\qm$ is always satisfied).
 Recall that gradual lifting was introduced in order to comply with the expectations a programmer would have when using a gradual verification system.
-The validity predicate $\gtHoare {} {\cdot} {\cdot} {\cdot}$ on the other hand is defined semantically, is invisible to the programmer and therefore not affected by the logic behind gradual lifting.
+The validity predicate $\gtHoare {} {\cdot} {\cdot} {\cdot}$ on the other hand is defined semantically and therefore not affected by the logic behind gradual lifting.
 
 %% clash
 Unfortunately, the different concepts collide in gradual soundness (see definition \ref{def:gsnd-i}).
@@ -78,7 +78,10 @@ Soundness can then be redefined as
     If $\gthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ then $\gtHoare{}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$
 \end{definition}
 Intuitively, this definition states that an assertion is inserted during verification, whenever gradual Hoare logic is used.
-However, $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$ is a tautology.
+Such a system can be viewed as a “safe baseline” and corresponds to a strong dynamic type system: 
+Program states are only checked against their expectations as late/lazy as possible (like Scheme or Python check values for their runtime type if a corresponding function is called).
+It may be desirable to check for inconsistencies more eagerly, to terminate programs with unjustifiable behavior earlier or even as early as possible, like the “evidence” approach introduced by AGT \cite{garcia2016abstracting}.
+In section \ref{ssec:the-deterministic-approach} we will derive an approach that ultimately allows us to move towards more eager checking.
 
 \begin{lemma}[\tset{\gradT Soundness} Tautology]
     \label{lemma:tauto}~\\

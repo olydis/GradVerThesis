@@ -707,7 +707,7 @@ This section contains proofs for most lemmas and theorems mentioned in this work
 \end{proofatend}
 
 \begin{proofatend}[Proof of Lemma \ref{lemma:snd-svlidf}]
-    % TODO
+    Omitted (proof in \cite{olydisGitHub}).
 \end{proofatend}
 
 \begin{proofatend}[Proof of Lemma \ref{lemma:ss-wd}]
@@ -735,7 +735,7 @@ This section contains proofs for most lemmas and theorems mentioned in this work
         See lemma \ref{lemma:opt-lift-impl}.
         
         \tset{HAlloc}, \tset{HFieldAssign}, \tset{HReturn}, \tset{HAssert}:
-        Composition of lifted components as defined in \ref{ssec:lifted-helper-functions}.
+        Composition of lifted components as defined in \ref{sec:gradual-liftings}.
         
         Remaining rules analogous.
     \end{description}
@@ -1064,13 +1064,12 @@ This section contains proofs for most lemmas and theorems mentioned in this work
 \end{proofatend}
 
 \begin{proofatend}[Proof of Lemma \ref{lemma:is-hold}]
-    Omitted.
+    Analogous to previous proofs.
 \end{proofatend}
 
 \begin{proofatend}[Proof of Lemma \ref{lemma:is-seq}]
     Analogous to lemma \ref{lemma:gdpres-seq}.
 \end{proofatend}
-
 
 \begin{proofatend}[Proof of Theorem \ref{thm:gvlidf-dgsnd}]~\\
     Structural induction over statement $s$.
@@ -1095,7 +1094,7 @@ This section contains proofs for most lemmas and theorems mentioned in this work
     \end{align}
     As a consequence, all reasoning that allows the static system to be runtime check free must also apply to the gradual system (if all annotations are static).
     
-    Proof for \ref{lemma-frm:oh-free1}:
+    Proof for \ref{frm:oh-free1}:
     \begin{align*}
     \thoare{}{\phi_1}{s}{\phi_{2b}}
     \end{align*}

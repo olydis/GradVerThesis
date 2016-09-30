@@ -47,16 +47,6 @@ We believe that most imperative statically verified programming languages satisf
     \end{align*}
     
     We assume that there is a sequence operator \ttt{;} such that $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
-    % or munch that into syntax figure above?
-    
-    \begin{comment}
-    Let $\setStmt_s$ be the set of all statements having $s$ as prefix.
-    \end{comment}
-    
-    % examples, formal?
-    
-    % TODO: we make no other assumptions
-    % To illustrate certain points, we will make ad-hoc assumptions about the syntax and semantics.
     
 \item[Program State]~\\
     Dynamic semantics (see below) are formalized as discrete transitions between program states.
@@ -81,7 +71,6 @@ We believe that most imperative statically verified programming languages satisf
     
     \begin{comment}
     In order to determine the next program state (or detect termination), a state must have a notion of “upcoming work”, usually represented by a statement internally.
-    TODO: reasonable to call that “continuation”?
     
     Let $\setProgramState_s$ (with $s \in \setStmt$) be the set of program states having $s$ as upcoming work.
     This notion will be necessary to define soundness of \svl's static semantics.
@@ -101,7 +90,6 @@ We believe that most imperative statically verified programming languages satisf
         \end{flalign*}
     \end{description}
      
-    TODO: notion of initial state?
     \end{comment}
     
     
@@ -214,9 +202,7 @@ We believe that most imperative statically verified programming languages satisf
         \begin{displaymath}
         \envs{\phi_1} = \envs{\phi_2}
         \end{displaymath}
-    \end{definition} 
-    
-    % TODO examples
+    \end{definition}
     
     \begin{lemma}[Partial Order of Formulas]
         \label{lemma:po-form}~\\
@@ -277,7 +263,6 @@ We believe that most imperative statically verified programming languages satisf
     In practice, this predicate might also have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
     As we will see later, further parameters are generally irrelevant for and immune to gradualization, so it is reasonable to omit them for now.
-    % TODO: program als parameter...
     
     %% SEQ
     \begin{comment}
@@ -354,7 +339,6 @@ We believe that most imperative statically verified programming languages satisf
         \wsp(\sAssert {$\phi_a$}) = \{~ \pi \in \setProgramState ~|~ \evalphiGen{\pi}{\phi_a} ~\}
         \end{displaymath}
     \end{itemize}
-    % TODO: x := 3; assert (x = 2);   EXAMPLE?
     
     % Note that this definition is similar to the weakest liberal precondition $\predicate{wlp}$
     
