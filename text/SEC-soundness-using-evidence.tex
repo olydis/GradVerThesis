@@ -1,37 +1,11 @@
 %% intro
-Regarding soundness of the gradual system, we have deviated from the approach presented by AGT.
-In this section we compare our approach to the one motivated by AGT, show why we deviated from AGT and why both approaches are ultimately equivalent.
-
-%% AGT
-AGT derives a direct runtime semantics for the gradual system that uses “evidence” to ensure that products of a runtime derivation (evaluating an application $t_1~t_2$) are still type safe.
-Key to this approach is the observation that type safety proofs smoothly evolve as terms are reduced.
-More specifically, a type safety proof for the reduced term can be computed from a type safety proof of the unreduced term (function application, according to rule “Tapp”).
-
-In the static system, this process would always succeed (and is thus not necessary to ensure type safety).
-However, in the gradual system, deriving a proof for a reduced term may fail due to inconsistent judgments in the proofs of the unreduced term.
-For example, the unreduced term may judge $T_1~\grad{<}~\qm$ and $\qm~\grad{<}~T_2$, whereas the reduced term requires $T_1~\grad{<}~T_2$ to hold (a property called “consistent transitivity”).
-Evidence is the minimum information necessary to detect those inconsistencies.
-It is thus created while initially type checking a term (“initial evidence”, side product of gradual typing rule “\gradT Tapp”) and evolved during reduction as part of the runtime semantics.
-
-
-\begin{comment}{Combining Proofs}~\\
-    Given proofs for type judgments $\Gamma \vdash t_1 : T_1$ and $\Gamma \vdash t_2 : T_2$, one may derive a proof for $\Gamma \vdash t_1~t_2 : \predicate{cod}(T_1)$.
-    
-    In the static system, this proof must exist since $\Gamma \vdash t_1~t_2 : \predicate{cod}(T_1)$ would have been proven before 
-\end{comment}
+In section \ref{ssec:ev-based-gds} we claimed that the evidence approach is not feasible to ensure that the semantical judgment $\evalgphiGen{\pi}{\phi}$ holds for given formula $\phi$ and program state $\pi$ after executing some statement.
+This would be an alternative way to ensure soundness, in contrast to evaluating $\evalgphiGen{\pi}{\phi}$ as suggested by the baseline approach we present as $\tset{\gradT Soundness}$ in section \ref{ssec:gradual-soundness}.
 
 %% bridge to gvl
-To adapt this approach to \svl/\gvl we have to identify the counterpart of type safety and type derivations, including places where type safety may break at runtime.
-Unfortunately, no equivalent concepts exist in our setting.
-Type safety is a property that can be ensured for every single runtime derivation of a typed $\lambda$-calculus.
-\svl and \gvl have a notion of soundness, however this is not a property that gives meaning to intermediate reduction steps.
-Likewise, a static (“type”) derivation $\thoare{}{\phi_1}{s}{\phi_2}$ does not evolve during execution of $s$ (as would be the case for type derivations in a typed $\lambda$-calculus).
-Soundness is a property that exclusively affects the very last program state of a successful execution of $s$ as a whole.
-
 Given an execution $\gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}$, it would have to be the job of evidence to ensure that $\evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}$.
-Note that $\grad{\pi_2}$ corresponds to the reduced term in the setting of AGT, $\grad{\phi_2}$ corresponds to the type of $\grad{\pi_2}$ as postulated by the gradual type system.
+% Note that one can view $\grad{\pi_2}$ as a counterpart if the reduced term in the setting of AGT, $\grad{\phi_2}$ corresponds to the type of $\grad{\pi_2}$ as postulated by the gradual type system.
 One can imagine how complex evidence would have to be, as it effectively tracks all changes to $\grad{\pi_1}$ (on its way to become $\grad{\pi_2}$) in order to figure out in the very end whether these changes are consistent with the postulated “type” $\grad{\phi_2}$.
-On the other hand, one may simply check $\evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}$.
 
 Ultimately, both the explicit check and the evidence approach are equivalent, yet one is more natural than the other depending on the setting.
 The following example tries to illustrate how soundness of a gradual assertion statement would be deducible using evidence.
@@ -54,17 +28,16 @@ The following example tries to illustrate how soundness of a gradual assertion s
 \end{example}
 
 Our checking approach adapted to AGT would correspond to literally checking whether a reduced term has its postulated type -- however, this is only possible with additional runtime support (track runtime type information, tagging) and thus not as straight-forward to implement as the evidence approach.
+Note that strong dynamic type systems provide this kind of runtime support.
 
 %% moral
-The fundamental conceptual difference between type systems (setting of AGT) and verification (setting of this work) is that the former operates on syntactical typing derivations, whereas the latter operates on semantically defined predicates.
-It is arguably more complex to use evidence for predicting the behavior of a semantically defined predicate.
+The fundamental conceptual difference between type judgments (setting of AGT) and formula semantics (setting of this work) is that the former is syntax-driven, whereas the latter is defined semantically.
+%It is arguably more complex to use evidence for predicting the behavior of a semantically defined predicate.
 %In our setting, “type derivations” $\evalphiGen{\cdot}{\cdot}$ .
-
 Note also that the shape of Tapp corresponds precisely to the shape of \tset{Soundness}.
 Both make a statement about the type of a term/program state \emph{after} applying a function/executing a statement.
-However, in one system, the rule is given, in the other system the rule is (supposed to be) derivable from given static semantics.
-The static semantics of a statically verified programming language exclusively “type” functions operating on program states (corresponding to a number of specialized T$\lambda$ rule of AGT).
-\tset{HSeq} would correspond to a B-combinator that is derivable in AGT using Tapp and T$\lambda$.
+However, in one system, the rule is given, in the other system the rule is derivable from given static semantics (given that they are sound).
+On the other hand, \tset{HSeq} would correspond to a B-combinator that is derivable in AGT using Tapp and T$\lambda$.
 Note the duality of which rules are given and which are derivable in each setting.
 
 %Finally, there is a difference of what is required to be gradually lifted in our work, compared to AGT.

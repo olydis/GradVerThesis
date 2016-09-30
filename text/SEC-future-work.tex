@@ -57,3 +57,61 @@ In the case study, we have not made full use of the capabilities of implicit dyn
 Tracking exclusive access to memory locations also allows race-free reasoning about concurrent programs (Summers and Drossopoulou \cite{summers2013formal} give a corresponding Hoare logic).
 It would be interesting to see gradual verification applied to such a setting, as it reflects more closely the reality of modern programming languages.
 Further potential extensions include the introduction of shared access or the addition of non-separating conjunction to the formula syntax.
+
+\subsection{Evidence-Based Gradual Dynamic Semantics}\label{ssec:ev-based-gds}
+Regarding gradual dynamic semantics (and soundness) of the gradual system, we have deviated from the approach presented by AGT.
+
+%% AGT
+AGT derives a direct runtime semantics for the gradual system that uses “evidence” to ensure that products of a runtime derivation (evaluating an application $t_1~t_2$) are still type safe.
+Key to this approach is the observation that type safety proofs smoothly evolve as terms are reduced.
+More specifically, a type safety proof for the reduced term can be computed from a type safety proof of the unreduced term (function application, according to rule “Tapp”).
+
+In the static system, this process would always succeed (and is thus not necessary to ensure type safety).
+However, in the gradual system, deriving a proof for a reduced term may fail due to inconsistent judgments in the proofs of the unreduced term.
+For example, the unreduced term may judge $T_1~\grad{<}~\qm$ and $\qm~\grad{<}~T_2$, whereas the reduced term requires $T_1~\grad{<}~T_2$ to hold (a property called “consistent transitivity”).
+Evidence is the minimum information necessary to detect those inconsistencies.
+It is thus created while initially type checking a term (“initial evidence”, side product of gradual typing rule “\gradT Tapp”) and evolved during reduction as part of the runtime semantics.
+
+In our setting, there are two candidate judgments that one could try to enforce using evidence (like type safety is enforced in AGT).
+\begin{description}
+    \item[Semantical]~\\
+    When searching for a direct counterpart for type judgments $\vdash e : T$ in simply typed $\lambda$-calculus, one may come up with formula semantics $\evalgphiGen{\pi}{\phi}$.
+    Formula semantics can be seen as a way to “type” program states using formulas (“$\vdash \pi : \phi$”).
+    Just like type safety states that statically postulated type judgments hold during reduction of terms and expressions, it has to be ensured that annotated formulas are complied with during evolution of program states (which is what soundness states).
+    
+    However the formula semantics $\evalgphiGen{\pi}{\phi}$ is a semantical judgment, whereas the $\vdash e : T$ is syntactical.
+    We will illustrate in section \ref{sec:soundness-using-evidence} why the evidence approach is not feasible when choosing formula semantics as the judgment to ensure.
+    
+    \item[Syntactical]
+    Instead, one may find that Hoare logic $\thoare{}{\phi_1}{s}{\phi_2}$ acts like the conceptual counterpart of $\vdash e : T$.
+    While the signature slightly differs, Hoare logic can be regarded as a way to “type” statements as a function from program states satisfying $\phi_1$ to program states satisfying $\phi_2$ (“$\vdash s : \phi_1 \rightarrow \phi_2$”).
+    
+    During execution of the program, evidence would have to make sure that the “remaining” work $s$ is consistently typeable using Hoare logic.
+    \begin{example}{} \label{ex:ev-hl}~\\
+        Let 
+        \begin{align*}
+        & \phi_1 = \phiAnd{\phiEq{x}{10}}{\phiEq{a}{5}}\\
+        & \phi_3 = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{4}}
+        \end{align*}
+        Assume that
+        $$\thoare{}{\phi_1}{\sSeq{\sVarAssign{x}{3}}{\sVarAssign{y}{4}}}{\phi_3}$$
+        was proved by the verifier.
+        Starting execution of $\sSeq{\sVarAssign{x}{3}}{\sVarAssign{y}{4}}$ with a program state $\pi_1$ that satisfies $\phi_1$ one will reach a program state $\pi_2$ where $\sVarAssign{x}{3}$ has been executed but not yet $\sVarAssign{y}{4}$.
+        Type safety as motivated above would have to ensure that there exists a formula $\phi_2$ with
+        $$\evalphiGen{\pi_2}{\phi_2}$$
+        and
+        $$\thoare{}{\phi_2}{\sVarAssign{y}{4}}{\phi_3}$$
+        In this example $\phi_2 = \phiAnd{\phiEq{x}{3}}{\phiEq{a}{5}}$ would be suitable.
+        In other words, it is ensured that there exists a Hoare logic deduction justifying every intermediate state during execution.
+        
+        While such a formula always exists in the static setting (choose the one that was used as an intermediate formula when applying the sequence rule \tset{HSeq}), it may not exist in the gradual setting.
+        It would be the job of evidence to ensure the existence of such a formula at runtime, without performing a Hoare logic derivation.
+    \end{example}
+    
+    This approach requires a slightly stronger notion of soundness than the one we demanded in section \ref{sec:a-statically-verified}.
+    Specifically, a statement has to be made about intermediate execution steps (as illustrated in example \ref{ex:ev-hl}) instead of merely the execution as a whole.
+    
+    As mentioned in section \ref{ssec:gradual-soundness} such an approach would detect inconsistencies more eagerly than the “safe baseline” we introduced with \tset{\gradT Soundness} and later improved with \tset{\dgradT Soundness}.
+    Unfortunately, investigating this path was not in the scope of this work.
+\end{description}
+
