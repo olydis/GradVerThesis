@@ -122,16 +122,16 @@ From this multivalued function we can obtain a lifted version, following similar
     Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
     \begin{displaymath}
     \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
-    \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom{\dgrad{P}} 
+    &\grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom{\dgrad{P}} \\
     \implies 
-    \dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
+    &\dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
     \end{displaymath}
     \textcolor{blue}{
         \begin{displaymath}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ 
-        \grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom{\dgrad{\vdash}}
+        &\grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom{\dgrad{\vdash}}\\
         \implies 
-        \dgrad{\vdash}(\grad{\phi_1}, \grad{s_1}) \sqsubseteq \dgrad{\vdash}(\grad{\phi_2}, \grad{s_2})
+        &\dgrad{\vdash}(\grad{\phi_1}, \grad{s_1}) \sqsubseteq \dgrad{\vdash}(\grad{\phi_2}, \grad{s_2})
         \end{displaymath}
     }
 \end{description}
