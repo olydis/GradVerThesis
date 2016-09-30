@@ -110,7 +110,6 @@ There are a variety of valid instantiations for both variables:
     However, the instantiation is stricter than necessary -- but nevertheless valid according to the rules.
     The implication holds (the knowledge about \ttt{x} is dropped), and $$\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ holds since $$\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ does.
     
-    % REMOVE???
     This instantiation illustrates the requirement of runtime checks to ensure soundness as described in section \ref{ssec:gradual-soundness}.
     The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ right after the assignment.
     Unfortunately, this assertion alters runtime behavior:

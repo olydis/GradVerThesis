@@ -258,7 +258,6 @@ We believe that most imperative statically verified programming languages satisf
     \thoare {~} {\cdot} {\cdot} {\cdot} ~~~\subseteq~~~ \setFormula \times \setStmt \times \setFormula
     \end{displaymath}
     describing which programs (together with pre- and postconditions about the program state) are accepted.
-    % While the Hoare logic might be defined for arbitrary formulas in practice, we only ever reason about it in presence of satisfiable formulas, hence the “restricted domain”???.
     
     In practice, this predicate might also have further parameters. 
     For instance, a statically typed language might require a type context to safely deduce $$\thoare{\ex{x} : \Tint}{\phiTrue}{\sVarAssign{x}{3}}{\phiEq{x}{3}}$$
