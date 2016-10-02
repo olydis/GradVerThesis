@@ -2,8 +2,8 @@
 % the resulting gradual system compatible with the old one (otherwise it would trivially not  satisfy the gradual guarantee \ref{grad-guarantee}).
 
 The fundamental concept of gradual verification is the introduction of a wildcard formula $\qm$ into the formula syntax.
-Therefore, the first difference of \gvl in comparison to \svl is an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
-The gradual verifier is supposed to succeed in presence of the wildcard, should it be plausible that there exists a static formula that would make a static verifier succeed.
+Therefore, the first difference between \gvl and \svl is an extension of the set of formulas $\setFormula$, resulting in a superset of gradual formulas $\setGFormula \supset \setFormula$ with $\qm \in \setGFormula$ but $\qm \not \in \setFormula$.
+The gradual verifier is supposed to succeed in the presence of the wildcard, if it is plausible that there exists a static formula that would make a static verifier succeed.
 \begin{example}{Wildcard as Precondition}
 \begin{lstlisting}
 int increment(int i)

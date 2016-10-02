@@ -118,7 +118,7 @@ We believe that most imperative statically verified programming languages satisf
         \pi_2 = \langle [x \mapsto 8, y \mapsto 2],\,\, \sVarAssign{y}{x} \rangle
         \end{displaymath}
         
-        Apparently the notation hides away the implementation details of the small-step semantics.
+        Thus, the notation hides away the implementation details of the small-step semantics.
         It enables reasoning about small-step derivations (that correspond to executing certain statements) without worrying about the exact number of steps taken.
         
         Note that the judgment $\ssteps{\pi_1}{\pi_2}$ is also independent from the number of steps taken, yet it does not encode what is supposed to happen during those steps.
@@ -160,7 +160,7 @@ We believe that most imperative statically verified programming languages satisf
     formulas restrict which program states are valid for a certain point during execution. 
 
     They are used for annotations like method contracts or invariants.
-    For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered, if $\ttt{arg}$ evaluates to a value larger than $4$.
+    For example, a method contract stating $\ttt{arg > 4}$ as precondition is supposed to make sure that the method is only entered if $\ttt{arg}$ evaluates to a value larger than $4$.
     This is a restriction of program states corresponding to the very beginning of the method call.
     
     We assume that we are given a computable predicate
@@ -292,7 +292,7 @@ We believe that most imperative statically verified programming languages satisf
         (\phiImplies {\phi_1'} {\phi_2'}) ~~\wedge~ \thoare {~} {\phi_2} {s} {\phi_2'}
         \end{align*}
     \end{lemma}
-    Intuitively, this means that more knowledge about the initial program state can not result in a loss of information about the final state.
+    Intuitively, this means that more knowledge about the initial program state cannot result in a loss of information about the final state.
     
     \begin{comment}
     %% "wsp" - wlp, but with static instead of dynamic semantics!!!

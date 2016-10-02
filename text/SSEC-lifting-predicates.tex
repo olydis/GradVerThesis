@@ -8,15 +8,8 @@ We identify the following rules:
     We demand compatibility of the semantics of \gvl with the semantics of \svl.
     In other words, switching to the gradual system may never “break the code”.
     A predicate $\grad{P}$ that is part of the gradual semantics must thus satisfy:
-    \begin{mathpar}
-        \inferrule* [Right=\gradT PredIntro]
-        {
-            P(\phi_1, \phi_2)
-        }
-        {
-            \grad{P}(\phi_1, \phi_2)
-        }
-    \end{mathpar}
+    
+    If $P(\phi_1, \phi_2)$ then $\grad{P}(\phi_1, \phi_2)$ for all $\phi_1, phi_2 \in \setFormula$.
     
     Or equivalently, using set notation
     \begin{displaymath}
@@ -26,17 +19,8 @@ We identify the following rules:
     \item[Monotonicity]~\\
     In order to satisfy the gradual guarantee, the semantics of \gvl must be immune to reduction of precision.
     A predicate $\grad{P}$ that is part of the gradual semantics must thus remain satisfied when reducing the precision of arguments
-    \begin{mathpar}
-        \inferrule* [Right=\gradT PredMon]
-        {
-            \grad{P}(\grad{\phi_1}, \grad{\phi_2}) \\
-            \grad{\phi_1} \sqsubseteq \grad{\phi_1'} \\
-            \grad{\phi_2} \sqsubseteq \grad{\phi_2'}
-        }
-        {
-            \grad{P}(\grad{\phi_1'}, \grad{\phi_2'})
-        }
-    \end{mathpar}
+    
+    If $\grad{P}(\grad{\phi_1}, \grad{\phi_2})$ then $\grad{P}(\grad{\phi_1'}, \grad{\phi_2'})$ for all $\grad{\phi_1}, \grad{\phi_2}, \grad{\phi_1'}, \grad{\phi_2'} \in \setGFormula$ with $\grad{\phi_1} \sqsubseteq \grad{\phi_1'}$ and $\grad{\phi_2} \sqsubseteq \grad{\phi_2'}$.
 \end{description}
 
 \begin{definition}[Soundness of Predicate Lifting]

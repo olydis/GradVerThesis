@@ -9,19 +9,22 @@ Turning JML specifications into runtime assertion checks (RAC) to drive dynamic 
 A more recent programming language with built-in support to express specifications, coming with both static and dynamic verification tools is Spec\# \cite{the-spec-programming-system-an-overview}.
 Its compiler facilitates theorem provers for static verification and emits runtime checks for dynamic verification.
 It was developed further to cope with the challenges of concurrent object-orientation \cite{a-statically-verifiable-programming-model-for-concurrent-object-oriented-programs}.
-The concepts found their way to main stream programming in the form of “Code Contracts” \cite{embedded-contract-languages}, a toolset deeply integrated with the Microsoft .NET framework and thus available in a variety of programming languages.
+The concepts found their way to mainstream programming in the form of “Code Contracts” \cite{embedded-contract-languages}, a toolset deeply integrated with the Microsoft .NET framework and thus available in a variety of programming languages.
 
-The limitations of both static and dynamic verification motivated a recent trend of using both approaches at the same time (as observable in above programming languages).
-Due to its rigidity, static verification is treated more as a best effort service, meant to detect as many inconsistencies or contract violations as possible (the more coverage, the better).
+The limitations of both static and dynamic verification motivated a recent trend of using both approaches at the same time (as observable in the above programming languages).
+Automated theorem provers are used to perform static verification as a best effort service rather than a requirement for successful compilation.
+Their goal is to detect as many inconsistencies or contract violations as possible, but not necessarily find a proof for correctness.
+So even if compliance with annotations cannot be proved programs are “optimistically accepted”.
 Additionally, dynamic verification is used to restore the guarantee that static verification no longer provides.
+% In other words, while traditional static verifiers either prove compliance with or violation of annotations, fail
 
 Recent research focused on combining both approaches in a more meaningful and complementary way by focusing dynamic verification and testing efforts specifically to code areas where static verification had less success.
 Christakis, Müller and Wüstholz \cite{ChristakisMuellerWuestholz16} describe how programs can be annotated during static verification in order to prioritize certain tests over others or even prune the search space by aborting tests that lead to fully verified code.
 
 Still, static and dynamic verification concepts are treated as independent concepts for the most part.
 The same was once true for static and dynamic type systems, before advances in formalizing gradual type systems seamlessly bridged the gap.
-Our goal is to achieve the same for program verification, i.e. static and dynamic verification are no longer to be treated as independent concepts (that are then combined as smart as possible) but instead treated as one concept with different manifestations.
+Our goal is to achieve the same for program verification, i.e. static and dynamic verification are no longer to be treated as independent concepts (that are then combined as intelligently as possible) but instead treated as one concept with different manifestations.
 
 Note that Arlt et al. \cite{arlt2014gradual} mention gradual verification, yet it is meant as the process of “gradually” increasing the coverage of static verification.
 The work describes a metric for estimating this coverage, giving the developer feedback while annotating programs.
-A similar metric arises automatically from our notion of gradual verification: The amount of dynamic checks injected to guarantee compliance with annotations is a direct indication of where static verification has failed so far.
+A similar metric arises automatically from our notion of gradual verification: The number of dynamic checks injected to guarantee compliance with annotations is a direct indication of where static verification has failed so far.

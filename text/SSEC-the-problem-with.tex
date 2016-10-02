@@ -104,24 +104,33 @@ There are a variety of valid instantiations for both variables:
     
     Consequently, the verifier may try to be “as precise as possible” in order to detect inconsistencies at compile time.
         
-    \item[Too strict: $\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
-    This instantiation is fully static, i.e. precise.
+    \item[Too strict: $\grad{\phi_{q1}} = \phiAnd{\phiEq{x}{42}}{\phiEq{y}{2}},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
+    This instantiation is fully static (i.e. precise) and valid according to the rules:
+    The implication holds (the knowledge about \ttt{x} is dropped), and $$\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{42}}{\phiEq{y}{2}}}$$ holds since $$\thoare {} {\phiAnd{\phiEq{x}{42}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{42}}{\phiEq{y}{2}}}$$ does.
     
-    However, the instantiation is stricter than necessary -- but nevertheless valid according to the rules.
-    The implication holds (the knowledge about \ttt{x} is dropped), and $$\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ holds since $$\thoare {} {\phiAnd{\phiEq{x}{3}}{\phiEq{2}{2}}} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$$ does.
+    However, the instantiation is stricter than necessary, meaning that the Hoare triple 
+    $$\hoare {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{42}}{\phiEq{y}{2}}}$$
+    is not semantically valid.
     
-    This instantiation illustrates the requirement of runtime checks to ensure soundness as described in section \ref{ssec:gradual-soundness}.
-    The judgment $\gthoare {} {\qm} {\sVarAssign{y}{2}} {\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ must lead to the injection of an assertion of $\sAssert{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}$ right after the assignment.
-    Unfortunately, this assertion alters runtime behavior:
-    Code that would have never thrown an exception when evaluated with the runtime of \svl might now throw an exception.
-    This is a violation of the dynamic gradual guarantee (note that we are still designing the static system, so no violation).
-    Note that it is actually the runtime semantics breaking the guarantee, yet it is the “bad decision” made by the verifier that leads up to it.
+    While in general it is possible to derive semantically invalid Hoare triples (this is the motivation for runtime checks, see section \ref{ssec:gradual-soundness}), a gradual verifier should not deliberately produce any.
+    Invalid Hoare triples that are based on annotations represent the programmers \emph{intentions} and are thus ensured using runtime checks (see definition \ref{def:gsnd}).
+    On the other hand, invalid Hoare triples that are merely caused by an instantiation by the gradual verifier cannot be backed using runtime checks, as this would alter runtime behavior (in this example, a runtime check for $\phiEq{x}{42}$ is clearly unjustified).
     
-    Consequently, further rules are necessary to prevent the verifier from making decisions that are, as in this case, not general.
+    As a result, such instantiations are not “credible” (neither semantically correct nor ensured using checks) and thus cannot be used for further reasoning (like branch prediction or simplifications based on the supposed value of \ttt{x}).
+    
+    \begin{comment}
+    Programmers may provide annotations corresponding to invalid Hoare triples, since they may be unsure how or unable to express a valid one.
+    
+    however this is motivated by the possibility that programmers may have context information that render the triple valid after all.
+    For instance, the code in question may only be executed under circumstances that indeed cause the postcondition to be satisfied.
+    
+    On the other hand  invalid Hoare triples:
+    The instantiation involved (here: $\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}$) may not be used for further analysis like branch prediction, since it does not represent semantical knowledge ($\phiEq{x}{3}$ may be a false assumption).
+    \end{comment}
 \end{description}
 
 %% comparison: static verifier
-Note that above observations do not apply to a static verifier as the former two cases above rely on the existence of the wildcard:
+Note that above observations do not apply to a static verifier as the former two cases rely on the existence of the wildcard:
 The weak instantiation is syntactically impossible, the too strict instantiation relied on the fact that the precondition (of the overall judgment) is a wildcard.
 
 %% dilemma, consequence

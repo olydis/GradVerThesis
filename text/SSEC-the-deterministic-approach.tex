@@ -28,7 +28,13 @@
 In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) nor too strict (making assumptions that are neither general nor required by the following judgment and thus alter runtime behavior).
 While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
 
-In this section we define a deterministic gradual Hoare logic $\dgrad{\vdash} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$ which has the following desirable properties (formalized later):
+In this section we derive a “deterministic gradual Hoare logic” 
+$$\dgrad{\vdash} : \setGFormula \times \setGStmt \rightharpoonup \setGFormula$$
+from the static Hoare logic $\thoare{}{\cdot}{\cdot}{\cdot} \subseteq \setFormula \times \setStmt \times \setFormula$ in a process we call “deterministic lifting”.
+Note the difference to the signature of the gradual Hoare logic predicate
+$$\gthoare{}{\cdot}{\cdot}{\cdot} : \setGFormula \times \setGStmt \times \setGFormula$$
+
+The deterministic gradual Hoare logic has the following desirable properties (formalized later):
 A gradual lifting $\gthoare{}{\cdot}{\cdot}{\cdot}$ can be obtained from $\dgrad{\vdash}$, which is required for the gradual verifier.
 This gradual lifting is not defined inductively and does not rely on variables being instantiated.
 Instead it is syntax-directed, making the verification process deterministic.
@@ -120,19 +126,19 @@ From this multivalued function we can obtain a lifted version, following similar
     
     \item[Monotonicity]~\\
     Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
-    \begin{displaymath}
+    \begin{align*}
     \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
     &\grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom{\dgrad{P}} \\
     \implies 
     &\dgrad{P}(\grad{\phi_1}) \sqsubseteq \dgrad{P}(\grad{\phi_2})
-    \end{displaymath}
+    \end{align*}
     \textcolor{blue}{
-        \begin{displaymath}
+        \begin{align*}
         \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula,\, \grad{s_1}, \grad{s_2} \in \setGStmt.~ 
         &\grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{s_1} \sqsubseteq \grad{s_2} ~~\wedge~~ \langle \grad{\phi_1}, \grad{s_1} \rangle \in \dom{\dgrad{\vdash}}\\
         \implies 
         &\dgrad{\vdash}(\grad{\phi_1}, \grad{s_1}) \sqsubseteq \dgrad{\vdash}(\grad{\phi_2}, \grad{s_2})
-        \end{displaymath}
+        \end{align*}
     }
 \end{description}
 
@@ -194,21 +200,13 @@ As mentioned before, this gradual partial function has desirable properties:
         This example motivates the use of a more powerful gradual syntax, as apparently they result in more optimal gradual liftings.
     \end{example}
     
-    Optimality of the deterministic lifting does imply optimality of the obtained gradual lifting if the gradual formula syntax is expressive enough to encode all knowledge about the dynamic semantics of a statement (without proof).
+    We conjecture that optimality of the deterministic lifting does imply optimality of the obtained gradual lifting if the gradual formula syntax is expressive enough to encode all knowledge about the dynamic semantics of a statement.
     
     \item[(b) Determinism of Verifier]~\\
     As the name suggests, deterministic liftings leave no room for choice, but are instead syntax-directed.
     For the gradual verifier this means that there is no need to infer intermediate formulas, averting the risk of choosing bad instantiations (as illustrated in section \ref{ssec:the-problem-with}).
-    
-    \item[(c) Free Transitivity]~\\
-    Furthermore, applying Hoare rules transitively induces no more additional runtime cost:
-    As described in \ref{ssec:gradual-soundness}, every judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ must be accompanied with the injection of a runtime check in order to guarantee soundness.
-    Note that applying gradual Hoare logic to a sequence of statements (using \tset{\gradT HSec}) requires such judgment for every single statement, resulting in assertions between every pair of statements.
-    
-    Using a deterministic lifting transitively induces no such runtime cost since no judgment of the form $\gthoare {~} {\cdot} {\cdot} {\cdot}$ is made.
-    Only after applying lemma \ref{lem:det2grad} in the very end of verification, an assertion will be injected to ensure soundness for the overall judgment.
-    
-    \item[(d) Soundness]~\\
+        
+    \item[(c) Soundness]~\\
     Deterministic liftings are designed in a way that enables defining a stronger notion of soundness that does not rely on runtime assertions.
     \begin{definition}[\dgradT Soundness]\label{def:dgsnd}~\\
         Let $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ and $\grad{s} \in \setGStmt$.\\

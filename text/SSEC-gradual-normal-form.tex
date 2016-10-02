@@ -1,6 +1,6 @@
 In this section we will introduce a normal form for partially unknown formulas that proves useful for implementing a gradual verifier for \gvlidf.
 One example is the function postulated in lemma \ref{lemma:impl-gimpl}, another example is gradual formula precision $\sqsubseteq$:
-Originally it is defined as comparing (possibly infinite) concretizations for inclusion (see definition \ref{def:mpt}), using the following theorem the problem is reducible to checking an implication (without proof).
+Originally it is defined as comparing (possibly infinite) concretizations for inclusion (see definition \ref{def:mpt}), using the following theorem the problem is reducible to checking an implication.
 
 %% normal form
 \begin{theorem}[Gradual Normal Form]\label{thm:gnf}~\\
@@ -12,61 +12,3 @@ Originally it is defined as comparing (possibly infinite) concretizations for in
         \item $\withqm{\phi_1} \sqsubseteq \withqm{\phi_2}  \quad\iff\quad  \snorm{\phi_1} \implies \snorm{\phi_2}$
     \end{enumerate}
 \end{theorem}
-
-\begin{comment}
-In the remainder of this section we try to give an intuition behind this normal form.
-
-Recall that gradual formulas $\withqm{\phi_1}$ and $\withqm{\phi_2}$ are considered equal iff $\gamma(\withqm{\phi_1}) = \gamma(\withqm{\phi_1})$.
-The normal form makes use of the fact that concretizations of partially unknown formulas contain only self-framed formulas (see section \ref{sec:cs-gradual-formulas}).
-
-\begin{lemma}[Mentioning a field implies access]~\\
-    For any formula $\phi$ mentioning field $\edot{$x$}{$f$}$:
-    $$\forall \phi' \in \gamma(\withqm{\phi}), \phiImplies{\phi'}{\phiAcc{$x$}{$f$}}$$
-\end{lemma}
-In other words: Merely mentioning a field will make sure that the concretization contains appropriate framing.
-This is a helpful observation for justifying removal of accessibility predicates from the static part.
-
-Note, however, that simply dropping access from the static part may not result in an equivalent gradual formula for two reasons:
-\begin{description}
-    \item[1. No more mentions]~\\
-    Dropping $\phiAcc{$x$}{$f$}$ might result in $\edot{$x$}{$f$}$ not being mentioned in the formula anymore, so there would be no more reason for the concretization to “restore” $\phiAcc{$x$}{$f$}$ in all concretizations.
-    
-    \item[2. Aliasing]~\\
-    In general there are different ways in which access to multiple (syntactically different) fields can be restored.
-    \begin{example}{Ambiguous Framing}~\\
-        Dropping all accessibility predicates from $$\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}$$
-        results in
-        $$\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}$$
-        However, $\gamma(\withqm{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}})$ contains
-        $$\phiCons{\phiCons{\phiAcc{a}{f}}{\phiEq{a}{b}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{a.f}{x}}}$$
-        whereas $\gamma(\withqm{\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}})$
-        does not
-    \end{example}
-    %In other words, the possibility of aliasing may result in a variety of re-framed formulas that are not equivalent with the original one.
-    % Elaborate in more detail why this is bad?
-    % Also: this is where dominators play in... draw the line? How far?
-\end{description}
-
-Fortunately, we can prevent both problems from occurring by carefully preparing the static part before dropping all access, resulting in the following two-step approach:
-
-\begin{description}
-    \item[1. Enhancement]~\\
-    Enrich the static part to counteract above problems, i.e. to enforce that access is restored exactly the right way.
-    This is achieved by simply spelling out certain implications of the access-terms:
-    \begin{description}
-        \item [$\phiAcc{$x$}{$f$} \implies \phiEq{\edot{$x$}{$f$}}{\edot{$x$}{$f$}}$]~\\
-        Access to a field implicitly guarantees that it actually evaluates to some (arbitrary) value.
-        Note that $\phiEq{\edot{$x$}{$f$}}{\edot{$x$}{$f$}}$ is not a logical tautology (i.e. it is not implies by $\phiTrue$), since it indeed makes sure that $\edot{$x$}{$f$}$ evaluates, whereas $\phiTrue$ does not.
-        The bottom line is that $\edot{$x$}{$f$}$ is being mentioned even after dropping $\phiAcc{$x$}{$f$}$, therefore solving the first problem. 
-        \item [$\phiCons{\phiAcc{$x$}{$f$}}{\phiAcc{$y$}{$f$}} \implies \phiNeq{$x$}{$y$}$]~\\
-        Having access to the same field of different expressions actively prevents those expressions to ever alias.
-        Spelling out this restriction by adding the corresponding inequality also prevents re-framing in a way that relies on aliasing.
-        The bottom line is that any valid re-framing must restore two distinct access-terms, therefore solving the second problem.
-    \end{description}
-    We enhance the non-linear part of our formula by spelling out above implications in every possible way, i.e. accounting for all (pairs of) access-terms.
-    It is worth noting that this enhancement preserves equality of the formula as only terms are added that were implied by the original formula, anyway.
-    
-    \item[2. Delinearization]~\\
-    All access-terms are dropped.
-\end{description}
-\end{comment}

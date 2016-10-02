@@ -33,8 +33,7 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
     \end{align*}
     Intuitively, the deterministic lifting is only supposed to be defined for static preconditions if there exists some corresponding derivation of the static Hoare logic.
     
-    Note that optimal deterministic liftings are semi-optimal.
-    Semi-optimality can be viewed as a very weak optimality measure.
+    As expected, optimal deterministic liftings are semi-optimal.
 \end{definition}
 \begin{definition}[Semi-Optimal Gradual Small-Step Semantics]~\\
     \label{def:perf-dyn}
@@ -45,13 +44,10 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
     \end{comment}
     \begin{align*}
     %\label{frm:perf-ex}
-    \forall \grad{\pi_1}, \grad{\pi_2} \in \setGProgramState,\, \grad{s} \in \setGStmt.&~ \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}\\ \implies \exists \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}), \pi_2 \in \setFormula.&~ \sstepConsume{s}{\pi_1}{\pi_2}
+    \forall \grad{\pi_1}, \grad{\pi_2} \in \setGProgramState,\, \grad{s} \in \setGStmt.&~ \gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}\\ \implies \exists \pi_1 \in \gamma(\grad{\pi_1}),\, s \in \gamma(\grad{s}), \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2}
     \end{align*}
     Intuitively, the gradual small-step semantics is not supposed to define derivations if all concretizations would be stuck in the original small-step semantics.
     Note that the rules of gradual lifting (of partial functions) allow arbitrary behavior in case the small-step semantics are stuck (i.e. the function is undefined).
-    
-    Optimal deterministic liftings are semi-optimal.
-    Semi-optimality can be viewed as a very weak optimality measure.
 \end{definition}
 
 We call the semantics of \gvl semi-optimal if both Hoare logic and small-step semantics are semi-optimal as defined above.

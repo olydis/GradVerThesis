@@ -1,5 +1,5 @@
 %% intro
-Formulas play a role for some statements, extending their syntax may thus also affect the syntax of statements.
+Formulas play a role in some statements, so extending their syntax may also affect the syntax of statements.
 A common example are assertion statements $\sAssert{$\phi$}$, which can now be extended to $\sAssert{$\grad{\phi}$}$.
 Note however, that having a gradual formula syntax available does not necessarily mean that all statements \emph{have} to adopt it.
 % Examples can be found in chapter \ref{ch:case-study--implicit} which derives a gradual language \gvlidf that .
@@ -8,7 +8,7 @@ Note however, that having a gradual formula syntax available does not necessaril
 A more complex example affected by gradualization of formulas is a call statement $\ttt{$m$()}$ in presence of method contracts.
 \begin{example}{Gradual Call Statement}~\\
     Although not directly visible, the (static and dynamic) semantics of a call statement is affected by the contract of $m$, consisting of pre- and postcondition.
-    One can think of $m$ as a reference to or syntactic sugar for some method definition including method contract.
+    One can think of $m$ as a reference to or syntactic sugar for some method definition including a method contract.
     Note that in practice such method definitions usually reside in a “program context” that the static and dynamic semantics are parameterized with.
     
     As the full meaning of such a statement is unknown without context, it is hard to reason about it abstractly.
@@ -30,7 +30,7 @@ A more complex example affected by gradualization of formulas is a call statemen
 \end{example}
 
 %% general
-In general, statement syntax is extended, resulting in a superset $\setGStmt \supseteq \setStmt$ of gradual statements.
+In general, the statement syntax is extended, resulting in a superset $\setGStmt \supseteq \setStmt$ of gradual statements.
 Note that the superset is induced merely by allowing $\setGFormula$ instead of $\setFormula$ in certain places (chosen by the gradual language designer).
 We give meaning to gradual statements using a concretization function. % MORE detail?
 \begin{definition}[Concretization of Gradual Statements]

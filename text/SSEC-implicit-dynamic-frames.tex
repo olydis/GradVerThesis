@@ -55,7 +55,7 @@ Finally, they show that the separation logic fragment of their logic can be enco
     Note how more complex predicates like $\ttt{<=}$ are now expressible.
 \end{example}
 
-As formulas can mention heap locations in arbitrary predicates, it has to be ensured that a formula contains accessibility predicates to all heap locations mentioned.
+As formulas can mention heap locations in arbitrary predicates, the verifier must ensure that a formula contains accessibility predicates to all heap locations mentioned.
 This property of formulas is called “self-framing”.
 The pre- and postcondition of example \ref{ex:pow-idf} are self-framed whereas the sub-formula $\phiEq{p1.age}{20}$ would not be.
 % MENTION? It is essential that access cannot be duplicated, implying that and thus also not be shared between threads, allowing race-free reasoning about concurrent programs.

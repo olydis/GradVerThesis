@@ -1,10 +1,10 @@
 As this work is based on the advances in gradual typing, it is helpful to understand the developments in that area.
 
 Gradual type systems originated from efforts to overcome limitations and drawbacks of purely static or dynamic type systems.
-Corresponding extensions were proposed for .NET by Meijer and Drayton \cite{meijer2004static}, for Java by Gray et al. \cite{gray2005fine} and for Scheme by Bres er al. \cite{bres2004compiling}.
+Corresponding extensions were proposed for .NET by Meijer and Drayton \cite{meijer2004static}, for Java by Gray et al. \cite{gray2005fine} and for Scheme by Bres et al. \cite{bres2004compiling}.
 Siek and Taha provided a type-theoretic foundation, formalizing gradual typing for functional programming \cite{siek2006gradual}.
-They describe a $\lambda$-calculus with optional type annotations, which is sound w.r.t. simply-typed $\lambda$-calculus for fully annotated terms.
-Static and dynamic type type checking is seamlessly combined by automatically inserting runtime checks (casts) where necessary.
+They describe a $\lambda$-calculus with optional type annotations, which is sound w.r.t. the simply-typed $\lambda$-calculus for fully annotated terms.
+Static and dynamic type checking are seamlessly combined by automatically inserting runtime checks (casts) where necessary.
 They later adapted their approach to object-based languages \cite{siek2007gradual}.
 
 Based on their work, Wolff et al. introduced “gradual typestate” \cite{wolff2011gradual}, circumventing the rigidity of static typestate checking.
@@ -12,12 +12,12 @@ Schwerter, Garcia and Tanter developed a theory of gradual effect systems \cite{
 An implementation for gradual effects in Scala was later given by Toro and Tanter \cite{toro2015customizable}.
 
 \label{grad-guarantee}
-Siek et al. recently formalized refined criteria for gradual typing, called “gradual guarantee” \cite{siek2015refined}.
-The gradual guarantee states that well typed programs will stay well typed when removing type annotations (static part of the guarantee).
-It furthermore states that well typed programs evaluating to a value will evaluate to the same value when removing type annotations (dynamic part of the guarantee).
+Siek et al. recently formalized refined criteria for gradual typing, called the “gradual guarantee” \cite{siek2015refined}.
+The gradual guarantee states that well typed programs will stay well typed when removing type annotations (the static part of the guarantee).
+It furthermore states that well typed programs evaluating to a value will evaluate to the same value when removing type annotations (the dynamic part of the guarantee).
 
 With “Abstracting Gradual Typing” (AGT) \cite{garcia2016abstracting} Garcia, Clark and Tanter propose a new formal foundation for gradual typing.
 Their approach draws on the principles of abstract interpretation, defining a gradual type system in terms of an existing static one.
 The resulting system satisfies the gradual guarantee by construction.
 Subsequent work by Garcia and Tanter demonstrates the flexibility of AGT by applying the concept to a security-typed language, yielding a gradual security language \cite{garcia2015deriving}, which in contrast to prior work does not require explicit security casts.
-Furthermore \cite{nico} have applied the approach to refinement types, resulting in a gradual language that is able to deal with imprecise logical information and dependent function types.
+Furthermore ??? \cite{nico} applied the approach to refinement types, resulting in a gradual language that is able to deal with imprecise logical information and dependent function types.

@@ -14,7 +14,6 @@ Fortunately, \tset{\dgradT Soundness} can be proved for sequences inductively.
     If \tset{\dgradT Soundness} holds for statements $s_1$ and $s_2$ then it holds for $s_1;s_2$
 \end{lemma}
 
-As we will show in the case study (section \ref{sec:gradual-soundness}) this inductive approach can be applied to other composite statements like method calls.
 As a result, it is sufficient to prove \tset{\dgradT Soundness} for “primitive” statements, e.g. by using the approach introduced in the previous section:
 Note that the definitions of completeness and semi-optimality are universally quantified over the set of all (gradual) statements.
 Instead, they can be weakened to quantify only over a limited set of primitive statements.
