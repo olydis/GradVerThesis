@@ -16,16 +16,16 @@ To enforce this specification in Java, one may validate the parameter \ttt{amoun
 void withdrawCoins(int amount)
 {
     if (!(this.balance >= amount))
-        throw new IllegalArgException("expected this.balance >= amount");
+        throw new IllegalArgEx("expected this.balance >= amount");
         
     // business logic
     this.balance -= amount;
 }
 \end{lstlisting}
 
-Note that this runtime check dynamically verify a method contract that has \ttt{this.balance >= amount} as precondition.
+Note that this runtime check dynamically verifies a method contract that has \ttt{this.balance >= amount} as precondition.
 Naturally, the drawbacks of dynamic verification apply:
-Violations of the method contract are only detected at runtime, possibly go unnoticed for a long time and impose a runtime overhead which might not be acceptable in all scenarios.
+Violations of the method contract are only detected at runtime, possibly go unnoticed for a long time and impose a runtime overhead.
 
 Java even has a dedicated assertion syntax, simplifying dynamic verification:
 \begin{lstlisting}
@@ -60,26 +60,27 @@ acc.withdrawCoins(30);
 \end{lstlisting}
 
 Using dynamic verification methods, the validity of both calls is only established at runtime, although the calls clearly adhere to the contract.
-However, static verification most likely fail due to incomplete knowledge:
-The method contract does not state how \ttt{this.balanced} is changed during a call to \ttt{withdrawCoins}, meaning that it cannot prove the precondition for the second call (we assume that the static verifier exclusively relies on the contract while reasoning about a method call).
-An additional postcondition \ttt{ensures this.balance = old(this.balance) - amount} would solve that problem, resulting in overall success of the verification.
+However, static verification most likely fails due to a lack of knowledge:
+The method contract does not state how \ttt{this.balance} is changed during a call to \ttt{withdrawCoins}, meaning that the precondition for the second call cannot be proved (we assume that the static verifier exclusively relies on the contract while reasoning about a method call).
+Annotating a postcondition $$\ttt{this.balance = old(this.balance) - amount}$$ would solve that problem, resulting in overall success of the verification.
 
 Gradual verification would realize a combined, best-effort approach without the need for full annotation:
 Static verification is used where possible (here: the first method call), dynamic verification where needed (here: the second method call).
-Where static verification proves a violation of the method contract, an error is found at compile time (which would have required tests with full code coverage to detect otherwise).
-Where static verification proves compliance with the method contract, no runtime checks are emitted in order to enforce the contract.
-Only call sites which are provable neither to violate nor to adhere with the contract will be enhanced with runtime assertions.
+Where static verification proves a violation of the method contract, the code is \emph{statically rejected}.
+Where static verification proves compliance with the method contract, the code is \emph{statically accepted}, i.e. no runtime checks are emitted in order to enforce the contract.
+In contrast to purely static verification, code that is provable neither to violate nor to comply with the contract will be \emph{optimistically accepted} and enhanced with runtime checks to guarantee compliance at runtime.
 
-This is realized by giving \ttt{withdrawCoins} an unknown postcondition $\qm$, which will be treated as any plausible formula (in this example, one that proves that the balance is still high enough).
-Whenever assumptions about $\qm$ are made statically, they are accompanied with a runtime check that ensures the validity of those assumptions at runtime.
-
+In above example, this behavior would be realized by treating the postcondition of \ttt{withdrawCoins} as unknown (“$\qm$”).
+This will allow the gradual verifier to assume any plausible formula for subsequent reasoning, e.g. one stating that the balance is still high enough for the second method call.
+Such treatment of $\qm$ is backed with a runtime check, making sure that all assumptions made by the gradual verifier were valid.
+Bottom line, the example would pass gradual verification and a single runtime check (for \ttt{acc.balance >= 30}) prior to the second call would be inserted.
 
 \subsection{Limitations of Static Verification}
 \label{ssec:limitations-of-static}
 The following example is written in a Java-like language with dedicated syntax for method contracts (similar to Eiffel \cite{meyer1988eiffel} and Spec\# \cite{the-spec-programming-system-an-overview}).
-We assume that this language is statically verified, i.e. static verification is part of the compilation process.
+We assume that this language is statically verified, i.e. successful static verification is a requirement for compilation.
 
-The example shows the limitations of static verification using the Collatz sequence as an algorithm too complex to describe concisely in a method contract:
+The example shows the limitations of static verification using the Collatz sequence as an algorithm too complex to describe and decide concisely in a method contract:
 \begin{lstlisting}
 int collatzIterations(int iter, int start)
     requires 1 <= start;
@@ -200,7 +201,7 @@ Note the \ttt{?} in the postcondition of \ttt{collatzIterations}.
 % - tracking access via ThreadLocalStorage
 % - transpilation (e.g. C# Roslyn compiler extension)
 
-\section{Conclusion???}
+\section{Overview}
 Our approach is based on recent advances in formalizing gradual typing, specifically “Abstracting Gradual Typing” \cite{garcia2016abstracting} by Garcia, Clark and Tanter.
 They describe a process called “gradualization” that uses the concept of abstract interpretation to define a gradual system in terms of a static one.
 Gradual typing emerged from drawbacks of static and dynamic type systems that are very similar to the drawbacks of verification systems outlined above.
