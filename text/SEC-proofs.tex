@@ -1153,35 +1153,59 @@ Further automated proofs can be found in \cite{olydisGitHub}.
 \end{proofatend}
 
 \begin{proofatend}[Proof of Theorem \ref{thm:gnf}]~\\
-    ???
-    \begin{comment}
-    In the remainder of this section we try to give an intuition behind this normal form.
+    Omitted.
     
+    Intuition behind the normal form:\\
     Recall that gradual formulas $\withqm{\phi_1}$ and $\withqm{\phi_2}$ are considered equal iff $\gamma(\withqm{\phi_1}) = \gamma(\withqm{\phi_1})$.
     The normal form makes use of the fact that concretizations of partially unknown formulas contain only self-framed formulas (see section \ref{sec:cs-gradual-formulas}).
     
-    \begin{lemma}[Mentioning a field implies access]~\\
+    \begin{lemma}[Mentioning a Field Implies Access]\label{lemma:mention}~\\
         For any formula $\phi$ mentioning field $\edot{$x$}{$f$}$:
         $$\forall \phi' \in \gamma(\withqm{\phi}), \phiImplies{\phi'}{\phiAcc{$x$}{$f$}}$$
     \end{lemma}
+    \begin{proof}
+        Note that a formula mentioning the field $\edot{$x$}{$f$}$ cannot be implied by a formula that does not mention that field.
+        E.g. $\phiImplies{\phiTrue}{\phiEq{x.f}{x.f}}$ is not true, since $\phiEq{x.f}{x.f}$ actually ensures that \ttt{x.f} evaluates (to any value), whereas $\phiTrue$ does not (there, \ttt{x} may not be defined or field \ttt{f} may not exist on whatever value \ttt{x} evaluates to).
+        This is a direct consequence of the formula semantics (see figure \ref{fig:svl-evalphi}).
+        
+        Due to self-framing, all formulas in $\gamma(\withqm{\phi})$ must therefore contain $\phiAcc{x}{f}$.
+    \end{proof}
     In other words: Merely mentioning a field will make sure that the concretization contains appropriate framing.
-    This is a helpful observation for justifying removal of accessibility predicates from the static part.
+    We say access to a field is “restored” by the concretization.
+    This is a helpful observation for justifying \emph{removal} of accessibility predicates from the static part.
     
-    Note, however, that simply dropping access from the static part may not result in an equivalent gradual formula for two reasons:
+    \begin{example}{Removal of Accessibility Predicate}\label{ex:rem-acc}~\\
+        Using lemma \ref{lemma:mention} one can derive
+        \begin{displaymath}
+        \gamma(\withqm{\phiCons{\phiAcc{x}{f}}{\phiEq{x.f}{3}}}) = \gamma(\withqm{\phiEq{x.f}{3}})
+        \end{displaymath}
+        The accessibility predicate can be dropped since it is restored by concretization due to $\phiEq{x.f}{3}$ mentioning field \ttt{x.f}.
+    \end{example}
+    
+    Note, however, that simply dropping access from the static part may not result in an equivalent gradual formula (like in example \ref{ex:rem-acc}) for two reasons:
     \begin{description}
         \item[1. No more mentions]~\\
         Dropping $\phiAcc{$x$}{$f$}$ might result in $\edot{$x$}{$f$}$ not being mentioned in the formula anymore, so there would be no more reason for the concretization to “restore” $\phiAcc{$x$}{$f$}$ in all concretizations.
+        \begin{example}{}\label{ex:rem-acc-1}~\\
+            \begin{displaymath}
+            \gamma(\withqm{\phiCons{\phiAcc{x}{f}}{\phiEq{p}{3}}}) \neq \gamma(\withqm{\phiEq{p}{3}})
+            \end{displaymath}
+        \end{example}
         
         \item[2. Aliasing]~\\
         In general there are different ways in which access to multiple (syntactically different) fields can be restored.
-        \begin{example}{Ambiguous Framing}~\\
+        \begin{example}{Ambiguous Framing}\label{ex:rem-acc-1x}~\\
             Dropping all accessibility predicates from $$\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}$$
             results in
             $$\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}$$
             However, $\gamma(\withqm{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}})$ contains
             $$\phiCons{\phiCons{\phiAcc{a}{f}}{\phiEq{a}{b}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{a.f}{x}}}$$
             whereas $\gamma(\withqm{\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}})$
-            does not
+            does not, i.e.
+            \begin{displaymath}
+            \gamma(\withqm{\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}}) \neq
+            \gamma(\withqm{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}})
+            \end{displaymath}
         \end{example}
         %In other words, the possibility of aliasing may result in a variety of re-framed formulas that are not equivalent with the original one.
         % Elaborate in more detail why this is bad?
@@ -1193,22 +1217,39 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \begin{description}
         \item[1. Enhancement]~\\
         Enrich the static part to counteract above problems, i.e. to enforce that access is restored exactly the right way.
-        This is achieved by simply spelling out certain implications of the access-terms:
+        This is achieved by appending certain implications of the access-terms as conjunctive terms:
         \begin{description}
             \item [$\phiAcc{$x$}{$f$} \implies \phiEq{\edot{$x$}{$f$}}{\edot{$x$}{$f$}}$]~\\
-            Access to a field implicitly guarantees that it actually evaluates to some (arbitrary) value.
-            Note that $\phiEq{\edot{$x$}{$f$}}{\edot{$x$}{$f$}}$ is not a logical tautology (i.e. it is not implies by $\phiTrue$), since it indeed makes sure that $\edot{$x$}{$f$}$ evaluates, whereas $\phiTrue$ does not.
-            The bottom line is that $\edot{$x$}{$f$}$ is being mentioned even after dropping $\phiAcc{$x$}{$f$}$, therefore solving the first problem. 
+            Access to a field implicitly guarantees that it evaluates to some value (see formula semantics in figure \ref{fig:svl-evalphi}).
+            The formula $\phiEq{\edot{$x$}{$f$}}{\edot{$x$}{$f$}}$ has the same effect, i.e. it can be appended as a conjunctive term without altering the formula semantics, but making sure that information is not lost when dropping the accessibility predicates.
+            \begin{example}{Example \ref{ex:rem-acc-1} revised}\label{ex:rem-acc-2}~
+                \begin{align*}
+                &\gamma(\withqm{\phiCons{\phiAcc{x}{f}}{\phiEq{p}{3}}}) \\
+                =~
+                &\gamma(\withqm{\phiCons{\phiCons{\phiAcc{x}{f}}{\phiEq{p}{3}}}{\phiEq{x.f}{x.f}}})\\
+                =~
+                &\gamma(\withqm{\phiCons{\phiEq{p}{3}}{\phiEq{x.f}{x.f}}})
+                \end{align*}
+            \end{example}
+            
             \item [$\phiCons{\phiAcc{$x$}{$f$}}{\phiAcc{$y$}{$f$}} \implies \phiNeq{$x$}{$y$}$]~\\
-            Having access to the same field of different expressions actively prevents those expressions to ever alias.
-            Spelling out this restriction by adding the corresponding inequality also prevents re-framing in a way that relies on aliasing.
-            The bottom line is that any valid re-framing must restore two distinct access-terms, therefore solving the second problem.
+            Having access to the same field of different expressions actively prevents those expressions to alias due to the formula semantics.
+            A corresponding inequality has the same effect, i.e. it can be appended as a conjunctive term without altering the formula semantics, but making sure that information is not lost when dropping the accessibility predicates.
+            \begin{example}{Example \ref{ex:rem-acc-1x} revised}\label{ex:rem-accx-2}~
+                \begin{align*}
+                &\gamma(\withqm{\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}}) \\
+                =~
+                &\gamma(\withqm{\phiCons{\phiCons{\phiCons{\phiAcc{a}{f}}{\phiAcc{b}{f}}}{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}}{\phiNeq{a}{b}}})\\
+                =~
+                &\gamma(\withqm{\phiCons{\phiCons{\phiEq{a.f}{3}}{\phiEq{b.f}{x}}}{\phiNeq{a}{b}}})
+                \end{align*}
+            \end{example}
         \end{description}
-        We enhance the non-linear part of our formula by spelling out above implications in every possible way, i.e. accounting for all (pairs of) access-terms.
-        It is worth noting that this enhancement preserves equality of the formula as only terms are added that were implied by the original formula, anyway.
+        As illustrated above, the normal form $\snorm{\cdot}$ will append corresponding conjunctive terms in every possible way, i.e. accounting for all (pairs of) access-terms.
+        It is worth noting that this process preserves equality of the formula as only terms are added that were implied by the original formula, anyway.
         
         \item[2. Delinearization]~\\
-        All access-terms are dropped.
+        All accessibility predicates are dropped.
+        Due to above measures, they are restored by concretization correctly.
     \end{description}
-    \end{comment}
 \end{proofatend}
