@@ -1,14 +1,15 @@
 The call statement is the only statement that is affected by the introduction of gradual formulas.
 As we do not want the semantics of any of the other statements to change, we only have to adjust the rules for calls.
 Figure \ref{fig:gvl-sem-dyn-sstep} shows those rules.
-\begin{figure}
+
+\begin{figure}[h]
     \boxed{\gsstep{\pi}{\pi}}
     \input{data/gvl-sem-dyn-sstep}
     \caption{\gvlidf: Small-Step Semantics for Method Call}
     \label{fig:gvl-sem-dyn-sstep}
 \end{figure}
-For all other statements $\gsstep{\cdot}{\cdot}$ is identical to $\sstep{\cdot}{\cdot}$ (see figure \ref{fig:svl-sem-dyn-sstep}).
 
+For all other statements $\gsstep{\cdot}{\cdot}$ is identical to $\sstep{\cdot}{\cdot}$ (see figure \ref{fig:svl-sem-dyn-sstep}).
 Furthermore, we design $\gsstep{\cdot}{\cdot}$ to be total.
 We extend the set of final states $\setGProgramStateFin$ with a designated exceptional state $\pi_{EX}$, representing dynamic verification failure.
 If no other derivation exists, we map to this state.

@@ -9,7 +9,7 @@ In this section, we will briefly describe how to turn a dynamically verified lan
 To understand how to approach dynamically verified languages, we have to examine how they fit into the spectrum of a gradually verified one.
 The static end is (by construction) the one where all formulas are static and the unknown formula “\qm” is never used.
 In contrast, annotating $\qm$ everywhere corresponds to a system that solely relies on runtime checks.
-One can further define that leaving out annotations (e.g. precondition, postcondition, or even both) corresponds to an annotation of $\qm$.
+One can further define that leaving out annotations (e.g. invariants, preconditions, postconditions, entire methods contracts) corresponds to an annotation of $\qm$.
 A dynamically verified language (say, Java with its mechanisms like runtime assertions) can be thought of as a gradually verified language with all annotations left out, defaulting to $\qm$.
 Such a gradually verified language can be derived as follows:
 

@@ -9,17 +9,13 @@ To drastically simplify notation, we will therefore define $\evalphiGen{\cdot}{\
         \evalphiGen{\langle H, \langle \rho, A, s \rangle \cdot S \rangle}{\phi}
     }
 \end{mathpar}
-
-Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $$\vDash~ \subseteq \setHeap \times \setVarEnv \times \setDFootprint \times \setFormula$$.
+Figure \ref{fig:svl-evalphi} defines the actual semantics as a predicate $$\vDash~ \subseteq \setHeap \times \setVarEnv \times \setDFootprint \times \setFormula$$
 \begin{figure}
     \boxed{\evalphi \phi}
     \input{data/svl-sem-dyn-form}
     \caption{\svlidf: Evaluating Formulas}
     \label{fig:svl-evalphi}
-\end{figure}
-
-% subtelties of EAAcc?
-
+\end{figure}% subtelties of EAAcc?
 We assume that denotational semantics $\envs{\cdot}$, implication and satisfiability are defined as described in section \ref{sec:a-statically-verified}.
 
 

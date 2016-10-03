@@ -1,10 +1,10 @@
 We choose the deterministic approach proposed in section \ref{ssec:the-deterministic-approach}.
-Figure \ref{fig:gvl-sem-stat-hoare} shows a deterministic lifting of the Hoare logic (figure \ref{fig:svl-sem-stat-hoare}).
+Figure \ref{fig:gvl-sem-stat-hoare} shows a deterministic lifting of the Hoare logic defined by figure \ref{fig:svl-sem-stat-hoare}.
 It uses a number of lifted components that we defined in section \ref{sec:gradual-liftings}.
 \begin{figure}[h!]
     \boxed{\dgthoare {\Gamma} {\grad{\phi_{pre}}} {s} {\grad{\phi_{post}}}}
     \input{data/gvl-sem-stat-hoare}
-    \caption{\gvl: Gradual Hoare Logic} 
+    \caption{\gvl: Gradual Deterministic Hoare Logic} 
     \label{fig:gvl-sem-stat-hoare}
 \end{figure}
 
@@ -12,5 +12,4 @@ It uses a number of lifted components that we defined in section \ref{sec:gradua
     The inductive definition we give induces a well-defined partial function.
     This function is a sound deterministic lifting (see \ref{ssec:the-deterministic-approach}) of the Hoare logic of \svlidf defined in section \ref{sec:static-semantics}.
 \end{lemma}
-
 A sound predicate lifting $\gtHoare{\cdot}{\cdot}{\cdot}{\cdot}$ can be derived using lemma \ref{lem:det2grad}.

@@ -1,6 +1,6 @@
 % MENTION that most of that stuff is completely redundant if soundness holds - and only used to prove just that!
 The small-step semantics $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$ of \svlidf are defined inductively in figure \ref{fig:svl-sem-dyn-sstep}.
-Note that right-associativity of \ttt{;} and termination of sequences with $\sSkip$ (see section \ref{sec:syntax}) obviates the need for dedicated sequence rules.
+Note that right-associativity of \ttt{;} and termination of sequences with $\sSkip$ (see section \ref{sec:syntax}) obviate the need for dedicated sequence rules.
 
 Using inductive rules to define a partial function, we have to make sure that at most one result is deducible for every input.
 \begin{lemma}[$\sstep{\cdot}{\cdot}$ Well-Defined]

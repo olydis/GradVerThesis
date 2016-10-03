@@ -24,10 +24,9 @@ This intuition can be formalized as
     \phi_2 = \phiCons{\phiEq{a}{b}}{\phiAcc{b}{f}}
     \end{displaymath}
     imply $\phi$.
-\end{example}
-
+\end{example} 
 As above example shows, regular conjunction can be indifferent about aliasing in the presence of access.
 Unfortunately, there is no way to be express such indifference using the syntax of \svlidf:
-Access to a field can be given either by inserting an accessibility predicate (implying that the field references \emph{different} than all other access referenced far) or by inserting an equation, relating it to existing access (explicitly stating that some fields reference the \emph{same} memory).
+Access to a field can be given either by inserting an accessibility predicate (implying that the field references a \emph{different} heap location than all other access referenced far) or by inserting an equation, relating it to existing access (explicitly stating that some fields reference the \emph{same} memory).
 The fundamental problem is the linear nature of accessibility-predicates, which makes explicit whether certain memory locations alias or not.
 Therefore, any formula giving access to fields $\ttt{a.f}$ and $\ttt{b.f}$ will always imply either $\phiEq{a}{b}$ or $\phiNeq{a}{b}$.

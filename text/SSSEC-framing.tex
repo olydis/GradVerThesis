@@ -37,8 +37,8 @@ The footprint of a formula is the set of fields it has access to, which can be i
     Note that the subtle difference of evaluating the expression (compared to static footprints) can have two effects:
     First, evaluation might fail (e.g. due to accessing non-existing fields or dereferencing null but also due to not returning a memory location $o$) which results in the partiality of the function.
     Second, multiple syntactically distinct accessibility-predicates might result in one tuple in the dynamic footprint.
-    \begin{example}{Aliasing Access}\\
-        \label{ex:aliasing-access}
+    \begin{example}{Static and Dynamic Footprints}
+        \label{ex:aliasing-access}\\
         Let $H$ and $\rho$ be defined such that $a, b, c \in \setExpr$ all evaluate to the same memory location $o \in \setLoc$.
         Furthermore, $d \in \setExpr$ evaluates to $\enull$.
         
@@ -55,7 +55,7 @@ The footprint of a formula is the set of fields it has access to, which can be i
     
     Note that the scenario in example \ref{ex:aliasing-access} violates the intuition behind the separating conjunction (introduced in section \ref{ssec:implicit-dynamic-frames}), which is supposed to guarantee that both “sides” of it have access to disjoint memory locations.
     This principle is violated by above formula because of $\phiAcc{a}{f}$ and $\phiAcc{b}{f}$.
-    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated, rendering above formulas unsatisfiable in any environment where \ttt{a} and \ttt{b} alias.
+    The formula semantics introduced in section \ref{ssec:formula-semantics} will make sure that the separating conjunction is not violated, rendering above formulas unsatisfiable in any program state where \ttt{a} and \ttt{b} alias.
 \end{description}
 \begin{figure}[h]
     \boxed{\staticFP {\phi} = A_s}
@@ -90,7 +90,7 @@ Figure \ref{fig:svl-frmphi} formalizes the predicate.
     \label{fig:svl-frmphi}
 \end{figure}
 Note how \tset{SfrmSepOp} augments the footprint the right sub-formula is checked against using the footprint of the left sub-formula.
-This ways, access predicates within a formula are able to frame expressions in the same formula, if mentioned in the right order.
+This way, access predicates within a formula are able to frame expressions in the same formula, if mentioned in the right order.
 
 % MOTIVATION FOR THIS? extraction?
 
@@ -114,7 +114,7 @@ We can now define self-framing as a special case of framing, namely framing with
     \begin{displaymath}
     \sfrmphi \phi
     \end{displaymath}
-    Let $\setFormulaB \subseteq \setFormulaA$ be the set of \textbf{self-framing and satisfiable} formulas.
+    Let $\setFormulaB \subseteq \setFormulaA$ be the set of \textbf{self-framed and satisfiable} formulas.
 \end{definition}
 
 \begin{comment}

@@ -35,7 +35,7 @@ In our design of gradual formulas we aim for “bounded unknown” formulas as i
     \end{example}
     
     \item[Static Knowledge Extraction]~\\
-    We define a helper function $\static{} : \setGFormula \rightarrow \setFormula$ that extracts the static part of a gradual formula as follows:
+    We define a helper function $\predicate{static} : \setGFormula \rightarrow \setFormula$ that extracts the static part of a gradual formula as follows:
     \begin{alignat*}{2}
     	 & \static{$\phi$}          &~= \phi & ~ \\
     	 & \static{$\withqm{\phi}$} &~= \phi &
@@ -52,5 +52,6 @@ We want to only allow gradual formulas in method contracts, resulting in the gra
 Note how the small change propagates throughout other constructs, all the way up to gradual programs.
 However, the change has no direct impact on statement syntax, allowing us to define $\setGStmt \defeq \setStmt$ and therefore $\setGProgramState \defeq \setProgramState$.
 Note that we also have not decorated $s$ in figure \ref{fig:gidf-syntax} although it is formally drawn from $\setGStmt$.
-There is no point in decorating statements or program state in of \gvlidf.
+%There is no point in decorating statements or program state in of \gvlidf.
+
 However, note that static and dynamic semantics of the call statement $\sCall {$x$} {$y$} {$m$} {$z$}$ will still have to be lifted as $m$ now references a gradual method contract (see section \ref{sec:gradual-statements} for detailed discussion).

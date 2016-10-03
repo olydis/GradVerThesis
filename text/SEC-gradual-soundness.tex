@@ -2,7 +2,7 @@ Proposed gradual Hoare logic is sound w.r.t. the small-step semantics if runtime
 % BY construction, what about progress? \gsssem exceptional? THEOREM?
 
 However, \gvlidf also complies with the stronger notion of soundness \tset{\dgradT Soundness} introduced in section \ref{ssec:gradual-soundness}.
-We will show how the small-step semantics $\sstep{\cdot}{\cdot}$ and $\gsstep{\cdot}{\cdot}$ realize the approach introduced in section \ref{ssec:atomic--knowledge}.
+To show this, we follow the approach introduced in section \ref{ssec:atomic--knowledge}.
 
 Specifically, we show that the semantics are complete and semi-optimal w.r.t. all statements except declarations, sequences, method calls and hold.
 For those remaining statements we prove by induction that \tset{\dgradT Soundness} still holds.
@@ -46,7 +46,7 @@ The overall proof is a structural induction on statement $s$.
 
 \begin{lemma}[\tset{\dgradT Soundness} Induction Step for Calls]
     \label{lemma:is-call}~\\
-    Assume \tset{\dgradT Soundness} holds for the method body of method $\edot{y}{m}$.\\
+    Assume \tset{\dgradT Soundness} holds for the method body of method $\edot{$y$}{$m$}$.\\
     Then \tset{\dgradT Soundness} holds for $\sCall {$x$} {$y$} {$m$} {$z$}$ (for all $m \in \setMethodName,\, x, y, z \in \setVar$).
 \end{lemma}
 
@@ -62,6 +62,6 @@ The overall proof is a structural induction on statement $s$.
     Then \tset{\dgradT Soundness} holds for $\sSeq {$s_1$} {$s_2$}$.
 \end{lemma}
 
-\begin{theorem}[\gvlidf Satisfies \tset{\dgradT Soundness}]\label{thm:gvlidf-dgsnd}~\\
-    The semantics of \gvlidf comply with \tset{\dgradT Soundness}.
+\begin{theorem}[\gvlidf satisfies \tset{\dgradT Soundness}]\label{thm:gvlidf-dgsnd}~\\
+    The semantics of \gvlidf satisfy \tset{\dgradT Soundness}.
 \end{theorem}

@@ -23,7 +23,7 @@ Furthermore, it is unclear whether optimality/consistency as defined by AGT is e
     or similar.
     However, an optimal gradual lifting is not able to deduce this fact, since there exists no instantiation of the postcondition for which a corresponding static judgment holds (since $\phiAnd{\ttt{1 <= x}}{\ttt{x <= 4}} \not \in \gamma(\withqmGen{\phiEq{x}{4}})$).
    
-    Note that our approach using a deterministic would work in this case:
+    Note that our approach using a deterministic gradual Hoare logic would work in this case:
     \begin{displaymath}
     \dgthoare{}{\withqmGen{\phiEq{x}{10000}}}{s}{\withqmGen{\phiAnd{\ttt{1 <= x}}{\ttt{x <= 4}}}}
     \end{displaymath}
@@ -41,15 +41,16 @@ For above example, the gradual formula syntax would have to provide a way of say
 This way, the gradual implication of x = 4 would (as expected) fail, as the optimal predicate would
 \end{comment}
 
-We conjecture that a notion of consistency that relies on \emph{valid} Hoare triples instead of \emph{deducible} Hoare triples (Hoare logic) would solve this problem, yet it is unclear what the implications of this definition would be.
-Most importantly, it would severely complicate optimality proofs, as they suddenly rely on dynamic semantics (from which validity of Hoare triples arises) instead of static semantics (Hoare logic).
+We conjecture that a notion of consistency that relies on semantically valid Hoare triples instead of statically deducible ones (Hoare logic) would solve this problem, yet it is unclear what the implications of this definition would be.
+Most importantly, it would severely complicate optimality proofs, as they suddenly rely on dynamic instead of static semantics.
 
 \subsection{Gradual Non-Termination}%% non-termination
 The “plausibility” interpretation of unknown formulas motivated us to define $\gamma(\qm)$ as the set of all \emph{satisfiable} formulas \setFormulaA (see section \ref{sec:gradual-formulas}).
 However, this definition implies that $\qm$ may not be usable as a postcondition of non-terminating statements (for which proving $\phiFalse$ as a postcondition would make sense).
 As a consequence, programmers may not be able to be imprecise about termination of a statement.
 Note that \svlidf does not contain non-terminating constructs, so we did not deal with this problem in chapter \ref{ch:case-study--implicit}.
-It is not clear how this case should be approached since the current definition of $\gamma(\qm)$ is clearly justified (for terminating programs), as otherwise $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{4}}$ holds, regardless of whether the lifted implication is optimal or not.
+
+%It is not clear how this should be approached since the current definition of $\gamma(\qm)$ is clearly justified (for terminating programs). as otherwise $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{4}}$ holds, regardless of whether the lifted implication is optimal or not.
 Maybe the introduction of an additional wildcard $\qm_{\bot}$ with $\gamma(\qm_{\bot}) = \setFormula$ proves useful in order to be imprecise about termination.
 
 \subsection{Leveraging Implicit Dynamic Frames}%% IDF
