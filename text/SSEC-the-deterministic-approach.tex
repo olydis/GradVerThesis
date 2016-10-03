@@ -25,7 +25,7 @@
 % { (x = 0) }
 
 %% intro
-In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) nor too strict (making assumptions that are neither general nor required by the following judgment and thus alter runtime behavior).
+In the previous section we built an intuition about intermediate gradual formulas that are neither too weak (increasing the chance of hiding inconsistencies) nor too strict (introducing semantically invalid Hoare triples).
 While this problem could certainly be solved by designing a sophisticated inference algorithm for gradual formulas, we propose solving the problem at the level of the gradual Hoare logic.
 
 In this section we derive a “deterministic gradual Hoare logic” 
@@ -40,7 +40,7 @@ This gradual lifting is not defined inductively and does not rely on variables b
 Instead it is syntax-directed, making the verification process deterministic.
 Furthermore $\dgrad{\vdash}$ allows for a stronger notion of soundness that does not rely on runtime checks.
 
-We will use the familiar notation $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ as an alias for $~\dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}$
+We may use the familiar notation $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ as an alias for $~\dgrad{\vdash}(\grad{\phi_1}, \grad{s}) = \grad{\phi_2}$
 
 ~\\
 %% approach idea
@@ -51,7 +51,7 @@ From this multivalued function we can obtain a lifted version, following similar
 \begin{definition}[Deterministic Lifting]~\\
     Given a binary predicate $P \subseteq \setFormula \times \setFormula$ we call a partial function $$\dgrad{P} : \setFormula \rightharpoonup \setFormula$$ \textbf{deterministic lifting} of $P$ if the following three conditions are met.\\
     (As before, the rules can be adapted to different parameter types and higher arity.
-    We indicate an adaptation to Hoare logic in blue using function notation for $\dgrad{\vdash}$.)
+    We indicate an adaptation to Hoare logic in blue.)
 \end{definition}
 
 \begin{description}
@@ -122,10 +122,11 @@ From this multivalued function we can obtain a lifted version, following similar
         \begin{flalign*}
         &\dgthoare{}{\qm}{\sVarAssign{y}{2}}{\phiAnd{\phiEq{x}{3}}{\phiEq{y}{2}}}
         \end{flalign*}
+        which corresponds to the instantiation criticized in section \ref{ssec:the-problem-with}.
     \end{example}
     
     \item[Monotonicity]~\\
-    Identical to monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
+    This rule is identical to the monotonicity condition of lifted partial functions (see section \ref{sssec:lifting-partial-functions}). % say why? P/f doesn't show up.
     \begin{align*}
     \forall \grad{\phi_1}, \grad{\phi_2} \in \setGFormula.~ 
     &\grad{\phi_1} \sqsubseteq \grad{\phi_2} ~~\wedge~~ \grad{\phi_1} \in \dom{\dgrad{P}} \\
@@ -156,23 +157,26 @@ As mentioned before, this gradual partial function has desirable properties:
         \begin{displaymath}
         \grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~~\defiff~~ \exists \grad{\phi_2'}.~ \dgrad{P}(\grad{\phi_1}) = \grad{\phi_2'} \wedge \gphiImplies {\grad{\phi_2'}} {\grad{\phi_2}}
         \end{displaymath}
-        is a sound gradual lifting of $P$.
+        is a sound gradual lifting of $P$.\\
+        See lemma \ref{lemma:ol-impl} for definition of $\gphiImplies{\cdot}{\cdot}$.
     \end{lemma}
     
-    This observation bridges the gap between $\dgthoare {~} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {~} {\cdot} {\cdot} {\cdot}$.
+    This observation bridges the gap between $\dgthoare {} {\cdot} {\cdot} {\cdot}$ and the gradual verifier which is supposed to implement $\gthoare {} {\cdot} {\cdot} {\cdot}$.
     
     Optimality of the deterministic lifting does not imply optimality of the obtained gradual lifting.
     
     \begin{example}{Counterexample of Optimality Induced by Deterministic Lifting}
         \label{cex:opt-det2grad}~\\
-        Assume that, one can verify
-        \begin{displaymath}
+        Assume that one can verify
+        \begin{align}
+        \label{frm:opt-det2grad1}
         \thoare{}{\phiEq{y}{4}}{\sVarAssign{x}{3}}{\phiAnd{\phiEq{y}{4}}{\phiEq{x}{3}}}
-        \end{displaymath}
+        \end{align}
         and
-        \begin{displaymath}
+        \begin{align}
+        \label{frm:opt-det2grad2}
         \thoare{}{\phiEq{y}{5}}{\sVarAssign{x}{3}}{\phiAnd{\phiEq{y}{5}}{\phiEq{x}{3}}}
-        \end{displaymath}
+        \end{align}
         using Hoare logic.
         
         Now, let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
@@ -180,13 +184,13 @@ As mentioned before, this gradual partial function has desirable properties:
         \begin{displaymath}
         \dgthoare{}{\qm}{\sVarAssign{x}{3}}{\qm}
         \end{displaymath}
-        The unknown formula as postcondition is necessary, as anything else (e.g. $\phiEq{x}{3}$) would break the strength condition (take the above static judgments, both of their postconditions cannot be implied by any static formula).
-        Note that the “bounded unknown” approach (see \ref{ssec:wildcard-with-upper}) would allow specifying $\withqmGen{\phiEq{x}{3}}$ as postcondition.
+        The wildcard as postcondition is necessary, as anything else (e.g. $\phiEq{x}{3}$) would break the strength condition (take judgments \ref{frm:opt-det2grad1} and \ref{frm:opt-det2grad2}, both of their postconditions cannot be implied by any satisfiable static formula).
         
         Using \ref{lem:det2grad} we can deduce
-        \begin{displaymath}
+        \begin{align}
+        \label{frm:opt-det2grad4}
         \gthoare{}{\qm}{\sVarAssign{x}{3}}{\phiEq{x}{1}}
-        \end{displaymath}
+        \end{align}
         since $\gphiImplies{\qm}{\phiEq{x}{1}}$ holds.
         An optimal gradual lifting would not be able to deduce this judgment, as it requires the existing of some $\phi \in \gamma(\qm) = \setFormulaA$ such that
         \begin{displaymath}
@@ -196,8 +200,9 @@ As mentioned before, this gradual partial function has desirable properties:
         However, the only working instantiation according to Hoare logic is $\phi = \phiEq{3}{1}$ which is not satisfiable.
         It follows that the obtained lifting is not optimal, even though the deterministic lifting is.
         
-        Note that with $\withqmGen{\phiEq{x}{3}}$ as a postcondition, one cannot deduce above gradual judgment (since $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{1}}$) does not hold.
-        This example motivates the use of a more powerful gradual syntax, as apparently they result in more optimal gradual liftings.
+        Note that the “bounded unknown” approach (see \ref{ssec:wildcard-with-upper}) would allow specifying $\withqmGen{\phiEq{x}{3}}$ as postcondition.
+        With this more precise postcondition, one cannot deduce judgment \ref{frm:opt-det2grad4} (since $\gphiImplies{\withqmGen{\phiEq{x}{3}}}{\phiEq{x}{1}}$ does not hold).
+        This example motivates the use of a more powerful gradual syntax, as they enable more optimal gradual liftings.
     \end{example}
     
     We conjecture that optimality of the deterministic lifting does imply optimality of the obtained gradual lifting if the gradual formula syntax is expressive enough to encode all knowledge about the dynamic semantics of a statement.
@@ -207,7 +212,7 @@ As mentioned before, this gradual partial function has desirable properties:
     For the gradual verifier this means that there is no need to infer intermediate formulas, averting the risk of choosing bad instantiations (as illustrated in section \ref{ssec:the-problem-with}).
         
     \item[(c) Soundness]~\\
-    Deterministic liftings are designed in a way that enables defining a stronger notion of soundness that does not rely on runtime assertions.
+    Deterministic liftings are designed in a way that allows for a stronger notion of soundness that does not rely on runtime checks.
     \begin{definition}[\dgradT Soundness]\label{def:dgsnd}~\\
         Let $\grad{\phi_1}, \grad{\phi_2} \in \setGFormula$ and $\grad{s} \in \setGStmt$.\\
         If $\dgthoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ then $\gtHoare{}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$
@@ -228,7 +233,7 @@ As mentioned before, this gradual partial function has desirable properties:
         \end{mathpar}
         Soundness of the Hoare logic implies that assertions are guaranteed to hold at runtime.
         It is therefore reasonable for \svl to implement assertions as no-operations.
-        It follows from the rules of gradual function lifting that \gvl implements them the same way.
+        It follows from the rules of gradual function lifting (applied to the small-step semantics) that \gvl implements them the same way.
         
         A valid deterministic lifting of \tset{HAssert} is able to verify
         \begin{displaymath}
@@ -237,13 +242,13 @@ As mentioned before, this gradual partial function has desirable properties:
         However $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ does not hold for non-trivial $\phi_a$:
         
         Choose $\phi_a = \phiEq{x}{2}$.
-        Let $\grad{\pi}, \grad{\pi'} \in \setGProgramState$ such that $\gsstepConsume{\sAssert{$\phi_a$}}{\grad{\pi}}{\grad{\pi'}}$ and $\evalgphiGen{\grad{\pi}}{\phiEq{x}{3}}$ holds (both assumptions are compatible since assertions are implemented as no-operations).
+        Let $\grad{\pi}, \grad{\pi'} \in \setGProgramState$ such that $\gsstepConsume{\sAssert{$\phi_a$}}{\grad{\pi}}{\grad{\pi'}}$ and $\evalgphiGen{\grad{\pi}}{\phiEq{x}{3}}$ holds (both assumptions are compatible since assertions are implemented as no-operations, i.e. especially not runtime check $\evalgphiGen{\grad{\pi}}{\phi_a}$ is performed).
         It follows that $\evalgphiGen{\grad{\pi'}}{\phiEq{x}{3}}$.
-        According to definition \ref{def:valid-hoare-triple}, we can deduce from $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ that $\evalgphiGen{\grad{\pi'}}{\withqmGen{\phiEq{x}{2}}}$.
+        According to definition \ref{def:valid-ghoare-triple}, we can deduce from $\gtHoare{}{\qm}{\sAssert{$\phi_a$}}{\withqmGen{\phi_a}}$ that $\evalgphiGen{\grad{\pi'}}{\withqmGen{\phiEq{x}{2}}}$.
         No such $\grad{\pi'}$ exists.
         
         On the other hand, a small-step semantics that is stuck or throws an exception if the assertion is violated would restore soundness.
-        In general, small-step semantics that are rely on guarantees given by static semantics may turn out too weak after gradualization of the static semantics.
+        In general, small-step semantics that rely on guarantees given by static semantics may turn out too weak after gradualization of the static semantics.
     \end{example}
 \end{description}
 
@@ -251,21 +256,25 @@ As mentioned before, this gradual partial function has desirable properties:
 \begin{lemma}[Reduced Runtime Checks]
     \label{lemma:runtime-checks-reduced}~\\
     Assume that $\dgthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2'}}$ holds for some $\grad{\phi_1}, \grad{s}, \grad{\phi_2'}$.
-    If \tset{\dgradT Soundness} holds, the runtime check $\sAssert{$\grad{\phi_2}$}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated in section \ref{ssec:gradual-soundness}, see \tset{\gradT Soundness}) can be simplified or omitted.
+    If \tset{\dgradT Soundness} holds, the runtime check $\sAssert{$\grad{\phi_2}$}$ associated with a judgment $\gthoare{~}{\grad{\phi_1}}{\grad{s}}{\grad{\phi_2}}$ (as postulated by definition \ref{def:gsnd}) can be simplified or omitted.
     
-    Specifically, it is sufficient to insert a runtime check (predicate) $P \subseteq \setProgramState$ if
+    Specifically, it is sufficient to insert a runtime check (predicate) $P \subseteq \setGProgramState$ if
     \begin{gather*}
     \envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}
     \end{gather*}
-    holds.
-    \begin{example}{Reduced Runtime Check}~\\
-        Let $\grad{\phi_2'} = \withqmGen{\phiEq{x}{3}}$ and $\grad{\phi_2} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{5}}$.
-        
-        Then $P(\pi) \defeq \evalgphiGen{\pi}{\phiEq{y}{5}}$ is a sufficient runtime check.
-    \end{example}
-    
-    Note that $P(\pi) = \setProgramState$ is a sufficient runtime check if $\envs{\grad{\phi_2'}} \subseteq \envs{\grad{\phi_2}}$.
-    In other words, no runtime check is necessary in this case.
+    holds where $\envs{\cdot} : \setGFormula \rightarrow \PP^{\setGProgramState}$ is defined analogous to definition \ref{def:frm-den-sem}:
+    \begin{displaymath}
+    \envs{\grad{\phi}} \defeq \{~ \grad{\pi} \in \setGProgramState ~|~ \evalgphiGen{\grad{\pi}}{\grad{\phi}} ~\}
+    \end{displaymath}
 \end{lemma}
 
+\begin{example}{Reduced Runtime Check}~\\
+    Let $\grad{\phi_2'} = \withqmGen{\phiEq{x}{3}}$ and $\grad{\phi_2} = \phiAnd{\phiEq{x}{3}}{\phiEq{y}{5}}$.
+    
+    Then $P(\pi) \defeq \evalgphiGen{\pi}{\phiEq{y}{5}}$ is a sufficient runtime check.
+\end{example}
 
+\begin{corollary}[Superfluous Runtime Checks]\label{cor:runtime-checks-removed}~\\
+    $P(\pi) = \setProgramState$ is a sufficient runtime check if $\envs{\grad{\phi_2'}} \subseteq \envs{\grad{\phi_2}}$.\\
+    In other words, no runtime check is necessary in this case.
+\end{corollary}

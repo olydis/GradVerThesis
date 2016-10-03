@@ -7,9 +7,9 @@ However, as illustrated in example \ref{ex:cex-gdpres}, incompleteness of the Ho
 % EXAMPLES
 
 %% completeness
-As completeness seems to be a property of the entire semantics instead of just the Hoare logic, we will define it as such.
-\begin{definition}[Completeness]~\\
-    \label{def:completeness}
+As completeness seems to be a property of the entire semantics (instead of just the Hoare logic), we will define it as such.
+\begin{definition}[Completeness]
+    \label{def:completeness}~\\
     A semantics is \textbf{complete} if every execution of a statement $s$ can be supported with a matching Hoare logic derivation:
     \begin{flalign*}
     \forall s \in \setStmt,\, \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
@@ -17,16 +17,18 @@ As completeness seems to be a property of the entire semantics instead of just t
     \end{flalign*}
 \end{definition}
 
+(Note that $\evalphiGen{\pi_2}{\phi_2}$ is then implied by soundness of the static language and thus not stated in above definition.)
+
 As indicated before, complete semantics may be derived by enhancing the existing Hoare logic but also by restricting the domain of the existing small-step semantics.
 As long as soundness is not broken, those changes do not have observable effects on \svl programs, i.e. valid programs will behave identically before and after respective adjustments.
 \begin{lemma}[Completion of Semantics]\label{lemma:compl-sem}~\\
-    Deriving sound, complete semantics by restricting the domain of the small-step semantics or extending the Hoare logic of \svl does not have observable effects.
+    Deriving complete semantics by restricting the domain of the small-step semantics or extending the Hoare logic of \svl (without breaking soundness) does not have observable effects.
 \end{lemma}
 
 %% further stuff
-Based on a complete semantics of \svl, the following requirements for \gvl are sufficient to satisfy \tset{\dgradT Soundness}.
-\begin{definition}[Semi-Optimal Gradual Deterministic Hoare Logic]~\\
-    \label{def:perf-stat}
+Based on a complete semantics of \svl, the following requirements for \gvl are then sufficient to satisfy \tset{\dgradT Soundness}.
+\begin{definition}[Semi-Optimal Gradual Deterministic Hoare Logic]
+    \label{def:perf-stat}~\\
     We call a deterministically lifted Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot}$ \textbf{semi-optimal} iff
     \begin{align*}
     \forall \phi_1 \in \setFormula,\, \grad{s} \in \setGStmt,\, \grad{\phi_2} \in \setGFormula.&~ \dgthoare{}{\phi_1}{\grad{s}}{\grad{\phi_2}}\\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{}{\phi_1}{s}{\phi_2}
@@ -93,8 +95,8 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
     \end{align*}
 \end{comment}
 
-\begin{definition}[Semi-Optimal Gradual Small-Step Semantics]~\\
-    \label{def:perf-dyn}
+\begin{definition}[Semi-Optimal Gradual Small-Step Semantics]
+    \label{def:perf-dyn}~\\
     We call a total, lifted small-step semantics $\gsstep{\cdot}{\cdot}$ \textbf{semi-optimal} iff
     \begin{comment}
     %\label{frm:perf-ex}
@@ -110,7 +112,7 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
 
 We call the semantics of \gvl semi-optimal if both Hoare logic and small-step semantics are semi-optimal as defined above.
 
-\begin{theorem}[Completeness and Semi-Optimality imply \tset{\dgradT Soundness}]~\\
-    \label{thm:compl-and-so-to-gdpres}
+\begin{theorem}[Completeness and Semi-Optimality imply \tset{\dgradT Soundness}]
+    \label{thm:compl-and-so-to-gdpres}~\\
     If the semantics of \svl are complete and the semantics of \gvl are semi-optimal, then \tset{\dgradT Soundness} is satisfied.
 \end{theorem}

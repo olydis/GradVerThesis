@@ -30,27 +30,7 @@ and
 \gthoare{~}{\qm}{\sSeq{\sVarAssign{i}{i + 1}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}
 \end{displaymath}
 
-As established in section \ref{ssec:gradual-soundness}, runtime assertions have to be injected whenever such a judgment is made, in order to guarantee soundness.
-The resulting program, as executed by small-step semantics looks as follows.
-\begin{lstlisting}
-int getFourA(int i)
-{
-    i := 4;
-    result := i;
-    assert (result = 4);
-}
-
-int getFourB(int i)
-{
-    i := i + 1;
-    result := i;
-    assert (result = 4);
-}
-\end{lstlisting}
-
-
-Note that the gradual verifier has not yet verified above judgments.
-It does so by applying the deterministic lifting (as determined in section \ref{sssec:examples-lift-determ}) and then using lemma \ref{lem:det2grad} to deduce the gradual lifting.
+It does so by applying the deterministic lifting (see section \ref{sssec:examples-lift-determ}) and then using lemma \ref{lem:det2grad} to deduce the gradual lifting.
 
 ~\\~\\
 Deducing $\gthoare{}{\phiTrue}{\sSeq{\sVarAssign{i}{4}}{\sVarAssign{result}{i}}}{\phiEq{result}{4}}$:
@@ -168,6 +148,60 @@ where
 \mathcal{I} \equiv&~ 
 \gphiImplies{\qm}{\phiEq{result}{4}}
 \end{flalign*}
+~\\~\\
+
+
+As established in section \ref{ssec:gradual-soundness}, runtime checks have to be injected whenever such a judgment is made, in order to guarantee soundness.
+Definition \ref{def:gsnd} of \tset{\gradT Soundness} suggests inserting a runtime assertion for the entire postcondition.
+The compiled program (as executed by the small-step semantics) would correspond to the following source code:
+\begin{lstlisting}
+int getFourA(int i)
+{
+    i := 4;
+    result := i;
+    assert (result = 4);
+}
+
+int getFourB(int i)
+{
+    i := i + 1;
+    result := i;
+    assert (result = 4);
+}
+\end{lstlisting}
+
+The runtime check in method \ttt{getFourA} looks redundant.
+As motivated in section \ref{ssec:the-deterministic-approach}, the gradual verifier may formally reason about optimized runtime checks using the return values of the deterministic gradual Hoare logic in case \tset{\dgradT Soundness} holds.
+Lemma \ref{lemma:runtime-checks-reduced} and corollary \ref{cor:runtime-checks-removed} give refined criteria for sufficient runtime checks.
+
+Assuming that \tset{\dgradT Soundness} does indeed hold, one can use corollary \ref{cor:runtime-checks-removed} to deduce that no runtime check is necessary for method \ttt{getFourA} since
+\begin{displaymath}
+\envs{\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}} \subseteq \envs{\phiEq{result}{4}}
+\end{displaymath}
+holds.
+
+For method $\ttt{getFourB}$ it is valid to check for $P(\grad{\pi}) = \evalgphiGen{\grad{\pi}}{\phiEq{result}{4}}$ (according to lemma \ref{lemma:runtime-checks-reduced}), which again corresponds to executing a runtime assertion $\sAssert{\phiEq{result}{4}}$.
+
+As a result, the compiled program corresponds to the following source code.
+\begin{lstlisting}
+int getFourA(int i)
+{
+    i := 4;
+    result := i;
+}
+
+int getFourB(int i)
+{
+    i := i + 1;
+    result := i;
+    assert (result = 4);
+}
+\end{lstlisting}
+
+\begin{comment}
+Note that the gradual verifier has not yet verified above judgments.
+
+
 
 ~\\~\\
 Comparing \ttt{getFourA} and \ttt{getFourB} one can observe a difference regarding the injected runtime assertions.
@@ -183,4 +217,4 @@ In other words, it is static knowledge that can be used to reason about the outc
 In case of function \ttt{getFourA}, the compiler would be able to treat $\phiAnd{\phiAnd{\phiTrue}{\phiEq{i}{4}}}{\phiEq{result}{i}}$ as static knowledge that is usable to formally guarantee the success of $\sAssert{\phiEq{result}{4}}$.
 
 
-
+\end{comment}

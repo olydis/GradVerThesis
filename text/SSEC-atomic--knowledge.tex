@@ -1,10 +1,9 @@
 %% intro
-Completeness as defined before tightly couples Hoare logic and small-step semantics.
-In practice this can be impossible to implement due to decidability, i.e. not all valid small-step derivations can be modeled using Hoare logic.
-As a result, completeness is impossible to achieve.
+Completeness as defined in definition \ref{def:completeness} tightly couples Hoare logic and small-step semantics.
+In practice this can be impossible to achieve due to decidability, i.e. not all valid small-step derivations can be modeled using Hoare logic.
 Similarly, semi-optimality of the gradual semantics might be hard to ensure.
 Semi-optimality of the gradual Hoare logic requires deciding the existence of a Hoare logic derivation which involves first order logic for composite statements like sequences (which was a problem we originally wanted to avoid with deterministic liftings).
-In this section we motivate that a weaker notion of completion and semi-optimality may be sufficient to prove \tset{\dgradT Soundness}.
+In this section we motivate that a weaker notion of completeness and semi-optimality may be sufficient to prove \tset{\dgradT Soundness}.
 
 %% 
 The sequence operator \ttt{;} is key to defining composite statements in most programming languages.
@@ -22,4 +21,4 @@ The resulting proof of \tset{\dgradT Soundness} (lemma \ref{thm:compl-and-so-to-
 
 Again, we want to point out that we only give examples of sufficient criteria to prove \tset{\dgradT Soundness}.
 It is possible that the approaches do not work for a certain programming language, or even that it is entirely impossible to satisfy \tset{\dgradT Soundness}.
-However, recall that \tset{\dgradT Soundness} is not necessary for \gvl to be sound.
+However, recall that \tset{\dgradT Soundness} is not necessary for \gvl to be sound (i.e. satisfy \tset{\gradT Soundness}).

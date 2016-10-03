@@ -11,10 +11,7 @@ We identify the following rules:
     
     If $P(\phi_1, \phi_2)$ then $\grad{P}(\phi_1, \phi_2)$ for all $\phi_1, \phi_2 \in \setFormula$.
     
-    Or equivalently, using set notation
-    \begin{displaymath}
-    P \subseteq \grad{P}
-    \end{displaymath}
+    Or equivalently, using set notation: $P \subseteq \grad{P}$
     
     \item[Monotonicity]~\\
     In order to satisfy the gradual guarantee, the semantics of \gvl must be immune to reduction of precision.
@@ -23,7 +20,7 @@ We identify the following rules:
     If $\grad{P}(\grad{\phi_1}, \grad{\phi_2})$ then $\grad{P}(\grad{\phi_1'}, \grad{\phi_2'})$ for all $\grad{\phi_1}, \grad{\phi_2}, \grad{\phi_1'}, \grad{\phi_2'} \in \setGFormula$ with $\grad{\phi_1} \sqsubseteq \grad{\phi_1'}$ and $\grad{\phi_2} \sqsubseteq \grad{\phi_2'}$.
 \end{description}
 
-\begin{definition}[Soundness of Predicate Lifting]
+\begin{definition}[Soundness of Predicate Lifting]~\\
     A lifted predicate is \textbf{sound} if it is closed under the above rules.
 \end{definition}
 
@@ -31,7 +28,7 @@ Note that soundness only gives a lower bound for the predicate:
 $$\grad{P} = \setGFormula \times \setGFormula$$ is a sound predicate lifting of any binary predicate $$P \subseteq \setFormula \times \setFormula$$
 This observation motivates an additional notion of optimality.
 
-\begin{definition}[Optimality of Predicate Lifting]
+\begin{definition}[Optimality of Predicate Lifting]~\\
     A sound lifted predicate is \textbf{optimal} if it is the smallest set closed under the above rules.
 \end{definition}
 
@@ -48,7 +45,7 @@ The definition of optimal predicate lifting coincides with the definition of “
 This is an intriguing observation since different approaches were used to end up with the same definition:
 AGT immediately defines consistent predicate lifting as above, arguing that it reflects the intuition behind gradual formulas (as placeholders for plausible static formulas).
 Therefore $\grad{P}(\grad{\phi_1}, \grad{\phi_2})$ is supposed to hold if it is plausible that there exists an instantiation satisfying the static predicate.
-This intuition is directly formalized, using concretization to map from gradual formulas back to plausible static formulas.
+This intuition is directly formalized, using concretization to map from gradual formulas to plausible static formulas.
 
 \begin{comment}
 We noticed early that this definition is too strong for gradual verification rules in general, due to the complexity of verification rules compared to typing rules:
@@ -61,5 +58,5 @@ Realizing that consistent lifting is actually not necessary for ending up with a
 Identifying the bare minimum of requirements (dictated by the gradual guarantee and compatibility with the static system) we ended up with our definition of sound lifting.
 The optional notion of optimality bridges the gap between both approaches.
 
-It is worth noting that optimality might not even be desirable under all circumstances as outlined in section \ref{sec:future-work}.
+It is worth noting that optimality may not only be hard to achieve sometimes, but might not even be desirable under all circumstances as outlined in section \ref{sec:future-work}.
 

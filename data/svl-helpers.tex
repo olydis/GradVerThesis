@@ -23,7 +23,7 @@ We define the following helper methods:
     \item[Free Variables]~\\
     The semantics of \svlidf will sometimes reason about the free variables of expressions or formulas.
     
-    Let $\FV : (\setExpr \cup \setFormula) \rightarrow \PP^{\setVar}$ be defined as
+    We define $\FV : (\setExpr \cup \setFormula) \rightarrow \PP^{\setVar}$ as
     \begin{alignat*}{3}
     	  & \FV(v)                            &  & = \emptyset                    & ~ \\
     	  & \FV(x)                            &  & = \{ x \}                      &  \\
@@ -39,7 +39,7 @@ We define the following helper methods:
     \item[Default Value of Given Type]~\\
     \svlidf assigns the following default values to variables when they are declared and to fields when classes are instantiated.
     
-    Let $\predicate{defaultValue} : \setType \rightarrow \setVal$ be defined as
+    We define $\predicate{defaultValue} : \setType \rightarrow \setVal$ as
     \begin{alignat*}{3}
     	 & \defaultValue{\Tint} &  & = 0      & ~ \\
     	 & \defaultValue{$C$}   &  & = \enull &
@@ -49,7 +49,7 @@ We define the following helper methods:
     Expressions mentioning fields are heap-dependent and thus require access.
     To enable treating all expressions (including bare variables and values) in a uniform fashion, we define a pseudo accessibility-predicate which is also defined for expressions that do not mention fields.
     
-    Let $\predicate{acc} : \setExpr \rightarrow \setFormula$ be defined as
+    We define $\predicate{acc} : \setExpr \rightarrow \setFormula$ as
     \begin{alignat*}{3}
     	 & \accFor{v}               &  & = \phiTrue          & ~ \\
     	 & \accFor{x}               &  & = \phiTrue          & ~ \\
@@ -60,7 +60,7 @@ We define the following helper methods:
     Under some circumstances (\ttt{hold}-statements, method bodies), overwriting a certain variable is not allowed in \svlidf.
     To reliably check which variables are written to by a statement, we define the following function.
     
-    Let $\mods : \setStmt \rightarrow \PP^{\setVar}$ be defined as
+    We define $\mods : \setStmt \rightarrow \PP^{\setVar}$ as
     \begin{alignat*}{3}
     	 & \mods({\sVarAssign {${x}$} {${e}$}})            & ~ & = \{~ x ~\}                       & ~ \\
     	 & \mods({\sAlloc {${x}$} {${C}$}})                & ~ & = \{~ x ~\}                       & ~ \\

@@ -1,6 +1,6 @@
 %% phiImplies
 \begin{lemma}[Optimal Lifting of Implication]\label{lemma:ol-impl}~\\
-    Let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).
+    Let $\setGFormula$ be extended using the “total unknown” approach (see section \ref{ssec:dedicated-wildcard-formula}).\\
     Let $~~\gphiImplies{\cdot}{\cdot}~ \subseteq \setGFormula \times \setGFormula$ be defined inductively as
     \begin{mathpar}
         \inferrule* [Right=\gradT ImplStatic]
@@ -35,7 +35,7 @@
 %% evalphi
 \begin{lemma}[Optimal Lifting of Evaluation]
     \label{ex:opt-lift-evalphi}~\\
-    Let $\setGFormula$ be extended using the “bounded unknown” approach (see section \ref{ssec:wildcard-with-upper}).
+    Let $\setGFormula$ be extended using the “bounded unknown” approach (see section \ref{ssec:wildcard-with-upper}).\\
     Let $~~\evalgphiGen{\cdot}{\cdot}~ \subseteq \setProgramState \times \setGFormula$ be defined inductively as
     \begin{mathpar}
         \inferrule* [Right=\gradT EvalStatic]
@@ -76,7 +76,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
 %% composite
 \begin{lemma}[Sound Lifting of Composite Predicate]
     \label{lemma:pred-lift-comp}~\\
-    Let $P, Q \subseteq \setFormula \times \setFormula$ be arbitrary binary predicates.
+    Let $P, Q \subseteq \setFormula \times \setFormula$ be arbitrary binary predicates.\\
     Let $(P \circ Q) \subseteq \setFormula \times \setFormula$ be defined as
     \begin{displaymath}
     (P \circ Q)(\phi_1, \phi_3) ~\defiff~ \exists \phi_2 \in \setFormula.~ P(\phi_1, \phi_2) \wedge Q(\phi_2, \phi_3)
@@ -89,12 +89,12 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     with sound liftings $\grad{P}$ and $\grad{Q}$.
     
     Then $\grad{(P \circ Q)}$ is a sound lifting of $(P \circ Q)$, i.e. “piecewise” lifting of composite predicates is allowed.
-    Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \circ Q)}$.
+    Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \circ Q)}$. % HSeq
 \end{lemma}
 
 %% conjunction
 \begin{lemma}[Sound Lifting of Conjunctive Predicate]\label{lemma:sl-conj-pred}~\\
-    Let $P, Q \subseteq \setFormula$ be arbitrary binary predicates.
+    Let $P, Q \subseteq \setFormula$ be arbitrary binary predicates.\\
     Let $(P \wedge Q) \subseteq \setFormula$ be defined as
     \begin{displaymath}
     (P \wedge Q)(\phi) ~\defiff~ P(\phi) \wedge Q(\phi)
@@ -106,13 +106,13 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     \end{displaymath}
     with sound liftings $\grad{P}$ and $\grad{Q}$.
     
-    Then $\grad{(P \wedge Q)}$ is a sound lifting of $(P \wedge Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
+    Then $\grad{(P \wedge Q)}$ is a sound lifting of $(P \wedge Q)$, i.e. term-wise lifting of conjunctive predicates is allowed.
     Optimality of $\grad{P}$ and $\grad{Q}$ does not imply optimality of $\grad{(P \wedge Q)}$.
 \end{lemma}
 
 %% disjunction
 \begin{lemma}[Optimal Lifting of Disjunctive Predicate]\label{lemma:sl-disj-pred}~\\
-    Let $P, Q \subseteq \setFormula$ be arbitrary binary predicates.
+    Let $P, Q \subseteq \setFormula$ be arbitrary binary predicates.\\
     Let $(P \vee Q) \subseteq \setFormula$ be defined as
     \begin{displaymath}
     (P \vee Q)(\phi) ~\defiff~ P(\phi) \vee Q(\phi)
@@ -125,7 +125,7 @@ We define denotational semantics of gradual formulas analogous to the non-gradua
     with sound liftings $\grad{P}$ and $\grad{Q}$.
     
     Then $\grad{(P \vee Q)}$ is a sound lifting of $(P \vee Q)$, i.e. term-wise lifting of disjunctive predicates is allowed.
-    Optimality of $\grad{P}$ and $\grad{Q}$ does imply optimality of $\grad{(P \vee Q)}$.
+    Optimality of $\grad{P}$ and $\grad{Q}$ implies optimality of $\grad{(P \vee Q)}$.
 \end{lemma}
 
 \begin{comment}

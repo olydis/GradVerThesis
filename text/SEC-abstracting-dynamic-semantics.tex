@@ -1,8 +1,8 @@
-Let $\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$ be a sound gradual lifting of $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$.
-As shown in section \ref{ssec:gradual-soundness}, \tset{\gradT Soundness} is a tautology, i.e. the gradual system is sound.
+Let $$\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$$ be a sound gradual lifting of $$\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$$
+As shown in section \ref{ssec:gradual-soundness}, \tset{\gradT Soundness} is a tautology, i.e. the gradual system we have derived is sound.
 
 %% soundnessX
-However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of soundness introduced in section \ref{ssec:the-deterministic-approach} (definition \ref{def:dgsnd}).
+However, in case the deterministic lifting approach is used to derive a gradual Hoare logic it is desirable to satisfy the stronger notion of soundness “\tset{\dgradT Soundness}” introduced in section \ref{ssec:the-deterministic-approach} (definition \ref{def:dgsnd}).
 This stronger notion allows considering return values of the deterministic lifting as static knowledge.
 As illustrated in section \ref{sssec:gradual-verification-illustrated}, such static knowledge can be used for optimizations.
 

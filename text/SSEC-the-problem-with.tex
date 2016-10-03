@@ -4,8 +4,8 @@ In case the Hoare rules of \svl are given inductively, we can make use of the ru
 The rules allow us to soundly lift each individual inductive rule in order to end up with a sound lifting of the overall predicate.
 
 %% example
-\begin{example}{Rule-wise Hoare Logic Lifting}
-    Given:
+\begin{example}{Rule-wise Hoare Logic Lifting}~\\
+    Assume that we are given a Hoare logic including rules for sequences and assignments:
     \begin{mathpar}
         \inferrule* [right=HSeq]
         {
@@ -25,7 +25,7 @@ The rules allow us to soundly lift each individual inductive rule in order to en
             \thoare {} {\phi[e/x]} {\sVarAssign{$x$}{$e$}} {\phi}
         }
     \end{mathpar}
-    Rule-wise lifting:
+    Then using rule-wise lifting we can obtain:
     \begin{mathpar}
         \inferrule* [right=\gradT HSeq]
         {
@@ -86,14 +86,15 @@ has to hold for some $\grad{\phi_{q1}}, \grad{\phi_{q2}} \in \setGFormula$.
 There are a variety of valid instantiations for both variables:
 \begin{description}
     \item[Good: $\grad{\phi_{q1}} = \phiEq{y}{2},~ \grad{\phi_{q2}} = \phiEq{y}{2}$]~\\
-    This instantiation aims to use static formulas as early as possible.
-    The implication trivially holds.
+    This instantiation makes no assumptions and would even work if the precondition $\qm$ was replaced by $\phiTrue$.
+    % The implication trivially holds.
         
     \item[Too weak: $\grad{\phi_{q1}} = \qm,~ \grad{\phi_{q2}} = \qm$]~\\
-    Whenever there exists a valid instantiation at all, the wildcard is also a valid one, so always choosing it would be an easy way of implementing a gradual verifier.
+    Whenever there exists a valid instantiation at all, the wildcard is also a valid one (due to the gradual guarantee), so always choosing it would be an easy way of implementing a gradual verifier.
     Note however, that the knowledge about the first statement is lost which results in the necessity of dynamic checks to ensure $\phiEq{x}{3}$ after $\sVarAssign{y}{2}$.
-    Before, this check could have been optimized away.
-    In general, choosing $\qm$ as intermediate gradual formulas allows verifying arbitrary inconsistent judgments (a manifestation of the lack of optimality of $\gthoare {} {\cdot} {\cdot} {\cdot}$).
+    Before, this check could have been optimized away (using sufficiently sophisticated reasoning).
+    
+    In general, choosing $\qm$ as intermediate gradual formulas allows verifying arbitrary inconsistent judgments (a manifestation of the lack of optimality of rule \tset{\gradT HSeq}).
     
     \begin{example}{Inconsistent Gradual Verification}
         \begin{displaymath}
@@ -113,8 +114,8 @@ There are a variety of valid instantiations for both variables:
     is not semantically valid.
     
     While in general it is possible to derive semantically invalid Hoare triples (this is the motivation for runtime checks, see section \ref{ssec:gradual-soundness}), a gradual verifier should not deliberately produce any.
-    Invalid Hoare triples that are based on annotations represent the programmers \emph{intentions} and are thus ensured using runtime checks (see definition \ref{def:gsnd}).
-    On the other hand, invalid Hoare triples that are merely caused by an instantiation by the gradual verifier cannot be backed using runtime checks, as this would alter runtime behavior (in this example, a runtime check for $\phiEq{x}{42}$ is clearly unjustified).
+    Invalid Hoare triples which are based on annotations represent the programmers \emph{intentions} and are thus ensured using runtime checks (see definition \ref{def:gsnd}).
+    On the other hand, invalid Hoare triples that are merely caused by an instantiation by the gradual verifier cannot be backed using runtime checks, as this would alter runtime behavior (in this example, a runtime check for $\phiEq{x}{42}$ to dynamically ensure the inferred postcondition is clearly unjustified).
     
     As a result, such instantiations are not “credible” (neither semantically correct nor ensured using checks) and thus cannot be used for further reasoning (like branch prediction or simplifications based on the supposed value of \ttt{x}).
     
@@ -131,11 +132,10 @@ There are a variety of valid instantiations for both variables:
 
 %% comparison: static verifier
 Note that above observations do not apply to a static verifier as the former two cases rely on the existence of the wildcard:
-The weak instantiation is syntactically impossible, the too strict instantiation relied on the fact that the precondition (of the overall judgment) is a wildcard.
+The weak instantiation is syntactically impossible, the too strict instantiation relied on the fact that the precondition (of the overall judgment) is the wildcard.
 
 %% dilemma, consequence
-On the other hand, decisions of the gradual verifier have the power to change the runtime behavior or let obvious inconsistencies go unnoticed.
-We propose a different approach, resulting in a deterministic gradual Hoare logic which also obviates the need of injecting runtime assertions.
-
+How the gradual verifier instantiates variables influences whether obvious inconsistencies go unnoticed or formulas have any credibility.
+We propose a different approach that is not affected by above observations.
 
 
