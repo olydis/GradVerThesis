@@ -9,18 +9,7 @@ is extended to
 $$\setGProgramState ~ =~ (\setVar \rightharpoonup \mathbb{Z}) ~\times~ \setGStmt$$
 \end{example}
 
-We give meaning to gradual program states using concretization.
-\begin{definition}[Concretization of Gradual Program States]
-    Let $\gamma_{\pi} : \setGProgramState \rightarrow \PP(\setProgramState)$ be defined as
-    \begin{displaymath}
-    \gamma_{\pi}(\grad{\pi}) = \{~ \pi \in \setProgramState ~|~ \textit{$\pi$ is $\grad{\pi}$ with all continuations replaced by a concretization} ~\}
-    \end{displaymath} 
-\end{definition}
-\begin{definition}[Precision of Gradual Program States]
-    Let $\mptpi \subseteq \setGProgramState \times \setGProgramState$ be a predicate defined as
-    $$\grad{\pi_a} \mptpi \grad{\pi_b}  \quad\iff\quad  \gamma_{\pi}(\grad{\pi_a}) \subseteq \gamma_{\pi}(\grad{\pi_b})$$
-    % TODO: observational instead? otherwise IDF stuff may not work
-\end{definition}
+Concretization and precision are defined accordingly, drawing on concretization of gradual statements.
 
 \begin{comment}
 Consequence:

@@ -1,5 +1,5 @@
 %% why static->gradual
-As illustrated in section \ref{sec:motivationexamples} gradual verification can be seen as an extension of both static and dynamic verification.
+As motivated in chapter \ref{ch:introduction} gradual verification can be seen as an extension of both static and dynamic verification.
 Yet, the approach of “gradualization” (adapted from AGT) derives the gradual semantics in terms of static semantics.
 In this chapter we will thus describe our approach of deriving an imperative gradually verified language “{\gvl}” starting with a generic imperative statically verified language “{\svl}”.
 An informal description of how to tackle the opposite direction can be found in section \ref{sec:enhancing-an-unverified}.
@@ -10,7 +10,6 @@ In section \ref{sec:gradual-formulas} we describe the syntax extensions necessar
 We immediately give a meaning to the new “gradual” syntax, driven by the concepts of abstract interpretation.
 In section \ref{sec:lifting-predicates-and} we explain “lifting”, a procedure adapting predicates and functions in order for them to deal with gradual parameters.
 To guide the following efforts to determine gradual semantics of \gvl, we present gradual soundness in section \ref{ssec:gradual-soundness} and point out the associated challenges.
-
 With the necessary tools for gradualization available, we apply them to the static semantics of \svl in section \ref{sec:abstracting-static-semantics}.
 Finally, we develop gradual dynamic semantics in section \ref{sec:abstracting-dynamic-semantics} and show how gradual soundness is achievable.
 

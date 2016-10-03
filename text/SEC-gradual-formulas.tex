@@ -6,17 +6,18 @@ Therefore, the first difference between \gvl and \svl is an extension of the set
 The gradual verifier is supposed to succeed in the presence of the wildcard, if it is plausible that there exists a static formula that would make a static verifier succeed.
 \begin{example}{Wildcard as Precondition}
 \begin{lstlisting}
-int increment(int i)
+int getFour(int i)
     requires ?;
-    ensures  result == 3;
+    ensures  result = 4;
 {
-    return i + 1;
+    i := i + 1;
+    return i;
 }
 \end{lstlisting}
-The gradual verifier is expected to successfully verify this method contract since there exists a static formula (\ttt{i == 2}), that would let static verification succeed.
+The gradual verifier is expected to successfully verify this method contract since there exists a static formula (\ttt{i == 3}), that would let static verification succeed.
 \end{example}
 
-On the other hand, a gradual verifier should reject the following method contract as there is no plausible (i.e. satisfiable) instantiation of $\qm$ that would make static verification work.
+On the other hand, a gradual verifier should reject the following method contract as there is no plausible (i.e. satisfiable) instantiation of $\qm$ that would make static verification succeed.
 \begin{example}{Implausible Wildcard as Precondition}
 \begin{lstlisting}
 int nonSense(int i)
@@ -29,9 +30,9 @@ int nonSense(int i)
 \end{example}
 
 This intuition about $\qm$ is formalized in the following sections.
-
 We decorate gradual formulas $\grad{\phi} \in \setGFormula$ to distinguish them from formulas drawn from $\setFormula$.
-Using the concept of abstract interpretation, we want to give meaning to gradual formulas by mapping them back to a set of static formulas (called “concretization”).
+
+Using the concepts of abstract interpretation, we want to give meaning to gradual formulas by mapping them back to a set of static formulas (called “concretization”).
 This way we can reason about a gradual formula by applying preexisting static reasoning to the formula's concretization.
 For example, we want a program state $\pi$ to satisfy a gradual formula $\grad{\phi}$ iff $\pi$ satisfies (at least) one of the formulas drawn from the concretization of $\grad{\phi}$ (this example is formalized in lemma \ref{ex:opt-lift-evalphi}).
 

@@ -40,23 +40,25 @@ We believe that most imperative statically verified programming languages satisf
 
 \begin{description}
 \item[Syntax]~\\
-    We assume the existence of the following two syntactic categories:
+    We assume the existence of the following two syntactic categories
     \begin{align*}
     	s    & \in \setStmt    \\
     	\phi & \in \setFormula
     \end{align*}
+    for statements and formulas.
     
     We assume that there is a sequence operator \ttt{;} such that $$\forall s_1, s_2 \in \setStmt.~~ s_1\ttt{;}s_2 \in \setStmt$$
     
 \item[Program State]~\\
     Dynamic semantics (see below) are formalized as discrete transitions between program states.
     Therefore a program state contains all information necessary to evaluate expressions and determine the next program state.
+    
     We assume that $\setProgramState$ is the set of all possible program states in \svl.
     
     \begin{example}{Program State: Primitive language with integer variables}
         \label{ex:ps-primitive}
         \begin{displaymath}
-        \setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{variable memory}} ~\times~ \setStmt 
+        \setProgramState ~=~ \underbrace{(\setVar \rightharpoonup \mathbb{Z})}_{\textit{variable memory}} ~\times~ \underbrace{\setStmt}_{\textit{continuation}} 
         \end{displaymath}
     \end{example}
     \begin{example}{Program State: Language with stack}
@@ -95,7 +97,9 @@ We believe that most imperative statically verified programming languages satisf
     
 \item[Dynamic Semantics]~\\
     We assume that \svl has a structural operational semantics or small-step semantics.
-    This semantics is formalized as $~\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$, describing precisely how program state can be updated. % TODO: reconsider non-deterministic
+    This semantics is formalized as $~\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$, describing precisely how program state is updated.
+    (Non-deterministic semantics would also be a potential area to investigate in the future, see section \ref{ssec:nd-semantics}.)
+    
     %We assume that there is a small-step semantics $~\sssem \subseteq \setProgramState \rightarrow \PP(\setProgramState)$ describing precisely how program state can be updated.
     %Note that this signature allows for non-deterministic (e.g. concurrent) semantics.
     %Execution is considered stuck in state $\pi$ iff $\sssem(\pi) = \emptyset$
@@ -105,7 +109,7 @@ We believe that most imperative statically verified programming languages satisf
     Also, we write $\sstepStuck{\pi}$ to state that $\pi$ is a “stuck” state, i.e. that $\pi$ is not in the domain of the partial small-step function.
     
     Furthermore we define $\sstepConsume{s}{\cdot}{\cdot} \subseteq \setProgramState \times \setProgramState$ as a predicate indicating whether a program state is reachable from another program state by executing statement $s$.
-    This is useful for abstracting over the precise implementation of both $\setProgramState$ (see examples \ref{ex:ps-primitive} and \ref{ex:ps-stacked}) and the small-step semantics.
+    This is useful for abstracting from the precise implementation of both $\setProgramState$ (see examples \ref{ex:ps-primitive} and \ref{ex:ps-stacked}) and the small-step semantics.
     
     \begin{example}{Execution of Given Statement}
         Assume that program state is defined as in example \ref{ex:ps-primitive}.
@@ -118,10 +122,9 @@ We believe that most imperative statically verified programming languages satisf
         \pi_2 = \langle [x \mapsto 8, y \mapsto 2],\,\, \sVarAssign{y}{x} \rangle
         \end{displaymath}
         
-        Thus, the notation hides away the implementation details of the small-step semantics.
-        It enables reasoning about small-step derivations (that correspond to executing certain statements) without worrying about the exact number of steps taken.
+        Note how the notation hides away implementation details like the number of steps taken.
+        While the judgment $\ssteps{\pi_1}{\pi_2}$ is also independent from the number of steps taken, it is unable to encode what is supposed to happen during those steps:
         
-        Note that the judgment $\ssteps{\pi_1}{\pi_2}$ is also independent from the number of steps taken, yet it does not encode what is supposed to happen during those steps.
         For $\pi_1$ defined as above
         \begin{displaymath}
         \pi_2 = \langle [x \mapsto 8, y \mapsto 8],\,\, \sSkip \rangle
@@ -130,10 +133,10 @@ We believe that most imperative statically verified programming languages satisf
         \begin{displaymath}
         \pi_2 = \pi_1
         \end{displaymath}
-        would be a valid instantiations.
+        would be valid instantiations.
     \end{example}
     
-    We assume that there is a designated non-empty set $~\setProgramStateFin \subseteq \setProgramState~$ of states indicating regular termination of the program.
+    We assume that there is a designated non-empty set $$~\setProgramStateFin \subseteq \setProgramState~$$ of “final” states indicating regular termination of the program.
     W.l.o.g. we assume $\forall \pi \in \setProgramStateFin.~ \sstepStuck{\pi}$, i.e. final states are stuck.
     
     We assume that dynamic semantics of a sequence $\sSeq{$s_1$}{$s_2$}$ is implemented such that 
@@ -219,9 +222,8 @@ We believe that most imperative statically verified programming languages satisf
     Therefore we will often restrict our reasoning on the satisfiable formulas $\setFormulaA$, without explicitly stating that the presence of an unsatisfiable formula would result in failure.
     \end{comment}
     
-    With this semantics we can formalize the notion of valid Hoare triples.
-    \begin{definition}[Validity of Hoare Triples]~\\
-        \label{def:valid-hoare-triple}
+    With this semantics we can formalize the notion of semantically valid Hoare triples.
+    \begin{definition}[Semantical Validity of Hoare Triples]\label{def:valid-hoare-triple}~\\
         A Hoare triple $\hoare{\phi_{pre}} {s} {\phi_{post}}$ is \textbf{valid}, written
         $\tHoare{}{\phi_{pre}} {s} {\phi_{post}}$
         iff
@@ -232,7 +234,7 @@ We believe that most imperative statically verified programming languages satisf
         \end{flalign*}
     \end{definition}
     \begin{lemma}[Compositional Validity of Hoare Triples]
-        \label{lem:comp-tHoare}~\\
+        \label{lem:comp-tHoare}~
         \begin{align*}
         \forall \phi_1, \phi_2, \phi_3 \in \setFormula,\, s_1, s_2 \in \setStmt.~
         &\tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}\\
@@ -242,7 +244,7 @@ We believe that most imperative statically verified programming languages satisf
     \end{lemma}
     
     We assume that the set $\phis{\pi} \defeq \{~ \phi \in \setFormula ~|~ \evalphiGen{\pi}{\phi} ~\}$ is a filter, i.e.
-    \begin{itemize}
+    \begin{enumerate}
         \item It is non-empty. This ensures that every program state is describable by at least one formula.
         This is the case as we demanded that $\phiTrue$ describes every program state.
         \item If $\evalphiGen{\pi}{\phi_a}$ and $\evalphiGen{\pi}{\phi_b}$, then there exists $\phi \in \setFormula$ with  $$~~\evalphiGen{\pi}{\phi} ~~\wedge~~ \phiImplies{\phi}{\phi_a} ~~\wedge~~ \phiImplies{\phi}{\phi_b}$$
@@ -250,7 +252,7 @@ We believe that most imperative statically verified programming languages satisf
         In case the formula syntax contains a logical conjunction operator, this criterion is met.
         \item If $\evalphiGen{\pi}{\phi_a}$ and $\phiImplies{\phi_a}{\phi_b}$ then $\evalphiGen{\pi}{\phi_b}$.
         This is true by definition of $\phiImplies{\cdot}{\cdot}$ (see \ref{def:form-implication}).
-    \end{itemize}
+    \end{enumerate}
     
 \item[Static Semantics]~\\
     We assume that there is a Hoare logic
@@ -280,7 +282,7 @@ We believe that most imperative statically verified programming languages satisf
     \end{comment}
     
     \begin{lemma}[Hoare Logic Monotonicity]
-        \label{ass:hl-mono}
+        \label{ass:hl-mono}~\\
         We assume that the Hoare predicate is monotonic in the precondition w.r.t. implication:
         \begin{align*}
         \forall s \in \setStmt.~& \\

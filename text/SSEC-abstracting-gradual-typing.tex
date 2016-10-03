@@ -14,7 +14,7 @@ An implementation for gradual effects in Scala was later given by Toro and Tante
 \label{grad-guarantee}
 Siek et al. recently formalized refined criteria for gradual typing, called the “gradual guarantee” \cite{siek2015refined}.
 The gradual guarantee states that well typed programs will stay well typed when removing type annotations (the static part of the guarantee).
-It furthermore states that well typed programs evaluating to a value will evaluate to the same value when removing type annotations (the dynamic part of the guarantee).
+It furthermore states that well typed programs evaluating to a value will evaluate to the same value (in lockstep) when removing type annotations (the dynamic part of the guarantee).
 
 With “Abstracting Gradual Typing” (AGT) \cite{garcia2016abstracting} Garcia, Clark and Tanter propose a new formal foundation for gradual typing.
 Their approach draws on the principles of abstract interpretation, defining a gradual type system in terms of an existing static one.

@@ -102,7 +102,8 @@ int myRandom(int seed)
 }
 \end{lstlisting}
 The first method \ttt{collatzIterations} iterates the Collatz sequence a given number of times \ttt{iter}, starting with given value \ttt{start}.
-We assume that the only provable contract is that positive start value results in a positive result.
+We assume that the only provable contract is that a positive start value results in a positive result.
+
 The second method \ttt{myRandom} uses the Collatz sequence to generate a pseudo random number from given seed.
 It is known to the programmer that start values up to 10000 result in convergence of the Collatz sequence after less than 300 iterations.
 After mapping 4 to 3, we are thus given a number between 1 and 3, as described in the postcondition.
@@ -150,8 +151,8 @@ int myRandom(int seed)
     // we know: result $\in$ { 1, 2, 4 }
     
     // verifier allowed to
-    //  assume 1 <= start && result <= 4
-    //  from   1 <= start && ?
+    //  assume 1 <= result && result <= 4
+    //  from   1 <= result && ?
     // (adding runtime check)
     
     if (result == 4) result = 3;
@@ -159,6 +160,7 @@ int myRandom(int seed)
 }
 \end{lstlisting}
 Note the \ttt{?} in the postcondition of \ttt{collatzIterations}.
+As indicated in the comments, the verifier may now make assumptions in order to prove the postcondition of \ttt{myRandom}.
 
 % gradual:
 % - not in a sense of GraVy
@@ -204,14 +206,14 @@ Note the \ttt{?} in the postcondition of \ttt{collatzIterations}.
 \section{Overview}
 Our approach is based on recent advances in formalizing gradual typing, specifically “Abstracting Gradual Typing” \cite{garcia2016abstracting} by Garcia, Clark and Tanter.
 They describe a process called “gradualization” that uses the concept of abstract interpretation to define a gradual system in terms of a static one.
-Gradual typing emerged from drawbacks of static and dynamic type systems that are very similar to the drawbacks of verification systems outlined above.
+Gradual typing emerged from drawbacks of static and dynamic type systems that are very similar to the drawbacks of verification systems outlined and illustrated above.
 This is no surprise from a theoretical perspective as type systems are a special case of program verification. 
 These similarities motivated our idea of reinterpreting and adapting the gradual typing approach to the verification setting.
 
 Chapter \ref{sec:categorization-of-existing} introduces the concepts motivating and driving our approach.
 Furthermore it categorizes existing work that goes in a similar direction, pointing out how it differs from our work.
-In chapter \ref{ch:gradualization-of-a} we describe our approach of gradualization in a generic way, meant to be used as a manual or template for designing gradual verification systems.
-We follow that manual in form of a case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic frames in order to enable safe static reasoning about shared mutable state.
+In chapter \ref{ch:gradualization-of-a} we describe our approach of gradualization in a generic way, meant to be used as a procedure or template for designing gradual verification systems.
+We follow that procedure in form of a case study in chapter \ref{ch:case-study--implicit}, applying the approach to a statically verified language that uses implicit dynamic frames in order to enable safe static reasoning about shared mutable state.
 We conclude with an evaluation of our approach (chapter \ref{ch:evaluation-analysis}) and a conclusion (chapter \ref{ch:conclusion}).
 The appendix contains additional information like proofs for lemmas and theorems stated throughout this work. % TODO: is that all?
 We have also implemented the gradually verified language developed in chapter \ref{ch:case-study--implicit} as an interactive web page (see section \ref{sec:implementation}).

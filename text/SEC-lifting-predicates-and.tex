@@ -1,7 +1,11 @@
-The Hoare logic of \svl is a ternary predicate $\thoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setFormula \times \setStmt \times \setFormula$.
-Since \gvl contains gradual formulas and gradual statements, the gradualized Hoare logic is expected to have signature $\gthoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setGFormula \times \setGStmt \times \setGFormula$.
-Similarly, the gradualized small-step semantics is expected to have signature $\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$ instead of $\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$.
-Usually semantics are defined inductively, meaning that they are defined in terms of further predicates or functions (e.g. implication between formulas).
+The Hoare logic of \svl is a ternary predicate $$\thoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setFormula \times \setStmt \times \setFormula$$
+Since \gvl operates on gradual formulas and gradual statements, the gradualized Hoare logic is expected to have signature $$\gthoare{~}{\cdot}{\cdot}{\cdot} \subseteq \setGFormula \times \setGStmt \times \setGFormula$$
+Similarly, the small-step semantics
+$$\sstep{\cdot}{\cdot} : \setProgramState \rightharpoonup \setProgramState$$
+has to be extended to deal with gradual program state:
+$$\gsstep{\cdot}{\cdot} : \setGProgramState \rightharpoonup \setGProgramState$$
+
+Formal semantics are sometimes defined inductively, meaning that they are defined in terms of further predicates or functions (e.g. implication between formulas).
 These functions will have new signatures as well in order to deal with the extended syntax of \gvl.
 This section will present a procedure called “gradual lifting”, which formalizes this adaptation of predicates and functions.
 
@@ -11,4 +15,4 @@ This section will present a procedure called “gradual lifting”, which formal
 \end{comment}
 
 Our rules for gradual lifting rely merely on the existence of a concretization function and a notion of precision.
-We will thus restrict our formalizations and explanations to (gradual) formulas, the same ideas are directly applicable to other gradualized sets.
+We will thus restrict our formalizations and explanations to (gradual) formulas, the same ideas are directly applicable to other gradualized sets like statements and program states.

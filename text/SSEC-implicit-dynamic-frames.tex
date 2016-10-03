@@ -10,7 +10,7 @@ Reasoning about programs using shared mutable data structures (the default in ob
     {\phiAnd{\phiEq{p1.age}{20}}{\phiEq{p2.age}{19}}}
     \end{displaymath}
     The problem is that \ttt{p1} and \ttt{p2} might be aliases, meaning that they reference the same memory.
-    The increment operation would thus also affect \ttt{p2.age}, rendering the postcondition invalid.
+    The increment operation could thus also affect \ttt{p2.age}, rendering the postcondition invalid.
 \end{example}
 
 We want to demonstrate gradual verification on a Java-like language in chapter \ref{ch:case-study--implicit}, so we need a logic that is capable of dealing with mutable data structures.
