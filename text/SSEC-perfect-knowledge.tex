@@ -25,7 +25,7 @@ As long as soundness is not broken, those changes do not have observable effects
 
 %% further stuff
 Based on a complete semantics of \svl, the following requirements for \gvl are sufficient to satisfy \tset{\dgradT Soundness}.
-\begin{definition}[Semi-Optimal Gradual Hoare Logic]~\\
+\begin{definition}[Semi-Optimal Gradual Deterministic Hoare Logic]~\\
     \label{def:perf-stat}
     We call a deterministically lifted Hoare logic $\dgthoare{}{\cdot}{\cdot}{\cdot}$ \textbf{semi-optimal} iff
     \begin{align*}
@@ -35,6 +35,64 @@ Based on a complete semantics of \svl, the following requirements for \gvl are s
     
     As expected, optimal deterministic liftings are semi-optimal.
 \end{definition}
+
+\begin{comment}[Semi-Optimal Gradual Deterministic Assertion]\label{lemma:so-assert}~\\
+    Let $\setGFormula$ be extended using the “bounded unknown” approach (see section \ref{ssec:wildcard-with-upper}).
+    
+    Assume there is a Hoare logic for assertion statements:
+    \begin{mathpar}
+        \inferrule* [Right=HAssert]
+        {
+            \phiImplies{\phi}{\phi_a}
+        }
+        {
+            \thoare{~}{\phi}{\sAssert{$\phi_a$}}{\phi}
+        }
+    \end{mathpar}
+    
+    Then the following rules induce a semi-optimal deterministic lifting of that Hoare logic:
+    \begin{mathpar}
+        \inferrule* [Right=\dgradT HAssertStat1]
+        {
+            \phiImplies{\phi}{\phi_a}
+        }
+        {
+            \dgthoare{~}{\phi}{\sAssert{$\phi_a$}}{\phi}
+        }
+    \end{mathpar}
+    \begin{mathpar}
+        \inferrule* [Right=\dgradT HAssertStat2]
+        {
+            \phiImplies{\phi}{\phi_a}
+        }
+        {
+            \dgthoare{~}{\phi}{\sAssert{$\withqmGen{\phi_a}$}}{\phi}
+        }
+    \end{mathpar}
+    \begin{mathpar}
+        \inferrule* [Right=\dgradT HAssertStat2]
+        {
+            \phiImplies{\phi}{\phi_a}
+        }
+        {
+            \dgthoare{~}{\phi}{\sAssert{$\withqmGen{\phi_a}$}}{\phi}
+        }
+    \end{mathpar}
+\end{comment}
+\begin{comment}%\ref{lemma:so-assert}
+    \begin{description}
+        \item[Semi-Optimality]~\\
+        Assume that $\dgthoare{}{\phi_1}{\sVarAssign{$x$}{$e$}}{\grad{\phi_2}}$ holds for some $\phi_1 \in \setFormula,\, \grad{\phi_2} \in \setGFormula,\, x \in \setVar,\, e \in \setExpr$
+        
+        By inversion ()
+    \end{description}
+    
+    
+    
+    \\ \implies \exists s \in \gamma(\grad{s}),\, \phi_2 \in \setFormula.&~ \thoare{}{\phi_1}{s}{\phi_2}
+    \end{align*}
+\end{comment}
+
 \begin{definition}[Semi-Optimal Gradual Small-Step Semantics]~\\
     \label{def:perf-dyn}
     We call a total, lifted small-step semantics $\gsstep{\cdot}{\cdot}$ \textbf{semi-optimal} iff
