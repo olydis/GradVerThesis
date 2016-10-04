@@ -46,7 +46,7 @@ Most importantly, it would severely complicate optimality proofs, as they sudden
 
 \subsection{Gradual Non-Termination}%% non-termination
 The “plausibility” interpretation of unknown formulas motivated us to define $\gamma(\qm)$ as the set of all \emph{satisfiable} formulas \setFormulaA (see section \ref{sec:gradual-formulas}).
-However, this definition implies that $\qm$ may not be usable as a postcondition of non-terminating statements (for which proving $\phiFalse$ as a postcondition would make sense).
+However, this definition implies that $\qm$ may not be usable as a postcondition of non-terminating statements, for which proving $\phiFalse$ as a postcondition would make sense.
 As a consequence, programmers may not be able to be imprecise about termination of a statement.
 Note that \svlidf does not contain non-terminating constructs, so we did not deal with this problem in chapter \ref{ch:case-study--implicit}.
 
@@ -58,6 +58,10 @@ In the case study, we have not made full use of the capabilities of implicit dyn
 Tracking exclusive access to memory locations also allows race-free reasoning about concurrent programs (Summers and Drossopoulou \cite{summers2013formal} give a corresponding Hoare logic).
 It would be interesting to see gradual verification applied to such a setting, as it reflects more closely the reality of modern programming languages.
 Further potential extensions include the introduction of shared access or the addition of non-separating conjunction to the formula syntax.
+
+\subsection{Non-Deterministic Semantics}\label{ssec:nd-semantics}
+In section \ref{sec:a-statically-verified} we assumed that the dynamic semantics of \svl is deterministic.
+It may be worth investigating the implications of non-deterministic semantics on gradual lifting, soundness, and gradualization in general.
 
 \subsection{Evidence-Based Gradual Dynamic Semantics}\label{ssec:ev-based-gds}
 Regarding gradual dynamic semantics (and soundness) of the gradual system, we have deviated from the approach presented by AGT.
@@ -76,18 +80,20 @@ It is thus created while initially type checking a term (“initial evidence”,
 In our setting, there are two candidate judgments that one could try to enforce using evidence (like type safety is enforced in AGT).
 \begin{description}
     \item[Semantical]~\\
-    When searching for a direct counterpart for type judgments $\vdash e : T$ in simply typed $\lambda$-calculus, one may come up with formula semantics $\evalgphiGen{\pi}{\phi}$.
-    Formula semantics can be seen as a way to “type” program states using formulas (“$\vdash \pi : \phi$”).
+    When searching for a direct counterpart for type judgments $\vdash e : T$ in simply typed $\lambda$-calculus, one may come up with the formula semantics $\evalphiGen{\pi}{\phi}$.
+    It can be seen as a way to “type” program states using formulas (“$\vdash \pi : \phi$”).
     Just like type safety states that statically postulated type judgments hold during reduction of terms and expressions, it has to be ensured that annotated formulas are complied with during evolution of program states (which is what soundness states).
     
-    However the formula semantics $\evalgphiGen{\pi}{\phi}$ is a semantical judgment, whereas the $\vdash e : T$ is syntactical.
+    However the formula semantics $\evalphiGen{\pi}{\phi}$ is a semantical judgment, whereas $\vdash e : T$ is syntactical.
     We will illustrate in section \ref{sec:soundness-using-evidence} why the evidence approach is not feasible when choosing formula semantics as the judgment to ensure.
     
-    \item[Syntactical]
+    \item[Syntactical]~\\
     Instead, one may find that Hoare logic $\thoare{}{\phi_1}{s}{\phi_2}$ acts like the conceptual counterpart of $\vdash e : T$.
     While the signature slightly differs, Hoare logic can be regarded as a way to “type” statements as a function from program states satisfying $\phi_1$ to program states satisfying $\phi_2$ (“$\vdash s : \phi_1 \rightarrow \phi_2$”).
     
-    During execution of the program, evidence would have to make sure that the “remaining” work $s$ is consistently typeable using Hoare logic.
+    During execution of the program, evidence would have to make sure that the “remaining work” $s$ is consistently typeable using Hoare logic.
+    In other words, there has to be a Hoare logic deduction justifying every intermediate state during execution.\\
+    
     \begin{example}{} \label{ex:ev-hl}~\\
         Let 
         \begin{align*}
@@ -103,10 +109,9 @@ In our setting, there are two candidate judgments that one could try to enforce 
         and
         $$\thoare{}{\phi_2}{\sVarAssign{y}{4}}{\phi_3}$$
         In this example $\phi_2 = \phiAnd{\phiEq{x}{3}}{\phiEq{a}{5}}$ would be suitable.
-        In other words, it is ensured that there exists a Hoare logic deduction justifying every intermediate state during execution.
         
         While such a formula always exists in the static setting (choose the one that was used as an intermediate formula when applying the sequence rule \tset{HSeq}), it may not exist in the gradual setting.
-        It would be the job of evidence to ensure the existence of such a formula at runtime, without performing a Hoare logic derivation.
+        It would be the job of evidence to ensure the existence of such a formula at runtime.
     \end{example}
     
     This approach requires a slightly stronger notion of soundness than the one we demanded in section \ref{sec:a-statically-verified}.
@@ -115,8 +120,4 @@ In our setting, there are two candidate judgments that one could try to enforce 
     As mentioned in section \ref{ssec:gradual-soundness} such an approach would detect inconsistencies more eagerly than the “safe baseline” we introduced with \tset{\gradT Soundness} and later improved with \tset{\dgradT Soundness}.
     Unfortunately, investigating this path was not in the scope of this work.
 \end{description}
-
-\subsection{Non-Deterministic Semantics}\label{ssec:nd-semantics}
-In section \ref{sec:a-statically-verified} we assumed that the dynamic semantics of \svl is deterministic.
-It may be worth investigating the implications of non-deterministic semantics on gradual lifting, soundness, and gradualization in general.
 

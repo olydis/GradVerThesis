@@ -70,7 +70,7 @@ In this section we give a number of implementation strategies, that can be used 
     The definition makes use of $\norms{\phi}$ which is a normal form of $\phi$ defined in section $\ref{ssec:gradual-normal-form}$.
     
     \item[Gradual Formula Extraction]
-    \begin{lemma}~\\
+    \begin{lemma}\label{lemma:frm-extr}~\\
         There exists a function $\dgrad{P} : \setGFormula \times \setGFormula \rightharpoonup \setGFormula$ such that
         $\dgrad{P}$ is an optimal deterministic lifting of $P \subseteq \setFormula \times \setFormula \times \setFormula$ with
         $$P(\phi_1, \phi_t, \phi_2) ~\defeq~ \phiImplies{\phi_1}{\phiCons{$\phi_t$}{$\phi_2$}} ~\wedge \sfrmphi \phi_2$$
@@ -87,14 +87,14 @@ In this section we give a number of implementation strategies, that can be used 
     \begin{example}{Behavior of $\dgrad{P}$}
         \begin{alignat*}{3}
         	 & \dgrad{P}(\grad{\phi}, \phi)            && = \grad{\phi}    \quad\quad \text{if } \staticFP{\phi} = \emptyset & ~ \\
-        	 & \dgrad{P}(\grad{\phi}, \withqm{\phi_t}) && = \dgrad{P}(\grad{\phi}, \static{$\grad{\phi}$})                   & \\
+        	 %& \dgrad{P}(\grad{\phi}, \withqm{\phi_t}) && = \dgrad{P}(\grad{\phi}, \static{$\grad{\phi}$})                   & \\
              & \dgrad{P}(\ttt{acc(x.f)\:*\:(x.f = 3)}, \ttt{acc(x.f)}) && = \phiTrue                                         & \\
              & \dgrad{P}(\ttt{?\:*\:(a = x.f)\:*\:(x.f = b)}, \ttt{acc(x.f)}) && = \phiEq{a}{b}                                        & \\
         	 & \dgrad{P}(\phiAcc{y}{f}, \phiAcc{x}{f}) && \textit{undefined (extracted formula not implied)}                 &
         \end{alignat*}
     \end{example}
     
-    \item[Gradual Variable Extraction]~\\
+    \item[Gradual Variable Extraction]\label{lemma:var-extr}~\\
     \begin{lemma}~\\
         There exists a function $\dgrad{P}_{\overline{x}} \subseteq \setGFormula \rightharpoonup \setGFormula$ such that
         $\dgrad{P}$ is an optimal deterministic lifting of $P_{\overline{x}} \subseteq \setFormula \times \setFormula$ with

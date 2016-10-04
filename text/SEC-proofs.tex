@@ -1,11 +1,11 @@
 This section contains proofs for most lemmas and theorems mentioned in this work.
 Further automated proofs can be found in \cite{olydisGitHub}.
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:po-form}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:po-form}]~\\
     Follows from definitions \ref{def:form-implication}, \ref{def:form-eq} and the fact that $\subseteq$ induces a partial order.
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lem:comp-tHoare}]
+\begin{proofatend}[Proof of Lemma \ref{lem:comp-tHoare}]~\\
     We are given 
     \begin{displaymath}
     \evalphiGen{\pi_1}{\phi_1}
@@ -16,7 +16,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \end{displaymath}
     for some $\pi_1, \pi_3 \in \setProgramState$.
     
-    According to assumption \ref{frm:assume-seq-ss} this implies
+    According to assumption \ref{frm:assume-seq-ss} (see section \ref{sec:a-statically-verified}) this implies
     \begin{displaymath}
     \sstepConsume{s_1}{\pi_1}{\pi_2} \wedge \sstepConsume{s_2}{\pi_2}{\pi_3}
     \end{displaymath}
@@ -125,7 +125,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \end{description}
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:pred-lift-comp}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:pred-lift-comp}]~
     \begin{description}
         \item[Introduction] 
         \begin{align*}
@@ -294,7 +294,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \end{description}       
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:sl-comp}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:sl-comp}]~
     \begin{description}
         \item[Introduction]
         \begin{align*}
@@ -354,7 +354,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     Then \ref{eq:ttemp1g} follows by definition of the assertion statement (see example \ref{ex:ss-ra} for an illustration).
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lem:det2grad}]~\\
+\begin{proofatend}[Proof of Lemma \ref{lem:det2grad}]~
     \begin{description}
         \item[Introduction] 
         \begin{align*}
@@ -367,14 +367,14 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~ \exists \phi \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi}{\phi_2} \\
         \overset{}{~\quad\implies\quad~} 
         &\exists \grad{\phi_2}.~ \grad{P}(\phi_1) = \grad{\phi_2} ~\wedge~  \gphiImplies{\grad{\phi_2}}{\phi_2} \\
-        \overset{Def}{~\quad\implies\quad~} 
+        \overset{Definition}{~\quad\implies\quad~} 
         &\grad{P}(\phi_1, \phi_2)
         \end{align*}
         
         \item[Monotonicity] 
         \begin{align*}
         &\grad{P}(\grad{\phi_1}, \grad{\phi_2}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
-        \overset{Def}{~\quad\implies\quad~}
+        \overset{Definition}{~\quad\implies\quad~}
         &(\exists \grad{\phi}.~ \dgrad{P}(\grad{\phi_1}) = \grad{\phi} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_1} \mpt \grad{\phi_1'} ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
         \overset{Monotonicity}{~\quad\implies\quad~}
         &(\exists \grad{\phi}, \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \grad{\phi} \mpt \grad{\phi'} \wedge \gphiImplies {\grad{\phi}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
@@ -382,20 +382,20 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         &(\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2}}) ~\wedge~ \grad{\phi_2} \mpt \grad{\phi_2'}\\
         \overset{}{~\quad\implies\quad~} 
         &(\exists \grad{\phi'}.~ \dgrad{P}(\grad{\phi_1'}) = \grad{\phi'} \wedge \gphiImplies {\grad{\phi'}} {\grad{\phi_2'}})\\
-        \overset{Def}{~\quad\implies\quad~} 
-        &\grad{P}(\phi_1', \phi_2') \\
+        \overset{Definition}{~\quad\implies\quad~} 
+        &\grad{P}(\phi_1', \phi_2')
         \end{align*}
     \end{description}
 \end{proofatend}
 
 \begin{proofatend}[Proof of Lemma \ref{lemma:runtime-checks-reduced}]~\\
-    The restriction $\envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
+    The restriction $\envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
     $\grad{\phi_2'}$ is ensured by \tset{\dgradT Soundness}, $P$ is explicitly checked.
     
     On the other hand, $\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}} \subseteq \envs{\grad{\phi_2'}} \cap P$ ensures that $P$ is not stricter than necessary.
-    Assume there exists a program state $\pi \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\pi \not \in (\envs{\grad{\phi_2'}} \cap P$.
-    It follows that $\neg P(\pi)$, i.e. a runtime exception is thrown that indicates that a runtime check fails.
-    However, $\pi$ neither violates $\grad{\phi_2'}$ nor $\grad{\phi_2}$ and is thus not expected to violate any runtime checks.
+    Assume there exists a program state $\grad{\pi} \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\grad{\pi} \not \in (\envs{\grad{\phi_2'}} \cap P)$.
+    It follows that $\neg P(\grad{\pi})$, i.e. a runtime exception is thrown that indicates that a runtime check fails.
+    However, $\grad{\pi}$ neither violates $\grad{\phi_2'}$ nor $\grad{\phi_2}$ and is thus not expected to violate any runtime checks.
 \end{proofatend}
 
 \begin{proofatend}[Proof of Corollary \ref{cor:runtime-checks-removed}]~\\
@@ -419,7 +419,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
         \wedge 
         (\exists \phi_2' \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_2'}{\phi_2}))\\
-        & \overset{lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
+        & \overset{Lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
         \exists \phi_2.~ P_1(\phi_1, \phi_2) \wedge P_2(\phi_2, \phi_3)
         \wedge (\exists \grad{\phi_2}.~ \dgrad{P_1}(\phi_1) = \grad{\phi_2} \\
         & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -470,7 +470,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
         \wedge P_1(\phi_1, \phi_2) \wedge P_2(\phi', \phi)
         \wedge \phiImplies{\phi_2}{\phi'} \\
-        & \overset{lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
+        & \overset{Lemma~\ref{ass:hl-mono}}{~\quad\quad\implies\quad\quad~} 
         \exists \grad{\phi_2}, \phi_2 \in \gamma(\grad{\phi_2}), \phi''.~ 
         \dgrad{P_2}(\grad{\phi_2}) = \grad{\phi_3}   \\
         & \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
@@ -714,7 +714,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     Omitted (proof in \cite{olydisGitHub}).
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:ss-wd}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:ss-wd}]~\\
     For $\sstep{\cdot}{\cdot}$ to be well-defined, at most one result can be deducible per input.
     The rules in figure \ref{fig:svl-sem-dyn-sstep} are syntax directed, so we can focus on individual rules when checking for determinism.
     This can be done by looking at the source of all variables used to construct return values (i.e. the variables used on the right hand side of $\sstep{}{}$ in the conclusion).
@@ -746,7 +746,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
 \end{proofatend}
 
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:gss-wd}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:gss-wd}]~\\
     For $\gsstep{\cdot}{\cdot}$ to be well-defined, the inductive rules may allow deducing at most one return value for every input.
     For the most part, this is the case due to $\sstep{\cdot}{\cdot}$ being well-defined (see lemma \ref{lemma:ss-wd}).
     We show that the same is true for adjustments made in figure \ref{fig:gvl-sem-dyn-sstep}.
@@ -787,7 +787,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \end{description}
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:pc-idf}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:pc-idf}]~\\
     Goal:
     \begin{flalign*}
     \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
@@ -846,7 +846,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \end{description}
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:pso-idf}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:pso-idf}]~\\
     Semi-optimality of the gradual small-step semantics is trivially the case due to being identical with the small-step semantics of \svlidf.
     
     Semi-optimality of the deterministic gradual Hoare logic:
@@ -927,7 +927,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
 \end{proofatend}
 
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:is-decl}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:is-decl}]~\\
     Assumption:
     \begin{align}
     \dgthoare{\Gamma}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
@@ -981,7 +981,7 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
 \end{proofatend}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:is-call}]
+\begin{proofatend}[Proof of Lemma \ref{lemma:is-call}]~\\
     Assumption:
     \begin{align}
     \dgthoare {\Gamma} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
@@ -1156,6 +1156,10 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     This contradicts the assumption that $\grad{\phi}$ is the least element with that property.
 \end{proofatend}
 
+\begin{proofatend}[Proofs of Lemma \ref{ex:idf-opt-lift-evalphi}, \ref{ex:idf-opt-lift-sfrmphi}, \ref{lemma:impl-gimpl}, \ref{lemma:frm-extr}, \ref{lemma:var-extr}]
+    Omitted (proofs in \cite{olydisGitHub}).
+\end{proofatend}
+
 \begin{proofatend}[Proof of Theorem \ref{thm:gnf}]~\\
     Omitted.
     
@@ -1167,13 +1171,6 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         For any formula $\phi$ mentioning field $\edot{$x$}{$f$}$:
         $$\forall \phi' \in \gamma(\withqm{\phi}), \phiImplies{\phi'}{\phiAcc{$x$}{$f$}}$$
     \end{lemma}
-    \begin{proof}
-        Note that a formula mentioning the field $\edot{$x$}{$f$}$ cannot be implied by a formula that does not mention that field.
-        E.g. $\phiImplies{\phiTrue}{\phiEq{x.f}{x.f}}$ is not true, since $\phiEq{x.f}{x.f}$ actually ensures that \ttt{x.f} evaluates (to any value), whereas $\phiTrue$ does not (there, \ttt{x} may not be defined or field \ttt{f} may not exist on whatever value \ttt{x} evaluates to).
-        This is a direct consequence of the formula semantics (see figure \ref{fig:svl-evalphi}).
-        
-        Due to self-framing, all formulas in $\gamma(\withqm{\phi})$ must therefore contain $\phiAcc{x}{f}$.
-    \end{proof}
     In other words: Merely mentioning a field will make sure that the concretization contains appropriate framing.
     We say access to a field is “restored” by the concretization.
     This is a helpful observation for justifying \emph{removal} of accessibility predicates from the static part.
@@ -1256,4 +1253,13 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         All accessibility predicates are dropped.
         Due to above measures, they are restored by concretization correctly.
     \end{description}
+\end{proofatend}
+
+\begin{proofatend}[Proof of Lemma \ref{lemma:mention}]~\\
+    Note that a formula mentioning the field $\edot{$x$}{$f$}$ cannot be implied by a formula that does not mention that field.
+    This is a direct consequence of the formula semantics (see figure \ref{fig:svl-evalphi}).
+    
+    E.g. $\phiImplies{\phiTrue}{\phiEq{x.f}{x.f}}$ is not true, since $\phiEq{x.f}{x.f}$ actually ensures that \ttt{x.f} evaluates (to any value), whereas $\phiTrue$ does not (there, \ttt{x} may not be defined or field \ttt{f} may not exist on the value \ttt{x} evaluates to).
+    
+    Due to self-framing, all formulas in $\gamma(\withqm{\phi})$ must therefore contain $\phiAcc{x}{f}$.
 \end{proofatend}

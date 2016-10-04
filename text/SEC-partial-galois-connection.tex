@@ -10,15 +10,16 @@ The following definition is drawn from Miné \cite{mine2004weakly}, but adapted 
     \begin{enumerate}
         \item If $\alpha(\overline{\phi})$ is defined, then $\overline{\phi} \subseteq \gamma(\alpha(\overline{\phi}))$
         \item If $\alpha(\overline{\phi})$ is defined, then $\overline{\phi} \subseteq \gamma(\grad{\phi})$ implies $\alpha(\overline{\phi}) \mpt \grad{\phi}$
-        \item For all $F \in \mathcal{F}$ and $\grad{\phi} \in \setGFormula$, $\alpha(F(\gamma(\grad{\phi})))$
+        \item For all $F \in \mathcal{F}$ and $\grad{\phi} \in \setGFormula$, $\alpha(F(\gamma(\grad{\phi})))$ is defined
     \end{enumerate}
 This definition can be generalized for a set $\mathcal{F}$ of arbitrary $n$-ary operators.
 \end{definition}
 
 %% motivation
-In our work we use partial Galois connections because a traditional Galois connection between $\setGFormula$ and $\PP^{\setFormula}$ may not always exist (and does not exist in case of \gvlidf, as introduced in chapter \ref{ch:case-study--implicit}).
-\begin{lemma}[Non-Existence of Galois Connection in \gvlidf]~\\
-    \label{lemma:gc-nonex}
+In our work we use partial Galois connections because a traditional Galois connection between $\setGFormula$ and $\PP^{\setFormula}$ may not always exist.
+Specifically, it does not exist in case of \gvlidf, as introduced in chapter \ref{ch:case-study--implicit}.
+\begin{lemma}[Non-Existence of Galois Connection in \gvlidf]
+    \label{lemma:gc-nonex}~\\
     Assume that $\setFormula$, $\setGFormula$ and $\gamma$ are defined as in \svlidf/\gvlidf (see chapter \ref{ch:case-study--implicit}).
     Then there exists no $\alpha$ such that $\langle \alpha, \gamma \rangle$ is a Galois connection.
 \end{lemma}

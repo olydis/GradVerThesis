@@ -1,25 +1,26 @@
 %% intro
-In section \ref{ssec:ev-based-gds} we claimed that the evidence approach is not feasible to ensure that the semantical judgment $\evalgphiGen{\pi}{\phi}$ holds for given formula $\phi$ and program state $\pi$ after executing some statement.
-This would be an alternative way to ensure soundness, in contrast to evaluating $\evalgphiGen{\pi}{\phi}$ as suggested by the baseline approach we present as $\tset{\gradT Soundness}$ in section \ref{ssec:gradual-soundness}.
+In section \ref{ssec:ev-based-gds} we claimed that the evidence approach is not feasible to ensure that the semantical judgment $\evalphiGen{\pi}{\phi}$ holds for given formula $\phi$ and program state $\pi$ after executing some statement.
+This would be an alternative way to ensure soundness of the gradual system, in contrast to \emph{evaluating} $\evalgphiGen{\grad{\pi}}{\grad{\phi}}$ as suggested by the baseline approach we present as $\tset{\gradT Soundness}$ in section \ref{ssec:gradual-soundness}.
 
 %% bridge to gvl
 Given an execution $\gsstepConsume{\grad{s}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\grad{\phi_1}}$, it would have to be the job of evidence to ensure that $\evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}$.
 % Note that one can view $\grad{\pi_2}$ as a counterpart if the reduced term in the setting of AGT, $\grad{\phi_2}$ corresponds to the type of $\grad{\pi_2}$ as postulated by the gradual type system.
-One can imagine how complex evidence would have to be, as it effectively tracks all changes to $\grad{\pi_1}$ (on its way to become $\grad{\pi_2}$) in order to figure out in the very end whether these changes are consistent with the postulated “type” $\grad{\phi_2}$.
+One can imagine how complex evidence would have to be, as it effectively tracks all changes to $\grad{\pi_1}$ (on its way to become $\grad{\pi_2}$) in order to figure out whether these changes are consistent with the postulated “type” $\grad{\phi_2}$.
 
 Ultimately, both the explicit check and the evidence approach are equivalent, yet one is more natural than the other depending on the setting.
 The following example tries to illustrate how soundness of a gradual assertion statement would be deducible using evidence.
 \begin{example}{Sound Gradual Assertion using Evidence}\label{ex:snd-evidence}~\\
-    Given a judgment $\gthoare{}{\qm}{\sAssert{\phiEq{x}{3}}}{\phiEq{x}{3}}$ and an execution $\gsstepConsume{\sAssert{\phiEq{x}{3}}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\qm}$, we have to \emph{derive} $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ (i.e. we may not simply evaluate).
+    Given a judgment $\gthoare{}{\qm}{\sAssert{\phiEq{x}{3}}}{\phiEq{x}{3}}$ and an execution $\gsstepConsume{\sAssert{\phiEq{x}{3}}}{\grad{\pi_1}}{\grad{\pi_2}}$ with $\evalgphiGen{\grad{\pi_1}}{\qm}$, we have to \emph{derive} $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$.
     
     From runtime derivations lying in the past we are given a proof why $\evalgphiGen{\grad{\pi_1}}{\qm}$ holds.
-    Ultimately, this proof may involve information about the value of $x$ (for instance, there might have been an assignment to $x$ in the past, i.e. $\grad{\pi_1}$ has evolved from a program state that had type $\phiEq{x}{...}$).
+    Ultimately, this proof may involve information about the value of $x$.
+    For instance, there might have been an assignment to $x$ in the past, i.e. $\grad{\pi_1}$ has evolved from a program state that had type $\phiEq{x}{...}$.
     Now, this proof can be combined with the proof for $\gthoare{}{\qm}{\sAssert{\phiEq{x}{3}}}{\phiEq{x}{3}}$, say $\gphiImplies{\qm}{\phiEq{x}{3}}$.
     In case the combined proof results in a transitive judgment $\gphiImplies{\phi}{\gphiImplies{\qm}{\phiEq{x}{3}}}$, this judgment can be checked for consistency (i.e. whether $\gphiImplies{\phi}{\phiEq{x}{3}}$ holds).
     
     Should combining both proofs succeed, we ultimately end up with a proof for $\evalgphiGen{\grad{\pi_1}}{\phiEq{x}{3}}$ which is also a proof for $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ (due to the small-step semantics of assertions).
     
-    Evaluation of $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ is arguably less complex and does not require any proofs.
+    Evaluating $\evalgphiGen{\grad{\pi_2}}{\phiEq{x}{3}}$ is arguably less complex.
     \begin{comment}
     Note also that the assertion example above is a very simple case. In general, it might be required to show consistency of more complex proofs, e.g. by proving that $$\gphiImplies{\phiAnd{$(\phiAnd{$(\wo{\phi}{\eresult})$}{\phiEq{\eresult}{\ethis}})[\ttt{x},\ttt{y}/\eresult,\ethis]$}{\phiEq{x}{p}}}{\phiEq{y}{p}}$$
     holds given $$\gphiImplies{\phiAnd{$(\phiAnd{$(\wo{\phi}{\eresult})$}{\phiEq{\eresult}{\ethis}})[\ttt{x},\ttt{y}/\eresult,\ethis]$}{\phiEq{x}{p}}}{\phiEq{y}{p}}$$
@@ -27,17 +28,17 @@ The following example tries to illustrate how soundness of a gradual assertion s
     \end{comment}
 \end{example}
 
-Our checking approach adapted to AGT would correspond to literally checking whether a reduced term has its postulated type -- however, this is only possible with additional runtime support (track runtime type information, tagging) and thus not as straight-forward to implement as the evidence approach.
+On the other hand, our checking approach adapted to AGT would correspond to literally checking whether a reduced term has its postulated type -- however, this is only possible with additional runtime support (track runtime type information, tagging) and is therefore not as straight-forward to implement as the evidence approach.
 Note that strong dynamic type systems provide this kind of runtime support.
 
 %% moral
 The fundamental conceptual difference between type judgments (setting of AGT) and formula semantics (setting of this work) is that the former is syntax-driven, whereas the latter is defined semantically.
 %It is arguably more complex to use evidence for predicting the behavior of a semantically defined predicate.
 %In our setting, “type derivations” $\evalphiGen{\cdot}{\cdot}$ .
-Note also that the shape of Tapp corresponds precisely to the shape of \tset{Soundness}.
+Note also that the signature of Tapp corresponds precisely to the signature of \tset{Soundness}.
 Both make a statement about the type of a term/program state \emph{after} applying a function/executing a statement.
-However, in one system, the rule is given, in the other system the rule is derivable from given static semantics (given that they are sound).
-On the other hand, \tset{HSeq} would correspond to a B-combinator that is derivable in AGT using Tapp and T$\lambda$.
+However, in one system, the rule is given while in the other system the rule is derivable from the given static semantics (if they are sound).
+On the other hand, the rule \tset{HSeq} is given in our work but would correspond to a function composition rule that is derivable in AGT using Tapp and T$\lambda$.
 Note the duality of which rules are given and which are derivable in each setting.
 
 %Finally, there is a difference of what is required to be gradually lifted in our work, compared to AGT.
