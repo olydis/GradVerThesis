@@ -110,7 +110,7 @@ After mapping 4 to 3, we are thus given a number between 1 and 3, as described i
 
 Unfortunately, the verifier cannot deduce this fact since the postcondition of \ttt{collatzIterations} only guarantees positive results, but no specific range of values.
 We could resort to dynamic methods to aid verification, realizing a “cast” of knowledge:
-
+\pagebreak
 \begin{lstlisting}
 ...
 {
