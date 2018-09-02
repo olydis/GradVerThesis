@@ -1,11 +1,11 @@
 This section contains proofs for most lemmas and theorems mentioned in this work.
 Further automated proofs can be found in \cite{olydisGitHub}.
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:po-form}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:po-form}]~\\
     Follows from definitions \ref{def:form-implication}, \ref{def:form-eq} and the fact that $\subseteq$ induces a partial order.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lem:comp-tHoare}]~\\
+\begin{proof}[Proof of Lemma \ref{lem:comp-tHoare}]~\\
     We are given 
     \begin{displaymath}
     \evalphiGen{\pi_1}{\phi_1}
@@ -26,9 +26,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \tHoare{}{\phi_1} {s_1} {\phi_2} ~\wedge~ \tHoare{}{\phi_2} {s_2} {\phi_3}
     \end{displaymath}
     we can deduce $\evalphiGen{\pi_3}{\phi_3}$.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:ol-impl}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:ol-impl}]~\\
     Goal:
     $$\gphiImplies{\grad{\phi_1}}{\grad{\phi_2}} \iff \exists \phi_1 \in \gamma(\grad{\phi_1}), \phi_2 \in \gamma(\grad{\phi_2}).~ \phiImplies{\phi_1}{\phi_2}$$
     
@@ -84,9 +84,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
             Apply $\tset{\gradT ImplStatic}$.
         \end{description}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{ex:opt-lift-evalphi}]~\\
+\begin{proof}[Proof of Lemma \ref{ex:opt-lift-evalphi}]~\\
     Goal:
     $$\evalgphiGen{\pi}{\grad{\phi}} \iff \exists \phi \in \gamma(\grad{\phi}).~ \evalphiGen{\pi}{\phi}$$
     
@@ -123,9 +123,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
             Apply $\tset{\gradT EvalStatic}$.
         \end{description}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:pred-lift-comp}]~
+\begin{proof}[Proof of Lemma \ref{lemma:pred-lift-comp}]~
     \begin{description}
         \item[Introduction] 
         \begin{align*}
@@ -155,9 +155,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         &\grad{(P \circ Q)}(\grad{\phi_1'}, \grad{\phi_3'})\\
         \end{align*}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:sl-conj-pred}]
+\begin{proof}[Proof of Lemma \ref{lemma:sl-conj-pred}]
     \begin{description}
         \item[Introduction] 
         \begin{align*}
@@ -185,9 +185,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         &\grad{(P \wedge Q)}(\grad{\phi'})\\
         \end{align*}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:sl-disj-pred}]
+\begin{proof}[Proof of Lemma \ref{lemma:sl-disj-pred}]
     \begin{align*}
     &\grad{(P \vee Q)}(\grad{\phi})\\
     \overset{Definition}{~\quad\quad\iff\quad\quad~}
@@ -201,9 +201,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \overset{Definition}{~\quad\quad\iff\quad\quad~}
     &(\exists \phi \in \gamma(\grad{\phi}).~ (P \vee Q)(\phi))
     \end{align*}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:eq-fun-lift-agt}]~
+\begin{proof}[Proof of Lemma \ref{lemma:eq-fun-lift-agt}]~
     \begin{description}
         \item[Adjoint Equation] 
         \begin{align*}
@@ -292,9 +292,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         \end{align*}
         Contradiction.
     \end{description}       
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:sl-comp}]~
+\begin{proof}[Proof of Lemma \ref{lemma:sl-comp}]~
     \begin{description}
         \item[Introduction]
         \begin{align*}
@@ -322,13 +322,13 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         &\grad{(g \circ f)}(\grad{\phi_1}) \mpt \grad{(g \circ f)}(\grad{\phi_2})
         \end{align*}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lem:comp-gtHoare}]~\\
+\begin{proof}[Proof of Lemma \ref{lem:comp-gtHoare}]~\\
     Analogous to proof of lemma \ref{lem:comp-tHoare}.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:tauto}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:tauto}]~\\
     Goal: $\gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s}$}{\sAssert{$\grad{\phi_2}$}}}{\grad{\phi_2}}$.
     
     According to definition \ref{def:valid-ghoare-triple} we may assume
@@ -352,9 +352,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \gsstepConsume{\sAssert{$\grad{\phi_2}$}}{\grad{\pi}}{\grad{\pi_2}}
     \end{align}
     Then \ref{eq:ttemp1g} follows by definition of the assertion statement (see example \ref{ex:ss-ra} for an illustration).
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lem:det2grad}]~
+\begin{proof}[Proof of Lemma \ref{lem:det2grad}]~
     \begin{description}
         \item[Introduction] 
         \begin{align*}
@@ -386,9 +386,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         &\grad{P}(\phi_1', \phi_2')
         \end{align*}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:runtime-checks-reduced}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:runtime-checks-reduced}]~\\
     The restriction $\envs{\grad{\phi_2'}} \cap P \subseteq \envs{\grad{\phi_2}}$ makes sure that only program states that satisfy $\grad{\phi_2}$ reach the corresponding point during execution.
     $\grad{\phi_2'}$ is ensured by \tset{\dgradT Soundness}, $P$ is explicitly checked.
     
@@ -396,13 +396,13 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     Assume there exists a program state $\grad{\pi} \in (\envs{\grad{\phi_2'}} \cap \envs{\grad{\phi_2}})$ with $\grad{\pi} \not \in (\envs{\grad{\phi_2'}} \cap P)$.
     It follows that $\neg P(\grad{\pi})$, i.e. a runtime exception is thrown that indicates that a runtime check fails.
     However, $\grad{\pi}$ neither violates $\grad{\phi_2'}$ nor $\grad{\phi_2}$ and is thus not expected to violate any runtime checks.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Corollary \ref{cor:runtime-checks-removed}]~\\
+\begin{proof}[Proof of Corollary \ref{cor:runtime-checks-removed}]~\\
     The condition of lemma \ref{lemma:runtime-checks-reduced} is directly implied.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:det-lift-comp}]~
+\begin{proof}[Proof of Lemma \ref{lemma:det-lift-comp}]~
     \begin{description}
         \item[Introduction]
         \begin{align*}
@@ -497,9 +497,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         \item[Monotonicity]~\\
         Compositions of monotonic functions are monotonic.
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:opt-lift-impl}]~
+\begin{proof}[Proof of Lemma \ref{lemma:opt-lift-impl}]~
     \begin{description}
         \item[Soundness]
         \begin{description}
@@ -527,17 +527,17 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         This means that $\phi \in \gamma(\dgrad{f}(\grad{\phi}))$.
         Contradiction.
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:compl-sem}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:compl-sem}]~\\
     \svl only ever executes a statement $s$ if it was successfully verified.
     After extending the Hoare logic, derivable Hoare triples are still derivable.
     Successful verification implies that there exists some Hoare derivation $\thoare{}{\phi_1}{s}{\phi_2}$ for every statement $s$ executed by the program.
     Soundness of the Hoare logic implies that the small-step semantics do not get stuck while executing $s$.
     Thus, the restricted domain of $\sstep{\cdot}{\cdot}$ can never affect reachable executions.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Theorem \ref{thm:compl-and-so-to-gdpres}]~\\
+\begin{proof}[Proof of Theorem \ref{thm:compl-and-so-to-gdpres}]~\\
     To prove \tset{\dgradT Soundness} we may assume:
     \begin{align}
     \label{frm:tmp0}
@@ -682,9 +682,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         \evalgphiGen{\grad{\pi_2}}{\grad{\phi_2}}
         \end{align}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:gdpres-seq}]
+\begin{proof}[Proof of Lemma \ref{lemma:gdpres-seq}]
     \begin{mathpar}
         \inferrule* [Right=seq]
         {
@@ -708,13 +708,13 @@ Further automated proofs can be found in \cite{olydisGitHub}.
             \gtHoare{~}{\grad{\phi_1}}{\sSeq{$\grad{s_1}$}{$\grad{s_2}$}}{\grad{\phi_3}}
         }
     \end{mathpar}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:snd-svlidf}]
+\begin{proof}[Proof of Lemma \ref{lemma:snd-svlidf}]
     Omitted (proof in \cite{olydisGitHub}).
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:ss-wd}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:ss-wd}]~\\
     For $\sstep{\cdot}{\cdot}$ to be well-defined, at most one result can be deducible per input.
     The rules in figure \ref{fig:svl-sem-dyn-sstep} are syntax directed, so we can focus on individual rules when checking for determinism.
     This can be done by looking at the source of all variables used to construct return values (i.e. the variables used on the right hand side of $\sstep{}{}$ in the conclusion).
@@ -728,9 +728,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     These are drawn from input or are result of expression evaluation which is deterministic.
     
     The same approach can be used for all remaining rules.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:gvlidf-sdl-hl}]~
+\begin{proof}[Proof of Lemma \ref{lemma:gvlidf-sdl-hl}]~
     \begin{description}
         \item[Well-definedness] The rules are syntax directed and only can deduce at most one result per input.
         \item[Deterministic lifting] Rule-wise.
@@ -743,10 +743,10 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         
         Remaining rules analogous.
     \end{description}
-\end{proofatend}
+\end{proof}
 
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:gss-wd}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:gss-wd}]~\\
     For $\gsstep{\cdot}{\cdot}$ to be well-defined, the inductive rules may allow deducing at most one return value for every input.
     For the most part, this is the case due to $\sstep{\cdot}{\cdot}$ being well-defined (see lemma \ref{lemma:ss-wd}).
     We show that the same is true for adjustments made in figure \ref{fig:gvl-sem-dyn-sstep}.
@@ -757,9 +757,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     
     Rule \tset{\gradT SsCallFinish} is deterministic:
     $H, \rho, x, A, A', s, S$ are forwarded from the input, $v_r$ is uniquely determined by the premises.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:gss-sl}]
+\begin{proof}[Proof of Lemma \ref{lemma:gss-sl}]
     For the rules copied from $\sstep{\cdot}{\cdot}$, the rules are trivially satisfied as there is no difference between gradual and non-gradual statements.
     Precision is only meaningful for call statements:
     
@@ -785,9 +785,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
             In terms of definedness, reducing the precision of the postcondition cannot result in premises that were satisfied before to be unsatisfied.
         \end{description}
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:pc-idf}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:pc-idf}]~\\
     Goal:
     \begin{flalign*}
     \forall \pi_1, \pi_2 \in \setProgramState.&~ \sstepConsume{s}{\pi_1}{\pi_2} \\
@@ -844,9 +844,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         $\thoare{\Gamma}{\phi}{\sRelease {$\phi$}}{\phiTrue}$ can be deduced using \tset{HRelease} (for some $\Gamma$).
         Furthermore $\evalphiGen{\pi_1}{\phi}$ holds by inversion of \tset{\dgradT SsRelease}.
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:pso-idf}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:pso-idf}]~\\
     Semi-optimality of the gradual small-step semantics is trivially the case due to being identical with the small-step semantics of \svlidf.
     
     Semi-optimality of the deterministic gradual Hoare logic:
@@ -924,10 +924,10 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         
         Then $\thoare{\Gamma}{\phi_1}{\sRelease {$\phi$}}{\phiTrue}$ holds (\tset{HRelease}).
     \end{description}
-\end{proofatend}
+\end{proof}
 
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:is-decl}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:is-decl}]~\\
     Assumption:
     \begin{align}
     \dgthoare{\Gamma}{\grad{\phi}} {\sSeq {\sDeclare {${T}$} {${x}$}} {$s$}} {\grad{\phi'}}
@@ -979,9 +979,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \evalgphiGen {\pi_2} {\grad{\phi}}
     \end{gather}
     The goal follows (the separating conjunction acts like classical conjunction since ${\phiEq {${\ex{${x}$}}$} {${\ev{${\defaultValue{${T}$}}$}}$}}$ does not mention the heap).
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:is-call}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:is-call}]~\\
     Assumption:
     \begin{align}
     \dgthoare {\Gamma} {\grad{\phi}} {{\sCall {${x}$} {${y}$} {${m}$} {${z'}$}}} {\gphiCons{$\grad{\phi'}$}{$\grad{\phi_q}$}}
@@ -1065,17 +1065,17 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \evalgphiGen {\pi_2} {\grad{\phi'}}
     \end{gather}
     The goal follows from \ref{frm:tmpp2010a} and \ref{frm:tmpp2011a} using the fact that the formulas contain disjoint memory locations.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:is-hold}]
+\begin{proof}[Proof of Lemma \ref{lemma:is-hold}]
     Analogous to previous proofs.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:is-seq}]
+\begin{proof}[Proof of Lemma \ref{lemma:is-seq}]
     Analogous to lemma \ref{lemma:gdpres-seq}.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Theorem \ref{thm:gvlidf-dgsnd}]~\\
+\begin{proof}[Proof of Theorem \ref{thm:gvlidf-dgsnd}]~\\
     Structural induction over statement $s$.
     Most cases are handled by theorem \ref{thm:compl-and-so-to-gdpres} and lemmas \ref{lemma:pc-idf} and \ref{lemma:pso-idf}.
     The remaining cases are covered by lemmas 
@@ -1083,9 +1083,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \ref{lemma:is-call},
     \ref{lemma:is-hold} and
     \ref{lemma:is-seq}.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:oh-free}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:oh-free}]~\\
     We prove that 
     \begin{align}
     \begin{split}
@@ -1125,9 +1125,9 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     \end{displaymath}
     \end{description}
     \end{comment}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:gc-nonex}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:gc-nonex}]~\\
     It is essential that $\setFormula$ cannot express knowledge like 
     \begin{align}
     \label{ex-frm:appro}
@@ -1154,13 +1154,13 @@ Further automated proofs can be found in \cite{olydisGitHub}.
     Since $\grad{\phi}$ is finite, there must be an integer that has not yet been excluded from the set of possible values for \ttt{x}.
     Therefore, adding a corresponding inequality to $\grad{\phi}$ yields a gradual formula that is more precise than $\grad{\phi}$ and still conservatively approximates $\overline{\phi}$.\\
     This contradicts the assumption that $\grad{\phi}$ is the least element with that property.
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proofs of Lemma \ref{ex:idf-opt-lift-evalphi}, \ref{ex:idf-opt-lift-sfrmphi}, \ref{lemma:impl-gimpl}, \ref{lemma:frm-extr}, \ref{lemma:var-extr}]
+\begin{proof}[Proofs of Lemma \ref{ex:idf-opt-lift-evalphi}, \ref{ex:idf-opt-lift-sfrmphi}, \ref{lemma:impl-gimpl}, \ref{lemma:frm-extr}, \ref{lemma:var-extr}]
     Omitted (proofs in \cite{olydisGitHub}).
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Theorem \ref{thm:gnf}]~\\
+\begin{proof}[Proof of Theorem \ref{thm:gnf}]~\\
     Omitted.
     
     Intuition behind the normal form:\\
@@ -1253,13 +1253,13 @@ Further automated proofs can be found in \cite{olydisGitHub}.
         All accessibility predicates are dropped.
         Due to above measures, they are restored by concretization correctly.
     \end{description}
-\end{proofatend}
+\end{proof}
 
-\begin{proofatend}[Proof of Lemma \ref{lemma:mention}]~\\
+\begin{proof}[Proof of Lemma \ref{lemma:mention}]~\\
     Note that a formula mentioning the field $\edot{$x$}{$f$}$ cannot be implied by a formula that does not mention that field.
     This is a direct consequence of the formula semantics (see figure \ref{fig:svl-evalphi}).
     
     E.g. $\phiImplies{\phiTrue}{\phiEq{x.f}{x.f}}$ is not true, since $\phiEq{x.f}{x.f}$ actually ensures that \ttt{x.f} evaluates (to any value), whereas $\phiTrue$ does not (there, \ttt{x} may not be defined or field \ttt{f} may not exist on the value \ttt{x} evaluates to).
     
     Due to self-framing, all formulas in $\gamma(\withqm{\phi})$ must therefore contain $\phiAcc{x}{f}$.
-\end{proofatend}
+\end{proof}

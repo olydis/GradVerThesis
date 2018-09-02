@@ -7,10 +7,9 @@ Figure \ref{fig:idf-syntax} shows the full syntax of \svlidf.
 % EXPLAIN what stuff (like hold, release) means!
 
 %% parser rassoc, skip
-\FloatBarrier
 We define $\ttt{;}$ to be right-associative and assume that parsing a sequence of statements (e.g. method body) operates analogously, obviating the need for parenthesis.
 Furthermore we assume that the parser terminates every sequence with $\sSkip$.
-\begin{exmp}~
+\begin{example}~
     \begin{lstlisting}
     ...
     {
@@ -22,5 +21,5 @@ Furthermore we assume that the parser terminates every sequence with $\sSkip$.
     is parsed as
     
     \includegraphics[trim={3cm 3cm 3cm 3cm}, clip, width=6cm]{graphics/rightAssocSkip}
-\end{exmp}
+\end{example}
 These assumptions highly simplify reasoning about statements.

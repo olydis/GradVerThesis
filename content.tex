@@ -1,230 +1,203 @@
-% IDEA: separate theoretical/general approach and concrete decisions
-% this means, for example, that:
-% PART1:
-% - requirements for lifted functions, soundness
-% - implication (gradual, ...)
-% - abstract versions of [w/o], append
-% PART2:
-% - concrete version of [w/o], append, ... (probably requires notion of normalized env :( )
-% - actual implementation
-
-\chapter{Introduction}
+\section{Introduction}
 \label{ch:introduction}
 \input{text/CH-introduction}
 
-    \section{Motivational Examples}
+    \subsection{Motivational Examples}
     \label{sec:motivationexamples}
     \input{text/SEC-motivationexamples}
 
 
 
-\chapter{Background}
-\label{sec:categorization-of-existing}
-\input{text/SEC-categorization-of-existing}
+%\section{Background}
+%\label{sec:categorization-of-existing}
+%\input{text/SEC-categorization-of-existing}
 
-\section{Gradual Typing}
-\label{ssec:abstracting-gradual-typing}
-\input{text/SSEC-abstracting-gradual-typing}
+%\subsection{Gradual Typing}
+%\label{ssec:abstracting-gradual-typing}
+%\input{text/SSEC-abstracting-gradual-typing}
 
-\section{Hoare Logic}
-\label{sec:hoare-logic}
-\input{text/SEC-hoare-logic}
+%\subsection{Hoare Logic}
+%\label{sec:hoare-logic}
+%\input{text/SEC-hoare-logic}
 
-\section{Implicit Dynamic Frames}
-\label{ssec:implicit-dynamic-frames}
-\input{text/SSEC-implicit-dynamic-frames}
-
-
+%\subsection{Implicit Dynamic Frames}
+%\label{ssec:implicit-dynamic-frames}
+%\input{text/SSEC-implicit-dynamic-frames}
 
 
-\chapter{Gradualization of an Imperative Statically Verified Language}
+
+
+\section{A Static Verification System}
 \label{ch:gradualization-of-a}
 \input{text/CH-gradualization-of-a}
+\label{ch:case-study--implicit}
+\input{text/CH-case-study--implicit}
 
-\section{A Generic Imperative Statically Verified Language \svl}
-\label{sec:a-statically-verified}
-\input{text/SEC-a-statically-verified}
+%\section{A Generic Imperative Statically Verified Language \svl}
+%\label{sec:a-statically-verified}
+%\input{text/SEC-a-statically-verified}
 
-\section{Gradual Formulas}
+\label{sec:language}
+\input{text/SEC-language}
+
+\subsection{Syntax}
+\label{sec:syntax}
+\input{text/SEC-syntax}
+
+%    \subsubsection{Helper Methods}
+%    \input{data/svl-helpers}
+
+%    \subsection{Expression Evaluation}
+%    \label{sec:expeval}
+%    \input{text/SEC-expeval}
+
+\subsection{Footprints and Framing}
+\label{ssec:framing}
+\input{text/SSSEC-framing}
+
+\subsection{Program State}
+\label{ssec:program-state}
+\input{text/SSEC-program-state}
+
+\subsection{Formula Semantics}
+\label{ssec:formula-semantics}
+\input{text/SSEC-formula-semantics}
+
+%        \subsubsection{Regular Conjunction}
+%        \label{sssec:regular-conjunction}
+%        \input{text/SSSEC-regular-conjunction}
+
+\subsection{Static Semantics}
+\label{sec:static-semantics}
+\input{text/SEC-static-semantics}
+
+%    \subsection{Dynamic Semantics}
+%    \label{ssec:dynamic-semantics}
+%    \input{text/SSEC-dynamic-semantics}
+
+%    \subsection{Well-Formedness}
+%    \label{sec:well-formedness}
+%    \input{text/SEC-well-formedness}
+
+\subsection{Soundness}
+\label{ssec:soundness}
+\input{text/SSEC-soundness}
+
+\section{A Gradual Verification System}
+\subsection{Gradual Formulas}
 \label{sec:gradual-formulas}
 \input{text/SEC-gradual-formulas}
-
-    \subsection{Total Unknown}
-    \label{ssec:dedicated-wildcard-formula}
-    \input{text/SSEC-dedicated-wildcard-formula}
-    
-    \subsection{Bounded Unknown}
-    \label{ssec:wildcard-with-upper}
-    \input{text/SSEC-wildcard-with-upper}
-
-    \subsection{Precision}
-    \label{ssec:precision}
-    \input{text/SSEC-precision}
-    
-    \subsection{Generalization}
-    \label{ssec:generalization}
-    \input{text/SSEC-generalization}
-    
-\section{Gradual Statements}
+\subsection{Gradual Statements}
 \label{sec:gradual-statements}
 \input{text/SEC-gradual-statements}
-
-\section{Gradual Program State}
+\subsection{Gradual Program State}
 \label{sec:gradual-program-state}
 \input{text/SEC-gradual-program-state}
+\subsection{Gradual Syntax}
+\label{sec:cs-gradual-formulas}
+\input{text/SEC-cs-gradual-formulas}
+\subsection{Precision}
+\label{ssec:precision}
+\input{text/SSEC-precision}
 
-\section{Lifting Predicates and Functions}
+\subsection{Lifting Predicates and Functions}
 \label{sec:lifting-predicates-and}
 \input{text/SEC-lifting-predicates-and}
-
-    \subsection{Gradual Guarantee of Verification}
-    \label{ssec:gfconclusion}
-    \input{text/SSEC-gfconclusion}
-
-    \subsection{Lifting Predicates}
-    \label{ssec:lifting-predicates}
-    \input{text/SSEC-lifting-predicates}
-    
-        \subsubsection{Examples}
-        \label{sssec:examples-lift-predicates}
-        \input{text/SSSEC-examples-lift-predicates}
-    
-    \subsection{Lifting Functions}
-    \label{ssec:lifting-functions}
-    \input{text/SSEC-lifting-functions}
-    
-        \subsubsection{Examples}
-        \label{sssec:examples-lift-functions}
-        \input{text/SSSEC-examples-lift-functions}
-        
-        \subsubsection{Lifting Partial Functions}
-        \label{sssec:lifting-partial-functions}
-        \input{text/SSSEC-lifting-partial-functions}
-    
-    \subsection{Generalized Lifting}
-    \label{ssec:generalized-lifting}
-    \input{text/SSEC-generalized-lifting}
+\subsection{Gradual Guarantee of Verification}
+\label{ssec:gfconclusion}
+\input{text/SSEC-gfconclusion}
+\subsection{Lifting Predicates}
+\label{ssec:lifting-predicates}
+\input{text/SSEC-lifting-predicates}
+\subsubsection{Examples}
+\label{sssec:examples-lift-predicates}
+\input{text/SSSEC-examples-lift-predicates}
+%    \subsection{Lifting Functions}
+%    \label{ssec:lifting-functions}
+%    \input{text/SSEC-lifting-functions}
+%        \subsubsection{Examples}
+%        \label{sssec:examples-lift-functions}
+%        \input{text/SSSEC-examples-lift-functions}
+\subsubsection{Lifting Partial Functions}
+\label{sssec:lifting-partial-functions}
+\input{text/SSSEC-lifting-partial-functions}
+%    \subsection{Generalized Lifting}
+%    \label{ssec:generalized-lifting}
+%    \input{text/SSEC-generalized-lifting}
+\subsection{Gradual Liftings}
+\label{sec:gradual-liftings}
+\input{text/SEC-gradual-liftings}
 
 \section{Gradual Soundness vs Gradual Guarantee}
 \label{ssec:gradual-soundness}
 \input{text/SSEC-gradual-soundness}
 
-%\subsection{title}
+\section{Gradual Soundness}
+\label{sec:gradual-soundness}
+\input{text/SEC-gradual-soundness}
+
 
 \section{Abstracting Static Semantics}
 \label{sec:abstracting-static-semantics}
 \input{text/SEC-abstracting-static-semantics}
-    
-    \subsection{The Problem with Composite Predicate Lifting}
-    \label{ssec:the-problem-with}
-    \input{text/SSEC-the-problem-with}
-    
-    \subsection{The Deterministic Approach}
-    \label{ssec:the-deterministic-approach}
-    \input{text/SSEC-the-deterministic-approach}
-    
-        \subsubsection{Examples}
-        \label{sssec:examples-lift-determ}
-        \input{text/SSSEC-examples-lift-determ}
-        
-        \subsubsection{Gradual Verification Illustrated}
-        \label{sssec:gradual-verification-illustrated}
-        \input{text/SSSEC-gradual-verification-illustrated}
-
-\section{Abstracting Dynamic Semantics}
-\label{sec:abstracting-dynamic-semantics}
-\input{text/SEC-abstracting-dynamic-semantics}
-
-    \subsection{Perfect Knowledge}
-    \label{ssec:perfect-knowledge}
-    \input{text/SSEC-perfect-knowledge}
-    
-    \subsection{Partial Knowledge}
-    \label{ssec:atomic--knowledge}
-    \input{text/SSEC-atomic--knowledge}
-
-
-
-
-\chapter{Case Study: Implicit Dynamic Frames}
-\label{ch:case-study--implicit}
-\input{text/CH-case-study--implicit}
-
-\section{The Statically Verified Language \svlidf}
-\label{sec:language}
-\input{text/SEC-language}
-
-    \subsection{Syntax}
-    \label{sec:syntax}
-    \input{text/SEC-syntax}
-    
-    \subsubsection{Helper Methods}
-    \input{data/svl-helpers}
-    
-    \subsection{Expression Evaluation}
-    \label{sec:expeval}
-    \input{text/SEC-expeval}
-    
-    %\FloatBarrier
-    \subsection{Footprints and Framing}
-    \label{ssec:framing}
-    \input{text/SSSEC-framing}
-    
-    \subsection{Program State}
-    \label{ssec:program-state}
-    \input{text/SSEC-program-state}
-        
-    \subsection{Formula Semantics}
-    \label{ssec:formula-semantics}
-    \input{text/SSEC-formula-semantics}
-    
-        \subsubsection{Regular Conjunction}
-        \label{sssec:regular-conjunction}
-        \input{text/SSSEC-regular-conjunction}
-    
-    \subsection{Static Semantics}
-    \label{sec:static-semantics}
-    \input{text/SEC-static-semantics}
-    
-    \FloatBarrier
-    \subsection{Dynamic Semantics}
-    \label{ssec:dynamic-semantics}
-    \input{text/SSEC-dynamic-semantics}
-    
-    \subsection{Well-Formedness}
-    \label{sec:well-formedness}
-    \input{text/SEC-well-formedness}
-    
-    \subsection{Soundness}
-    \label{ssec:soundness}
-    \input{text/SSEC-soundness}
-
-\section{Gradual Syntax}
-\label{sec:cs-gradual-formulas}
-\input{text/SEC-cs-gradual-formulas}
-
-\section{Gradual Liftings}
-\label{sec:gradual-liftings}
-\input{text/SEC-gradual-liftings}
-
-\section{Gradual Static Semantics}
+\subsection{The Problem with Composite Predicate Lifting}
+\label{ssec:the-problem-with}
+\input{text/SSEC-the-problem-with}
+\subsection{The Deterministic Approach}
+\label{ssec:the-deterministic-approach}
+\input{text/SSEC-the-deterministic-approach}
+%        \subsubsection{Examples}
+%        \label{sssec:examples-lift-determ}
+%        \input{text/SSSEC-examples-lift-determ}
+%        \subsubsection{Gradual Verification Illustrated}
+%        \label{sssec:gradual-verification-illustrated}
+%        \input{text/SSSEC-gradual-verification-illustrated}
+\subsection{Gradual Static Semantics}
 \label{sec:gradualize-hoare-rules}
 \input{text/SEC-gradualize-hoare-rules}
 
-\section{Gradual Dynamic Semantics}
-\label{sec:gradual-dyn--semantics}
-\input{text/SEC-gradual-dyn--semantics}
+\section{Abstracting Dynamic Semantics}
 
-\FloatBarrier
-\section{Gradual Well-Formedness}
-\label{ssec:well-formedness}
-\input{text/SSEC-well-formedness}
+%\section{Gradual Dynamic Semantics}
+%\label{sec:gradual-dyn--semantics}
+%\input{text/SEC-gradual-dyn--semantics}
 
-\section{Gradual Soundness}
-\label{sec:gradual-soundness}
-\input{text/SEC-gradual-soundness}
-% thing with HSec
-% Tapp usw...
+%\section{Gradual Well-Formedness}
+%\label{ssec:well-formedness}
+%\input{text/SSEC-well-formedness}
+
+%    \subsection{Total Unknown}
+%    \label{ssec:dedicated-wildcard-formula}
+%    \input{text/SSEC-dedicated-wildcard-formula}
+
+%    \subsection{Bounded Unknown}
+%    \label{ssec:wildcard-with-upper}
+%    \input{text/SSEC-wildcard-with-upper}
+
+%    \subsection{Generalization}
+%    \label{ssec:generalization}
+%    \input{text/SSEC-generalization}
+    
+
+
+%\subsection{title}
+
+
+%\section{Abstracting Dynamic Semantics}
+%\label{sec:abstracting-dynamic-semantics}
+%\input{text/SEC-abstracting-dynamic-semantics}
+
+%    \subsection{Perfect Knowledge}
+%    \label{ssec:perfect-knowledge}
+%    \input{text/SSEC-perfect-knowledge}
+    
+%    \subsection{Partial Knowledge}
+%    \label{ssec:atomic--knowledge}
+%    \input{text/SSEC-atomic--knowledge}
+
+
+
+
 
 
 \chapter{Evaluation}
@@ -239,9 +212,9 @@
 \label{sec:implementation}
 \input{text/SEC-implementation}
 
-\section{Enhancing a Dynamically Verified Language}
-\label{sec:enhancing-an-unverified}
-\input{text/SEC-enhancing-an-unverified}
+%\section{Enhancing a Dynamically Verified Language}
+%\label{sec:enhancing-an-unverified}
+%\input{text/SEC-enhancing-an-unverified}
 
 
 \chapter{Conclusion}
@@ -252,30 +225,9 @@
 \label{sec:future-work}
 \input{text/SEC-future-work}
 
-\section{Evidence for Semantical Judgment Considered Bad}
-\label{sec:soundness-using-evidence}
-\input{text/SEC-soundness-using-evidence}
-
-\begin{appendices}
-\chapter{Appendix}
-
-\section{Partial Galois Connection}
-\label{app:part-galois}
-\input{text/SEC-partial-galois-connection}
-
-\section{Implementation Strategies}
-\label{app:impl-strat}
-\input{text/SEC-implementation-strategies}
-
-\subsection{Access-Free Gradual Normal Form}
-\label{ssec:gradual-normal-form}
-\input{text/SSEC-gradual-normal-form}
-
-\section{Proofs}
-\label{sec:proofs}
-\input{text/SEC-proofs}
-
-\end{appendices}
+%\section{Evidence for Semantical Judgment Considered Bad}
+%\label{sec:soundness-using-evidence}
+%\input{text/SEC-soundness-using-evidence}
 
 \begin{comment}
 \chapter{UNSORTED}
